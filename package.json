@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "CC Search Browser Extension.",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint './src/**/*.js'"
   },
   "repository": {
     "type": "git",
@@ -13,5 +13,10 @@
   "bugs": {
     "url": "https://github.com/creativecommons/ccsearch-browser-extension/issues"
   },
-  "homepage": "https://github.com/creativecommons/ccsearch-browser-extension#readme"
+  "homepage": "https://github.com/creativecommons/ccsearch-browser-extension#readme",
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.17.3"
+  }
 }
