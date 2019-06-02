@@ -78,3 +78,17 @@ header img {
   text-decoration: none;
   color: #18beff;
 }
+
+footer {
+  height: 30px;
+  background-color: #242424;
+  text-align: center;
+}
+
+footer a {
+  font-size: 70%;
+  color: #fff;
+  text-decoration: none;
+  text-transform: uppercase;
+  margin-right: 20px;
+}
