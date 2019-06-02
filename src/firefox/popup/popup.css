@@ -62,3 +62,19 @@ header img {
 .section-search i:hover {
   color: #2dc4ff;
 }
+
+.section-content {
+  padding-top: 10%;
+}
+
+.section-content p {
+  min-height: 300px;
+  width: 90%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.section-content p a {
+  text-decoration: none;
+  color: #18beff;
+}
