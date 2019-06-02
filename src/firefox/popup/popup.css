@@ -13,3 +13,52 @@ body {
   background-color: #fff;
   color: #555;
 }
+
+header {
+  width: 600px;
+  background-image: linear-gradient(to right, #ff4e14, #ff7d31);
+}
+
+header img {
+  display: inline-block;
+  padding: 5px 0;
+  height: 50px;
+  margin-left: 10%;
+}
+
+.container {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.section-search {
+  margin-top: 4%;
+  position: relative;
+}
+
+.section-search input[type="text"] {
+  width: 100%;
+  font-size: 130%;
+  background: #fff;
+  padding: 2%;
+  border: 1.2px solid rgb(255, 191, 132);
+  transition: all 0.3s ease-in-out;
+}
+
+.section-search input[type="text"]:focus {
+  box-shadow: 0 0 5px #fa8526;
+  border: 1.2px solid #ff8432;
+}
+
+.section-search i {
+  position: absolute;
+  right: 3%;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #47cbff;
+  font-size: 170%;
+}
+
+.section-search i:hover {
+  color: #2dc4ff;
+}
