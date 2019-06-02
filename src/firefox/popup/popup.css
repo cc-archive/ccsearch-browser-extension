@@ -12,10 +12,11 @@ body {
   font-size: 20px;
   background-color: #fff;
   color: #555;
+  width: 620px;
 }
 
 header {
-  width: 600px;
+  width: 100%;
   background-image: linear-gradient(to right, #ff4e14, #ff7d31);
 }
 
