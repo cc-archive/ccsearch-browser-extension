@@ -81,15 +81,24 @@ header img {
 }
 
 footer {
-  height: 30px;
+  height: 40px;
   background-color: #242424;
   text-align: center;
 }
 
-footer a {
+.footer-box {
+  display: inline;
+  margin: 0 20px;
+}
+
+.footer-box a {
   font-size: 70%;
   color: #fff;
   text-decoration: none;
   text-transform: uppercase;
-  margin-right: 20px;
+}
+
+.footer-box img {
+  width: 30px;
+  transform: translateY(5px);
 }
