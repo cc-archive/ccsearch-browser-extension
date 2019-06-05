@@ -1,6 +1,7 @@
 .row {
-  max-width: 630px;
-  margin-bottom: 10px;
+  /* assuming a container wrapper */
+  max-width: 100%;
+  margin: 10px auto;
 }
 
 .row:last-child {

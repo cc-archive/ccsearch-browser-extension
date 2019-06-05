@@ -12,7 +12,8 @@ body {
   font-size: 20px;
   background-color: #fff;
   color: #555;
-  width: 620px;
+  width: 640px;
+  overflow-x: hidden;
 }
 
 header {
