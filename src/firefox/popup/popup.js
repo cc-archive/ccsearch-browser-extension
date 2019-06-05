@@ -31,6 +31,7 @@ searchIcon.addEventListener('click', () => {
       });
       console.log(thumbnails);
       console.log(resultArray);
+      let count = 1;
       thumbnails.forEach((element) => {
         const sectionContentParagraph = document.querySelector('.section-content p');
         if (sectionContentParagraph) {
@@ -38,7 +39,16 @@ searchIcon.addEventListener('click', () => {
         }
         const imgElement = document.createElement('img');
         imgElement.setAttribute('src', element);
-        document.querySelector('.section-content').appendChild(imgElement);
+        if (count === 1) {
+          document.querySelector('.section-content .row .first-col').appendChild(imgElement);
+          count += 1;
+        } else if (count === 2) {
+          document.querySelector('.section-content .row .second-col').appendChild(imgElement);
+          count += 1;
+        } else if (count === 3) {
+          document.querySelector('.section-content .row .third-col').appendChild(imgElement);
+          count = 1;
+        }
       });
     });
 });

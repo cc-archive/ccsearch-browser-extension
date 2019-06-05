@@ -120,3 +120,7 @@ footer {
   clear: both;
   display: table;
 }
+
+.row img {
+  width: 100%;
+}
