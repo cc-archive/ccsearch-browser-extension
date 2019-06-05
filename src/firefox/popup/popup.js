@@ -31,14 +31,29 @@ searchIcon.addEventListener('click', () => {
       });
       console.log(thumbnails);
       console.log(resultArray);
+
+      // remove old images for a new search
+      const firstImgCol = document.querySelector('.section-content .row .first-col');
+      const secondImgCol = document.querySelector('.section-content .row .second-col');
+      const thirdImgCol = document.querySelector('.section-content .row .third-col');
+
+      firstImgCol.innerHTML = '';
+      secondImgCol.innerHTML = '';
+      thirdImgCol.innerHTML = '';
+
       let count = 1;
       thumbnails.forEach((element) => {
+        // remove initial content
         const sectionContentParagraph = document.querySelector('.section-content p');
         if (sectionContentParagraph) {
           sectionContentParagraph.parentNode.removeChild(sectionContentParagraph);
         }
+
+        // make an image element
         const imgElement = document.createElement('img');
         imgElement.setAttribute('src', element);
+
+        // fill the grid
         if (count === 1) {
           document.querySelector('.section-content .row .first-col').appendChild(imgElement);
           count += 1;
