@@ -62,6 +62,13 @@ header img {
 
 .section-search i:hover {
   color: #2dc4ff;
+  cursor: pointer;
+}
+
+#error-message {
+  color: rgba(224, 38, 38, 0.9);
+  display: block;
+  font-size: 65%;
 }
 
 .section-content {
