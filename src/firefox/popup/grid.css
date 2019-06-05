@@ -1,0 +1,29 @@
+.row {
+  max-width: 630px;
+  margin-bottom: 10px;
+}
+
+.row:last-child {
+  margin-bottom: 0;
+}
+
+.row .col-1-of-3 {
+  float: left;
+  /* can mix units in calc function */
+  width: calc((100% - 20px) / 3);
+  margin-right: 10px;
+}
+
+.row .col-1-of-3:last-child {
+  margin-right: 0;
+}
+
+.row .col-2-of-3 {
+  float: left;
+  width: calc((2 * ((100% - 20px) / 3)) + 10px);
+  margin-right: 10px;
+}
+
+.row .col-2-of-3:last-child {
+  margin-right: 0;
+}

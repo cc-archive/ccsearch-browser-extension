@@ -109,3 +109,14 @@ footer {
   width: 30px;
   transform: translateY(5px);
 }
+
+/* preserve the height of parent of floating elements */
+.clearfix {
+  clear: both;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
