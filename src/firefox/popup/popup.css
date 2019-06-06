@@ -1,3 +1,14 @@
+/* Variables */
+:root {
+  --primary-color-dark: #ff4e14;
+  --primary-color-light: #ff7d31;
+
+  --secondary-color-dark: #0ab8fd;
+  --secondary-color-light: #3fc7fd;
+
+  --color-white: #fff;
+}
+
 /* Style Reset */
 
 * {
@@ -10,7 +21,7 @@ body {
   font-family: "Lato", "Arial", sans-serif;
   font-weight: 300;
   font-size: 20px;
-  background-color: #fff;
+  background-color: var(--color-white);
   color: #555;
   width: 640px;
   overflow-x: hidden;
@@ -41,15 +52,15 @@ header img {
 .section-search input[type="text"] {
   width: 100%;
   font-size: 130%;
-  background: #fff;
+  background: var(--color-white);
   padding: 2%;
-  border: 1.2px solid rgb(255, 191, 132);
+  border: 1.2px solid var(--primary-color-light);
   transition: all 0.3s ease-in-out;
 }
 
 .section-search input[type="text"]:focus {
-  box-shadow: 0 0 5px #fa8526;
-  border: 1.2px solid #ff8432;
+  box-shadow: 0 0 5px var(--primary-color-dark);
+  border: 1.2px solid var(--primary-color-dark);
 }
 
 .section-search i {
@@ -57,12 +68,12 @@ header img {
   right: 3%;
   top: 50%;
   transform: translateY(-50%);
-  color: #47cbff;
+  color: var(--secondary-color-light);
   font-size: 170%;
 }
 
 .section-search i:hover {
-  color: #2dc4ff;
+  color: var(--secondary-color-dark);
   cursor: pointer;
 }
 
@@ -85,7 +96,7 @@ header img {
 
 .section-content p a {
   text-decoration: none;
-  color: #18beff;
+  color: var(--secondary-color-light);
 }
 
 footer {
@@ -101,7 +112,7 @@ footer {
 
 .footer-box a {
   font-size: 70%;
-  color: #fff;
+  color: var(--color-white);
   text-decoration: none;
   text-transform: uppercase;
 }
