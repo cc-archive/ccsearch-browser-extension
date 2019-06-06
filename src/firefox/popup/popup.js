@@ -13,8 +13,11 @@ inputField.addEventListener('keydown', (event) => {
 
 searchIcon.addEventListener('click', () => {
   const inputText = inputField.value;
+
   if (inputText === '') {
     errorMessage.textContent = 'Please enter a search query';
+  } else {
+    errorMessage.textContent = '';
   }
   console.log(inputText);
 
