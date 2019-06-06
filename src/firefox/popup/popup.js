@@ -1,5 +1,3 @@
-console.log('hello from the extension!');
-
 const inputField = document.getElementById('section-search-input');
 const searchIcon = document.getElementById('search-icon');
 const errorMessage = document.getElementById('error-message');
@@ -19,14 +17,12 @@ searchIcon.addEventListener('click', () => {
   } else {
     errorMessage.textContent = '';
   }
-  console.log(inputText);
 
   const url = `https://api.creativecommons.engineering/image/search?q=${inputText}&pagesize=50`;
 
   fetch(url)
     .then(data => data.json())
     .then((res) => {
-      console.log(res);
       const resultArray = res.results;
       const thumbnails = [];
       resultArray.forEach((element) => {
