@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "CC Search Browser Extension.",
   "scripts": {
-    "lint": "eslint './src/**/*.js'"
+    "lint": "eslint './src/**/*.js'",
+    "compile-sass": "node-sass src/firefox/popup/sass/main.scss src/firefox/popup/popup.css",
+    "compile-sass:watch": "node-sass src/firefox/popup/sass/main.scss src/firefox/popup/popup.css --watch"
   },
   "repository": {
     "type": "git",
