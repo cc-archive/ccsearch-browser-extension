@@ -1,0 +1,37 @@
+.container {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.section-search {
+  margin-top: 4%;
+  position: relative;
+
+  input[type="text"] {
+    width: 100%;
+    font-size: 130%;
+    background: $color-white;
+    padding: 2%;
+    border: 1.2px solid $primary-color-light;
+    transition: all 0.3s ease-in-out;
+
+    &:focus {
+      box-shadow: 0 0 5px $primary-color-dark;
+      border: 1.2px solid $primary-color-dark;
+    }
+  }
+
+  i {
+    position: absolute;
+    right: 3%;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $secondary-color-light;
+    font-size: 170%;
+
+    &:hover {
+      color: $secondary-color-dark;
+      cursor: pointer;
+    }
+  }
+}

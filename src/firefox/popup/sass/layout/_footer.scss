@@ -1,0 +1,22 @@
+footer {
+  height: 40px;
+  background-color: #242424;
+  text-align: center;
+}
+
+.footer-box {
+  display: inline;
+  margin: 0 20px;
+
+  a {
+    font-size: 70%;
+    color: $color-white;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  img {
+    width: 30px;
+    transform: translateY(5px);
+  }
+}

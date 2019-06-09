@@ -1,0 +1,15 @@
+.section-content {
+  padding-top: 10%;
+
+  p {
+    min-height: 300px;
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+
+    a {
+      text-decoration: none;
+      color: $secondary-color-light;
+    }
+  }
+}
