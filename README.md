@@ -11,6 +11,10 @@ You can test and develop the extension locally on your system.
 **NOTE**: Right now the focus is on Firefox Browser so the extension might show some unexpected behavior in Chrome.
 1. Clone the repo: `git clone https://github.com/creativecommons/ccsearch-browser-extension.git`.
 
+2. Run: `npm install`.
+
+3. To compile Sass to CSS, Run: `npm run compile-sass`.
+
 ### Load the extension in Firefox
 1. Open Firefox browser and navigate to _about:debugging_.
 
