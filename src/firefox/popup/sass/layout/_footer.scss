@@ -18,5 +18,10 @@ footer {
   img {
     width: 30px;
     transform: translateY(5px);
+    transition: all 0.2s;
+
+    &:hover {
+      transform: translateY(4.5px) scale(1.1);
+    }
   }
 }
