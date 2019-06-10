@@ -7,6 +7,10 @@
     margin-bottom: 0;
   }
 
+  &::after {
+    @include clearfix;
+  }
+
   .col-1-of-3 {
     float: left;
     /* can mix units in calc function */
