@@ -66,8 +66,13 @@
       color: $color-white;
       font-size: 15px;
       font-weight: 700;
+      width: 90%;
+      // height: 15px;
       opacity: 0;
       z-index: 3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 }
