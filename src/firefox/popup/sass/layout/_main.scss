@@ -19,7 +19,7 @@
     position: relative;
     backface-visibility: hidden;
     transition: all 0.5s;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 5px 10px rgba($color-black, 0.15);
     margin-bottom: 7px;
 
     img {
@@ -35,13 +35,18 @@
       height: 100%;
       top: 0;
       left: 0;
-      background-image: linear-gradient(rgba(0, 0, 0, 0.3), transparent 30%, transparent 70%, rgba(0, 0, 0, 0.3));
+      background-image: linear-gradient(
+        rgba($color-black, 0.3),
+        transparent 30%,
+        transparent 70%,
+        rgba($color-black, 0.3)
+      );
       transition: all 0.5s;
       opacity: 0;
     }
     &:hover {
       transform: scale(1.05);
-      box-shadow: 0 7.5 15px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 7.5 15px rgba($color-black, 0.3);
 
       &:after {
         opacity: 1;
