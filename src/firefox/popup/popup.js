@@ -9,6 +9,11 @@ inputField.addEventListener('keydown', (event) => {
   }
 });
 
+// convert Unicode sequence To String
+function unicodeToString(string) {
+  return string.replace(/\\u[\dA-F]{4}/gi, match => String.fromCharCode(parseInt(match.replace(/\\u/g, ''), 16)));
+}
+
 searchIcon.addEventListener('click', () => {
   const inputText = inputField.value;
 
@@ -38,7 +43,7 @@ searchIcon.addEventListener('click', () => {
       let count = 1;
       resultArray.forEach((element) => {
         const { thumbnail } = element;
-        const title = decodeURIComponent(escape(element.title));
+        const title = unicodeToString(element.title);
         // remove initial content
         const sectionContentParagraph = document.querySelector('.section-content p');
         if (sectionContentParagraph) {
