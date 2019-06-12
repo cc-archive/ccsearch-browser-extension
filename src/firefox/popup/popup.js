@@ -24,11 +24,6 @@ searchIcon.addEventListener('click', () => {
     .then(data => data.json())
     .then((res) => {
       const resultArray = res.results;
-      const thumbnails = [];
-      resultArray.forEach((element) => {
-        thumbnails.push(element.thumbnail);
-      });
-      console.log(thumbnails);
       console.log(resultArray);
 
       // remove old images for a new search
@@ -41,7 +36,8 @@ searchIcon.addEventListener('click', () => {
       thirdImgCol.innerHTML = '';
 
       let count = 1;
-      thumbnails.forEach((element) => {
+      resultArray.forEach((element) => {
+        const { thumbnail } = element;
         // remove initial content
         const sectionContentParagraph = document.querySelector('.section-content p');
         if (sectionContentParagraph) {
@@ -50,7 +46,7 @@ searchIcon.addEventListener('click', () => {
 
         // make an image element
         const imgElement = document.createElement('img');
-        imgElement.setAttribute('src', element);
+        imgElement.setAttribute('src', thumbnail);
 
         // make an div element to encapsulate image element
         const divElement = document.createElement('div');
