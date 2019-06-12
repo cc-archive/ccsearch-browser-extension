@@ -42,8 +42,9 @@ searchIcon.addEventListener('click', () => {
 
       let count = 1;
       resultArray.forEach((element) => {
-        const { thumbnail } = element;
+        const thumbnail = element.thumbnail ? element.thumbnail : element.url;
         const title = unicodeToString(element.title);
+
         // remove initial content
         const sectionContentParagraph = document.querySelector('.section-content p');
         if (sectionContentParagraph) {
