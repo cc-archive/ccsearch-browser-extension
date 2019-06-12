@@ -52,15 +52,21 @@ searchIcon.addEventListener('click', () => {
         const imgElement = document.createElement('img');
         imgElement.setAttribute('src', element);
 
+        // make an div element to encapsulate image element
+        const divElement = document.createElement('div');
+        divElement.setAttribute('class', 'image');
+
+        divElement.appendChild(imgElement);
+
         // fill the grid
         if (count === 1) {
-          document.querySelector('.section-content .first-col .images').appendChild(imgElement);
+          document.querySelector('.section-content .first-col .images').appendChild(divElement);
           count += 1;
         } else if (count === 2) {
-          document.querySelector('.section-content .second-col .images').appendChild(imgElement);
+          document.querySelector('.section-content .second-col .images').appendChild(divElement);
           count += 1;
         } else if (count === 3) {
-          document.querySelector('.section-content .third-col .images').appendChild(imgElement);
+          document.querySelector('.section-content .third-col .images').appendChild(divElement);
           count = 1;
         }
       });
