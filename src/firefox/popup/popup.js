@@ -9,7 +9,7 @@ inputField.addEventListener('keydown', (event) => {
   }
 });
 
-// convert Unicode sequence To String
+// convert Unicode sequence To String. credit: https://stackoverflow.com/a/22021709/10425980
 function unicodeToString(string) {
   return string.replace(/\\u[\dA-F]{4}/gi, match => String.fromCharCode(parseInt(match.replace(/\\u/g, ''), 16)));
 }
@@ -44,6 +44,8 @@ searchIcon.addEventListener('click', () => {
       resultArray.forEach((element) => {
         const thumbnail = element.thumbnail ? element.thumbnail : element.url;
         const title = unicodeToString(element.title);
+        const { license } = element;
+        const licenseArray = license.split('-'); // split license in individual characteristics
 
         // remove initial content
         const sectionContentParagraph = document.querySelector('.section-content p');
@@ -60,12 +62,47 @@ searchIcon.addEventListener('click', () => {
         spanTitleElement.setAttribute('class', 'image-title');
         spanTitleElement.textContent = title;
 
+        // make a span to hold the license icons
+        const spanLicenseElement = document.createElement('span');
+        spanLicenseElement.setAttribute('class', 'image-license');
+
+        // make a link to license description
+        const licenseLinkElement = document.createElement('a');
+        licenseLinkElement.setAttribute(
+          'href',
+          `https://creativecommons.org/licenses/${license}/2.0/`,
+        );
+        licenseLinkElement.setAttribute('target', '_blank'); // open link in new tab
+
+        // Array to hold license image elements
+        const licenseIconElementsArray = [];
+
+        // Add the default cc icon
+        let licenseIconElement = document.createElement('img');
+        licenseIconElement.setAttribute('src', 'img/cc_icon.svg');
+        licenseIconElement.setAttribute('alt', 'cc_icon');
+        licenseIconElementsArray.push(licenseIconElement);
+
+        // make and push license image elements
+        licenseArray.forEach((name) => {
+          licenseIconElement = document.createElement('img');
+          licenseIconElement.setAttribute('src', `img/cc-${name}_icon.svg`);
+          licenseIconElement.setAttribute('alt', `cc-${name}_icon`);
+          licenseIconElementsArray.push(licenseIconElement);
+        });
+
+        licenseIconElementsArray.forEach((licenseIcon) => {
+          licenseLinkElement.appendChild(licenseIcon);
+        });
+        spanLicenseElement.appendChild(licenseLinkElement);
+
         // make an div element to encapsulate image element
         const divElement = document.createElement('div');
         divElement.setAttribute('class', 'image');
 
         divElement.appendChild(imgElement);
         divElement.appendChild(spanTitleElement);
+        divElement.appendChild(spanLicenseElement);
 
         // fill the grid
         if (count === 1) {
