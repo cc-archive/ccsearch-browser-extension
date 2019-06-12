@@ -38,6 +38,7 @@ searchIcon.addEventListener('click', () => {
       let count = 1;
       resultArray.forEach((element) => {
         const { thumbnail } = element;
+        const title = decodeURIComponent(escape(element.title));
         // remove initial content
         const sectionContentParagraph = document.querySelector('.section-content p');
         if (sectionContentParagraph) {
@@ -48,11 +49,17 @@ searchIcon.addEventListener('click', () => {
         const imgElement = document.createElement('img');
         imgElement.setAttribute('src', thumbnail);
 
+        // make a span to hold the title
+        const spanTitleElement = document.createElement('span');
+        spanTitleElement.setAttribute('class', 'image-title');
+        spanTitleElement.textContent = title;
+
         // make an div element to encapsulate image element
         const divElement = document.createElement('div');
         divElement.setAttribute('class', 'image');
 
         divElement.appendChild(imgElement);
+        divElement.appendChild(spanTitleElement);
 
         // fill the grid
         if (count === 1) {
