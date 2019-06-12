@@ -32,9 +32,9 @@ searchIcon.addEventListener('click', () => {
       console.log(resultArray);
 
       // remove old images for a new search
-      const firstImgCol = document.querySelector('.section-content .row .first-col');
-      const secondImgCol = document.querySelector('.section-content .row .second-col');
-      const thirdImgCol = document.querySelector('.section-content .row .third-col');
+      const firstImgCol = document.querySelector('.section-content .first-col .images');
+      const secondImgCol = document.querySelector('.section-content .second-col .images');
+      const thirdImgCol = document.querySelector('.section-content .third-col .images');
 
       firstImgCol.innerHTML = '';
       secondImgCol.innerHTML = '';
@@ -54,13 +54,13 @@ searchIcon.addEventListener('click', () => {
 
         // fill the grid
         if (count === 1) {
-          document.querySelector('.section-content .row .first-col').appendChild(imgElement);
+          document.querySelector('.section-content .first-col .images').appendChild(imgElement);
           count += 1;
         } else if (count === 2) {
-          document.querySelector('.section-content .row .second-col').appendChild(imgElement);
+          document.querySelector('.section-content .second-col .images').appendChild(imgElement);
           count += 1;
         } else if (count === 3) {
-          document.querySelector('.section-content .row .third-col').appendChild(imgElement);
+          document.querySelector('.section-content .third-col .images').appendChild(imgElement);
           count = 1;
         }
       });
