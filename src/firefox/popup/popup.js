@@ -42,12 +42,41 @@ searchIcon.addEventListener('click', () => {
 
       let count = 1;
 
+      // all the provider logo image file names
+      const providerLogos = [
+        '500px_logo.png',
+        'animaldiversity_logo.png',
+        'brooklynmuseum_logo.png',
+        'behance_logo.svg',
+        'CAPL_logo.png',
+        'clevelandmuseum_logo.png',
+        'deviantart_logo.png',
+        'digitaltmuseum_logo.png',
+        'eol_logo.png',
+        'flickr_logo.png',
+        'floraon_logo.png',
+        'geographorguk_logo.gif',
+        'iha_logo.png',
+        'mccordmuseum_logo.png',
+        'met_logo.png',
+        'museumsvictoria_logo.svg',
+        'nypl_logo.svg',
+        'rawpixel_logo.png',
+        'rijksmuseum_logo.png',
+        'sciencemuseum_logo.svg',
+        'svgsilh_logo.png',
+        'thingiverse_logo.png',
+        'thorvaldsensmuseum_logo.png',
+        'WoRMS_logo.png',
+      ];
+
       resultArray.forEach((element) => {
         const thumbnail = element.thumbnail ? element.thumbnail : element.url;
         const title = unicodeToString(element.title);
         const { license } = element;
         const licenseArray = license.split('-'); // split license in individual characteristics
         const foreignLandingUrl = element.foreign_landing_url;
+        const { provider } = element;
 
         // remove initial content
         const sectionContentParagraph = document.querySelector('.section-content p');
@@ -70,7 +99,14 @@ searchIcon.addEventListener('click', () => {
         foreignLandingLinkElement.setAttribute('class', 'foreign-landing-url');
 
         const providerImageElement = document.createElement('img');
-        providerImageElement.setAttribute('src', 'img/provider_logos/flickr_logo.png');
+        let providerLogoName;
+        for (let i = 0; i < providerLogos.length; i += 1) {
+          if (providerLogos[i].includes(provider)) {
+            providerLogoName = providerLogos[i];
+            break;
+          }
+        }
+        providerImageElement.setAttribute('src', `img/provider_logos/${providerLogoName}`);
         providerImageElement.setAttribute('class', 'provider-image');
 
         foreignLandingLinkElement.appendChild(providerImageElement);
