@@ -94,6 +94,7 @@ searchIcon.addEventListener('click', () => {
         // make a span to hold the title
         const spanTitleElement = document.createElement('span');
         spanTitleElement.setAttribute('class', 'image-title');
+        spanTitleElement.setAttribute('title', title);
         const imageTitleNode = document.createTextNode(title);
 
         const foreignLandingLinkElement = document.createElement('a');
@@ -128,6 +129,7 @@ searchIcon.addEventListener('click', () => {
           `https://creativecommons.org/licenses/${license}/2.0/`,
         );
         licenseLinkElement.setAttribute('target', '_blank'); // open link in new tab
+        licenseLinkElement.setAttribute('title', license); // open link in new tab
 
         // Array to hold license image elements
         const licenseIconElementsArray = [];
