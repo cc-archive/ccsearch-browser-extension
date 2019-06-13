@@ -131,14 +131,14 @@ searchIcon.addEventListener('click', () => {
 
         // Add the default cc icon
         let licenseIconElement = document.createElement('img');
-        licenseIconElement.setAttribute('src', 'img/cc_icon.svg');
+        licenseIconElement.setAttribute('src', 'img/license_logos/cc_icon.svg');
         licenseIconElement.setAttribute('alt', 'cc_icon');
         licenseIconElementsArray.push(licenseIconElement);
 
         // make and push license image elements
         licenseArray.forEach((name) => {
           licenseIconElement = document.createElement('img');
-          licenseIconElement.setAttribute('src', `img/cc-${name}_icon.svg`);
+          licenseIconElement.setAttribute('src', `img/license_logos/cc-${name}_icon.svg`);
           licenseIconElement.setAttribute('alt', `cc-${name}_icon`);
           licenseIconElementsArray.push(licenseIconElement);
         });
