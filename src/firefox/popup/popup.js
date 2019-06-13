@@ -41,11 +41,13 @@ searchIcon.addEventListener('click', () => {
       thirdImgCol.innerHTML = '';
 
       let count = 1;
+
       resultArray.forEach((element) => {
         const thumbnail = element.thumbnail ? element.thumbnail : element.url;
         const title = unicodeToString(element.title);
         const { license } = element;
         const licenseArray = license.split('-'); // split license in individual characteristics
+        const foreignLandingUrl = element.foreign_landing_url;
 
         // remove initial content
         const sectionContentParagraph = document.querySelector('.section-content p');
@@ -60,7 +62,21 @@ searchIcon.addEventListener('click', () => {
         // make a span to hold the title
         const spanTitleElement = document.createElement('span');
         spanTitleElement.setAttribute('class', 'image-title');
-        spanTitleElement.textContent = title;
+        const imageTitleNode = document.createTextNode(title);
+
+        const foreignLandingLinkElement = document.createElement('a');
+        foreignLandingLinkElement.setAttribute('href', foreignLandingUrl);
+        foreignLandingLinkElement.setAttribute('target', '_blank');
+        foreignLandingLinkElement.setAttribute('class', 'foreign-landing-url');
+
+        const providerImageElement = document.createElement('img');
+        providerImageElement.setAttribute('src', 'img/provider_logos/flickr_logo.png');
+        providerImageElement.setAttribute('class', 'provider-image');
+
+        foreignLandingLinkElement.appendChild(providerImageElement);
+        foreignLandingLinkElement.appendChild(imageTitleNode);
+
+        spanTitleElement.appendChild(foreignLandingLinkElement);
 
         // make a span to hold the license icons
         const spanLicenseElement = document.createElement('span');

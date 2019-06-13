@@ -43,6 +43,7 @@
         rgba($color-black, 0.5)
       );
       transition: all 0.5s;
+      backface-visibility: hidden;
       opacity: 0;
     }
     &:hover {
@@ -68,6 +69,7 @@
 
     .image-title {
       transition: all 0.7s;
+      backface-visibility: hidden;
       position: absolute;
       bottom: 5px;
       left: 5px;
@@ -75,16 +77,34 @@
       font-size: 13px;
       font-weight: 700;
       width: 90%;
-      // height: 15px;
       opacity: 0;
       z-index: 3;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      vertical-align: middle;
+
+      .foreign-landing-url {
+        text-decoration: none;
+        color: $color-white;
+
+        &:hover {
+          text-decoration: underline;
+        }
+
+        .provider-image {
+          vertical-align: middle;
+          max-height: 30px;
+          max-width: 40px;
+          margin-right: 5px;
+          padding-bottom: 3px;
+        }
+      }
     }
 
     .image-license {
       transition: all 0.6s;
+      backface-visibility: hidden;
       position: absolute;
       top: 5px;
       left: 5px;
