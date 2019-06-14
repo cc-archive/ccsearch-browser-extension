@@ -2,7 +2,7 @@
   padding-top: 10%;
 
   p {
-    min-height: 300px;
+    min-height: 30rem;
     width: 90%;
     margin: 0 auto;
     text-align: center;
@@ -19,8 +19,8 @@
     position: relative;
     backface-visibility: hidden;
     transition: all 0.5s;
-    box-shadow: 0 5px 10px rgba($color-black, 0.15);
-    margin-bottom: 7px;
+    box-shadow: 0 0.5rem 1rem rgba($color-black, 0.15);
+    margin-bottom: 0.7rem;
 
     & > img {
       width: 100%;
@@ -48,7 +48,7 @@
     }
     &:hover {
       transform: scale(1.05);
-      box-shadow: 0 7.5px 15px rgba($color-black, 0.3);
+      box-shadow: 0 0.75rem 1.5rem rgba($color-black, 0.3);
 
       &:after {
         opacity: 1;
@@ -71,10 +71,10 @@
       transition: all 0.7s;
       backface-visibility: hidden;
       position: absolute;
-      bottom: 5px;
-      left: 5px;
+      bottom: 0.5rem;
+      left: 0.5rem;
       color: $color-white;
-      font-size: 13px;
+      font-size: 1.3rem;
       font-weight: 700;
       width: 90%;
       opacity: 0;
@@ -94,10 +94,10 @@
 
         .provider-image {
           vertical-align: middle;
-          max-height: 30px;
-          max-width: 40px;
-          margin-right: 5px;
-          padding-bottom: 3px;
+          max-height: 3rem;
+          max-width: 4rem;
+          margin-right: 0.5rem;
+          padding-bottom: 0.3rem;
         }
       }
     }
@@ -106,13 +106,13 @@
       transition: all 0.6s;
       backface-visibility: hidden;
       position: absolute;
-      top: 5px;
-      left: 5px;
+      top: 0.5rem;
+      left: 0.5rem;
       display: block;
       width: 100%;
       opacity: 0;
       z-index: 3;
-      height: 20px;
+      height: 2rem;
 
       a {
         display: block;

@@ -4,8 +4,12 @@
   box-sizing: border-box;
 }
 
+html {
+  font-size: 62.5%; // this defines what 1 rem is.
+}
+
 body {
   background-color: $color-white;
-  width: 640px;
+  width: 64rem;
   overflow-x: hidden;
 }
