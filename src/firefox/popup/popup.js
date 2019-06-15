@@ -1,5 +1,6 @@
 const inputField = document.getElementById('section-search-input');
 const searchIcon = document.getElementById('search-icon');
+const filterIcon = document.getElementById('filter-icon');
 const errorMessage = document.getElementById('error-message');
 
 // Activate the click event on pressing enter.
@@ -7,6 +8,12 @@ inputField.addEventListener('keydown', (event) => {
   if (event.keyCode === 13) {
     searchIcon.click();
   }
+});
+
+filterIcon.addEventListener('click', () => {
+  const filterSection = document.querySelector('.section-filter');
+  console.log(filterSection);
+  filterSection.classList.toggle('section-filter--active');
 });
 
 // convert Unicode sequence To String. credit: https://stackoverflow.com/a/22021709/10425980
