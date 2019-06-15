@@ -29,6 +29,10 @@
     color: $secondary-color-light;
     font-size: 170%;
 
+    &#filter-icon {
+      right: 10%;
+    }
+
     &:hover {
       color: $secondary-color-dark;
       cursor: pointer;
