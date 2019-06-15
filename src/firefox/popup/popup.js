@@ -52,6 +52,19 @@ searchIcon.addEventListener('click', () => {
 
       let count = 1;
 
+      // remove initial content
+      const sectionContentParagraph = document.querySelector('.section-content p');
+      if (sectionContentParagraph) {
+        sectionContentParagraph.parentNode.removeChild(sectionContentParagraph);
+      }
+
+      if (resultArray.length === 0) {
+        const sectionContent = document.querySelector('.section-content');
+        const noResultFoundPara = document.createElement('p');
+        noResultFoundPara.textContent = 'No result Found. Please try a different search query.';
+        sectionContent.appendChild(noResultFoundPara);
+      }
+
       // all the provider logo image file names
       const providerLogos = [
         '500px_logo.png',
@@ -87,12 +100,6 @@ searchIcon.addEventListener('click', () => {
         const licenseArray = license.split('-'); // split license in individual characteristics
         const foreignLandingUrl = element.foreign_landing_url;
         const { provider } = element;
-
-        // remove initial content
-        const sectionContentParagraph = document.querySelector('.section-content p');
-        if (sectionContentParagraph) {
-          sectionContentParagraph.parentNode.removeChild(sectionContentParagraph);
-        }
 
         // make an image element
         const imgElement = document.createElement('img');
