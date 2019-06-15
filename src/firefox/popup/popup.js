@@ -29,6 +29,7 @@ searchIcon.addEventListener('click', () => {
 
   if (inputText === '') {
     errorMessage.textContent = 'Please enter a search query';
+    throw new Error('Please enter a search query');
   } else {
     errorMessage.textContent = '';
   }
