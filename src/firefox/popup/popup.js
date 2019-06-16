@@ -2,6 +2,7 @@ const inputField = document.getElementById('section-search-input');
 const searchIcon = document.getElementById('search-icon');
 const filterIcon = document.getElementById('filter-icon');
 const errorMessage = document.getElementById('error-message');
+const spinner = document.getElementById('spinner');
 
 // Activate the click event on pressing enter.
 inputField.addEventListener('keydown', (event) => {
@@ -34,30 +35,38 @@ searchIcon.addEventListener('click', () => {
     errorMessage.textContent = '';
   }
 
+  // remove initial content
+  const sectionContentParagraph = document.querySelector('.section-content p');
+  if (sectionContentParagraph) {
+    sectionContentParagraph.parentNode.removeChild(sectionContentParagraph);
+  }
+
+  // remove old images for a new search
+  const firstImgCol = document.querySelector('.section-content .first-col .images');
+  const secondImgCol = document.querySelector('.section-content .second-col .images');
+  const thirdImgCol = document.querySelector('.section-content .third-col .images');
+
+  firstImgCol.innerHTML = '';
+  secondImgCol.innerHTML = '';
+  thirdImgCol.innerHTML = '';
+
+  // enable spinner
+  spinner.classList.add('spinner');
+
   const url = `https://api.creativecommons.engineering/image/search?q=${inputText}&pagesize=50`;
 
   fetch(url)
+    .finally(() => {
+      // removes spinner even if promise is not resolved
+      spinner.classList.remove('spinner');
+    })
+
     .then(data => data.json())
     .then((res) => {
       const resultArray = res.results;
       console.log(resultArray);
 
-      // remove old images for a new search
-      const firstImgCol = document.querySelector('.section-content .first-col .images');
-      const secondImgCol = document.querySelector('.section-content .second-col .images');
-      const thirdImgCol = document.querySelector('.section-content .third-col .images');
-
-      firstImgCol.innerHTML = '';
-      secondImgCol.innerHTML = '';
-      thirdImgCol.innerHTML = '';
-
       let count = 1;
-
-      // remove initial content
-      const sectionContentParagraph = document.querySelector('.section-content p');
-      if (sectionContentParagraph) {
-        sectionContentParagraph.parentNode.removeChild(sectionContentParagraph);
-      }
 
       if (resultArray.length === 0) {
         const sectionContent = document.querySelector('.section-content');
