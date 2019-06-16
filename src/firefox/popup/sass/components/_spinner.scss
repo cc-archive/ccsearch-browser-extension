@@ -1,0 +1,33 @@
+// credit: https://github.com/tobiasahlin/SpinKit
+.spinner {
+  width: $spinner-size;
+  height: $spinner-size;
+  position: relative;
+  margin: $spinner-margin;
+
+  .sk-child {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: $spinner-color;
+    opacity: 0.6;
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: sk-doubleBounce 2s infinite ease-in-out;
+  }
+
+  .sk-double-bounce2 {
+    animation-delay: -1s;
+  }
+}
+
+@keyframes sk-doubleBounce {
+  0%,
+  100% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1);
+  }
+}
