@@ -3,6 +3,10 @@ const searchIcon = document.getElementById('search-icon');
 const filterIcon = document.getElementById('filter-icon');
 const errorMessage = document.getElementById('error-message');
 const spinner = document.getElementById('spinner');
+const usecaseChooser = document.querySelector('#choose-usecase');
+const licenseChooser = document.querySelector('#choose-license');
+const providerChooser = document.querySelector('#choose-provider');
+const filterResetButton = document.querySelector('.section-filter--reset-button');
 
 // Activate the click event on pressing enter.
 inputField.addEventListener('keydown', (event) => {
@@ -15,6 +19,13 @@ filterIcon.addEventListener('click', () => {
   const filterSection = document.querySelector('.section-filter');
   console.log(filterSection);
   filterSection.classList.toggle('section-filter--active');
+});
+
+filterResetButton.addEventListener('click', () => {
+  // reset values
+  usecaseChooser.value = '';
+  licenseChooser.value = '';
+  providerChooser.value = '';
 });
 
 // convert Unicode sequence To String. credit: https://stackoverflow.com/a/22021709/10425980
