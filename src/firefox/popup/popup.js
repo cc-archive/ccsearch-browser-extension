@@ -12,6 +12,7 @@ const filterApplyButton = document.querySelector('.section-filter--apply-button'
 
 // List to hold selected providers
 let provider = [];
+let licenseAPIQueryStringsList = [];
 
 // Activate the click event on pressing enter.
 inputField.addEventListener('keydown', (event) => {
@@ -34,7 +35,7 @@ filterResetButton.addEventListener('click', () => {
   // TODO: make a fresh search and reset all datastrucutes
 });
 
-// object to map user applied filter to valid API query string
+// object to map user applied Provider filter to valid API query string
 const providerAPIQueryStrings = {
   'Animal Diversity Web': 'animaldiversity',
   'Brooklyn Museum': 'brooklynmuseum',
@@ -56,8 +57,21 @@ const providerAPIQueryStrings = {
   'World Register of Marine Species': 'WoRMS',
 };
 
+// object to map user applied License filter to valid API query string
+const licenseAPIQueryStrings = {
+  CC0: 'CC0',
+  'Public Domain Mark': 'PDM',
+  BY: 'BY',
+  'BY-SA': 'BY-SA',
+  'BY-NC': 'BY-NC',
+  'BY-ND': 'BY-ND',
+  'BY-NC-SA': 'BY-NC-SA',
+  'BY-NC-ND': 'BY-NC-ND',
+};
+
 function resetFilterDataStructures() {
   provider = [];
+  licenseAPIQueryStringsList = [];
 }
 
 filterApplyButton.addEventListener('click', () => {
@@ -67,6 +81,15 @@ filterApplyButton.addEventListener('click', () => {
     userInputProvidersList.forEach((element) => {
       provider.push(providerAPIQueryStrings[element]);
     });
+  }
+
+  if (licenseChooser.value) {
+    const userInputLicensesList = licenseChooser.value.split(', ');
+    userInputLicensesList.forEach((element) => {
+      console.log(element);
+      licenseAPIQueryStringsList.push(licenseAPIQueryStrings[element]);
+    });
+    console.log(licenseAPIQueryStringsList);
   }
   searchIcon.click();
 });
@@ -108,10 +131,8 @@ searchIcon.addEventListener('click', () => {
   spinner.classList.add('spinner');
 
   console.log(provider);
-  const url = `https://api.creativecommons.engineering/image/search?q=${inputText}&pagesize=50&provider=${provider}`;
+  const url = `https://api.creativecommons.engineering/image/search?q=${inputText}&pagesize=50&li=${licenseAPIQueryStringsList}&provider=${provider}`;
   console.log(url);
-
-  resetFilterDataStructures();
 
   fetch(url)
     .finally(() => {
