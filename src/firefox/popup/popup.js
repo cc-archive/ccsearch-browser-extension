@@ -201,66 +201,138 @@ searchIcon.addEventListener('click', () => {
 });
 
 // test data
-const myData = [
+const licensesList = [
   {
     id: 0,
-    title: 'Item 1 ',
+    title: 'CC0',
   },
   {
     id: 1,
-    title: 'Item 3',
+    title: 'Public Domain Mark',
   },
   {
     id: 2,
-    title: 'Item 3',
+    title: 'BY',
   },
   {
     id: 3,
-    title: 'Item 3',
+    title: 'BY-SA',
   },
   {
     id: 4,
-    title: 'Item 3',
+    title: 'BY-NC',
   },
   {
     id: 5,
-    title: 'Item 3',
+    title: 'BY-ND',
   },
   {
     id: 6,
-    title: 'Item 3',
+    title: 'BY-NC-SA',
   },
-
   {
     id: 7,
-    title: 'Item 3',
+    title: 'BY-NC-ND',
+  },
+];
+
+const providersList = [
+  {
+    id: 0,
+    title: 'Animal Diversity Web',
   },
   {
-    id: 8,
-    title: 'Item 3',
-  },
-  {
-    id: 9,
-    title: 'Item 3',
+    id: 1,
+    title: 'Bēhance',
   },
   {
     id: 2,
-    title: 'Item 3',
+    title: 'Brooklyn Museum',
   },
-  // more data here
+  {
+    id: 3,
+    title: 'Culturally Authentic Pictorial Lexicon',
+  },
+  {
+    id: 4,
+    title: 'Cleveland Museum Of Art',
+  },
+  {
+    id: 5,
+    title: 'DeviantArt',
+  },
+  {
+    id: 6,
+    title: 'Digitalt Museum',
+  },
+  {
+    id: 7,
+    title: 'Flickr',
+  },
+  {
+    id: 8,
+    title: 'Flora-on',
+  },
+  {
+    id: 9,
+    title: 'Geograph Britain and Ireland',
+  },
+  {
+    id: 10,
+    title: 'Metropolitan Museum of Art',
+  },
+  {
+    id: 11,
+    title: 'Museums Victoria',
+  },
+  {
+    id: 12,
+    title: 'Science Museum - UK',
+  },
+  {
+    id: 13,
+    title: 'Rijksmuseum',
+  },
+  {
+    id: 14,
+    title: 'SVG Silh',
+  },
+  {
+    id: 15,
+    title: 'Thingiverse',
+  },
+  {
+    id: 16,
+    title: 'Thorvaldsens Museum',
+  },
+  {
+    id: 17,
+    title: 'World Register of Marine Species',
+  },
+];
+
+const usecasesList = [
+  {
+    id: 0,
+    title: 'I can use commercially',
+  },
+  {
+    id: 1,
+    title: 'I can modify or adapt',
+  },
 ];
 
 $('#choose-usecase').comboTree({
-  source: myData,
+  source: usecasesList,
   isMultiple: true,
 });
 
 $('#choose-license').comboTree({
-  source: myData,
+  source: licensesList,
   isMultiple: true,
 });
 
 $('#choose-provider').comboTree({
-  source: myData,
+  source: providersList,
   isMultiple: true,
 });
