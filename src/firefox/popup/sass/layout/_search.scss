@@ -46,6 +46,24 @@
   display: none;
 
   &--active {
-    display: block;
+    display: flex;
+    align-items: center;
+  }
+
+  &__filter-wrapper {
+    display: inline-block;
+    margin-right: 2rem;
+
+    &--choose-usecase {
+      width: 20rem;
+    }
+
+    &--choose-license {
+      width: 11rem;
+    }
+
+    &--choose-provider {
+      width: 12rem;
+    }
   }
 }

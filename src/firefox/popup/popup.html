@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="popup.css" />
+    <link rel="stylesheet" href="comboTreestyle.css" />
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,300i,400&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <title>Creative Commons</title>
@@ -22,7 +23,17 @@
         <i class="material-icons" id="search-icon">search</i>
         <i class="material-icons" id="filter-icon">filter_list</i>
       </section>
-      <section class="section-filter"></section>
+      <section class="section-filter">
+        <div class="section-filter__filter-wrapper section-filter__filter-wrapper--choose-usecase">
+          <input type="text" id="choose-usecase" placeholder="I want something that I can" />
+        </div>
+        <div class="section-filter__filter-wrapper section-filter__filter-wrapper--choose-license">
+          <input type="text" id="choose-license" placeholder="All licenses" />
+        </div>
+        <div class="section-filter__filter-wrapper section-filter__filter-wrapper--choose-provider">
+          <input type="text" id="choose-provider" placeholder="All Providers" />
+        </div>
+      </section>
       <span id="error-message"></span>
       <section class="section-content">
         <div class="row">
@@ -77,6 +88,8 @@
       </div>
     </footer>
 
+    <script src="jquery.min.js"></script>
+    <script src="comboTreePlugin.js"></script>
     <script src="popup.js"></script>
   </body>
 </html>

@@ -199,3 +199,68 @@ searchIcon.addEventListener('click', () => {
       });
     });
 });
+
+// test data
+const myData = [
+  {
+    id: 0,
+    title: 'Item 1 ',
+  },
+  {
+    id: 1,
+    title: 'Item 3',
+  },
+  {
+    id: 2,
+    title: 'Item 3',
+  },
+  {
+    id: 3,
+    title: 'Item 3',
+  },
+  {
+    id: 4,
+    title: 'Item 3',
+  },
+  {
+    id: 5,
+    title: 'Item 3',
+  },
+  {
+    id: 6,
+    title: 'Item 3',
+  },
+
+  {
+    id: 7,
+    title: 'Item 3',
+  },
+  {
+    id: 8,
+    title: 'Item 3',
+  },
+  {
+    id: 9,
+    title: 'Item 3',
+  },
+  {
+    id: 2,
+    title: 'Item 3',
+  },
+  // more data here
+];
+
+$('#choose-usecase').comboTree({
+  source: myData,
+  isMultiple: true,
+});
+
+$('#choose-license').comboTree({
+  source: myData,
+  isMultiple: true,
+});
+
+$('#choose-provider').comboTree({
+  source: myData,
+  isMultiple: true,
+});
