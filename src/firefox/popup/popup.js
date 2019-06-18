@@ -1,3 +1,4 @@
+// selectors
 const inputField = document.getElementById('section-search-input');
 const searchIcon = document.getElementById('search-icon');
 const filterIcon = document.getElementById('filter-icon');
@@ -7,6 +8,10 @@ const usecaseChooser = document.querySelector('#choose-usecase');
 const licenseChooser = document.querySelector('#choose-license');
 const providerChooser = document.querySelector('#choose-provider');
 const filterResetButton = document.querySelector('.section-filter--reset-button');
+const filterApplyButton = document.querySelector('.section-filter--apply-button');
+
+// List to hold selected providers
+let provider = [];
 
 // Activate the click event on pressing enter.
 inputField.addEventListener('keydown', (event) => {
@@ -26,6 +31,44 @@ filterResetButton.addEventListener('click', () => {
   usecaseChooser.value = '';
   licenseChooser.value = '';
   providerChooser.value = '';
+  // TODO: make a fresh search and reset all datastrucutes
+});
+
+// object to map user applied filter to valid API query string
+const providerAPIQueryStrings = {
+  'Animal Diversity Web': 'animaldiversity',
+  'Brooklyn Museum': 'brooklynmuseum',
+  Bēhance: 'behance',
+  DeviantArt: 'deviantart',
+  'Culturally Authentic Pictorial Lexicon': 'CAPL',
+  'Cleveland Museum Of Art': 'clevelandmuseum',
+  'Digitalt Museum': 'digitaltmuseum',
+  Flickr: 'flickr',
+  'Geograph Britain and Ireland': 'geographorguk',
+  'Flora-on': 'floraon',
+  'Metropolitan Museum of Art': 'met',
+  'Museums Victoria': 'museumsvictoria',
+  'Science Museum - UK': 'sciencemuseum',
+  Rijksmuseum: 'rijksmuseum',
+  'SVG Silh': 'svgsilh',
+  Thingiverse: 'thingiverse',
+  'Thorvaldsens Museum': 'thorvaldsensmuseum',
+  'World Register of Marine Species': 'WoRMS',
+};
+
+function resetFilterDataStructures() {
+  provider = [];
+}
+
+filterApplyButton.addEventListener('click', () => {
+  resetFilterDataStructures();
+  if (providerChooser.value) {
+    const userInputProvidersList = providerChooser.value.split(', ');
+    userInputProvidersList.forEach((element) => {
+      provider.push(providerAPIQueryStrings[element]);
+    });
+  }
+  searchIcon.click();
 });
 
 // convert Unicode sequence To String. credit: https://stackoverflow.com/a/22021709/10425980
@@ -64,7 +107,11 @@ searchIcon.addEventListener('click', () => {
   // enable spinner
   spinner.classList.add('spinner');
 
-  const url = `https://api.creativecommons.engineering/image/search?q=${inputText}&pagesize=50`;
+  console.log(provider);
+  const url = `https://api.creativecommons.engineering/image/search?q=${inputText}&pagesize=50&provider=${provider}`;
+  console.log(url);
+
+  resetFilterDataStructures();
 
   fetch(url)
     .finally(() => {
@@ -211,7 +258,7 @@ searchIcon.addEventListener('click', () => {
     });
 });
 
-// test data
+// license drop down fields
 const licensesList = [
   {
     id: 0,
@@ -247,6 +294,7 @@ const licensesList = [
   },
 ];
 
+// Providers drop down fields
 const providersList = [
   {
     id: 0,
@@ -322,6 +370,7 @@ const providersList = [
   },
 ];
 
+// Use-case drop down fields
 const usecasesList = [
   {
     id: 0,
@@ -333,6 +382,7 @@ const usecasesList = [
   },
 ];
 
+// applying comboTree (see https://github.com/kirlisakal/combo-tree)
 $('#choose-usecase').comboTree({
   source: usecasesList,
   isMultiple: true,
