@@ -73,9 +73,10 @@
     display: inline-block;
     position: absolute;
     right: 0px;
+    bottom: -13px;
     text-decoration: none;
     color: $primary-color-dark;
-    padding: 1px 4px;
+    padding: 0 4px;
     border: 1.5px dotted $primary-color-dark;
     transition: all 0.3s;
     border-radius: 3px;
@@ -83,6 +84,26 @@
     &:hover,
     &:active {
       background-color: $primary-color-dark;
+      color: $color-white;
+    }
+  }
+
+  &--apply-button:link,
+  &--apply-button:visited {
+    display: inline-block;
+    position: absolute;
+    right: 0px;
+    top: 4px;
+    text-decoration: none;
+    color: $secondary-color-dark;
+    padding: 0 4px;
+    border: 1.5px dotted $secondary-color-dark;
+    transition: all 0.3s;
+    border-radius: 3px;
+
+    &:hover,
+    &:active {
+      background-color: $secondary-color-dark;
       color: $color-white;
     }
   }
