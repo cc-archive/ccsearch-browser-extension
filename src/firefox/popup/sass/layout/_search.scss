@@ -44,6 +44,7 @@
   width: 100%;
   height: 5rem;
   display: none;
+  position: relative;
 
   &--active {
     display: flex;
@@ -52,10 +53,10 @@
 
   &__filter-wrapper {
     display: inline-block;
-    margin-right: 2rem;
+    margin-right: 1rem;
 
     &--choose-usecase {
-      width: 20rem;
+      width: 17rem;
     }
 
     &--choose-license {
@@ -63,7 +64,26 @@
     }
 
     &--choose-provider {
-      width: 12rem;
+      width: 20rem;
+    }
+  }
+
+  &--reset-button:link,
+  &--reset-button:visited {
+    display: inline-block;
+    position: absolute;
+    right: 0px;
+    text-decoration: none;
+    color: $primary-color-dark;
+    padding: 1px 4px;
+    border: 1.5px dotted $primary-color-dark;
+    transition: all 0.3s;
+    border-radius: 3px;
+
+    &:hover,
+    &:active {
+      background-color: $primary-color-dark;
+      color: $color-white;
     }
   }
 }
