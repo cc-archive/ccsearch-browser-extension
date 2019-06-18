@@ -11,7 +11,7 @@ const filterResetButton = document.querySelector('.section-filter--reset-button'
 const filterApplyButton = document.querySelector('.section-filter--apply-button');
 
 // List to hold selected providers
-let provider = [];
+let providerAPIQueryStringsList = [];
 let licenseAPIQueryStringsList = [];
 
 // Activate the click event on pressing enter.
@@ -70,7 +70,7 @@ const licenseAPIQueryStrings = {
 };
 
 function resetFilterDataStructures() {
-  provider = [];
+  providerAPIQueryStringsList = [];
   licenseAPIQueryStringsList = [];
 }
 
@@ -79,7 +79,7 @@ filterApplyButton.addEventListener('click', () => {
   if (providerChooser.value) {
     const userInputProvidersList = providerChooser.value.split(', ');
     userInputProvidersList.forEach((element) => {
-      provider.push(providerAPIQueryStrings[element]);
+      providerAPIQueryStringsList.push(providerAPIQueryStrings[element]);
     });
   }
 
@@ -130,8 +130,7 @@ searchIcon.addEventListener('click', () => {
   // enable spinner
   spinner.classList.add('spinner');
 
-  console.log(provider);
-  const url = `https://api.creativecommons.engineering/image/search?q=${inputText}&pagesize=50&li=${licenseAPIQueryStringsList}&provider=${provider}`;
+  const url = `https://api.creativecommons.engineering/image/search?q=${inputText}&pagesize=50&li=${licenseAPIQueryStringsList}&provider=${providerAPIQueryStringsList}`;
   console.log(url);
 
   fetch(url)
