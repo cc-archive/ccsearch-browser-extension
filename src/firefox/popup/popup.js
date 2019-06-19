@@ -119,7 +119,11 @@ filterResetButton.addEventListener('click', () => {
   usecaseChooser.value = '';
   licenseChooser.value = '';
   providerChooser.value = '';
-  // TODO: make a fresh search and reset all datastrucutes
+
+  // clear the datastructures and make a fresh search
+  userSelectedLicensesList = [];
+  userSelectedProvidersList = [];
+  searchIcon.click();
 });
 
 // object to map user applied License filter to valid API query string
