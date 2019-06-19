@@ -7,6 +7,12 @@ const spinner = document.getElementById('spinner');
 const usecaseChooser = document.querySelector('#choose-usecase');
 const licenseChooser = document.querySelector('#choose-license');
 const providerChooser = document.querySelector('#choose-provider');
+const providerChooserWrapper = document.querySelector(
+  '.section-filter__filter-wrapper--choose-provider',
+);
+const providerChooserLoadingMessage = document.querySelector(
+  '.section-filter__provider-loading-mes',
+);
 const filterResetButton = document.querySelector('.section-filter--reset-button');
 const filterApplyButton = document.querySelector('.section-filter--apply-button');
 
@@ -74,6 +80,9 @@ function populateProviderList(providerAPIQuerystrings) {
     source: providersList,
     isMultiple: true,
   });
+
+  providerChooserLoadingMessage.style.display = 'none';
+  providerChooserWrapper.style.display = 'inline-block';
 }
 
 filterIcon.addEventListener('click', () => {
