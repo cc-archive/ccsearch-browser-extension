@@ -10,33 +10,22 @@ const providerChooser = document.querySelector('#choose-provider');
 const filterResetButton = document.querySelector('.section-filter--reset-button');
 const filterApplyButton = document.querySelector('.section-filter--apply-button');
 
-// List to hold selected providers
-let providerAPIQueryStringsList = [];
-let licenseAPIQueryStringsList = [];
+// list to hold Providers to show to the user in dropdown
+// the list must have objects with id and title as properties.
+// see https://github.com/kirlisakal/combo-tree#sample-json-data
+const providersList = [];
 
-// Activate the click event on pressing enter.
-inputField.addEventListener('keydown', (event) => {
-  if (event.keyCode === 13) {
-    searchIcon.click();
-  }
-});
+// List to hold providers selected by the user from the drop down.
+let userSelectedProvidersList = [];
 
-filterIcon.addEventListener('click', () => {
-  const filterSection = document.querySelector('.section-filter');
-  console.log(filterSection);
-  filterSection.classList.toggle('section-filter--active');
-});
+// List to hold user selected licenses
+let userSelectedLicensesList = [];
 
-filterResetButton.addEventListener('click', () => {
-  // reset values
-  usecaseChooser.value = '';
-  licenseChooser.value = '';
-  providerChooser.value = '';
-  // TODO: make a fresh search and reset all datastrucutes
-});
+// object to map Provider display names to valid query names.
+let providerAPIQueryStrings = {};
 
-// object to map user applied Provider filter to valid API query string
-const providerAPIQueryStrings = {
+// bakup object in case we cannot fetch provider names from the API.
+const backupProviderAPIQueryStrings = {
   'Animal Diversity Web': 'animaldiversity',
   'Brooklyn Museum': 'brooklynmuseum',
   Bēhance: 'behance',
@@ -57,6 +46,73 @@ const providerAPIQueryStrings = {
   'World Register of Marine Species': 'WoRMS',
 };
 
+// Activate the click event on pressing enter.
+inputField.addEventListener('keydown', (event) => {
+  if (event.keyCode === 13) {
+    searchIcon.click();
+  }
+});
+
+function isObjectEmpty(obj) {
+  return Object.keys(obj).length === 0 && obj.constructor === Object;
+}
+
+function populateProviderList(providerAPIQuerystrings) {
+  let count = 0;
+  // iterating over provider object
+  Object.keys(providerAPIQuerystrings).forEach((key) => {
+    providersList[count] = {
+      id: count,
+      title: key,
+    };
+    count += 1;
+  });
+
+  console.log(providersList);
+
+  $('#choose-provider').comboTree({
+    source: providersList,
+    isMultiple: true,
+  });
+}
+
+filterIcon.addEventListener('click', () => {
+  const filterSection = document.querySelector('.section-filter');
+  filterSection.classList.toggle('section-filter--active');
+
+  const getProviderURL = 'https://api.creativecommons.engineering/statistics/image';
+
+  console.log(providerAPIQueryStrings);
+
+  if (isObjectEmpty(providerAPIQueryStrings)) {
+    console.log('inside provider fetch');
+    fetch(getProviderURL)
+      .then(data => data.json())
+      .then((res) => {
+        console.log(res);
+        res.forEach((provider) => {
+          providerAPIQueryStrings[provider.display_name] = provider.provider_name;
+        });
+        console.log(providerAPIQueryStrings);
+        populateProviderList(providerAPIQueryStrings);
+      })
+      .catch((error) => {
+        console.log(error);
+        console.log('in catch block');
+        providerAPIQueryStrings = backupProviderAPIQueryStrings;
+        populateProviderList(providerAPIQueryStrings);
+      });
+  }
+});
+
+filterResetButton.addEventListener('click', () => {
+  // reset values
+  usecaseChooser.value = '';
+  licenseChooser.value = '';
+  providerChooser.value = '';
+  // TODO: make a fresh search and reset all datastrucutes
+});
+
 // object to map user applied License filter to valid API query string
 const licenseAPIQueryStrings = {
   CC0: 'CC0',
@@ -70,8 +126,8 @@ const licenseAPIQueryStrings = {
 };
 
 function resetFilterDataStructures() {
-  providerAPIQueryStringsList = [];
-  licenseAPIQueryStringsList = [];
+  userSelectedProvidersList = [];
+  userSelectedLicensesList = [];
 }
 
 filterApplyButton.addEventListener('click', () => {
@@ -79,7 +135,7 @@ filterApplyButton.addEventListener('click', () => {
   if (providerChooser.value) {
     const userInputProvidersList = providerChooser.value.split(', ');
     userInputProvidersList.forEach((element) => {
-      providerAPIQueryStringsList.push(providerAPIQueryStrings[element]);
+      userSelectedProvidersList.push(providerAPIQueryStrings[element]);
     });
   }
 
@@ -87,9 +143,9 @@ filterApplyButton.addEventListener('click', () => {
     const userInputLicensesList = licenseChooser.value.split(', ');
     userInputLicensesList.forEach((element) => {
       console.log(element);
-      licenseAPIQueryStringsList.push(licenseAPIQueryStrings[element]);
+      userSelectedLicensesList.push(licenseAPIQueryStrings[element]);
     });
-    console.log(licenseAPIQueryStringsList);
+    console.log(userSelectedLicensesList);
   }
   searchIcon.click();
 });
@@ -130,7 +186,7 @@ searchIcon.addEventListener('click', () => {
   // enable spinner
   spinner.classList.add('spinner');
 
-  const url = `https://api.creativecommons.engineering/image/search?q=${inputText}&pagesize=50&li=${licenseAPIQueryStringsList}&provider=${providerAPIQueryStringsList}`;
+  const url = `https://api.creativecommons.engineering/image/search?q=${inputText}&pagesize=50&li=${userSelectedLicensesList}&provider=${userSelectedProvidersList}`;
   console.log(url);
 
   fetch(url)
@@ -314,82 +370,6 @@ const licensesList = [
   },
 ];
 
-// Providers drop down fields
-const providersList = [
-  {
-    id: 0,
-    title: 'Animal Diversity Web',
-  },
-  {
-    id: 1,
-    title: 'Bēhance',
-  },
-  {
-    id: 2,
-    title: 'Brooklyn Museum',
-  },
-  {
-    id: 3,
-    title: 'Culturally Authentic Pictorial Lexicon',
-  },
-  {
-    id: 4,
-    title: 'Cleveland Museum Of Art',
-  },
-  {
-    id: 5,
-    title: 'DeviantArt',
-  },
-  {
-    id: 6,
-    title: 'Digitalt Museum',
-  },
-  {
-    id: 7,
-    title: 'Flickr',
-  },
-  {
-    id: 8,
-    title: 'Flora-on',
-  },
-  {
-    id: 9,
-    title: 'Geograph Britain and Ireland',
-  },
-  {
-    id: 10,
-    title: 'Metropolitan Museum of Art',
-  },
-  {
-    id: 11,
-    title: 'Museums Victoria',
-  },
-  {
-    id: 12,
-    title: 'Science Museum - UK',
-  },
-  {
-    id: 13,
-    title: 'Rijksmuseum',
-  },
-  {
-    id: 14,
-    title: 'SVG Silh',
-  },
-  {
-    id: 15,
-    title: 'Thingiverse',
-  },
-  {
-    id: 16,
-    title: 'Thorvaldsens Museum',
-  },
-  {
-    id: 17,
-    title: 'World Register of Marine Species',
-  },
-];
-
 // Use-case drop down fields
 const usecasesList = [
   {
@@ -413,7 +393,7 @@ $('#choose-license').comboTree({
   isMultiple: true,
 });
 
-$('#choose-provider').comboTree({
-  source: providersList,
-  isMultiple: true,
-});
+// $('#choose-provider').comboTree({
+//   source: providersList,
+//   isMultiple: true,
+// });
