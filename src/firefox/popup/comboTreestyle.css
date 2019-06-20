@@ -92,6 +92,11 @@ span.comboTreeItemTitle {
   text-shadow: 0 0 0 #2196f3;
 }
 
+/* To show grey placeholder on firefox. using black because the color is lightened by default */
+.comboTreeInputBox::placeholder {
+  color: black;
+}
+
 .comboTreeArrowBtnImg {
   font-size: 10px;
 }
