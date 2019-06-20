@@ -7,6 +7,12 @@ const spinner = document.getElementById('spinner');
 const usecaseChooser = document.querySelector('#choose-usecase');
 const licenseChooser = document.querySelector('#choose-license');
 const providerChooser = document.querySelector('#choose-provider');
+const licenseChooserWrapper = document.querySelector(
+  '.section-filter__filter-wrapper--choose-license',
+);
+const usecaseChooserWrapper = document.querySelector(
+  '.section-filter__filter-wrapper--choose-usecase',
+);
 const providerChooserWrapper = document.querySelector(
   '.section-filter__filter-wrapper--choose-provider',
 );
@@ -119,6 +125,24 @@ filterResetButton.addEventListener('click', () => {
   usecaseChooser.value = '';
   licenseChooser.value = '';
   providerChooser.value = '';
+
+  // array of dropdown container elements
+  const dropdownElementsList = [
+    providerChooserWrapper,
+    licenseChooserWrapper,
+    usecaseChooserWrapper,
+  ];
+
+  dropdownElementsList.forEach((dropdown) => {
+    const dropdownContainer = dropdown.querySelector('.comboTreeDropDownContainer');
+    const inputCheckboxes = dropdownContainer.getElementsByTagName('input');
+    // unchecking all the options
+    for (let i = 0; i < inputCheckboxes.length; i += 1) {
+      inputCheckboxes[i].checked = false;
+    }
+  });
+
+  // usecaseChooser.parentNode.removeChild(usecaseChooser);
 
   // clear the datastructures and make a fresh search
   userSelectedLicensesList = [];
