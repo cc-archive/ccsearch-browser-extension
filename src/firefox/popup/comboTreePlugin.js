@@ -1,3 +1,4 @@
+/* comboTree (see https://github.com/kirlisakal/combo-tree) with some changes */
 /*!
  * jQuery ComboTree Plugin
  * Author:  Erhan FIRAT
