@@ -138,7 +138,10 @@ filterResetButton.addEventListener('click', () => {
     const inputCheckboxes = dropdownContainer.getElementsByTagName('input');
     // unchecking all the options
     for (let i = 0; i < inputCheckboxes.length; i += 1) {
-      inputCheckboxes[i].checked = false;
+      // using click to uncheck the box as setting checked=false also works visually
+      if (inputCheckboxes[i].checked) {
+        inputCheckboxes[i].click();
+      }
     }
   });
 
@@ -148,6 +151,8 @@ filterResetButton.addEventListener('click', () => {
   userSelectedLicensesList = [];
   userSelectedProvidersList = [];
   searchIcon.click();
+  console.log(userSelectedLicensesList);
+  console.log(userSelectedProvidersList);
 });
 
 // object to map user applied License filter to valid API query string
