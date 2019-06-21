@@ -12,12 +12,12 @@
     font-size: 130%;
     background: $color-white;
     padding: 2%;
-    border: 1.2px solid $primary-color-light;
+    border: 1.2px solid $color-primary-light;
     transition: all 0.3s ease-in-out;
 
     &:focus {
-      box-shadow: 0 0 0.5rem $primary-color-dark;
-      border: 1.2px solid $primary-color-dark;
+      box-shadow: 0 0 0.5rem $color-primary-dark;
+      border: 1.2px solid $color-primary-dark;
     }
   }
 
@@ -26,7 +26,7 @@
     right: 3%;
     top: 50%;
     transform: translateY(-50%);
-    color: $secondary-color-light;
+    color: $color-secondary-light;
     font-size: 170%;
 
     &#filter-icon {
@@ -34,7 +34,7 @@
     }
 
     &:hover {
-      color: $secondary-color-dark;
+      color: $color-secondary-dark;
       cursor: pointer;
     }
   }
@@ -81,15 +81,15 @@
     right: 0px;
     bottom: -13px;
     text-decoration: none;
-    color: $secondary-color-dark;
+    color: $color-secondary-dark;
     padding: 0 4px;
-    border: 1.5px dotted $secondary-color-dark;
+    border: 1.5px dotted $color-secondary-dark;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
     transition: all 0.3s;
     border-radius: 2px;
 
     &:hover {
-      background-color: $secondary-color-dark;
+      background-color: $color-secondary-dark;
       color: $color-white;
     }
 
@@ -106,16 +106,16 @@
     right: 0px;
     top: 4px;
     text-decoration: none;
-    background-color: $primary-color-dark;
+    background-color: $color-primary-dark;
     color: $color-white;
     padding: 0 4px;
-    border: 1.5px dotted $primary-color-dark;
+    border: 1.5px dotted $color-primary-dark;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     transition: all 0.3s;
     border-radius: 2px;
 
     &:hover {
-      background-color: darken($primary-color-dark, 10);
+      background-color: darken($color-primary-dark, 10);
     }
 
     &:active {
