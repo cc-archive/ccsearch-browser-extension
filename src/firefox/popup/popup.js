@@ -180,6 +180,7 @@ function resetFilterDataStructures() {
   userSelectedUseCaseList = [];
 }
 
+// block to disable license dropdown, when atleast one of use-case checkboxes are checked
 useCaseChooserWrapper.addEventListener(
   'click',
   (event) => {
@@ -188,51 +189,38 @@ useCaseChooserWrapper.addEventListener(
       '.comboTreeDropDownContainer',
     );
     const inputCheckboxes = useCaseDropDownContainer.getElementsByTagName('input');
-    // unchecking all the options
 
-    // console.log(event.target.querySelector('input'));
-    // console.log(event.target.querySelector('input').checked);
     let flag = 0;
-    console.log(event.target);
     if (event.target.classList.contains('comboTreeItemTitle')) {
+      // only checking checkbox elements
       if (!event.target.querySelector('input').checked) {
-        console.log('disable it');
+        // if the clicked checkbox is unchecked
+        licenseChooser.disabled = true; // disable the license dropdown (as atleast one checkbox is checked)
         flag = 1;
       }
     }
     for (let i = 0; i < inputCheckboxes.length; i += 1) {
+      // iterating all the checkboxes of use-case dropdown
       if (inputCheckboxes[i] !== event.target.querySelector('input')) {
+        // excluding the current checkbox
         if (inputCheckboxes[i].checked) {
-          // console.log('yes atleast one is checked');
-          console.log('disable it');
+          // if atleast one checkbox is checked, disable the license dropdown
+          licenseChooser.disabled = true;
           flag = 1;
         }
       }
     }
     if (!flag) {
-      console.log('if disabled, then enable it');
+      // if none of the checkbox is checked
+      if (licenseChooser.disabled) {
+        // enable the license dropdown if it is not already.
+        licenseChooser.disabled = false;
+      }
     }
   },
-  true,
+  true, // needed to make the event trigger during capturing phase
+  // (https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#Parameters)
 );
-
-// licenseChooser.addEventListener('click', (event) => {
-//   if (useCaseChooser.value) {
-//     console.log('there is a value');
-//     // stop another click event to trigger, therefore not open the dropdown.
-//     event.stopImmediatePropagation();
-//   }
-// });
-
-// licenseChooser.addEventListener('click', (event) => {
-//   console.log(event.detail);
-//   const licenseWrapper = licenseChooserWrapper.childNodes;
-//   console.log(licenseWrapper);
-// });
-
-// licenseChooserWrapper.addEventListener('click', (event) => {
-//   console.log(event);
-// });
 
 filterApplyButton.addEventListener('click', () => {
   resetFilterDataStructures();
