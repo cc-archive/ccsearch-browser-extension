@@ -123,6 +123,7 @@ filterIcon.addEventListener('click', () => {
   }
 });
 
+// TODO: divide the steps into functions
 filterResetButton.addEventListener('click', () => {
   // reset values
   useCaseChooser.value = '';
@@ -157,6 +158,22 @@ filterResetButton.addEventListener('click', () => {
   console.log(userSelectedProvidersList);
 });
 
+function resetLicenseDropDown() {
+  licenseChooser.value = '';
+
+  const dropdownContainer = licenseChooserWrapper.querySelector('.comboTreeDropDownContainer');
+  const inputCheckboxes = dropdownContainer.getElementsByTagName('input');
+  // unchecking all the options
+  for (let i = 0; i < inputCheckboxes.length; i += 1) {
+    // using click to uncheck the box as setting checked=false also works visually
+    if (inputCheckboxes[i].checked) {
+      inputCheckboxes[i].click();
+    }
+  }
+
+  // clear the datastructures and make a fresh search
+  userSelectedLicensesList = [];
+}
 // object to map user applied License filter to valid API query string
 const licenseAPIQueryStrings = {
   CC0: 'CC0',
@@ -195,6 +212,7 @@ useCaseChooserWrapper.addEventListener(
       // only checking checkbox elements
       if (!event.target.querySelector('input').checked) {
         // if the clicked checkbox is unchecked
+        resetLicenseDropDown();
         licenseChooser.disabled = true; // disable the license dropdown (as atleast one checkbox is checked)
         flag = 1;
       }
@@ -205,6 +223,7 @@ useCaseChooserWrapper.addEventListener(
         // excluding the current checkbox
         if (inputCheckboxes[i].checked) {
           // if atleast one checkbox is checked, disable the license dropdown
+          resetLicenseDropDown();
           licenseChooser.disabled = true;
           flag = 1;
         }
