@@ -125,7 +125,7 @@ filterIcon.addEventListener('click', () => {
 
 filterResetButton.addEventListener('click', () => {
   // reset values
-  usecaseChooser.value = '';
+  useCaseChooser.value = '';
   licenseChooser.value = '';
   providerChooser.value = '';
 
@@ -133,7 +133,7 @@ filterResetButton.addEventListener('click', () => {
   const dropdownElementsList = [
     providerChooserWrapper,
     licenseChooserWrapper,
-    usecaseChooserWrapper,
+    useCaseChooserWrapper,
   ];
 
   dropdownElementsList.forEach((dropdown) => {
@@ -148,11 +148,10 @@ filterResetButton.addEventListener('click', () => {
     }
   });
 
-  // usecaseChooser.parentNode.removeChild(usecaseChooser);
-
   // clear the datastructures and make a fresh search
   userSelectedLicensesList = [];
   userSelectedProvidersList = [];
+  userSelectedUseCaseList = [];
   searchIcon.click();
   console.log(userSelectedLicensesList);
   console.log(userSelectedProvidersList);
