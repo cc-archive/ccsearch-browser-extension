@@ -4,13 +4,13 @@ const searchIcon = document.getElementById('search-icon');
 const filterIcon = document.getElementById('filter-icon');
 const errorMessage = document.getElementById('error-message');
 const spinner = document.getElementById('spinner');
-const usecaseChooser = document.querySelector('#choose-usecase');
+const useCaseChooser = document.querySelector('#choose-usecase');
 const licenseChooser = document.querySelector('#choose-license');
 const providerChooser = document.querySelector('#choose-provider');
 const licenseChooserWrapper = document.querySelector(
   '.section-filter__filter-wrapper--choose-license',
 );
-const usecaseChooserWrapper = document.querySelector(
+const useCaseChooserWrapper = document.querySelector(
   '.section-filter__filter-wrapper--choose-usecase',
 );
 const providerChooserWrapper = document.querySelector(
@@ -32,6 +32,9 @@ let userSelectedProvidersList = [];
 
 // List to hold user selected licenses
 let userSelectedLicensesList = [];
+
+// List to hold user selected use case
+let userSelectedUseCaseList = [];
 
 // object to map Provider display names to valid query names.
 let providerAPIQueryStrings = {};
@@ -167,6 +170,11 @@ const licenseAPIQueryStrings = {
   'BY-NC-ND': 'BY-NC-ND',
 };
 
+const useCaseAPIQueryStrings = {
+  'I can use commercially': 'commercial',
+  'I can modify or adapt': 'modification',
+};
+
 function resetFilterDataStructures() {
   userSelectedProvidersList = [];
   userSelectedLicensesList = [];
@@ -188,6 +196,15 @@ filterApplyButton.addEventListener('click', () => {
       userSelectedLicensesList.push(licenseAPIQueryStrings[element]);
     });
     console.log(userSelectedLicensesList);
+  }
+
+  if (useCaseChooser.value) {
+    const userInputUseCaseList = useCaseChooser.value.split(', ');
+    userInputUseCaseList.forEach((element) => {
+      console.log(element);
+      userSelectedUseCaseList.push(useCaseAPIQueryStrings[element]);
+    });
+    console.log(userSelectedUseCaseList);
   }
   searchIcon.click();
 });
@@ -228,7 +245,14 @@ searchIcon.addEventListener('click', () => {
   // enable spinner
   spinner.classList.add('spinner');
 
-  const url = `https://api.creativecommons.engineering/image/search?q=${inputText}&pagesize=50&li=${userSelectedLicensesList}&provider=${userSelectedProvidersList}`;
+  let url;
+
+  if (userSelectedUseCaseList.length > 0) {
+    url = `https://api.creativecommons.engineering/image/search?q=${inputText}&pagesize=50&lt=${userSelectedUseCaseList}`;
+  } else {
+    url = `https://api.creativecommons.engineering/image/search?q=${inputText}&pagesize=50&li=${userSelectedLicensesList}&provider=${userSelectedProvidersList}`;
+  }
+
   console.log(url);
 
   fetch(url)
