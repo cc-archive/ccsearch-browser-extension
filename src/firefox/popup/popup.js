@@ -177,7 +177,62 @@ const useCaseAPIQueryStrings = {
 function resetFilterDataStructures() {
   userSelectedProvidersList = [];
   userSelectedLicensesList = [];
+  userSelectedUseCaseList = [];
 }
+
+useCaseChooserWrapper.addEventListener(
+  'click',
+  (event) => {
+    console.log('capture event occured');
+    const useCaseDropDownContainer = useCaseChooserWrapper.querySelector(
+      '.comboTreeDropDownContainer',
+    );
+    const inputCheckboxes = useCaseDropDownContainer.getElementsByTagName('input');
+    // unchecking all the options
+
+    // console.log(event.target.querySelector('input'));
+    // console.log(event.target.querySelector('input').checked);
+    let flag = 0;
+    console.log(event.target);
+    if (event.target.classList.contains('comboTreeItemTitle')) {
+      if (!event.target.querySelector('input').checked) {
+        console.log('disable it');
+        flag = 1;
+      }
+    }
+    for (let i = 0; i < inputCheckboxes.length; i += 1) {
+      if (inputCheckboxes[i] !== event.target.querySelector('input')) {
+        if (inputCheckboxes[i].checked) {
+          // console.log('yes atleast one is checked');
+          console.log('disable it');
+          flag = 1;
+        }
+      }
+    }
+    if (!flag) {
+      console.log('if disabled, then enable it');
+    }
+  },
+  true,
+);
+
+// licenseChooser.addEventListener('click', (event) => {
+//   if (useCaseChooser.value) {
+//     console.log('there is a value');
+//     // stop another click event to trigger, therefore not open the dropdown.
+//     event.stopImmediatePropagation();
+//   }
+// });
+
+// licenseChooser.addEventListener('click', (event) => {
+//   console.log(event.detail);
+//   const licenseWrapper = licenseChooserWrapper.childNodes;
+//   console.log(licenseWrapper);
+// });
+
+// licenseChooserWrapper.addEventListener('click', (event) => {
+//   console.log(event);
+// });
 
 filterApplyButton.addEventListener('click', () => {
   resetFilterDataStructures();
