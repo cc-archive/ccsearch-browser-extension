@@ -213,7 +213,8 @@ useCaseChooserWrapper.addEventListener(
       if (!event.target.querySelector('input').checked) {
         // if the clicked checkbox is unchecked
         resetLicenseDropDown();
-        licenseChooser.disabled = true; // disable the license dropdown (as atleast one checkbox is checked)
+        // disable the license dropdown (as atleast one checkbox is checked)
+        licenseChooser.disabled = true;
         flag = 1;
       }
     }
