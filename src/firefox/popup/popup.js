@@ -24,6 +24,7 @@ const filterResetButton = document.querySelector('.section-filter--reset-button'
 const filterApplyButton = document.querySelector('.section-filter--apply-button');
 
 let inputText;
+let pageNo;
 // list to hold Providers to show to the user in dropdown
 // the list must have objects with id and title as properties.
 // see https://github.com/kirlisakal/combo-tree#sample-json-data
@@ -298,6 +299,7 @@ function unicodeToString(string) {
 
 searchIcon.addEventListener('click', () => {
   inputText = inputField.value;
+  pageNo = 1;
 
   if (inputText === '') {
     errorMessage.textContent = 'Please enter a search query';
@@ -329,10 +331,11 @@ searchIcon.addEventListener('click', () => {
     userSelectedUseCaseList,
     userSelectedLicensesList,
     userSelectedProvidersList,
-    1,
+    pageNo,
   );
 
   console.log(url);
+  pageNo += 1;
 
   fetch(url)
     .finally(() => {
@@ -542,3 +545,38 @@ $('#choose-license').comboTree({
 //   source: providersList,
 //   isMultiple: true,
 // });
+
+let processing;
+
+async function nextRequest(page) {
+  const url = getRequestUrl(
+    inputText,
+    userSelectedUseCaseList,
+    userSelectedLicensesList,
+    userSelectedProvidersList,
+    page,
+  );
+
+  console.log(url);
+  const response = await fetch(url);
+  const json = await response.json();
+  const result = json.results;
+  console.log(result);
+  pageNo += 1;
+  processing = false;
+}
+
+// Trigger nextRequest when we reach bottom of the page
+// https://stackoverflow.com/a/10662576/10425980
+$(document).ready(() => {
+  $(document).scroll(() => {
+    if (processing) return false;
+
+    if ($(window).scrollTop() >= $(document).height() - $(window).height() - 700) {
+      processing = true;
+
+      nextRequest(pageNo);
+    }
+    return undefined;
+  });
+});
