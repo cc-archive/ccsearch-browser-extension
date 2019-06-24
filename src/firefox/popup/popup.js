@@ -578,6 +578,7 @@ async function nextRequest(page) {
   const json = await response.json();
   const result = json.results;
   console.log(result);
+  addThumbnailsToDOM(result);
   pageNo += 1;
   processing = false;
 }
