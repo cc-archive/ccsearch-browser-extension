@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 // selectors
 const inputField = document.getElementById('section-search-input');
 const searchIcon = document.getElementById('search-icon');
@@ -68,8 +69,23 @@ inputField.addEventListener('keydown', (event) => {
   }
 });
 
+// Helper Functions
+
 function isObjectEmpty(obj) {
   return Object.keys(obj).length === 0 && obj.constructor === Object;
+}
+
+function getRequestUrl(
+  inputText,
+  userSelectedUseCaseList,
+  userSelectedLicensesList,
+  userSelectedProvidersList,
+  page,
+) {
+  if (userSelectedUseCaseList.length > 0) {
+    return `https://api.creativecommons.engineering/image/search?q=${inputText}&page=${page}&pagesize=50&lt=${userSelectedUseCaseList}&provider=${userSelectedProvidersList}`;
+  }
+  return `https://api.creativecommons.engineering/image/search?q=${inputText}&page=${page}&pagesize=50&li=${userSelectedLicensesList}&provider=${userSelectedProvidersList}`;
 }
 
 function populateProviderList(providerAPIQuerystrings) {
@@ -307,13 +323,13 @@ searchIcon.addEventListener('click', () => {
   // enable spinner
   spinner.classList.add('spinner');
 
-  let url;
-
-  if (userSelectedUseCaseList.length > 0) {
-    url = `https://api.creativecommons.engineering/image/search?q=${inputText}&pagesize=50&lt=${userSelectedUseCaseList}`;
-  } else {
-    url = `https://api.creativecommons.engineering/image/search?q=${inputText}&pagesize=50&li=${userSelectedLicensesList}&provider=${userSelectedProvidersList}`;
-  }
+  const url = getRequestUrl(
+    inputText,
+    userSelectedUseCaseList,
+    userSelectedLicensesList,
+    userSelectedProvidersList,
+    1,
+  );
 
   console.log(url);
 
