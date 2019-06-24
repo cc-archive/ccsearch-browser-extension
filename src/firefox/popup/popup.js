@@ -23,6 +23,7 @@ const providerChooserLoadingMessage = document.querySelector(
 const filterResetButton = document.querySelector('.section-filter--reset-button');
 const filterApplyButton = document.querySelector('.section-filter--apply-button');
 
+let inputText;
 // list to hold Providers to show to the user in dropdown
 // the list must have objects with id and title as properties.
 // see https://github.com/kirlisakal/combo-tree#sample-json-data
@@ -296,7 +297,7 @@ function unicodeToString(string) {
 }
 
 searchIcon.addEventListener('click', () => {
-  const inputText = inputField.value;
+  inputText = inputField.value;
 
   if (inputText === '') {
     errorMessage.textContent = 'Please enter a search query';
