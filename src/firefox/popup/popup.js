@@ -483,11 +483,6 @@ searchIcon.addEventListener('click', () => {
   pageNo += 1;
 
   fetch(url)
-    .finally(() => {
-      // removes spinner even if promise is not resolved
-      spinner.classList.remove('spinner');
-    })
-
     .then(data => data.json())
     .then((res) => {
       const resultArray = res.results;
