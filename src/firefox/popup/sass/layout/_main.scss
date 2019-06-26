@@ -47,7 +47,7 @@
       opacity: 0;
     }
     &:hover {
-      transform: scale(1.05);
+      transform: translateY(-1px);
       box-shadow: 0 0.75rem 1.5rem rgba($color-black, 0.3);
 
       &:after {
