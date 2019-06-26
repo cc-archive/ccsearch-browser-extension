@@ -39,8 +39,8 @@
       background-image: linear-gradient(
         rgba($color-black, 0.5),
         transparent 20%,
-        transparent 80%,
-        rgba($color-black, 0.5)
+        transparent 70%,
+        rgba($color-black, 0.8)
       );
       transition: all 0.5s;
       backface-visibility: hidden;
@@ -71,7 +71,7 @@
       transition: all 0.7s;
       backface-visibility: hidden;
       position: absolute;
-      bottom: 0.5rem;
+      bottom: -2.5px;
       left: 0.5rem;
       color: $color-white;
       font-size: 1.3rem;
