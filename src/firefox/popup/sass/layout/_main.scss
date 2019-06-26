@@ -1,7 +1,7 @@
 .section-content {
   padding-top: 10%;
 
-  p {
+  .initial-info {
     min-height: 23rem;
     width: 90%;
     margin: 0 auto;
@@ -11,6 +11,11 @@
       text-decoration: none;
       color: $color-secondary-light;
     }
+  }
+
+  .no-more-images-mes {
+    margin: 10px auto;
+    text-align: center;
   }
 }
 

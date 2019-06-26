@@ -22,6 +22,7 @@ const providerChooserLoadingMessage = document.querySelector(
 );
 const filterResetButton = document.querySelector('.section-filter--reset-button');
 const filterApplyButton = document.querySelector('.section-filter--apply-button');
+const noMoreImagesMessage = document.querySelector('.no-more-images-mes');
 
 let inputText;
 let pageNo;
@@ -166,6 +167,11 @@ function checkResultLength(resultArray) {
   }
 }
 
+function removeLoderAnimation() {
+  spinner.classList.remove('spinner');
+  noMoreImagesMessage.classList.remove('display-none');
+}
+
 function addThumbnailsToDOM(resultArray) {
   let count = 1;
   resultArray.forEach((element) => {
@@ -259,6 +265,10 @@ function addThumbnailsToDOM(resultArray) {
       count = 1;
     }
   });
+
+  if (resultArray.length <= 10) {
+    removeLoderAnimation();
+  }
 }
 
 function populateProviderList(providerAPIQuerystrings) {
