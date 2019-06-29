@@ -172,9 +172,75 @@ function removeLoderAnimation() {
   noMoreImagesMessage.classList.remove('display-none');
 }
 
+function getMaxOrMinElem(arr, option) {
+  // option = 0 for min, 1 for max;
+  console.log(arr);
+  if (arr.length === 0) {
+    return -1;
+  }
+
+  let elem = arr[0];
+  // let index = 0;
+
+  for (let i = 1; i < arr.length; i += 1) {
+    if (option === 0) {
+      if (arr[i] < elem) {
+        // index = i;
+        elem = arr[i];
+      }
+    } else if (option === 1) {
+      if (arr[i] > elem) {
+        // index = i;
+        elem = arr[i];
+      }
+    }
+  }
+  console.log(elem);
+
+  return elem;
+}
+
+function checkPriority(columnHeights) {
+  const max = getMaxOrMinElem(columnHeights, 1);
+  const min = getMaxOrMinElem(columnHeights, 0);
+  const difference = max - min;
+
+  if (difference > 400 && difference < 1000) {
+    return [columnHeights.indexOf(min), 3];
+  }
+  if (difference > 1000 && difference < 2000) {
+    return [columnHeights.indexOf(min), 7];
+  }
+  if (difference > 2000) {
+    return [columnHeights.indexOf(min), 11];
+  }
+
+  return [0, 0];
+}
+
+function appendImageToDom(columnNo, divElement) {
+  let column;
+  if (columnNo === 0) column = '.first-col';
+  if (columnNo === 1) column = '.second-col';
+  if (columnNo === 2) column = '.third-col';
+  document.querySelector(`.section-content ${column} .images`).appendChild(divElement);
+}
+
 function addThumbnailsToDOM(resultArray) {
   let count = 1;
-  resultArray.forEach((element) => {
+
+  const firstColHeight = document.querySelector('.first-col').clientHeight;
+  const secondColHeight = document.querySelector('.second-col').clientHeight;
+  const thirdColHeight = document.querySelector('.third-col').clientHeight;
+
+  const columnSizeArray = [firstColHeight, secondColHeight, thirdColHeight];
+  console.log(columnSizeArray);
+
+  const priorityArray = checkPriority(columnSizeArray);
+  console.log(priorityArray);
+
+  for (let i = 0; i < resultArray.length; i += 1) {
+    const element = resultArray[i];
     const thumbnail = element.thumbnail ? element.thumbnail : element.url;
     const title = unicodeToString(element.title);
     const { license } = element;
@@ -253,18 +319,30 @@ function addThumbnailsToDOM(resultArray) {
     divElement.appendChild(spanTitleElement);
     divElement.appendChild(spanLicenseElement);
 
-    // fill the grid
+    // count = balanceImageColHeight() + 1;
+    if (priorityArray[1] > 0) {
+      appendImageToDom(priorityArray[0], divElement);
+      priorityArray[1] -= 1;
+      // eslint-disable-next-line no-continue
+      continue;
+    }
+
+    // // fill the grid
     if (count === 1) {
-      document.querySelector('.section-content .first-col .images').appendChild(divElement);
+      // document.querySelector('.section-content .first-col .images').appendChild(divElement);
+      appendImageToDom(0, divElement);
       count += 1;
     } else if (count === 2) {
-      document.querySelector('.section-content .second-col .images').appendChild(divElement);
+      // document.querySelector('.section-content .second-col .images').appendChild(divElement);
+      appendImageToDom(1, divElement);
       count += 1;
     } else if (count === 3) {
-      document.querySelector('.section-content .third-col .images').appendChild(divElement);
+      // document.querySelector('.section-content .third-col .images').appendChild(divElement);
+      appendImageToDom(2, divElement);
+      count += 1;
       count = 1;
     }
-  });
+  }
 
   if (resultArray.length <= 10) {
     removeLoderAnimation();
