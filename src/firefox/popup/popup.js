@@ -154,6 +154,17 @@ function removeOldSearchResults() {
   thirdImgCol.innerHTML = '';
 }
 
+const elem = document.querySelector('.grid');
+// eslint-disable-next-line no-undef
+const msnry = new Masonry(elem, {
+  // options
+  itemSelector: '.grid-item',
+  columnWidth: '.grid-item',
+  gutter: '.gutter-sizer',
+  percentPosition: true,
+  transitionDuration: '0.4s',
+});
+
 function showNoResultFoundMessage() {
   const sectionContent = document.querySelector('.section-content');
   const noResultFoundPara = document.createElement('p');
