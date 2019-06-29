@@ -143,20 +143,9 @@ function removeInitialContent() {
   }
 }
 
-function removeOldSearchResults() {
-  // remove old images for a new search
-  const firstImgCol = document.querySelector('.section-content .first-col .images');
-  const secondImgCol = document.querySelector('.section-content .second-col .images');
-  const thirdImgCol = document.querySelector('.section-content .third-col .images');
-
-  firstImgCol.innerHTML = '';
-  secondImgCol.innerHTML = '';
-  thirdImgCol.innerHTML = '';
-}
-
-const elem = document.querySelector('.grid');
+const grid = document.querySelector('.grid');
 // eslint-disable-next-line no-undef
-const msnry = new Masonry(elem, {
+const msnry = new Masonry(grid, {
   // options
   itemSelector: '.grid-item',
   columnWidth: '.grid-item',
@@ -164,6 +153,12 @@ const msnry = new Masonry(elem, {
   percentPosition: true,
   transitionDuration: '0.4s',
 });
+
+function removeOldSearchResults() {
+  // remove old images for a new search
+
+  grid.innerHTML = '<div class="gutter-sizer"></div>';
+}
 
 function showNoResultFoundMessage() {
   const sectionContent = document.querySelector('.section-content');
@@ -183,75 +178,22 @@ function removeLoderAnimation() {
   noMoreImagesMessage.classList.remove('display-none');
 }
 
-function getMaxOrMinElem(arr, option) {
-  // option = 0 for min, 1 for max;
-  console.log(arr);
-  if (arr.length === 0) {
-    return -1;
-  }
-
-  let elem = arr[0];
-  // let index = 0;
-
-  for (let i = 1; i < arr.length; i += 1) {
-    if (option === 0) {
-      if (arr[i] < elem) {
-        // index = i;
-        elem = arr[i];
-      }
-    } else if (option === 1) {
-      if (arr[i] > elem) {
-        // index = i;
-        elem = arr[i];
-      }
-    }
-  }
-  console.log(elem);
-
-  return elem;
-}
-
-function checkPriority(columnHeights) {
-  const max = getMaxOrMinElem(columnHeights, 1);
-  const min = getMaxOrMinElem(columnHeights, 0);
-  const difference = max - min;
-
-  if (difference > 400 && difference < 1000) {
-    return [columnHeights.indexOf(min), 3];
-  }
-  if (difference > 1000 && difference < 2000) {
-    return [columnHeights.indexOf(min), 7];
-  }
-  if (difference > 2000) {
-    return [columnHeights.indexOf(min), 11];
-  }
-
-  return [0, 0];
-}
-
-function appendImageToDom(columnNo, divElement) {
-  let column;
-  if (columnNo === 0) column = '.first-col';
-  if (columnNo === 1) column = '.second-col';
-  if (columnNo === 2) column = '.third-col';
-  document.querySelector(`.section-content ${column} .images`).appendChild(divElement);
+function appendToGrid(msnry, fragment, divs, grid) {
+  grid.appendChild(fragment);
+  msnry.appended(divs);
+  // eslint-disable-next-line no-undef
+  imagesLoaded(grid).on('progress', () => {
+    // layout Masonry after each image loads
+    msnry.layout();
+    // console.log('this function was called');
+  });
 }
 
 function addThumbnailsToDOM(resultArray) {
-  let count = 1;
+  const divs = [];
+  const fragment = document.createDocumentFragment();
 
-  const firstColHeight = document.querySelector('.first-col').clientHeight;
-  const secondColHeight = document.querySelector('.second-col').clientHeight;
-  const thirdColHeight = document.querySelector('.third-col').clientHeight;
-
-  const columnSizeArray = [firstColHeight, secondColHeight, thirdColHeight];
-  console.log(columnSizeArray);
-
-  const priorityArray = checkPriority(columnSizeArray);
-  console.log(priorityArray);
-
-  for (let i = 0; i < resultArray.length; i += 1) {
-    const element = resultArray[i];
+  resultArray.forEach((element) => {
     const thumbnail = element.thumbnail ? element.thumbnail : element.url;
     const title = unicodeToString(element.title);
     const { license } = element;
@@ -262,6 +204,8 @@ function addThumbnailsToDOM(resultArray) {
     // make an image element
     const imgElement = document.createElement('img');
     imgElement.setAttribute('src', thumbnail);
+    imgElement.setAttribute('class', 'image-thumbnails');
+    // imgElement.src = thumbnail;
 
     // make a span to hold the title
     const spanTitleElement = document.createElement('span');
@@ -322,7 +266,7 @@ function addThumbnailsToDOM(resultArray) {
     });
     spanLicenseElement.appendChild(licenseLinkElement);
 
-    // make an div element to encapsulate image element
+    // make a div element to encapsulate image element
     const divElement = document.createElement('div');
     divElement.setAttribute('class', 'image');
 
@@ -330,30 +274,19 @@ function addThumbnailsToDOM(resultArray) {
     divElement.appendChild(spanTitleElement);
     divElement.appendChild(spanLicenseElement);
 
-    // count = balanceImageColHeight() + 1;
-    if (priorityArray[1] > 0) {
-      appendImageToDom(priorityArray[0], divElement);
-      priorityArray[1] -= 1;
-      // eslint-disable-next-line no-continue
-      continue;
-    }
+    // div to act as grid itemj
+    const gridItemDiv = document.createElement('div');
+    gridItemDiv.setAttribute('class', 'grid-item');
 
-    // // fill the grid
-    if (count === 1) {
-      // document.querySelector('.section-content .first-col .images').appendChild(divElement);
-      appendImageToDom(0, divElement);
-      count += 1;
-    } else if (count === 2) {
-      // document.querySelector('.section-content .second-col .images').appendChild(divElement);
-      appendImageToDom(1, divElement);
-      count += 1;
-    } else if (count === 3) {
-      // document.querySelector('.section-content .third-col .images').appendChild(divElement);
-      appendImageToDom(2, divElement);
-      count += 1;
-      count = 1;
-    }
-  }
+    gridItemDiv.appendChild(divElement);
+
+    fragment.appendChild(gridItemDiv);
+    divs.push(gridItemDiv);
+
+    console.log(gridItemDiv);
+  });
+
+  appendToGrid(msnry, fragment, divs, grid);
 
   if (resultArray.length <= 10) {
     removeLoderAnimation();
