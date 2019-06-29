@@ -122,9 +122,9 @@ function getRequestUrl(
   page,
 ) {
   if (userSelectedUseCaseList.length > 0) {
-    return `https://api.creativecommons.engineering/image/search?q=${inputText}&page=${page}&pagesize=50&lt=${userSelectedUseCaseList}&provider=${userSelectedProvidersList}`;
+    return `https://api.creativecommons.engineering/image/search?q=${inputText}&page=${page}&pagesize=20&lt=${userSelectedUseCaseList}&provider=${userSelectedProvidersList}`;
   }
-  return `https://api.creativecommons.engineering/image/search?q=${inputText}&page=${page}&pagesize=50&li=${userSelectedLicensesList}&provider=${userSelectedProvidersList}`;
+  return `https://api.creativecommons.engineering/image/search?q=${inputText}&page=${page}&pagesize=20&li=${userSelectedLicensesList}&provider=${userSelectedProvidersList}`;
 }
 
 function checkInputError(inputText) {
