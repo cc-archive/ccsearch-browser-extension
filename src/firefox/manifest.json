@@ -11,7 +11,13 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["content.js", "popup/jquery.min.js", "popup/comboTreePlugin.js"]
+      "js": [
+        "content.js",
+        "popup/jquery.min.js",
+        "popup/comboTreePlugin.js",
+        "popup/masonry.min.js",
+        "popup/imagesloaded.min.js"
+      ]
     }
   ]
 }
