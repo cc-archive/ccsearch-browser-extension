@@ -23,6 +23,7 @@ const providerChooserLoadingMessage = document.querySelector(
 const filterResetButton = document.querySelector('.section-filter--reset-button');
 const filterApplyButton = document.querySelector('.section-filter--apply-button');
 const noMoreImagesMessage = document.querySelector('.no-more-images-mes');
+const popup = document.getElementById('popup');
 
 let inputText;
 let pageNo;
@@ -93,6 +94,50 @@ const providerLogos = [
   'WoRMS_logo.png',
 ];
 
+const popupCloseButton = document.querySelector('.popup__close-button');
+popupCloseButton.addEventListener('click', () => {
+  popup.style.opacity = 0;
+  popup.style.visibility = 'hidden';
+});
+
+document.querySelector('.popup').addEventListener('click', (e) => {
+  if (e.target.classList.contains('popup')) {
+    // popup.style.opacity = 0;
+    // popup.style.visibility = 'hidden';
+    popupCloseButton.click();
+  }
+});
+
+const popupTabLinks = document.getElementsByClassName('popup__tab-links');
+const popupTabContent = document.getElementsByClassName('popup__tab-content');
+const attributionTabLink = popupTabLinks[0];
+
+function removeClassFromElements(elemArray, className) {
+  Array.prototype.forEach.call(elemArray, (e) => {
+    e.classList.remove(className);
+  });
+}
+
+function makeElementsDisplayNone(elemArray) {
+  Array.prototype.forEach.call(elemArray, (e) => {
+    e.style.display = 'none';
+  });
+}
+
+Array.prototype.forEach.call(popupTabLinks, (element) => {
+  element.addEventListener('click', (e) => {
+    const targetElement = e.target;
+    const targetElementText = e.target.textContent;
+    console.log(targetElementText);
+
+    makeElementsDisplayNone(popupTabContent);
+    removeClassFromElements(popupTabLinks, 'popup__tab-links-active');
+
+    document.getElementById(targetElementText.toLowerCase()).style.display = 'block';
+    targetElement.classList.add('popup__tab-links-active');
+  });
+});
+
 // Activate the click event on pressing enter.
 inputField.addEventListener('keydown', (event) => {
   if (event.keyCode === 13) {
@@ -160,6 +205,25 @@ function removeOldSearchResults() {
   grid.innerHTML = '<div class="gutter-sizer"></div>';
 }
 
+function getImageData(imageId) {
+  const url = `https://api.creativecommons.engineering/image/${imageId}`;
+
+  fetch(url)
+    .then(data => data.json())
+    .then((res) => {
+      console.log(res);
+      const {
+        title, creator, creator_url: creatorUrl, provider,
+      } = res;
+      const popupTitle = document.querySelector('.popup__content-title');
+      const popupCreator = document.querySelector('.popup__content-creator');
+      const popupProvider = document.querySelector('.popup__content-provider');
+      popupTitle.innerHTML = `<strong>Title:</strong> ${title}`;
+      popupCreator.innerHTML = `<strong>Creator:</strong><a href=${creatorUrl}>${creator}</a>`;
+      popupProvider.innerHTML = `<strong>Provider:</strong> ${provider}`;
+    });
+}
+
 function showNoResultFoundMessage() {
   const sectionContent = document.querySelector('.section-content');
   const noResultFoundPara = document.createElement('p');
@@ -196,16 +260,23 @@ function addThumbnailsToDOM(resultArray) {
   resultArray.forEach((element) => {
     const thumbnail = element.thumbnail ? element.thumbnail : element.url;
     const title = unicodeToString(element.title);
-    const { license } = element;
+    const { license, provider, id } = element;
     const licenseArray = license.split('-'); // split license in individual characteristics
     const foreignLandingUrl = element.foreign_landing_url;
-    const { provider } = element;
 
     // make an image element
     const imgElement = document.createElement('img');
     imgElement.setAttribute('src', thumbnail);
     imgElement.setAttribute('class', 'image-thumbnails');
-    // imgElement.src = thumbnail;
+    imgElement.setAttribute('id', id);
+    imgElement.addEventListener('click', (e) => {
+      getImageData(e.target.id);
+      popup.style.opacity = 1;
+      popup.style.visibility = 'visible';
+      console.log(attributionTabLink);
+      attributionTabLink.click();
+    });
+
 
     // make a span to hold the title
     const spanTitleElement = document.createElement('span');
