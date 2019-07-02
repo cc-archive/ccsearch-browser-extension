@@ -26,7 +26,7 @@
 .image-thumbnails {
   width: 100%;
   height: 100%;
-  vertical-align: top;
+  display: block;
 }
 
 .image {
@@ -35,6 +35,12 @@
   transition: all 0.5s;
   box-shadow: 0 0.5rem 1rem rgba($color-black, 0.15);
   margin-bottom: 0.7rem;
+  // let img element be clickable
+  visibility: hidden;
+
+  * {
+    visibility: visible;
+  }
 
   &:after {
     content: "";
