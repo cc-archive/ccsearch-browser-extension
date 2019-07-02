@@ -196,7 +196,7 @@ const msnry = new Masonry(grid, {
   columnWidth: '.grid-item',
   gutter: '.gutter-sizer',
   percentPosition: true,
-  transitionDuration: '0.4s',
+  transitionDuration: '0',
 });
 
 function removeOldSearchResults() {
