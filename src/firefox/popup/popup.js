@@ -44,6 +44,17 @@ let userSelectedUseCaseList = [];
 // object to map Provider display names to valid query names.
 let providerAPIQueryStrings = {};
 
+// eslint-disable-next-line no-undef
+const clipboard = new ClipboardJS('.btn-copy');
+
+clipboard.on('success', (e) => {
+  e.clearSelection();
+  e.trigger.textContent = 'Copied';
+  setTimeout(() => {
+    e.trigger.textContent = 'Copy';
+  }, 1000);
+});
+
 // bakup object in case we cannot fetch provider names from the API.
 const backupProviderAPIQueryStrings = {
   'Animal Diversity Web': 'animaldiversity',
@@ -188,6 +199,56 @@ function removeInitialContent() {
   }
 }
 
+function getRichTextAttribution(image) {
+  if (!image) {
+    return '';
+  }
+  const imgLink = `<a href="${image.foreign_landing_url}" target="_blank">"${image.title}"</a>`;
+  let creator = '';
+  if (image.creator && image.creator_url) {
+    creator = `<span>by <a href="${image.creator_url}" target="_blank">${image.creator}</a></span>`;
+  } else if (image.creator && !image.creator_url) {
+    creator = `<span> by <span>${image.creator}</span></span>`;
+  }
+  const licenseLink = ` is licensed under <a href="${
+    image.license_url
+  }" target="_blank">CC ${image.license.toUpperCase()} ${image.license_version}</a>`;
+
+  return `${imgLink}${creator}${licenseLink}`;
+}
+
+function getHtmlAttribution(image) {
+  if (!image) {
+    return '';
+  }
+  const baseAssetsPath = 'https://search.creativecommons.org/static/img'; // path is not dynamic. Change if assets are moved.
+  const imgLink = `<a href="${image.foreign_landing_url}">"${image.title}"</a>`;
+  let creator = '';
+  if (image.creator && image.creator_url) {
+    creator = `<span>by <a href="${image.creator_url}">${image.creator}</a></span>`;
+  } else if (image.creator && !image.creator_url) {
+    creator = `<span> by <span>${image.creator}</span></span>`;
+  }
+  const licenseLink = ` is licensed under <a href="${
+    image.license_url
+  }" style="margin-right: 5px;">CC ${image.license.toUpperCase()} ${image.license_version}</a>`;
+
+  let licenseIcons = `<img style="height: inherit;margin-right: 3px;display: inline-block;" src="${baseAssetsPath}/cc_icon.svg" />`;
+  if (image.license) {
+    licenseIcons += image.license
+      .split('-')
+      .map(
+        license => `<img style="height: inherit;margin-right: 3px;display: inline-block;" src="${baseAssetsPath}/cc-${license.toLowerCase()}_icon.svg" />`,
+      )
+      .join('');
+  }
+
+  const licenseImgLink = `<a href="${
+    image.license_url
+  }" target="_blank" rel="noopener noreferrer" style="display: inline-block;white-space: none;opacity: .7;margin-top: 2px;margin-left: 3px;height: 22px !important;">${licenseIcons}</a>`;
+  return `<p style="font-size: 0.9rem;font-style: italic;">${imgLink}${creator}${licenseLink}${licenseImgLink}</p>`;
+}
+
 const grid = document.querySelector('.grid');
 // eslint-disable-next-line no-undef
 const msnry = new Masonry(grid, {
@@ -218,9 +279,13 @@ function getImageData(imageId) {
       const popupTitle = document.querySelector('.popup__content-title');
       const popupCreator = document.querySelector('.popup__content-creator');
       const popupProvider = document.querySelector('.popup__content-provider');
+      const attributionRichTextPara = document.getElementById('attribution-rich-text');
+      const attributionHtmlTextArea = document.getElementById('attribution-html');
       popupTitle.innerHTML = `<strong>Title:</strong> ${title}`;
       popupCreator.innerHTML = `<strong>Creator:</strong><a href=${creatorUrl}>${creator}</a>`;
       popupProvider.innerHTML = `<strong>Provider:</strong> ${provider}`;
+      attributionRichTextPara.innerHTML = getRichTextAttribution(res);
+      attributionHtmlTextArea.value = getHtmlAttribution(res);
     });
 }
 
