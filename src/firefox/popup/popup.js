@@ -24,6 +24,8 @@ const filterResetButton = document.querySelector('.section-filter--reset-button'
 const filterApplyButton = document.querySelector('.section-filter--apply-button');
 const noMoreImagesMessage = document.querySelector('.no-more-images-mes');
 const popup = document.getElementById('popup');
+const downloadImageButton = document.getElementById('download-image');
+const downloadImageAttributionButton = document.getElementById('download-image-attribution');
 
 let inputText;
 let pageNo;
@@ -104,6 +106,58 @@ const providerLogos = [
   'thorvaldsensmuseum_logo.png',
   'WoRMS_logo.png',
 ];
+
+function getPlainAttribution(image) {
+  if (!image) {
+    return '';
+  }
+  let creatorUrl = 'None';
+  // eslint-disable-next-line no-use-before-define
+  const HtmlAttribution = getHtmlAttribution(image);
+  if (image.creator_url) {
+    creatorUrl = image.creator_url;
+  }
+  if (image.creator) {
+    return `"${image.title}" by ${
+      image.creator
+    } is licensed under CC ${image.license.toUpperCase()} ${image.license_version}\n\n
+Image Link: ${image.foreign_landing_url}\n
+Creator Link: ${creatorUrl}\n\n
+**********************HTML Attribution**********************
+${HtmlAttribution}`;
+  }
+  return `${image.title} is licensed under CC ${image.license.toUpperCase()} ${
+    image.license_version
+  }\n\n
+Image Link: ${image.foreign_landing_url}\n
+Creator Link: ${creatorUrl}\n\n
+**********************HTML Attribution**********************
+${HtmlAttribution}`;
+}
+
+function downloadImage(imageUrl, imageName) {
+  const x = new XMLHttpRequest();
+  x.open('GET', imageUrl, true);
+  x.responseType = 'blob';
+  x.onload = () => {
+    // eslint-disable-next-line no-undef
+    download(x.response, imageName, 'image/gif'); // using download.js (http://danml.com/download.html)
+  };
+  x.send();
+  // eventHandlerTarget.removeEventListener('click', eventHandlerFunction);
+}
+function downloadImageAttribution(image) {
+  // eslint-disable-next-line no-undef
+  download(getPlainAttribution(image), image.title, 'text/plain');
+}
+
+function handleImageDownload(e) {
+  downloadImage(e.currentTarget.imageUrl, e.currentTarget.title);
+}
+function handleImageAttributionDownload(e) {
+  downloadImage(e.currentTarget.image.url, e.currentTarget.image.title);
+  downloadImageAttribution(e.currentTarget.image);
+}
 
 const popupCloseButton = document.querySelector('.popup__close-button');
 popupCloseButton.addEventListener('click', () => {
@@ -276,6 +330,10 @@ function getImageData(imageId) {
       const {
         title, creator, creator_url: creatorUrl, provider,
       } = res;
+      // adding arguments for event handlers to the target itself
+      downloadImageButton.imageUrl = res.url;
+      downloadImageButton.title = res.title;
+      downloadImageAttributionButton.image = res;
       const popupTitle = document.querySelector('.popup__content-title');
       const popupCreator = document.querySelector('.popup__content-creator');
       const popupProvider = document.querySelector('.popup__content-provider');
@@ -286,6 +344,8 @@ function getImageData(imageId) {
       popupProvider.innerHTML = `<strong>Provider:</strong> ${provider}`;
       attributionRichTextPara.innerHTML = getRichTextAttribution(res);
       attributionHtmlTextArea.value = getHtmlAttribution(res);
+      downloadImageButton.addEventListener('click', handleImageDownload);
+      downloadImageAttributionButton.addEventListener('click', handleImageAttributionDownload);
     });
 }
 
