@@ -51,10 +51,9 @@
       outline: none;
     }
 
-    .btn-copy {
+    .btn-popup {
       display: block;
       padding: 0.9rem 2rem;
-      width: 4rem;
       box-sizing: content-box;
       position: relative;
       text-decoration: none;
@@ -67,6 +66,24 @@
 
       &:hover {
         background-color: lighten($color-black, 25);
+      }
+    }
+
+    .btn-copy {
+      width: 4rem;
+    }
+
+    .download-buttons {
+      @include clearfix;
+
+      .btn-download {
+        background-color: $color-secondary-light;
+        float: left;
+        margin-right: 1rem;
+
+        &:hover {
+          background-color: $color-secondary-dark;
+        }
       }
     }
   }
