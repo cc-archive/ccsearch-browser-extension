@@ -72,12 +72,18 @@
         <div id="attribution" class="popup__tab-content">
           <h5 class="attribution-label margin-bottom-small">Rich-text</h5>
           <p id="attribution-rich-text" class="margin-bottom-small"></p>
-          <button class="btn-copy" data-clipboard-target="#attribution-rich-text">Copy</button>
+          <button class="btn-popup btn-copy" data-clipboard-target="#attribution-rich-text">Copy</button>
           <label for="attribution-html" class="attribution-label margin-bottom-small margin-top-medium">HTML</label>
           <textarea class="margin-bottom-small" id="attribution-html" id="" cols="30" rows="3" readonly>
             text area
           </textarea>
-          <button class="btn-copy" data-clipboard-target="#attribution-html">Copy</button>
+          <button class="btn-popup btn-copy" data-clipboard-target="#attribution-html">Copy</button>
+          <div class="download-buttons margin-top-medium">
+            <button class="btn-popup btn-download" id="download-image">Download Image</button>
+            <button class="btn-popup btn-download" id="download-image-attribution">
+              Download Image and Attribution
+            </button>
+          </div>
         </div>
         <div id="info" class="popup__tab-content">
           <h4 class="popup__content popup__content-title"></h4>
@@ -114,6 +120,7 @@
     <script src="imagesloaded.min.js"></script>
     <script src="comboTreePlugin.js"></script>
     <script src="clipboard.min.js"></script>
+    <script src="download.js"></script>
     <script src="popup.js"></script>
   </body>
 </html>
