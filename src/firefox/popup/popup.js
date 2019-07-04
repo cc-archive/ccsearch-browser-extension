@@ -163,6 +163,10 @@ const popupCloseButton = document.querySelector('.popup__close-button');
 popupCloseButton.addEventListener('click', () => {
   popup.style.opacity = 0;
   popup.style.visibility = 'hidden';
+
+  // remove eventlisteners from download buttons to avoid multiple downloads.
+  downloadImageButton.removeEventListener('click', handleImageDownload);
+  downloadImageAttributionButton.removeEventListener('click', handleImageAttributionDownload);
 });
 
 document.querySelector('.popup').addEventListener('click', (e) => {
