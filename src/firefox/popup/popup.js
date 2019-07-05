@@ -472,6 +472,19 @@ function addThumbnailsToDOM(resultArray) {
     const divElement = document.createElement('div');
     divElement.setAttribute('class', 'image');
 
+    // adding event listener to this image wrapper otherwise to make image clickable we have to make
+    // this div hidden but then the dark ovelay on hover not works because it also gets hidden.
+    divElement.addEventListener('click', (e) => {
+      if (e.target.classList.contains('image')) {
+        const imageThumbnail = e.target.querySelector('.image-thumbnails');
+        getImageData(imageThumbnail.id);
+        popup.style.opacity = 1;
+        popup.style.visibility = 'visible';
+        console.log(attributionTabLink);
+        attributionTabLink.click();
+      }
+    });
+
     divElement.appendChild(imgElement);
     divElement.appendChild(spanTitleElement);
     divElement.appendChild(spanLicenseElement);
