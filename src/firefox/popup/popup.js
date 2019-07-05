@@ -400,14 +400,6 @@ function addThumbnailsToDOM(resultArray) {
     imgElement.setAttribute('src', thumbnail);
     imgElement.setAttribute('class', 'image-thumbnails');
     imgElement.setAttribute('id', id);
-    imgElement.addEventListener('click', (e) => {
-      getImageData(e.target.id);
-      popup.style.opacity = 1;
-      popup.style.visibility = 'visible';
-      console.log(attributionTabLink);
-      attributionTabLink.click();
-    });
-
 
     // make a span to hold the title
     const spanTitleElement = document.createElement('span');
