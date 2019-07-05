@@ -6,11 +6,6 @@
     width: 90%;
     margin: 0 auto;
     text-align: center;
-
-    a {
-      text-decoration: none;
-      color: $color-secondary-light;
-    }
   }
 
   .no-more-images-mes {
@@ -130,7 +125,6 @@
     a {
       display: block;
       height: inherit;
-      text-decoration: none;
 
       &:hover {
         opacity: 1;
