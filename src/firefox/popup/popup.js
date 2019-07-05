@@ -334,20 +334,35 @@ function getImageData(imageId) {
     .then((res) => {
       console.log(res);
       const {
-        title, creator, creator_url: creatorUrl, provider,
+        title,
+        provider,
+        foreign_landing_url: foreignLandingUrl,
+        license_url: licenseUrl,
+        license,
       } = res;
+      let { creator, creator_url: creatorUrl } = res;
+      if (!creatorUrl) {
+        creatorUrl = '#';
+      }
+      if (!creator) {
+        creator = 'Not Available';
+      }
       // adding arguments for event handlers to the target itself
       downloadImageButton.imageUrl = res.url;
       downloadImageButton.title = res.title;
       downloadImageAttributionButton.image = res;
-      const popupTitle = document.querySelector('.popup__content-title');
-      const popupCreator = document.querySelector('.popup__content-creator');
-      const popupProvider = document.querySelector('.popup__content-provider');
+      const popupTitle = document.querySelector('.info__content-title');
+      const popupCreator = document.querySelector('.info__content-creator');
+      const popupProvider = document.querySelector('.info__content-provider');
+      const popupLicense = document.querySelector('.info__content-license');
       const attributionRichTextPara = document.getElementById('attribution-rich-text');
       const attributionHtmlTextArea = document.getElementById('attribution-html');
-      popupTitle.innerHTML = `<strong>Title:</strong> ${title}`;
-      popupCreator.innerHTML = `<strong>Creator:</strong><a href=${creatorUrl}>${creator}</a>`;
-      popupProvider.innerHTML = `<strong>Provider:</strong> ${provider}`;
+      // filling the info tab
+      popupTitle.innerHTML = `${title}`;
+      popupCreator.innerHTML = `<a href=${creatorUrl}>${creator}</a>`;
+      popupProvider.innerHTML = `<a href=${foreignLandingUrl}>${provider}</a>`;
+      popupLicense.innerHTML = `<a href=${licenseUrl}>CC ${license.toUpperCase()}</a>`;
+      // Attribution tab
       attributionRichTextPara.innerHTML = getRichTextAttribution(res);
       attributionHtmlTextArea.value = getHtmlAttribution(res);
       downloadImageButton.addEventListener('click', handleImageDownload);

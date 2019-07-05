@@ -81,6 +81,19 @@
         }
       }
     }
+
+    .info {
+      &__label {
+        display: block;
+        font-size: 1.9rem;
+        font-weight: 700;
+      }
+
+      &__content {
+        font-size: 1.5rem;
+        font-weight: 500;
+      }
+    }
   }
 
   .popup__header::after {
