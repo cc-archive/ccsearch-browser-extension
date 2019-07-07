@@ -7,7 +7,7 @@ import {
   getRequestUrl,
   checkResultLength,
   addThumbnailsToDOM,
-} from './searchView';
+} from './searchModule';
 import {
   isObjectEmpty,
   licensesList,
@@ -18,7 +18,7 @@ import {
   makeElementsDisplayNone,
   removeClassFromElements,
 } from './helper';
-import { populateProviderList, resetLicenseDropDown } from './filterView';
+import { populateProviderList, resetLicenseDropDown } from './filterModule';
 import { handleImageAttributionDownload, handleImageDownload } from './infoPopupModule';
 
 let inputText;
