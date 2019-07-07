@@ -13,14 +13,14 @@ You can test and develop the extension locally on your system.
 
 2. Run: `npm install`.
 
-3. To compile Sass to CSS, Run: `npm run compile-sass`.
+3. Run: `npm run dev`. This would compile SASS to CSS and bundle JS. The compiled version will be in dist folder.
 
 ### Load the extension in Firefox
 1. Open Firefox browser and navigate to _about:debugging_.
 
 2. Click "Load Temporary Add-on"
 
-3. From the file browser, choose `ccsearch-browser-extension/src/firefox/manifest.json`.
+3. From the file browser, choose `ccsearch-browser-extension/dist/firefox/manifest.json`.
 
 ### Using `web-ext` for development
 You can also use node-based command line utility [web-ext](https://github.com/mozilla/web-ext) by Mozilla to speed up the development process. It adds automatic extension reloading out of the box.
