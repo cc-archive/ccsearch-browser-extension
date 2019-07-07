@@ -1,4 +1,4 @@
-import elements from './base';
+import { elements } from './base';
 
 // list to hold Providers to show to the user in dropdown
 // the list must have objects with id and title as properties.

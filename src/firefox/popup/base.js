@@ -1,4 +1,4 @@
-export default {
+export const elements = {
   inputField: document.getElementById('section-search-input'),
   searchIcon: document.getElementById('search-icon'),
   filterIcon: document.getElementById('filter-icon'),
@@ -25,5 +25,6 @@ export default {
   filterSection: document.querySelector('.section-filter'),
   popupTabLinks: document.getElementsByClassName('popup__tab-links'),
   popupTabContent: document.getElementsByClassName('popup__tab-content'),
-  attributionTabLink: this.popupTabLinks[0],
 };
+
+export const attributionTabLink = elements.popupTabLinks[0];

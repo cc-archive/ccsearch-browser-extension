@@ -1,4 +1,4 @@
-import elements from './base';
+import { elements, attributionTabLink } from './base';
 
 function getRichTextAttribution(image) {
   if (!image) {
@@ -155,6 +155,6 @@ export function activatePopup(imageThumbnail) {
   getImageData(imageThumbnail.id);
   elements.popup.style.opacity = 1;
   elements.popup.style.visibility = 'visible';
-  console.log(elements.attributionTabLink);
-  elements.attributionTabLink.click();
+  console.log(attributionTabLink);
+  attributionTabLink.click();
 }

@@ -1,5 +1,5 @@
 /* eslint-disable no-shadow */
-import elements from './base';
+import { elements } from './base';
 import {
   checkInputError,
   removeInitialContent,

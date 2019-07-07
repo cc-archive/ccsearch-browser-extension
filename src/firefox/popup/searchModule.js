@@ -1,4 +1,4 @@
-import elements from './base';
+import { elements } from './base';
 import { unicodeToString, providerLogos } from './helper';
 import { activatePopup } from './infoPopupModule';
 
