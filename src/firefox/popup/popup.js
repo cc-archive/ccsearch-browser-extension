@@ -1,31 +1,6 @@
 /* eslint-disable no-shadow */
 // selectors
-const inputField = document.getElementById('section-search-input');
-const searchIcon = document.getElementById('search-icon');
-const filterIcon = document.getElementById('filter-icon');
-const errorMessage = document.getElementById('error-message');
-const spinner = document.getElementById('spinner');
-const useCaseChooser = document.querySelector('#choose-usecase');
-const licenseChooser = document.querySelector('#choose-license');
-const providerChooser = document.querySelector('#choose-provider');
-const licenseChooserWrapper = document.querySelector(
-  '.section-filter__filter-wrapper--choose-license',
-);
-const useCaseChooserWrapper = document.querySelector(
-  '.section-filter__filter-wrapper--choose-usecase',
-);
-const providerChooserWrapper = document.querySelector(
-  '.section-filter__filter-wrapper--choose-provider',
-);
-const providerChooserLoadingMessage = document.querySelector(
-  '.section-filter__provider-loading-mes',
-);
-const filterResetButton = document.querySelector('.section-filter--reset-button');
-const filterApplyButton = document.querySelector('.section-filter--apply-button');
-const noMoreImagesMessage = document.querySelector('.no-more-images-mes');
-const popup = document.getElementById('popup');
-const downloadImageButton = document.getElementById('download-image');
-const downloadImageAttributionButton = document.getElementById('download-image-attribution');
+import elements from './base';
 
 let inputText;
 let pageNo;
@@ -159,21 +134,23 @@ function handleImageAttributionDownload(e) {
   downloadImageAttribution(e.currentTarget.image);
 }
 
-const popupCloseButton = document.querySelector('.popup__close-button');
-popupCloseButton.addEventListener('click', () => {
-  popup.style.opacity = 0;
-  popup.style.visibility = 'hidden';
+elements.popupCloseButton.addEventListener('click', () => {
+  elements.popup.style.opacity = 0;
+  elements.popup.style.visibility = 'hidden';
 
   // remove eventlisteners from download buttons to avoid multiple downloads.
-  downloadImageButton.removeEventListener('click', handleImageDownload);
-  downloadImageAttributionButton.removeEventListener('click', handleImageAttributionDownload);
+  elements.downloadImageButton.removeEventListener('click', handleImageDownload);
+  elements.downloadImageAttributionButton.removeEventListener(
+    'click',
+    handleImageAttributionDownload,
+  );
 });
 
-document.querySelector('.popup').addEventListener('click', (e) => {
+elements.popup.addEventListener('click', (e) => {
   if (e.target.classList.contains('popup')) {
     // popup.style.opacity = 0;
     // popup.style.visibility = 'hidden';
-    popupCloseButton.click();
+    elements.popupCloseButton.click();
   }
 });
 
@@ -208,9 +185,9 @@ Array.prototype.forEach.call(popupTabLinks, (element) => {
 });
 
 // Activate the click event on pressing enter.
-inputField.addEventListener('keydown', (event) => {
+elements.inputField.addEventListener('keydown', (event) => {
   if (event.keyCode === 13) {
-    searchIcon.click();
+    elements.searchIcon.click();
   }
 });
 
@@ -243,17 +220,16 @@ function getRequestUrl(
 
 function checkInputError(inputText) {
   if (inputText === '') {
-    errorMessage.textContent = 'Please enter a search query';
+    elements.errorMessage.textContent = 'Please enter a search query';
     throw new Error('Please enter a search query');
   } else {
-    errorMessage.textContent = '';
+    elements.errorMessage.textContent = '';
   }
 }
 
 function removeInitialContent() {
-  const sectionContentParagraph = document.querySelector('.section-content p');
-  if (sectionContentParagraph) {
-    sectionContentParagraph.parentNode.removeChild(sectionContentParagraph);
+  if (elements.sectionContentParagraph) {
+    elements.sectionContentParagraph.parentNode.removeChild(elements.sectionContentParagraph);
   }
 }
 
@@ -309,9 +285,8 @@ function getHtmlAttribution(image) {
   return `<p style="font-size: 0.9rem;font-style: italic;">${imgLink}${creator}${licenseLink}${licenseImgLink}</p>`;
 }
 
-const grid = document.querySelector('.grid');
 // eslint-disable-next-line no-undef
-const msnry = new Masonry(grid, {
+const msnry = new Masonry(elements.grid, {
   // options
   itemSelector: '.grid-item',
   columnWidth: '.grid-item',
@@ -323,7 +298,7 @@ const msnry = new Masonry(grid, {
 function removeOldSearchResults() {
   // remove old images for a new search
 
-  grid.innerHTML = '<div class="gutter-sizer"></div>';
+  elements.grid.innerHTML = '<div class="gutter-sizer"></div>';
 }
 
 function getImageData(imageId) {
@@ -348,9 +323,9 @@ function getImageData(imageId) {
         creator = 'Not Available';
       }
       // adding arguments for event handlers to the target itself
-      downloadImageButton.imageUrl = res.url;
-      downloadImageButton.title = res.title;
-      downloadImageAttributionButton.image = res;
+      elements.downloadImageButton.imageUrl = res.url;
+      elements.downloadImageButton.title = res.title;
+      elements.downloadImageAttributionButton.image = res;
       const popupTitle = document.querySelector('.info__content-title');
       const popupCreator = document.querySelector('.info__content-creator');
       const popupProvider = document.querySelector('.info__content-provider');
@@ -365,8 +340,11 @@ function getImageData(imageId) {
       // Attribution tab
       attributionRichTextPara.innerHTML = getRichTextAttribution(res);
       attributionHtmlTextArea.value = getHtmlAttribution(res);
-      downloadImageButton.addEventListener('click', handleImageDownload);
-      downloadImageAttributionButton.addEventListener('click', handleImageAttributionDownload);
+      elements.downloadImageButton.addEventListener('click', handleImageDownload);
+      elements.downloadImageAttributionButton.addEventListener(
+        'click',
+        handleImageAttributionDownload,
+      );
     });
 }
 
@@ -384,8 +362,8 @@ function checkResultLength(resultArray) {
 }
 
 function removeLoderAnimation() {
-  spinner.classList.remove('spinner');
-  noMoreImagesMessage.classList.remove('display-none');
+  elements.spinner.classList.remove('spinner');
+  elements.noMoreImagesMessage.classList.remove('display-none');
 }
 
 function appendToGrid(msnry, fragment, divs, grid) {
@@ -485,8 +463,8 @@ function addThumbnailsToDOM(resultArray) {
       if (e.target.classList.contains('image')) {
         const imageThumbnail = e.target.querySelector('.image-thumbnails');
         getImageData(imageThumbnail.id);
-        popup.style.opacity = 1;
-        popup.style.visibility = 'visible';
+        elements.popup.style.opacity = 1;
+        elements.popup.style.visibility = 'visible';
         console.log(attributionTabLink);
         attributionTabLink.click();
       }
@@ -508,7 +486,7 @@ function addThumbnailsToDOM(resultArray) {
     console.log(gridItemDiv);
   });
 
-  appendToGrid(msnry, fragment, divs, grid);
+  appendToGrid(msnry, fragment, divs, elements.grid);
 
   if (resultArray.length <= 10) {
     removeLoderAnimation();
@@ -533,13 +511,12 @@ function populateProviderList(providerAPIQuerystrings) {
     isMultiple: true,
   });
 
-  providerChooserLoadingMessage.style.display = 'none';
-  providerChooserWrapper.style.display = 'inline-block';
+  elements.providerChooserLoadingMessage.style.display = 'none';
+  elements.providerChooserWrapper.style.display = 'inline-block';
 }
 
-filterIcon.addEventListener('click', () => {
-  const filterSection = document.querySelector('.section-filter');
-  filterSection.classList.toggle('section-filter--active');
+elements.filterIcon.addEventListener('click', () => {
+  elements.filterSection.classList.toggle('section-filter--active');
 
   const getProviderURL = 'https://api.creativecommons.engineering/statistics/image';
 
@@ -567,17 +544,17 @@ filterIcon.addEventListener('click', () => {
 });
 
 // TODO: divide the steps into functions
-filterResetButton.addEventListener('click', () => {
+elements.filterResetButton.addEventListener('click', () => {
   // reset values
-  useCaseChooser.value = '';
-  licenseChooser.value = '';
-  providerChooser.value = '';
+  elements.useCaseChooser.value = '';
+  elements.licenseChooser.value = '';
+  elements.providerChooser.value = '';
 
   // array of dropdown container elements
   const dropdownElementsList = [
-    providerChooserWrapper,
-    licenseChooserWrapper,
-    useCaseChooserWrapper,
+    elements.providerChooserWrapper,
+    elements.licenseChooserWrapper,
+    elements.useCaseChooserWrapper,
   ];
 
   dropdownElementsList.forEach((dropdown) => {
@@ -596,15 +573,17 @@ filterResetButton.addEventListener('click', () => {
   userSelectedLicensesList = [];
   userSelectedProvidersList = [];
   userSelectedUseCaseList = [];
-  searchIcon.click();
+  elements.searchIcon.click();
   console.log(userSelectedLicensesList);
   console.log(userSelectedProvidersList);
 });
 
 function resetLicenseDropDown() {
-  licenseChooser.value = '';
+  elements.licenseChooser.value = '';
 
-  const dropdownContainer = licenseChooserWrapper.querySelector('.comboTreeDropDownContainer');
+  const dropdownContainer = elements.licenseChooserWrapper.querySelector(
+    '.comboTreeDropDownContainer',
+  );
   const inputCheckboxes = dropdownContainer.getElementsByTagName('input');
   // unchecking all the options
   for (let i = 0; i < inputCheckboxes.length; i += 1) {
@@ -641,11 +620,11 @@ function resetFilterDataStructures() {
 }
 
 // block to disable license dropdown, when atleast one of use-case checkboxes are checked
-useCaseChooserWrapper.addEventListener(
+elements.useCaseChooserWrapper.addEventListener(
   'click',
   (event) => {
     console.log('capture event occured');
-    const useCaseDropDownContainer = useCaseChooserWrapper.querySelector(
+    const useCaseDropDownContainer = elements.useCaseChooserWrapper.querySelector(
       '.comboTreeDropDownContainer',
     );
     const inputCheckboxes = useCaseDropDownContainer.getElementsByTagName('input');
@@ -657,7 +636,7 @@ useCaseChooserWrapper.addEventListener(
         // if the clicked checkbox is unchecked
         resetLicenseDropDown();
         // disable the license dropdown (as atleast one checkbox is checked)
-        licenseChooser.disabled = true;
+        elements.licenseChooser.disabled = true;
         flag = 1;
       }
     }
@@ -668,16 +647,16 @@ useCaseChooserWrapper.addEventListener(
         if (inputCheckboxes[i].checked) {
           // if atleast one checkbox is checked, disable the license dropdown
           resetLicenseDropDown();
-          licenseChooser.disabled = true;
+          elements.licenseChooser.disabled = true;
           flag = 1;
         }
       }
     }
     if (!flag) {
       // if none of the checkbox is checked
-      if (licenseChooser.disabled) {
+      if (elements.licenseChooser.disabled) {
         // enable the license dropdown if it is not already.
-        licenseChooser.disabled = false;
+        elements.licenseChooser.disabled = false;
       }
     }
   },
@@ -685,17 +664,17 @@ useCaseChooserWrapper.addEventListener(
   // (https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#Parameters)
 );
 
-filterApplyButton.addEventListener('click', () => {
+elements.filterApplyButton.addEventListener('click', () => {
   resetFilterDataStructures();
-  if (providerChooser.value) {
-    const userInputProvidersList = providerChooser.value.split(', ');
+  if (elements.providerChooser.value) {
+    const userInputProvidersList = elements.providerChooser.value.split(', ');
     userInputProvidersList.forEach((element) => {
       userSelectedProvidersList.push(providerAPIQueryStrings[element]);
     });
   }
 
-  if (licenseChooser.value) {
-    const userInputLicensesList = licenseChooser.value.split(', ');
+  if (elements.licenseChooser.value) {
+    const userInputLicensesList = elements.licenseChooser.value.split(', ');
     userInputLicensesList.forEach((element) => {
       console.log(element);
       userSelectedLicensesList.push(licenseAPIQueryStrings[element]);
@@ -703,19 +682,19 @@ filterApplyButton.addEventListener('click', () => {
     console.log(userSelectedLicensesList);
   }
 
-  if (useCaseChooser.value) {
-    const userInputUseCaseList = useCaseChooser.value.split(', ');
+  if (elements.useCaseChooser.value) {
+    const userInputUseCaseList = elements.useCaseChooser.value.split(', ');
     userInputUseCaseList.forEach((element) => {
       console.log(element);
       userSelectedUseCaseList.push(useCaseAPIQueryStrings[element]);
     });
     console.log(userSelectedUseCaseList);
   }
-  searchIcon.click();
+  elements.searchIcon.click();
 });
 
-searchIcon.addEventListener('click', () => {
-  inputText = inputField.value;
+elements.searchIcon.addEventListener('click', () => {
+  inputText = elements.inputField.value;
   pageNo = 1;
 
   checkInputError(inputText);
@@ -723,7 +702,7 @@ searchIcon.addEventListener('click', () => {
   removeOldSearchResults();
 
   // enable spinner
-  spinner.classList.add('spinner');
+  elements.spinner.classList.add('spinner');
 
   const url = getRequestUrl(
     inputText,
