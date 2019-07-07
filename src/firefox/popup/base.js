@@ -23,4 +23,7 @@ export default {
   sectionContentParagraph: document.querySelector('.section-content p'),
   grid: document.querySelector('.grid'),
   filterSection: document.querySelector('.section-filter'),
+  popupTabLinks: document.getElementsByClassName('popup__tab-links'),
+  popupTabContent: document.getElementsByClassName('popup__tab-content'),
+  attributionTabLink: this.popupTabLinks[0],
 };
