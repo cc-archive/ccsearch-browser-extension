@@ -1,6 +1,6 @@
 import elements from './base';
 import { unicodeToString, providerLogos } from './helper';
-import { activatePopup } from './infoPopupView';
+import { activatePopup } from './infoPopupModule';
 
 export function checkInputError(inputText) {
   if (inputText === '') {

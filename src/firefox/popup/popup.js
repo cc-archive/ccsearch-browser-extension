@@ -15,8 +15,11 @@ import {
   licenseAPIQueryStrings,
   useCaseAPIQueryStrings,
   backupProviderAPIQueryStrings,
+  makeElementsDisplayNone,
+  removeClassFromElements,
 } from './helper';
 import { populateProviderList, resetLicenseDropDown } from './filterView';
+import { handleImageAttributionDownload, handleImageDownload } from './infoPopupModule';
 
 let inputText;
 let pageNo;
@@ -44,58 +47,6 @@ clipboard.on('success', (e) => {
   }, 1000);
 });
 
-function getPlainAttribution(image) {
-  if (!image) {
-    return '';
-  }
-  let creatorUrl = 'None';
-  // eslint-disable-next-line no-use-before-define
-  const HtmlAttribution = getHtmlAttribution(image);
-  if (image.creator_url) {
-    creatorUrl = image.creator_url;
-  }
-  if (image.creator) {
-    return `"${image.title}" by ${
-      image.creator
-    } is licensed under CC ${image.license.toUpperCase()} ${image.license_version}\n\n
-Image Link: ${image.foreign_landing_url}\n
-Creator Link: ${creatorUrl}\n\n
-**********************HTML Attribution**********************
-${HtmlAttribution}`;
-  }
-  return `${image.title} is licensed under CC ${image.license.toUpperCase()} ${
-    image.license_version
-  }\n\n
-Image Link: ${image.foreign_landing_url}\n
-Creator Link: ${creatorUrl}\n\n
-**********************HTML Attribution**********************
-${HtmlAttribution}`;
-}
-
-function downloadImage(imageUrl, imageName) {
-  const x = new XMLHttpRequest();
-  x.open('GET', imageUrl, true);
-  x.responseType = 'blob';
-  x.onload = () => {
-    // eslint-disable-next-line no-undef
-    download(x.response, imageName, 'image/gif'); // using download.js (http://danml.com/download.html)
-  };
-  x.send();
-  // eventHandlerTarget.removeEventListener('click', eventHandlerFunction);
-}
-function downloadImageAttribution(image) {
-  // eslint-disable-next-line no-undef
-  download(getPlainAttribution(image), image.title, 'text/plain');
-}
-
-function handleImageDownload(e) {
-  downloadImage(e.currentTarget.imageUrl, e.currentTarget.title);
-}
-function handleImageAttributionDownload(e) {
-  downloadImage(e.currentTarget.image.url, e.currentTarget.image.title);
-  downloadImageAttribution(e.currentTarget.image);
-}
-
 elements.popupCloseButton.addEventListener('click', () => {
   elements.popup.style.opacity = 0;
   elements.popup.style.visibility = 'hidden';
@@ -115,18 +66,6 @@ elements.popup.addEventListener('click', (e) => {
     elements.popupCloseButton.click();
   }
 });
-
-function removeClassFromElements(elemArray, className) {
-  Array.prototype.forEach.call(elemArray, (e) => {
-    e.classList.remove(className);
-  });
-}
-
-function makeElementsDisplayNone(elemArray) {
-  Array.prototype.forEach.call(elemArray, (e) => {
-    e.style.display = 'none';
-  });
-}
 
 Array.prototype.forEach.call(elements.popupTabLinks, (element) => {
   element.addEventListener('click', (e) => {
@@ -148,107 +87,6 @@ elements.inputField.addEventListener('keydown', (event) => {
     elements.searchIcon.click();
   }
 });
-
-// Helper Functions
-
-function getRichTextAttribution(image) {
-  if (!image) {
-    return '';
-  }
-  const imgLink = `<a href="${image.foreign_landing_url}" target="_blank">"${image.title}"</a>`;
-  let creator = '';
-  if (image.creator && image.creator_url) {
-    creator = `<span> by <a href="${image.creator_url}" target="_blank">${
-      image.creator
-    }</a></span>`;
-  } else if (image.creator && !image.creator_url) {
-    creator = `<span> by <span>${image.creator}</span></span>`;
-  }
-  const licenseLink = ` is licensed under <a href="${
-    image.license_url
-  }" target="_blank">CC ${image.license.toUpperCase()} ${image.license_version}</a>`;
-
-  return `${imgLink}${creator}${licenseLink}`;
-}
-
-function getHtmlAttribution(image) {
-  if (!image) {
-    return '';
-  }
-  const baseAssetsPath = 'https://search.creativecommons.org/static/img'; // path is not dynamic. Change if assets are moved.
-  const imgLink = `<a href="${image.foreign_landing_url}">"${image.title}"</a>`;
-  let creator = '';
-  if (image.creator && image.creator_url) {
-    creator = `<span>by <a href="${image.creator_url}">${image.creator}</a></span>`;
-  } else if (image.creator && !image.creator_url) {
-    creator = `<span> by <span>${image.creator}</span></span>`;
-  }
-  const licenseLink = ` is licensed under <a href="${
-    image.license_url
-  }" style="margin-right: 5px;">CC ${image.license.toUpperCase()} ${image.license_version}</a>`;
-
-  let licenseIcons = `<img style="height: inherit;margin-right: 3px;display: inline-block;" src="${baseAssetsPath}/cc_icon.svg" />`;
-  if (image.license) {
-    licenseIcons += image.license
-      .split('-')
-      .map(
-        license => `<img style="height: inherit;margin-right: 3px;display: inline-block;" src="${baseAssetsPath}/cc-${license.toLowerCase()}_icon.svg" />`,
-      )
-      .join('');
-  }
-
-  const licenseImgLink = `<a href="${
-    image.license_url
-  }" target="_blank" rel="noopener noreferrer" style="display: inline-block;white-space: none;opacity: .7;margin-top: 2px;margin-left: 3px;height: 22px !important;">${licenseIcons}</a>`;
-  return `<p style="font-size: 0.9rem;font-style: italic;">${imgLink}${creator}${licenseLink}${licenseImgLink}</p>`;
-}
-
-function getImageData(imageId) {
-  const url = `https://api.creativecommons.engineering/image/${imageId}`;
-
-  fetch(url)
-    .then(data => data.json())
-    .then((res) => {
-      console.log(res);
-      const {
-        title,
-        provider,
-        foreign_landing_url: foreignLandingUrl,
-        license_url: licenseUrl,
-        license,
-      } = res;
-      let { creator, creator_url: creatorUrl } = res;
-      if (!creatorUrl) {
-        creatorUrl = '#';
-      }
-      if (!creator) {
-        creator = 'Not Available';
-      }
-      // adding arguments for event handlers to the target itself
-      elements.downloadImageButton.imageUrl = res.url;
-      elements.downloadImageButton.title = res.title;
-      elements.downloadImageAttributionButton.image = res;
-      const popupTitle = document.querySelector('.info__content-title');
-      const popupCreator = document.querySelector('.info__content-creator');
-      const popupProvider = document.querySelector('.info__content-provider');
-      const popupLicense = document.querySelector('.info__content-license');
-      const attributionRichTextPara = document.getElementById('attribution-rich-text');
-      const attributionHtmlTextArea = document.getElementById('attribution-html');
-      // filling the info tab
-      popupTitle.innerHTML = `${title}`;
-      popupCreator.innerHTML = `<a href=${creatorUrl}>${creator}</a>`;
-      popupProvider.innerHTML = `<a href=${foreignLandingUrl}>${provider}</a>`;
-      popupLicense.innerHTML = `<a href=${licenseUrl}>CC ${license.toUpperCase()}</a>`;
-      // Attribution tab
-      attributionRichTextPara.innerHTML = getRichTextAttribution(res);
-      attributionHtmlTextArea.value = getHtmlAttribution(res);
-      elements.downloadImageButton.addEventListener('click', handleImageDownload);
-      elements.downloadImageAttributionButton.addEventListener(
-        'click',
-        handleImageAttributionDownload,
-      );
-    });
-}
 
 elements.filterIcon.addEventListener('click', () => {
   elements.filterSection.classList.toggle('section-filter--active');
