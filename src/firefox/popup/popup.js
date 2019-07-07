@@ -1,6 +1,13 @@
 /* eslint-disable no-shadow */
-// selectors
 import elements from './base';
+import {
+  checkInputError,
+  removeInitialContent,
+  removeOldSearchResults,
+  getRequestUrl,
+  checkResultLength,
+  addThumbnailsToDOM,
+} from './searchView';
 
 let inputText;
 let pageNo;
@@ -53,34 +60,6 @@ const backupProviderAPIQueryStrings = {
   'Thorvaldsens Museum': 'thorvaldsensmuseum',
   'World Register of Marine Species': 'WoRMS',
 };
-
-// all the provider logo image file names
-const providerLogos = [
-  '500px_logo.png',
-  'animaldiversity_logo.png',
-  'brooklynmuseum_logo.png',
-  'behance_logo.svg',
-  'CAPL_logo.png',
-  'clevelandmuseum_logo.png',
-  'deviantart_logo.png',
-  'digitaltmuseum_logo.png',
-  'eol_logo.png',
-  'flickr_logo.png',
-  'floraon_logo.png',
-  'geographorguk_logo.gif',
-  'iha_logo.png',
-  'mccordmuseum_logo.png',
-  'met_logo.png',
-  'museumsvictoria_logo.svg',
-  'nypl_logo.svg',
-  'rawpixel_logo.png',
-  'rijksmuseum_logo.png',
-  'sciencemuseum_logo.svg',
-  'svgsilh_logo.png',
-  'thingiverse_logo.png',
-  'thorvaldsensmuseum_logo.png',
-  'WoRMS_logo.png',
-];
 
 function getPlainAttribution(image) {
   if (!image) {
@@ -154,10 +133,6 @@ elements.popup.addEventListener('click', (e) => {
   }
 });
 
-const popupTabLinks = document.getElementsByClassName('popup__tab-links');
-const popupTabContent = document.getElementsByClassName('popup__tab-content');
-const attributionTabLink = popupTabLinks[0];
-
 function removeClassFromElements(elemArray, className) {
   Array.prototype.forEach.call(elemArray, (e) => {
     e.classList.remove(className);
@@ -170,14 +145,14 @@ function makeElementsDisplayNone(elemArray) {
   });
 }
 
-Array.prototype.forEach.call(popupTabLinks, (element) => {
+Array.prototype.forEach.call(elements.popupTabLinks, (element) => {
   element.addEventListener('click', (e) => {
     const targetElement = e.target;
     const targetElementText = e.target.textContent;
     console.log(targetElementText);
 
-    makeElementsDisplayNone(popupTabContent);
-    removeClassFromElements(popupTabLinks, 'popup__tab-links-active');
+    makeElementsDisplayNone(elements.popupTabContent);
+    removeClassFromElements(elements.popupTabLinks, 'popup__tab-links-active');
 
     document.getElementById(targetElementText.toLowerCase()).style.display = 'block';
     targetElement.classList.add('popup__tab-links-active');
@@ -193,44 +168,8 @@ elements.inputField.addEventListener('keydown', (event) => {
 
 // Helper Functions
 
-// convert Unicode sequence To String. credit: https://stackoverflow.com/a/22021709/10425980
-function unicodeToString(string) {
-  if (typeof string !== 'undefined') {
-    return string.replace(/\\u[\dA-F]{4}/gi, match => String.fromCharCode(parseInt(match.replace(/\\u/g, ''), 16)));
-  }
-  return '';
-}
-
 function isObjectEmpty(obj) {
   return Object.keys(obj).length === 0 && obj.constructor === Object;
-}
-
-function getRequestUrl(
-  inputText,
-  userSelectedUseCaseList,
-  userSelectedLicensesList,
-  userSelectedProvidersList,
-  page,
-) {
-  if (userSelectedUseCaseList.length > 0) {
-    return `https://api.creativecommons.engineering/image/search?q=${inputText}&page=${page}&pagesize=20&lt=${userSelectedUseCaseList}&provider=${userSelectedProvidersList}`;
-  }
-  return `https://api.creativecommons.engineering/image/search?q=${inputText}&page=${page}&pagesize=20&li=${userSelectedLicensesList}&provider=${userSelectedProvidersList}`;
-}
-
-function checkInputError(inputText) {
-  if (inputText === '') {
-    elements.errorMessage.textContent = 'Please enter a search query';
-    throw new Error('Please enter a search query');
-  } else {
-    elements.errorMessage.textContent = '';
-  }
-}
-
-function removeInitialContent() {
-  if (elements.sectionContentParagraph) {
-    elements.sectionContentParagraph.parentNode.removeChild(elements.sectionContentParagraph);
-  }
 }
 
 function getRichTextAttribution(image) {
@@ -285,22 +224,6 @@ function getHtmlAttribution(image) {
   return `<p style="font-size: 0.9rem;font-style: italic;">${imgLink}${creator}${licenseLink}${licenseImgLink}</p>`;
 }
 
-// eslint-disable-next-line no-undef
-const msnry = new Masonry(elements.grid, {
-  // options
-  itemSelector: '.grid-item',
-  columnWidth: '.grid-item',
-  gutter: '.gutter-sizer',
-  percentPosition: true,
-  transitionDuration: '0',
-});
-
-function removeOldSearchResults() {
-  // remove old images for a new search
-
-  elements.grid.innerHTML = '<div class="gutter-sizer"></div>';
-}
-
 function getImageData(imageId) {
   const url = `https://api.creativecommons.engineering/image/${imageId}`;
 
@@ -347,152 +270,6 @@ function getImageData(imageId) {
       );
     });
 }
-
-function showNoResultFoundMessage() {
-  const sectionContent = document.querySelector('.section-content');
-  const noResultFoundPara = document.createElement('p');
-  noResultFoundPara.textContent = 'No result Found. Please try a different search query.';
-  sectionContent.appendChild(noResultFoundPara);
-}
-
-function checkResultLength(resultArray) {
-  if (resultArray.length === 0) {
-    showNoResultFoundMessage();
-  }
-}
-
-function removeLoderAnimation() {
-  elements.spinner.classList.remove('spinner');
-  elements.noMoreImagesMessage.classList.remove('display-none');
-}
-
-function appendToGrid(msnry, fragment, divs, grid) {
-  grid.appendChild(fragment);
-  msnry.appended(divs);
-  // eslint-disable-next-line no-undef
-  imagesLoaded(grid).on('progress', () => {
-    // layout Masonry after each image loads
-    msnry.layout();
-    // console.log('this function was called');
-  });
-}
-
-function addThumbnailsToDOM(resultArray) {
-  const divs = [];
-  const fragment = document.createDocumentFragment();
-
-  resultArray.forEach((element) => {
-    const thumbnail = element.thumbnail ? element.thumbnail : element.url;
-    const title = unicodeToString(element.title);
-    const { license, provider, id } = element;
-    const licenseArray = license.split('-'); // split license in individual characteristics
-    const foreignLandingUrl = element.foreign_landing_url;
-
-    // make an image element
-    const imgElement = document.createElement('img');
-    imgElement.setAttribute('src', thumbnail);
-    imgElement.setAttribute('class', 'image-thumbnails');
-    imgElement.setAttribute('id', id);
-
-    // make a span to hold the title
-    const spanTitleElement = document.createElement('span');
-    spanTitleElement.setAttribute('class', 'image-title');
-    spanTitleElement.setAttribute('title', title);
-    const imageTitleNode = document.createTextNode(title);
-
-    const foreignLandingLinkElement = document.createElement('a');
-    foreignLandingLinkElement.setAttribute('href', foreignLandingUrl);
-    foreignLandingLinkElement.setAttribute('target', '_blank');
-    foreignLandingLinkElement.setAttribute('class', 'foreign-landing-url');
-
-    const providerImageElement = document.createElement('img');
-    let providerLogoName;
-    for (let i = 0; i < providerLogos.length; i += 1) {
-      if (providerLogos[i].includes(provider)) {
-        providerLogoName = providerLogos[i];
-        break;
-      }
-    }
-    providerImageElement.setAttribute('src', `img/provider_logos/${providerLogoName}`);
-    providerImageElement.setAttribute('class', 'provider-image');
-
-    foreignLandingLinkElement.appendChild(providerImageElement);
-    foreignLandingLinkElement.appendChild(imageTitleNode);
-
-    spanTitleElement.appendChild(foreignLandingLinkElement);
-
-    // make a span to hold the license icons
-    const spanLicenseElement = document.createElement('span');
-    spanLicenseElement.setAttribute('class', 'image-license');
-
-    // make a link to license description
-    const licenseLinkElement = document.createElement('a');
-    licenseLinkElement.setAttribute('href', `https://creativecommons.org/licenses/${license}/2.0/`);
-    licenseLinkElement.setAttribute('target', '_blank'); // open link in new tab
-    licenseLinkElement.setAttribute('title', license); // open link in new tab
-
-    // Array to hold license image elements
-    const licenseIconElementsArray = [];
-
-    // Add the default cc icon
-    let licenseIconElement = document.createElement('img');
-    licenseIconElement.setAttribute('src', 'img/license_logos/cc_icon.svg');
-    licenseIconElement.setAttribute('alt', 'cc_icon');
-    licenseIconElementsArray.push(licenseIconElement);
-
-    // make and push license image elements
-    licenseArray.forEach((name) => {
-      licenseIconElement = document.createElement('img');
-      licenseIconElement.setAttribute('src', `img/license_logos/cc-${name}_icon.svg`);
-      licenseIconElement.setAttribute('alt', `cc-${name}_icon`);
-      licenseIconElementsArray.push(licenseIconElement);
-    });
-
-    licenseIconElementsArray.forEach((licenseIcon) => {
-      licenseLinkElement.appendChild(licenseIcon);
-    });
-    spanLicenseElement.appendChild(licenseLinkElement);
-
-    // make a div element to encapsulate image element
-    const divElement = document.createElement('div');
-    divElement.setAttribute('class', 'image');
-
-    // adding event listener to this image wrapper otherwise to make image clickable we have to make
-    // this div hidden but then the dark ovelay on hover not works because it also gets hidden.
-    divElement.addEventListener('click', (e) => {
-      if (e.target.classList.contains('image')) {
-        const imageThumbnail = e.target.querySelector('.image-thumbnails');
-        getImageData(imageThumbnail.id);
-        elements.popup.style.opacity = 1;
-        elements.popup.style.visibility = 'visible';
-        console.log(attributionTabLink);
-        attributionTabLink.click();
-      }
-    });
-
-    divElement.appendChild(imgElement);
-    divElement.appendChild(spanTitleElement);
-    divElement.appendChild(spanLicenseElement);
-
-    // div to act as grid itemj
-    const gridItemDiv = document.createElement('div');
-    gridItemDiv.setAttribute('class', 'grid-item');
-
-    gridItemDiv.appendChild(divElement);
-
-    fragment.appendChild(gridItemDiv);
-    divs.push(gridItemDiv);
-
-    console.log(gridItemDiv);
-  });
-
-  appendToGrid(msnry, fragment, divs, elements.grid);
-
-  if (resultArray.length <= 10) {
-    removeLoderAnimation();
-  }
-}
-
 function populateProviderList(providerAPIQuerystrings) {
   let count = 0;
   // iterating over provider object
