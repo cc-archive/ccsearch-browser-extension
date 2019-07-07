@@ -33,3 +33,94 @@ export const providerLogos = [
   'thorvaldsensmuseum_logo.png',
   'WoRMS_logo.png',
 ];
+
+export function isObjectEmpty(obj) {
+  return Object.keys(obj).length === 0 && obj.constructor === Object;
+}
+
+// license drop down fields
+export const licensesList = [
+  {
+    id: 0,
+    title: 'CC0',
+  },
+  {
+    id: 1,
+    title: 'Public Domain Mark',
+  },
+  {
+    id: 2,
+    title: 'BY',
+  },
+  {
+    id: 3,
+    title: 'BY-SA',
+  },
+  {
+    id: 4,
+    title: 'BY-NC',
+  },
+  {
+    id: 5,
+    title: 'BY-ND',
+  },
+  {
+    id: 6,
+    title: 'BY-NC-SA',
+  },
+  {
+    id: 7,
+    title: 'BY-NC-ND',
+  },
+];
+
+// Use-case drop down fields
+export const usecasesList = [
+  {
+    id: 0,
+    title: 'I can use commercially',
+  },
+  {
+    id: 1,
+    title: 'I can modify or adapt',
+  },
+];
+
+// object to map user applied License filter to valid API query string
+export const licenseAPIQueryStrings = {
+  CC0: 'CC0',
+  'Public Domain Mark': 'PDM',
+  BY: 'BY',
+  'BY-SA': 'BY-SA',
+  'BY-NC': 'BY-NC',
+  'BY-ND': 'BY-ND',
+  'BY-NC-SA': 'BY-NC-SA',
+  'BY-NC-ND': 'BY-NC-ND',
+};
+
+export const useCaseAPIQueryStrings = {
+  'I can use commercially': 'commercial',
+  'I can modify or adapt': 'modification',
+};
+
+// backup object in case we cannot fetch provider names from the API.
+export const backupProviderAPIQueryStrings = {
+  'Animal Diversity Web': 'animaldiversity',
+  'Brooklyn Museum': 'brooklynmuseum',
+  Bēhance: 'behance',
+  DeviantArt: 'deviantart',
+  'Culturally Authentic Pictorial Lexicon': 'CAPL',
+  'Cleveland Museum Of Art': 'clevelandmuseum',
+  'Digitalt Museum': 'digitaltmuseum',
+  Flickr: 'flickr',
+  'Geograph Britain and Ireland': 'geographorguk',
+  'Flora-on': 'floraon',
+  'Metropolitan Museum of Art': 'met',
+  'Museums Victoria': 'museumsvictoria',
+  'Science Museum - UK': 'sciencemuseum',
+  Rijksmuseum: 'rijksmuseum',
+  'SVG Silh': 'svgsilh',
+  Thingiverse: 'thingiverse',
+  'Thorvaldsens Museum': 'thorvaldsensmuseum',
+  'World Register of Marine Species': 'WoRMS',
+};

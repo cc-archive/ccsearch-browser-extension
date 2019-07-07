@@ -8,13 +8,18 @@ import {
   checkResultLength,
   addThumbnailsToDOM,
 } from './searchView';
+import {
+  isObjectEmpty,
+  licensesList,
+  usecasesList,
+  licenseAPIQueryStrings,
+  useCaseAPIQueryStrings,
+  backupProviderAPIQueryStrings,
+} from './helper';
+import { populateProviderList, resetLicenseDropDown } from './filterView';
 
 let inputText;
 let pageNo;
-// list to hold Providers to show to the user in dropdown
-// the list must have objects with id and title as properties.
-// see https://github.com/kirlisakal/combo-tree#sample-json-data
-const providersList = [];
 
 // List to hold providers selected by the user from the drop down.
 let userSelectedProvidersList = [];
@@ -38,28 +43,6 @@ clipboard.on('success', (e) => {
     e.trigger.textContent = 'Copy';
   }, 1000);
 });
-
-// bakup object in case we cannot fetch provider names from the API.
-const backupProviderAPIQueryStrings = {
-  'Animal Diversity Web': 'animaldiversity',
-  'Brooklyn Museum': 'brooklynmuseum',
-  Bēhance: 'behance',
-  DeviantArt: 'deviantart',
-  'Culturally Authentic Pictorial Lexicon': 'CAPL',
-  'Cleveland Museum Of Art': 'clevelandmuseum',
-  'Digitalt Museum': 'digitaltmuseum',
-  Flickr: 'flickr',
-  'Geograph Britain and Ireland': 'geographorguk',
-  'Flora-on': 'floraon',
-  'Metropolitan Museum of Art': 'met',
-  'Museums Victoria': 'museumsvictoria',
-  'Science Museum - UK': 'sciencemuseum',
-  Rijksmuseum: 'rijksmuseum',
-  'SVG Silh': 'svgsilh',
-  Thingiverse: 'thingiverse',
-  'Thorvaldsens Museum': 'thorvaldsensmuseum',
-  'World Register of Marine Species': 'WoRMS',
-};
 
 function getPlainAttribution(image) {
   if (!image) {
@@ -168,10 +151,6 @@ elements.inputField.addEventListener('keydown', (event) => {
 
 // Helper Functions
 
-function isObjectEmpty(obj) {
-  return Object.keys(obj).length === 0 && obj.constructor === Object;
-}
-
 function getRichTextAttribution(image) {
   if (!image) {
     return '';
@@ -270,50 +249,24 @@ function getImageData(imageId) {
       );
     });
 }
-function populateProviderList(providerAPIQuerystrings) {
-  let count = 0;
-  // iterating over provider object
-  Object.keys(providerAPIQuerystrings).forEach((key) => {
-    providersList[count] = {
-      id: count,
-      title: key,
-    };
-    count += 1;
-  });
-
-  console.log(providersList);
-
-  $('#choose-provider').comboTree({
-    source: providersList,
-    isMultiple: true,
-  });
-
-  elements.providerChooserLoadingMessage.style.display = 'none';
-  elements.providerChooserWrapper.style.display = 'inline-block';
-}
 
 elements.filterIcon.addEventListener('click', () => {
   elements.filterSection.classList.toggle('section-filter--active');
 
   const getProviderURL = 'https://api.creativecommons.engineering/statistics/image';
 
-  console.log(providerAPIQueryStrings);
-
   if (isObjectEmpty(providerAPIQueryStrings)) {
     console.log('inside provider fetch');
     fetch(getProviderURL)
       .then(data => data.json())
       .then((res) => {
-        console.log(res);
         res.forEach((provider) => {
           providerAPIQueryStrings[provider.display_name] = provider.provider_name;
         });
-        console.log(providerAPIQueryStrings);
         populateProviderList(providerAPIQueryStrings);
       })
       .catch((error) => {
         console.log(error);
-        console.log('in catch block');
         providerAPIQueryStrings = backupProviderAPIQueryStrings;
         populateProviderList(providerAPIQueryStrings);
       });
@@ -351,50 +304,7 @@ elements.filterResetButton.addEventListener('click', () => {
   userSelectedProvidersList = [];
   userSelectedUseCaseList = [];
   elements.searchIcon.click();
-  console.log(userSelectedLicensesList);
-  console.log(userSelectedProvidersList);
 });
-
-function resetLicenseDropDown() {
-  elements.licenseChooser.value = '';
-
-  const dropdownContainer = elements.licenseChooserWrapper.querySelector(
-    '.comboTreeDropDownContainer',
-  );
-  const inputCheckboxes = dropdownContainer.getElementsByTagName('input');
-  // unchecking all the options
-  for (let i = 0; i < inputCheckboxes.length; i += 1) {
-    // using click to uncheck the box as setting checked=false also works visually
-    if (inputCheckboxes[i].checked) {
-      inputCheckboxes[i].click();
-    }
-  }
-
-  // clear the datastructures and make a fresh search
-  userSelectedLicensesList = [];
-}
-// object to map user applied License filter to valid API query string
-const licenseAPIQueryStrings = {
-  CC0: 'CC0',
-  'Public Domain Mark': 'PDM',
-  BY: 'BY',
-  'BY-SA': 'BY-SA',
-  'BY-NC': 'BY-NC',
-  'BY-ND': 'BY-ND',
-  'BY-NC-SA': 'BY-NC-SA',
-  'BY-NC-ND': 'BY-NC-ND',
-};
-
-const useCaseAPIQueryStrings = {
-  'I can use commercially': 'commercial',
-  'I can modify or adapt': 'modification',
-};
-
-function resetFilterDataStructures() {
-  userSelectedProvidersList = [];
-  userSelectedLicensesList = [];
-  userSelectedUseCaseList = [];
-}
 
 // block to disable license dropdown, when atleast one of use-case checkboxes are checked
 elements.useCaseChooserWrapper.addEventListener(
@@ -412,6 +322,8 @@ elements.useCaseChooserWrapper.addEventListener(
       if (!event.target.querySelector('input').checked) {
         // if the clicked checkbox is unchecked
         resetLicenseDropDown();
+        // clear the datastructures and make a fresh search
+        userSelectedLicensesList = [];
         // disable the license dropdown (as atleast one checkbox is checked)
         elements.licenseChooser.disabled = true;
         flag = 1;
@@ -442,7 +354,11 @@ elements.useCaseChooserWrapper.addEventListener(
 );
 
 elements.filterApplyButton.addEventListener('click', () => {
-  resetFilterDataStructures();
+  //  reset filter data structures
+  userSelectedProvidersList = [];
+  userSelectedLicensesList = [];
+  userSelectedUseCaseList = [];
+
   if (elements.providerChooser.value) {
     const userInputProvidersList = elements.providerChooser.value.split(', ');
     userInputProvidersList.forEach((element) => {
@@ -503,54 +419,6 @@ elements.searchIcon.addEventListener('click', () => {
     });
 });
 
-// license drop down fields
-const licensesList = [
-  {
-    id: 0,
-    title: 'CC0',
-  },
-  {
-    id: 1,
-    title: 'Public Domain Mark',
-  },
-  {
-    id: 2,
-    title: 'BY',
-  },
-  {
-    id: 3,
-    title: 'BY-SA',
-  },
-  {
-    id: 4,
-    title: 'BY-NC',
-  },
-  {
-    id: 5,
-    title: 'BY-ND',
-  },
-  {
-    id: 6,
-    title: 'BY-NC-SA',
-  },
-  {
-    id: 7,
-    title: 'BY-NC-ND',
-  },
-];
-
-// Use-case drop down fields
-const usecasesList = [
-  {
-    id: 0,
-    title: 'I can use commercially',
-  },
-  {
-    id: 1,
-    title: 'I can modify or adapt',
-  },
-];
-
 // applying comboTree (see https://github.com/kirlisakal/combo-tree)
 $('#choose-usecase').comboTree({
   source: usecasesList,
@@ -561,11 +429,6 @@ $('#choose-license').comboTree({
   source: licensesList,
   isMultiple: true,
 });
-
-// $('#choose-provider').comboTree({
-//   source: providersList,
-//   isMultiple: true,
-// });
 
 let processing;
 
