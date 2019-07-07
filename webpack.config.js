@@ -30,6 +30,16 @@ module.exports = {
         ignore: ['popup.js'],
       },
       {
+        from: 'firefox/popup/vendors/css/*',
+        to: 'firefox/popup/vendors/css/',
+        flatten: true,
+      },
+      {
+        from: 'firefox/popup/vendors/js/*',
+        to: 'firefox/popup/vendors/js/',
+        flatten: true,
+      },
+      {
         from: 'firefox/popup/img/*',
         to: 'firefox/popup/img/',
         flatten: true,
