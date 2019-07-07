@@ -27,7 +27,7 @@ module.exports = {
         from: 'firefox/popup/*',
         to: 'firefox/popup/',
         flatten: true,
-        ignore: ['popup.js'],
+        ignore: ['*.js'],
       },
       {
         from: 'firefox/popup/vendors/css/*',
