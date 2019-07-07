@@ -12,8 +12,9 @@ export function checkInputError(inputText) {
 }
 
 export function removeInitialContent() {
-  if (elements.sectionContentParagraph) {
-    elements.sectionContentParagraph.parentNode.removeChild(elements.sectionContentParagraph);
+  const sectionContentParagraph = document.querySelector('.section-content p');
+  if (sectionContentParagraph) {
+    sectionContentParagraph.parentNode.removeChild(sectionContentParagraph);
   }
 }
 

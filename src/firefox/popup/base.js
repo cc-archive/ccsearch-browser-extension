@@ -20,7 +20,6 @@ export const elements = {
   downloadImageButton: document.getElementById('download-image'),
   downloadImageAttributionButton: document.getElementById('download-image-attribution'),
   popupCloseButton: document.querySelector('.popup__close-button'),
-  sectionContentParagraph: document.querySelector('.section-content p'),
   grid: document.querySelector('.grid'),
   filterSection: document.querySelector('.section-filter'),
   popupTabLinks: document.getElementsByClassName('popup__tab-links'),
