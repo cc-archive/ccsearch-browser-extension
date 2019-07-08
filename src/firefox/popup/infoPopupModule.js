@@ -109,8 +109,12 @@ function getFacebookShareLink(imageId) {
   return `https://www.facebook.com/sharer/sharer.php?u=https://search.creativecommons.org/photos/${imageId}`;
 }
 
-function getTwitterShareLink(foreignLandingUrl) {
-  return `https://twitter.com/home?status=I%20found%20an%20image%20through%20CC%20search%20%40creativecommons%3A%20${foreignLandingUrl}`;
+function getTwitterShareLink(sourceLink) {
+  return `https://twitter.com/home?status=I%20found%20an%20image%20through%20CC%20search%20%40creativecommons%3A%20${sourceLink}`;
+}
+
+function getPinterestShareLink(sourceLink, imageLink) {
+  return `https://pinterest.com/pin/create/button/?url=${sourceLink}&media=${imageLink}&description=I%20found%20an%20image%20through%20CC%20search%20%40creativecommons%3A%20${sourceLink}`;
 }
 
 function getImageData(imageId) {
@@ -127,6 +131,7 @@ function getImageData(imageId) {
         license_url: licenseUrl,
         license,
         id,
+        url: imageUrl,
       } = res;
       let { creator, creator_url: creatorUrl } = res;
       if (!creatorUrl) {
@@ -161,6 +166,7 @@ function getImageData(imageId) {
       // share tab
       elements.facebookShareButton.href = getFacebookShareLink(id);
       elements.twitterShareButton.href = getTwitterShareLink(foreignLandingUrl);
+      elements.pinterestShareButton.href = getPinterestShareLink(foreignLandingUrl, imageUrl);
     });
 }
 

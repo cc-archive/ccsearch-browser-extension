@@ -26,6 +26,7 @@ export const elements = {
   popupTabContent: document.getElementsByClassName('popup__tab-content'),
   facebookShareButton: document.querySelector('.fa-facebook'),
   twitterShareButton: document.querySelector('.fa-twitter'),
+  pinterestShareButton: document.querySelector('.fa-pinterest'),
 };
 
 export const attributionTabLink = elements.popupTabLinks[0];
