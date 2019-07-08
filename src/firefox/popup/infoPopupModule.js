@@ -143,7 +143,7 @@ function getImageData(imageId) {
       }
       // adding arguments for event handlers to the target itself
       elements.downloadImageButton.imageUrl = res.url;
-      elements.downloadImageButton.title = res.title;
+      elements.downloadImageButton.title = `${res.title}.${res.url.split('.').pop()}`;
       elements.downloadImageAttributionButton.image = res;
       const popupTitle = document.querySelector('.info__content-title');
       const popupCreator = document.querySelector('.info__content-creator');
