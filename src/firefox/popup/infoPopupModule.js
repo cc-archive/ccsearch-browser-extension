@@ -104,6 +104,11 @@ export function handleImageAttributionDownload(e) {
   downloadImageAttribution(e.currentTarget.image);
 }
 
+function getFacebookShareLink(imageId) {
+  // needs to be changed if CC Search domain changes.
+  return `https://www.facebook.com/sharer/sharer.php?u=https://search.creativecommons.org/photos/${imageId}`;
+}
+
 function getImageData(imageId) {
   const url = `https://api.creativecommons.engineering/image/${imageId}`;
 
@@ -117,6 +122,7 @@ function getImageData(imageId) {
         foreign_landing_url: foreignLandingUrl,
         license_url: licenseUrl,
         license,
+        id,
       } = res;
       let { creator, creator_url: creatorUrl } = res;
       if (!creatorUrl) {
@@ -148,6 +154,8 @@ function getImageData(imageId) {
         'click',
         handleImageAttributionDownload,
       );
+      // share tab
+      elements.facebookShareButton.href = getFacebookShareLink(id);
     });
 }
 

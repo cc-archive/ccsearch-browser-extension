@@ -24,6 +24,7 @@ export const elements = {
   filterSection: document.querySelector('.section-filter'),
   popupTabLinks: document.getElementsByClassName('popup__tab-links'),
   popupTabContent: document.getElementsByClassName('popup__tab-content'),
+  facebookShareButton: document.querySelector('.fa-facebook'),
 };
 
 export const attributionTabLink = elements.popupTabLinks[0];
