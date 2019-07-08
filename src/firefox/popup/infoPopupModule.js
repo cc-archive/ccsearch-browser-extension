@@ -56,7 +56,7 @@ function getPlainAttribution(image) {
   if (!image) {
     return '';
   }
-  let creatorUrl = 'None';
+  let creatorUrl = 'Not Available';
   // eslint-disable-next-line no-use-before-define
   const HtmlAttribution = getHtmlAttribution(image);
   if (image.creator_url) {
@@ -67,7 +67,8 @@ function getPlainAttribution(image) {
       image.creator
     } is licensed under CC ${image.license.toUpperCase()} ${image.license_version}\n\n
 Image Link: ${image.foreign_landing_url}\n
-Creator Link: ${creatorUrl}\n\n
+Creator Link: ${creatorUrl}\n
+License Link: ${image.license_url}\n\n
 **********************HTML Attribution**********************
 ${HtmlAttribution}`;
   }
