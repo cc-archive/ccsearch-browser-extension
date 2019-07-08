@@ -1,4 +1,5 @@
 import { elements, attributionTabLink } from './base';
+import { addSpinner, removeSpinner } from './spinner';
 
 function getRichTextAttribution(image) {
   if (!image) {
@@ -168,13 +169,17 @@ function getImageData(imageId) {
       elements.facebookShareButton.href = getFacebookShareLink(id);
       elements.twitterShareButton.href = getTwitterShareLink(foreignLandingUrl);
       elements.pinterestShareButton.href = getPinterestShareLink(foreignLandingUrl, imageUrl);
+      removeSpinner(elements.spinnerPlaceholderPopup);
+      elements.popupMain.style.opacity = 1;
+      elements.popupMain.style.visibility = 'visible';
     });
 }
 
 export function activatePopup(imageThumbnail) {
-  getImageData(imageThumbnail.id);
   elements.popup.style.opacity = 1;
   elements.popup.style.visibility = 'visible';
+  addSpinner(elements.spinnerPlaceholderPopup);
+  getImageData(imageThumbnail.id);
   console.log(attributionTabLink);
   attributionTabLink.click();
 }

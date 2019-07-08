@@ -20,6 +20,7 @@ import {
 } from './helper';
 import { populateProviderList, resetLicenseDropDown } from './filterModule';
 import { handleImageAttributionDownload, handleImageDownload } from './infoPopupModule';
+import { addSpinner } from './spinner';
 
 let inputText;
 let pageNo;
@@ -50,6 +51,8 @@ clipboard.on('success', (e) => {
 elements.popupCloseButton.addEventListener('click', () => {
   elements.popup.style.opacity = 0;
   elements.popup.style.visibility = 'hidden';
+  elements.popupMain.style.opacity = 0;
+  elements.popupMain.style.visibility = 'hidden';
 
   // remove eventlisteners from download buttons to avoid multiple downloads.
   elements.downloadImageButton.removeEventListener('click', handleImageDownload);
@@ -233,7 +236,8 @@ elements.searchIcon.addEventListener('click', () => {
   removeOldSearchResults();
 
   // enable spinner
-  elements.spinner.classList.add('spinner');
+  addSpinner(elements.spinnerPlaceholderGrid);
+  // elements.spinner.classList.add('spinner');
 
   const url = getRequestUrl(
     inputText,

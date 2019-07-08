@@ -22,6 +22,11 @@
     transform: translate(-50%, -50%);
   }
 
+  &__main {
+    opacity: 0;
+    visibility: hidden;
+  }
+
   &__tab-content {
     padding: 2rem;
 

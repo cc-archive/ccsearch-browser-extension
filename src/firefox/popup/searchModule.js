@@ -1,6 +1,7 @@
 import { elements } from './base';
 import { unicodeToString, providerLogos } from './helper';
 import { activatePopup } from './infoPopupModule';
+import { removeSpinner } from './spinner';
 
 export function checkInputError(inputText) {
   if (inputText === '') {
@@ -62,7 +63,8 @@ function appendToGrid(msnry, fragment, divs, grid) {
 }
 
 function removeLoaderAnimation() {
-  elements.spinner.classList.remove('spinner');
+  // elements.spinner.classList.remove('spinner');
+  removeSpinner(elements.spinnerPlaceholderGrid);
   elements.noMoreImagesMessage.classList.remove('display-none');
 }
 
