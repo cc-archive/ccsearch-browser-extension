@@ -7,8 +7,8 @@
   left: 0;
   z-index: 100;
   // display: none;
-  opacity: 0;
-  visibility: hidden;
+  // opacity: 0;
+  // visibility: hidden;
 
   &__body {
     background-color: $color-white;
@@ -127,4 +127,36 @@
       border-bottom: 2px solid $color-secondary-dark;
     }
   }
+}
+
+// share buttons
+.fa {
+  box-sizing: content-box;
+  padding: 20px;
+  margin-right: 10px;
+  font-size: 25px;
+  width: 24px;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 50%;
+}
+
+.fa-facebook {
+  background: #3b5998;
+  color: white;
+}
+
+.fa-twitter {
+  background: #55acee;
+  color: white;
+}
+
+.fa-pinterest {
+  background: #cb2027;
+  color: white;
+}
+
+.fa-tumblr {
+  background: #2c4762;
+  color: white;
 }
