@@ -109,6 +109,10 @@ function getFacebookShareLink(imageId) {
   return `https://www.facebook.com/sharer/sharer.php?u=https://search.creativecommons.org/photos/${imageId}`;
 }
 
+function getTwitterShareLink(foreignLandingUrl) {
+  return `https://twitter.com/home?status=I%20found%20an%20image%20through%20CC%20search%20%40creativecommons%3A%20${foreignLandingUrl}`;
+}
+
 function getImageData(imageId) {
   const url = `https://api.creativecommons.engineering/image/${imageId}`;
 
@@ -156,6 +160,7 @@ function getImageData(imageId) {
       );
       // share tab
       elements.facebookShareButton.href = getFacebookShareLink(id);
+      elements.twitterShareButton.href = getTwitterShareLink(foreignLandingUrl);
     });
 }
 
