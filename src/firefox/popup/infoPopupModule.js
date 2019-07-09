@@ -95,14 +95,14 @@ function downloadImage(imageUrl, imageName) {
 }
 function downloadImageAttribution(image) {
   // eslint-disable-next-line no-undef
-  download(getPlainAttribution(image), image.title, 'text/plain');
+  download(getPlainAttribution(image), `${image.title}.txt`, 'text/plain');
 }
 
 export function handleImageDownload(e) {
   downloadImage(e.currentTarget.imageUrl, e.currentTarget.title);
 }
 export function handleImageAttributionDownload(e) {
-  downloadImage(e.currentTarget.image.url, e.currentTarget.image.title);
+  downloadImage(e.currentTarget.image.url, e.currentTarget.title);
   downloadImageAttribution(e.currentTarget.image);
 }
 
@@ -146,6 +146,7 @@ function getImageData(imageId) {
       elements.downloadImageButton.imageUrl = res.url;
       elements.downloadImageButton.title = `${res.title}.${res.url.split('.').pop()}`;
       elements.downloadImageAttributionButton.image = res;
+      elements.downloadImageAttributionButton.title = `${res.title}.${res.url.split('.').pop()}`;
       const popupTitle = document.querySelector('.info__content-title');
       const popupCreator = document.querySelector('.info__content-creator');
       const popupProvider = document.querySelector('.info__content-provider');
