@@ -24,6 +24,11 @@ module.exports = {
         flatten: true,
       },
       {
+        from: 'firefox/options/*',
+        to: 'firefox/options/',
+        flatten: true,
+      },
+      {
         from: 'firefox/popup/*',
         to: 'firefox/popup/',
         flatten: true,
