@@ -5,7 +5,12 @@
   "manifest_version": 2,
   "browser_action": {
     "default_title": "Creative Commons",
-    "default_icon": "icons/cc.svg",
+    "default_icon": {
+      "16": "icons/cc16.png",
+      "38": "icons/cc38.png",
+      "48": "icons/cc48.png",
+      "128": "icons/cc128.png"
+    },
     "default_popup": "popup/popup.html"
   },
   "content_scripts": [
