@@ -8,6 +8,11 @@
     "default_icon": "icons/cc.svg",
     "default_popup": "popup/popup.html"
   },
+  "permissions": ["storage"],
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
