@@ -6,10 +6,13 @@ console.log(path.resolve(__dirname, 'dist/firefox/'));
 
 module.exports = {
   context: path.resolve(__dirname, 'src'),
-  entry: './firefox/popup/popup.js',
+  entry: {
+    './firefox/popup/popup': './firefox/popup/popup.js',
+    './firefox/options/options': './firefox/options/options.js',
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'firefox/popup/popup.js',
+    filename: '[name].js',
   },
   plugins: [
     new CopyPlugin([
@@ -27,6 +30,7 @@ module.exports = {
         from: 'firefox/options/*',
         to: 'firefox/options/',
         flatten: true,
+        ignore: ['*.js'],
       },
       {
         from: 'firefox/popup/*',
