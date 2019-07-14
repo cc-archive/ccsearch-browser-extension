@@ -77,11 +77,11 @@ export const licensesList = [
 // Use-case drop down fields
 export const usecasesList = [
   {
-    id: 0,
+    id: 'commercial',
     title: 'I can use commercially',
   },
   {
-    id: 1,
+    id: 'modifiable',
     title: 'I can modify or adapt',
   },
 ];

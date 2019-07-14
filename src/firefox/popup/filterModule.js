@@ -42,3 +42,22 @@ export function resetLicenseDropDown() {
     }
   }
 }
+
+export function loadUserDefaults() {
+  console.log('loading defaults');
+  const dropdownContainer = elements.useCaseChooserWrapper.querySelector(
+    '.comboTreeDropDownContainer',
+  );
+  const inputCheckboxes = dropdownContainer.getElementsByTagName('input');
+  // unchecking all the options
+  for (let i = 0; i < inputCheckboxes.length; i += 1) {
+    // data attribute is at the parent span element of input
+    const id = inputCheckboxes[i].parentElement.getAttribute('data-id');
+    // eslint-disable-next-line no-undef
+    chrome.storage.local.get({ [id]: false }, (items) => {
+      if (items[id]) {
+        inputCheckboxes[i].click();
+      }
+    });
+  }
+}

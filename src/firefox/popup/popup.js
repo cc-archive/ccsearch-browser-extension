@@ -18,7 +18,7 @@ import {
   makeElementsDisplayNone,
   removeClassFromElements,
 } from './helper';
-import { populateProviderList, resetLicenseDropDown } from './filterModule';
+import { populateProviderList, resetLicenseDropDown, loadUserDefaults } from './filterModule';
 import { handleImageAttributionDownload, handleImageDownload } from './infoPopupModule';
 import { addSpinner } from './spinner';
 
@@ -194,7 +194,7 @@ elements.useCaseChooserWrapper.addEventListener(
   // (https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#Parameters)
 );
 
-elements.filterApplyButton.addEventListener('click', () => {
+function applyFilters() {
   //  reset filter data structures
   userSelectedProvidersList = [];
   userSelectedLicensesList = [];
@@ -224,6 +224,10 @@ elements.filterApplyButton.addEventListener('click', () => {
     });
     console.log(userSelectedUseCaseList);
   }
+}
+
+elements.filterApplyButton.addEventListener('click', () => {
+  applyFilters();
   elements.searchIcon.click();
 });
 
@@ -234,6 +238,7 @@ elements.searchIcon.addEventListener('click', () => {
   checkInputError(inputText);
   removeInitialContent();
   removeOldSearchResults();
+  applyFilters();
 
   // enable spinner
   addSpinner(elements.spinnerPlaceholderGrid);
@@ -271,6 +276,7 @@ $('#choose-license').comboTree({
   source: licensesList,
   isMultiple: true,
 });
+loadUserDefaults();
 
 let processing;
 
@@ -306,4 +312,9 @@ $(document).ready(() => {
     }
     return undefined;
   });
+});
+
+document.getElementById('options').addEventListener('click', () => {
+  // eslint-disable-next-line no-undef
+  chrome.runtime.openOptionsPage();
 });
