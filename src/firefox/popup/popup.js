@@ -318,7 +318,7 @@ $(document).ready(() => {
   });
 });
 
-document.getElementById('options').addEventListener('click', () => {
+document.getElementById('settings-icon').addEventListener('click', () => {
   // eslint-disable-next-line no-undef
   chrome.runtime.openOptionsPage();
 });
