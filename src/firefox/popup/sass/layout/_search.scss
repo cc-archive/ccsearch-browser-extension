@@ -43,11 +43,15 @@
 .section-filter {
   width: 100%;
   height: 5rem;
-  display: none;
+  // display: none;
+  visibility: hidden; //using this because display:none remove the elements from
+  // the DOM itself, so filters were not applied till the users click the filter
+  // icons and the elements were loaded to the DOM.
   position: relative;
 
   &--active {
     display: flex;
+    visibility: visible;
     align-items: center;
   }
 
