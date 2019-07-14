@@ -12,8 +12,15 @@
     </div>
 
     <h3 class="margin-bottom-small">Default Filters:</h3>
+    <div class="note">
+      <span><strong>Note:</strong></span>
+      <ul class="margin-bottom-medium">
+        <li>You can select either licenses or use-case at the same time, not both.</li>
+        <li>Don't forget to save the changes</li>
+      </ul>
+    </div>
 
-    <h4>I want something that:</h4>
+    <h4>I want something that (use-case)</h4>
     <div class="use-case filter-checkboxes">
       <input type="checkbox" id="commercial" />
       <label for="commercial">I can use commercially</label><br />
@@ -21,7 +28,7 @@
       <label for="modifiable">I can modify or adapt</label><br />
     </div>
 
-    <h4 class="margin-top-small">All licenses</h4>
+    <h4 class="margin-top-medium">All licenses</h4>
     <div class="license filter-checkboxes">
       <input type="checkbox" id="CC0" />
       <label for="CC0">CC0</label><br />
@@ -41,12 +48,12 @@
       <label for="BY-NC-ND">BY-NC-ND</label><br />
     </div>
 
-    <h4 class="margin-top-small">All Providers</h4>
+    <h4 class="margin-top-medium">All Providers</h4>
     <div class="provider filter-checkboxes">
       Fetching Latest Providers ...
     </div>
 
-    <button id="save" class="margin-top-medium">Save</button>
+    <button id="save">Save</button>
     <span id="status"></span>
 
     <script src="options.js"></script>

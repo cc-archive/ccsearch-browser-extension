@@ -13,8 +13,16 @@ html {
 body {
   font-family: "Lato", "Arial", sans-serif;
   font-weight: 500;
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   color: #383838;
+}
+
+h4 {
+  font-size: 1.7rem;
+}
+
+h3 {
+  font-size: 2.3rem;
 }
 
 .header {
@@ -27,13 +35,21 @@ body {
   margin: 0 auto;
 }
 
+ul {
+  padding-left: 1.5rem;
+}
+
+.note {
+  padding-left: 1rem;
+}
+
 .filter-checkboxes {
   margin-left: 1rem;
 }
 
 #save {
   padding: 0.5rem 0.7rem;
-  margin-left: 2rem;
+  margin: 1rem 0 5rem 2rem;
 }
 
 /* Utils */
@@ -42,7 +58,7 @@ body {
 }
 
 .margin-bottom-small {
-  margin-bottom: 0.5px;
+  margin-bottom: 0.5rem;
 }
 
 .margin-top-medium {
@@ -50,5 +66,5 @@ body {
 }
 
 .margin-top-small {
-  margin-top: 0.5px;
+  margin-top: 0.5rem;
 }
