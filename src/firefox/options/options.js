@@ -1,7 +1,10 @@
+import { backupProviderAPIQueryStrings } from '../popup/helper';
+
 console.log('options page');
 
 const useCaseInputs = document.querySelector('.use-case').getElementsByTagName('input');
 const licenseInputs = document.querySelector('.license').getElementsByTagName('input');
+const providerInputs = document.querySelector('.provider').getElementsByTagName('input');
 
 function restoreFilters(inputElements) {
   for (let i = 0; i < inputElements.length; i += 1) {
@@ -50,6 +53,51 @@ function saveSingleFilter(inputElements) {
 function saveFilters() {
   saveSingleFilter(useCaseInputs);
   saveSingleFilter(licenseInputs);
+  saveSingleFilter(providerInputs);
 }
 
 document.getElementById('save').addEventListener('click', saveFilters);
+
+function addProvidersToDom(providers) {
+  const providerWrapper = document.querySelector('.provider');
+  providerWrapper.innerText = '';
+
+  Object.keys(providers).forEach((key) => {
+    const input = document.createElement('input');
+    input.type = 'checkbox';
+    input.id = providers[key];
+
+    const label = document.createElement('label');
+    console.log(input.id);
+    label.setAttribute('for', input.id);
+    label.innerText = key;
+
+    const breakLine = document.createElement('br');
+
+    providerWrapper.appendChild(input);
+    providerWrapper.appendChild(label);
+    providerWrapper.appendChild(breakLine);
+  });
+  restoreFilters(providerInputs);
+}
+
+function getLatestProviders() {
+  const getProviderURL = 'https://api.creativecommons.engineering/statistics/image';
+  let providers = {};
+
+  fetch(getProviderURL)
+    .then(data => data.json())
+    .then((res) => {
+      res.forEach((provider) => {
+        providers[provider.display_name] = provider.provider_name;
+      });
+      addProvidersToDom(providers);
+    })
+    .catch((error) => {
+      console.log(error);
+      providers = backupProviderAPIQueryStrings;
+      addProvidersToDom(providers);
+    });
+}
+
+getLatestProviders();

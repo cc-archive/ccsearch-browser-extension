@@ -91,9 +91,7 @@ elements.inputField.addEventListener('keydown', (event) => {
   }
 });
 
-elements.filterIcon.addEventListener('click', () => {
-  elements.filterSection.classList.toggle('section-filter--active');
-
+function fetchProviders() {
   const getProviderURL = 'https://api.creativecommons.engineering/statistics/image';
 
   if (isObjectEmpty(providerAPIQueryStrings)) {
@@ -112,6 +110,12 @@ elements.filterIcon.addEventListener('click', () => {
         populateProviderList(providerAPIQueryStrings);
       });
   }
+}
+
+fetchProviders();
+
+elements.filterIcon.addEventListener('click', () => {
+  elements.filterSection.classList.toggle('section-filter--active');
 });
 
 // TODO: divide the steps into functions

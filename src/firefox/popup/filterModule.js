@@ -5,12 +5,29 @@ import { elements } from './base';
 // see https://github.com/kirlisakal/combo-tree#sample-json-data
 const providersList = [];
 
+function loadFilterSection(wrapperElement) {
+  console.log('loading defaults');
+  const dropdownContainer = wrapperElement.querySelector('.comboTreeDropDownContainer');
+  const inputCheckboxes = dropdownContainer.getElementsByTagName('input');
+  // unchecking all the options
+  for (let i = 0; i < inputCheckboxes.length; i += 1) {
+    // data attribute is at the parent span element of input
+    const id = inputCheckboxes[i].parentElement.getAttribute('data-id');
+    // eslint-disable-next-line no-undef
+    chrome.storage.local.get({ [id]: false }, (items) => {
+      if (items[id]) {
+        inputCheckboxes[i].click();
+      }
+    });
+  }
+}
+
 export function populateProviderList(providerAPIQuerystrings) {
   let count = 0;
   // iterating over provider object
   Object.keys(providerAPIQuerystrings).forEach((key) => {
     providersList[count] = {
-      id: count,
+      id: providerAPIQuerystrings[key],
       title: key,
     };
     count += 1;
@@ -25,6 +42,7 @@ export function populateProviderList(providerAPIQuerystrings) {
 
   elements.providerChooserLoadingMessage.style.display = 'none';
   elements.providerChooserWrapper.style.display = 'inline-block';
+  loadFilterSection(elements.providerChooserWrapper);
 }
 
 export function resetLicenseDropDown() {
@@ -40,23 +58,6 @@ export function resetLicenseDropDown() {
     if (inputCheckboxes[i].checked) {
       inputCheckboxes[i].click();
     }
-  }
-}
-
-function loadFilterSection(wrapperElement) {
-  console.log('loading defaults');
-  const dropdownContainer = wrapperElement.querySelector('.comboTreeDropDownContainer');
-  const inputCheckboxes = dropdownContainer.getElementsByTagName('input');
-  // unchecking all the options
-  for (let i = 0; i < inputCheckboxes.length; i += 1) {
-    // data attribute is at the parent span element of input
-    const id = inputCheckboxes[i].parentElement.getAttribute('data-id');
-    // eslint-disable-next-line no-undef
-    chrome.storage.local.get({ [id]: false }, (items) => {
-      if (items[id]) {
-        inputCheckboxes[i].click();
-      }
-    });
   }
 }
 
