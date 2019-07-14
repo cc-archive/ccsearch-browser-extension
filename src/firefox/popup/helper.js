@@ -107,7 +107,7 @@ export const useCaseAPIQueryStrings = {
 export const backupProviderAPIQueryStrings = {
   'Animal Diversity Web': 'animaldiversity',
   'Brooklyn Museum': 'brooklynmuseum',
-  Bēhance: 'behance',
+  Behance: 'behance',
   DeviantArt: 'deviantart',
   'Culturally Authentic Pictorial Lexicon': 'CAPL',
   'Cleveland Museum Of Art': 'clevelandmuseum',
