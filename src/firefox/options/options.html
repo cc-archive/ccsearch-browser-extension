@@ -2,25 +2,26 @@
 <html>
   <head>
     <title>My Test Extension Options</title>
+    <link rel="stylesheet" href="options.css" />
   </head>
   <body>
-    Favorite color:
-    <select id="color">
-      <option value="red">red</option>
-      <option value="green">green</option>
-      <option value="blue">blue</option>
-      <option value="yellow">yellow</option>
-    </select>
+    <div class="header margin-bottom-medium">
+      <img src="../icons/cc128.png" alt="cc-icon" class="cc-icon" />
+    </div>
 
-    <label>
-      <input type="checkbox" id="like" />
-      I like colors.
-    </label>
+    <h3 class="margin-bottom-small">Default Filters:</h3>
 
-    <div id="status"></div>
+    <h4>I want something that:</h4>
+    <div class="use-case">
+      <input type="checkbox" id="commercial" />
+      <label for="commercial">I can use commercially</label>
+      <input type="checkbox" id="modifiable" />
+      <label for="modifiable">I can modify or adapt</label>
+    </div>
+
     <button id="save">Save</button>
     <button id="show">show</button>
-    <div id="showdiv"></div>
+    <div id="status"></div>
 
     <script src="options.js"></script>
   </body>

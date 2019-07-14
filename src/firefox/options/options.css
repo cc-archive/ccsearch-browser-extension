@@ -1,0 +1,27 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.header {
+  padding: 2px;
+}
+
+.cc-icon {
+  display: block;
+  height: 20px;
+}
+
+/* Utils */
+.margin-bottom-medium {
+  margin-bottom: 10px;
+}
+
+.margin-bottom-small {
+  margin-bottom: 5px;
+}
+
+.margin-top-small {
+  margin-top: 5px;
+}
