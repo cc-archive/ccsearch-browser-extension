@@ -1,7 +1,20 @@
-* {
-  box-sizing: border-box;
-  padding: 0;
+*,
+*::after,
+*::before {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: "Lato", "Arial", sans-serif;
+  font-weight: 500;
+  font-size: 1.6rem;
+  color: #383838;
 }
 
 .header {
@@ -10,18 +23,32 @@
 
 .cc-icon {
   display: block;
-  height: 20px;
+  height: 30px;
+  margin: 0 auto;
+}
+
+.filter-checkboxes {
+  margin-left: 1rem;
+}
+
+#save {
+  padding: 0.5rem 0.7rem;
+  margin-left: 2rem;
 }
 
 /* Utils */
 .margin-bottom-medium {
-  margin-bottom: 10px;
+  margin-bottom: 1rem;
 }
 
 .margin-bottom-small {
-  margin-bottom: 5px;
+  margin-bottom: 0.5px;
+}
+
+.margin-top-medium {
+  margin-top: 1rem;
 }
 
 .margin-top-small {
-  margin-top: 5px;
+  margin-top: 0.5px;
 }

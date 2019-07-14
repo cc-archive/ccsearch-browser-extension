@@ -40,7 +40,7 @@ function saveSingleFilter(inputElements) {
       },
       () => {
         const status = document.getElementById('status');
-        status.textContent = 'Options Saved!';
+        status.textContent = 'Saved!';
         setTimeout(() => {
           status.textContent = '';
         }, 1000);

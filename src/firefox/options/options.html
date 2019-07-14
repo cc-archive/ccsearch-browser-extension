@@ -2,6 +2,8 @@
 <html>
   <head>
     <title>My Test Extension Options</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,300i,400&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <link rel="stylesheet" href="options.css" />
   </head>
   <body>
@@ -12,41 +14,40 @@
     <h3 class="margin-bottom-small">Default Filters:</h3>
 
     <h4>I want something that:</h4>
-    <div class="use-case">
+    <div class="use-case filter-checkboxes">
       <input type="checkbox" id="commercial" />
-      <label for="commercial">I can use commercially</label>
+      <label for="commercial">I can use commercially</label><br />
       <input type="checkbox" id="modifiable" />
-      <label for="modifiable">I can modify or adapt</label>
+      <label for="modifiable">I can modify or adapt</label><br />
     </div>
 
     <h4 class="margin-top-small">All licenses</h4>
-    <div class="license">
+    <div class="license filter-checkboxes">
       <input type="checkbox" id="CC0" />
-      <label for="CC0">CC0</label>
+      <label for="CC0">CC0</label><br />
       <input type="checkbox" id="Public Domain Mark" />
       <label for="Public Domain Mark">Public Domain Mark</label><br />
       <input type="checkbox" id="BY" />
-      <label for="BY">BY</label>
+      <label for="BY">BY</label><br />
       <input type="checkbox" id="BY-SA" />
       <label for="BY-SA">BY-SA</label><br />
       <input type="checkbox" id="BY-NC" />
-      <label for="BY-NC">BY-NC</label>
+      <label for="BY-NC">BY-NC</label><br />
       <input type="checkbox" id="BY-ND" />
       <label for="BY-ND">BY-ND</label><br />
       <input type="checkbox" id="BY-NC-SA" />
       <label for="BY-NC-SA">BY-NC-SA</label><br />
       <input type="checkbox" id="BY-NC-ND" />
-      <label for="BY-NC-ND">BY-NC-ND</label>
+      <label for="BY-NC-ND">BY-NC-ND</label><br />
     </div>
 
     <h4 class="margin-top-small">All Providers</h4>
-    <div class="provider">
+    <div class="provider filter-checkboxes">
       Fetching Latest Providers ...
     </div>
 
-    <button id="save">Save</button>
-    <button id="show">show</button>
-    <div id="status"></div>
+    <button id="save" class="margin-top-medium">Save</button>
+    <span id="status"></span>
 
     <script src="options.js"></script>
   </body>
