@@ -41,35 +41,35 @@ export function isObjectEmpty(obj) {
 // license drop down fields
 export const licensesList = [
   {
-    id: 0,
+    id: 'CC0',
     title: 'CC0',
   },
   {
-    id: 1,
+    id: 'Public Domain Mark',
     title: 'Public Domain Mark',
   },
   {
-    id: 2,
+    id: 'BY',
     title: 'BY',
   },
   {
-    id: 3,
+    id: 'BY-SA',
     title: 'BY-SA',
   },
   {
-    id: 4,
+    id: 'BY-NC',
     title: 'BY-NC',
   },
   {
-    id: 5,
+    id: 'BY-ND',
     title: 'BY-ND',
   },
   {
-    id: 6,
+    id: 'BY-NC-SA',
     title: 'BY-NC-SA',
   },
   {
-    id: 7,
+    id: 'BY-NC-ND',
     title: 'BY-NC-ND',
   },
 ];

@@ -1,14 +1,15 @@
 console.log('options page');
 
 const useCaseInputs = document.querySelector('.use-case').getElementsByTagName('input');
+const licenseInputs = document.querySelector('.license').getElementsByTagName('input');
 
-function restoreFilters() {
-  for (let i = 0; i < useCaseInputs.length; i += 1) {
-    const useCase = useCaseInputs[i].id;
+function restoreFilters(inputElements) {
+  for (let i = 0; i < inputElements.length; i += 1) {
+    const { id } = inputElements[i];
     // eslint-disable-next-line no-undef
-    chrome.storage.local.get({ [useCase]: false }, (items) => {
+    chrome.storage.local.get({ [id]: false }, (items) => {
       // default value is false
-      document.getElementById(useCase).checked = items[useCase];
+      document.getElementById(id).checked = items[id];
     });
     // eslint-disable-next-line no-undef
     chrome.storage.local.get(null, (items) => {
@@ -18,16 +19,21 @@ function restoreFilters() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', restoreFilters);
+function init() {
+  restoreFilters(useCaseInputs);
+  restoreFilters(licenseInputs);
+}
 
-function saveFilters() {
-  for (let i = 0; i < useCaseInputs.length; i += 1) {
-    const useCase = useCaseInputs[i].id;
-    const useCaseValue = useCaseInputs[i].checked;
+document.addEventListener('DOMContentLoaded', init);
+
+function saveSingleFilter(inputElements) {
+  for (let i = 0; i < inputElements.length; i += 1) {
+    const { id } = inputElements[i];
+    const value = inputElements[i].checked;
     // eslint-disable-next-line no-undef
     chrome.storage.local.set(
       {
-        [useCase]: useCaseValue, // using ES6 to use variable as key of object
+        [id]: value, // using ES6 to use variable as key of object
       },
       () => {
         const status = document.getElementById('status');
@@ -35,10 +41,15 @@ function saveFilters() {
         setTimeout(() => {
           status.textContent = '';
         }, 1000);
-        console.log(`${useCase} has been set to ${useCaseValue}`);
+        console.log(`${id} has been set to ${value}`);
       },
     );
   }
+}
+
+function saveFilters() {
+  saveSingleFilter(useCaseInputs);
+  saveSingleFilter(licenseInputs);
 }
 
 document.getElementById('save').addEventListener('click', saveFilters);

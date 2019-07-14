@@ -43,11 +43,9 @@ export function resetLicenseDropDown() {
   }
 }
 
-export function loadUserDefaults() {
+function loadFilterSection(wrapperElement) {
   console.log('loading defaults');
-  const dropdownContainer = elements.useCaseChooserWrapper.querySelector(
-    '.comboTreeDropDownContainer',
-  );
+  const dropdownContainer = wrapperElement.querySelector('.comboTreeDropDownContainer');
   const inputCheckboxes = dropdownContainer.getElementsByTagName('input');
   // unchecking all the options
   for (let i = 0; i < inputCheckboxes.length; i += 1) {
@@ -60,4 +58,9 @@ export function loadUserDefaults() {
       }
     });
   }
+}
+
+export function loadUserDefaults() {
+  loadFilterSection(elements.useCaseChooserWrapper);
+  loadFilterSection(elements.licenseChooserWrapper);
 }
