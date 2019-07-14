@@ -6,6 +6,30 @@ const useCaseInputs = document.querySelector('.use-case').getElementsByTagName('
 const licenseInputs = document.querySelector('.license').getElementsByTagName('input');
 const providerInputs = document.querySelector('.provider').getElementsByTagName('input');
 
+Array.prototype.forEach.call(useCaseInputs, (element) => {
+  element.addEventListener('click', (e) => {
+    console.log(`${e.target} clicked`);
+    if (e.target.checked) {
+      Array.prototype.forEach.call(licenseInputs, (licenseElement) => {
+        // eslint-disable-next-line no-param-reassign
+        licenseElement.checked = false;
+      });
+    }
+  });
+});
+
+Array.prototype.forEach.call(licenseInputs, (element) => {
+  element.addEventListener('click', (e) => {
+    console.log(`${e.target} clicked`);
+    if (e.target.checked) {
+      Array.prototype.forEach.call(useCaseInputs, (licenseElement) => {
+        // eslint-disable-next-line no-param-reassign
+        licenseElement.checked = false;
+      });
+    }
+  });
+});
+
 function restoreFilters(inputElements) {
   for (let i = 0; i < inputElements.length; i += 1) {
     const { id } = inputElements[i];
