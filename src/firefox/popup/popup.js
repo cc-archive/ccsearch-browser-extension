@@ -322,3 +322,7 @@ document.getElementById('settings-icon').addEventListener('click', () => {
   // eslint-disable-next-line no-undef
   chrome.runtime.openOptionsPage();
 });
+
+document.getElementById('invert_colors-icon').addEventListener('click', () => {
+  document.body.classList.toggle('dark');
+});
