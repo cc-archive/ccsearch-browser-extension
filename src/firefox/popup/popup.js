@@ -326,3 +326,10 @@ document.getElementById('settings-icon').addEventListener('click', () => {
 document.getElementById('invert_colors-icon').addEventListener('click', () => {
   document.body.classList.toggle('dark');
 });
+
+// eslint-disable-next-line no-undef
+chrome.storage.local.get('darkmode', (items) => {
+  if (items.darkmode) {
+    document.body.classList.add('dark');
+  }
+});

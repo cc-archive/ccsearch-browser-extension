@@ -5,7 +5,9 @@ console.log('options page');
 const useCaseInputs = document.querySelector('.use-case').getElementsByTagName('input');
 const licenseInputs = document.querySelector('.license').getElementsByTagName('input');
 const providerInputs = document.querySelector('.provider').getElementsByTagName('input');
+const darkModeInput = document.querySelector('.dark-mode').getElementsByTagName('input');
 
+// Making sure that only license or use-case is selected at the same time
 Array.prototype.forEach.call(useCaseInputs, (element) => {
   element.addEventListener('click', (e) => {
     console.log(`${e.target} clicked`);
@@ -49,6 +51,7 @@ function restoreFilters(inputElements) {
 function init() {
   restoreFilters(useCaseInputs);
   restoreFilters(licenseInputs);
+  restoreFilters(darkModeInput);
 }
 
 document.addEventListener('DOMContentLoaded', init);
@@ -78,6 +81,7 @@ function saveFilters() {
   saveSingleFilter(useCaseInputs);
   saveSingleFilter(licenseInputs);
   saveSingleFilter(providerInputs);
+  saveSingleFilter(darkModeInput);
 }
 
 document.getElementById('save').addEventListener('click', saveFilters);
