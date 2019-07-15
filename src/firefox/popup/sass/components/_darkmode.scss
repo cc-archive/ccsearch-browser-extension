@@ -1,0 +1,54 @@
+// Dark mode settings
+
+body.dark {
+  background-color: $color-darkmode-1;
+  color: $color-white;
+
+  input {
+    background-color: $color-darkmode-2 !important;
+    color: $color-white !important;
+  }
+
+  .popup__body {
+    background-color: $color-darkmode-1 !important ;
+  }
+
+  // dropdown input placeholder
+  .comboTreeInputBox::placeholder {
+    color: $color-white;
+  }
+
+  // dropdown input
+  .comboTreeInputBox {
+    color: transparent !important;
+    text-shadow: 0 0 0 #2196f3 !important;
+  }
+
+  // dropdown colors
+  .ComboTreeItemChlid {
+    background-color: $color-darkmode-2 !important;
+    color: $color-white !important;
+  }
+
+  #search-icon {
+    color: $color-white;
+  }
+
+  #filter-icon {
+    color: $color-white;
+  }
+
+  .popup__tab-links {
+    background-color: $color-darkmode-2;
+    color: $color-white;
+  }
+
+  textarea {
+    color: $color-white;
+    background-color: $color-darkmode-2;
+  }
+
+  .spinner > div {
+    background-color: $color-white;
+  }
+}

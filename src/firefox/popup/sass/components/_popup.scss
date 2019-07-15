@@ -57,7 +57,7 @@
       box-sizing: content-box;
       position: relative;
       text-decoration: none;
-      background-color: lighten($color-black, 30);
+      background-color: $color-secondary-light;
       color: $color-white;
       border: none;
       border-radius: 5px;
@@ -65,7 +65,7 @@
       cursor: pointer;
 
       &:hover {
-        background-color: lighten($color-black, 25);
+        background-color: $color-secondary-dark;
       }
     }
 
