@@ -41,6 +41,10 @@ body.dark {
   .popup__tab-links {
     background-color: $color-darkmode-2;
     color: $color-white;
+
+    &-active {
+      border-bottom: 2px solid $color-primary-dark;
+    }
   }
 
   textarea {
