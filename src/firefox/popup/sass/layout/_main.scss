@@ -110,13 +110,12 @@
     top: 0.5rem;
     left: 0.5rem;
     display: block;
-    width: 100%;
+    width: 90%;
     opacity: 0;
     z-index: 3;
     height: 2rem;
 
     a {
-      display: block;
       height: inherit;
 
       &:hover {
@@ -126,6 +125,12 @@
         display: inline-block;
         height: inherit;
       }
+    }
+
+    .bookmark-icon {
+      float: right;
+      color: $color-white;
+      cursor: pointer;
     }
   }
 }
