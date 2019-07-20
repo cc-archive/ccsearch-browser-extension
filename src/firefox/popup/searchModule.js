@@ -2,6 +2,7 @@ import { elements } from './base';
 import { unicodeToString, providerLogos } from './helper';
 import { activatePopup } from './infoPopupModule';
 import { removeSpinner } from './spinner';
+import bookmarkImage from './bookmarkModule';
 
 export function checkInputError(inputText) {
   if (inputText === '') {
@@ -153,7 +154,18 @@ export function addThumbnailsToDOM(resultArray) {
     licenseIconElementsArray.forEach((licenseIcon) => {
       licenseLinkElement.appendChild(licenseIcon);
     });
+
+    const bookmarkIcon = document.createElement('i');
+    bookmarkIcon.classList.add('material-icons');
+    bookmarkIcon.classList.add('bookmark-icon');
+    bookmarkIcon.id = 'settings-icon';
+    bookmarkIcon.title = 'Bookmark image';
+    bookmarkIcon.innerText = 'bookmark_border';
+    bookmarkIcon.setAttribute('data-imageid', id);
+    bookmarkIcon.addEventListener('click', bookmarkImage);
+
     spanLicenseElement.appendChild(licenseLinkElement);
+    spanLicenseElement.appendChild(bookmarkIcon);
 
     // make a div element to encapsulate image element
     const divElement = document.createElement('div');
