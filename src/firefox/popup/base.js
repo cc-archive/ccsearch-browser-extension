@@ -29,6 +29,10 @@ export const elements = {
   facebookShareButton: document.querySelector('.fa-facebook'),
   twitterShareButton: document.querySelector('.fa-twitter'),
   pinterestShareButton: document.querySelector('.fa-pinterest'),
+  showBookmarksIcon: document.getElementById('show_bookmarks-icon'),
+  homeIcon: document.getElementById('home-icon'),
+  primarySection: document.querySelector('.section-primary'),
+  bookmarksSection: document.querySelector('.section-bookmarks'),
 };
 
 export const attributionTabLink = elements.popupTabLinks[0];

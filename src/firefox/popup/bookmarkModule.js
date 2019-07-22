@@ -1,3 +1,5 @@
+import { elements } from './base';
+
 function showConfirmationMessage() {
   console.log('image bookmarked');
 }
@@ -17,3 +19,15 @@ export default function bookmarkImage(e) {
     });
   });
 }
+
+elements.showBookmarksIcon.addEventListener('click', () => {
+  elements.primarySection.style.display = 'none';
+  elements.bookmarksSection.style.display = 'block';
+  elements.homeIcon.style.visibility = 'visible';
+});
+
+elements.homeIcon.addEventListener('click', (e) => {
+  elements.primarySection.style.display = 'block';
+  elements.bookmarksSection.style.display = 'none';
+  e.target.style.visibility = 'hidden';
+});

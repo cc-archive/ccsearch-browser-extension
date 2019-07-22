@@ -18,50 +18,56 @@
         <img src="img/cc-logo_white.png" alt="cc logo" />
       </a>
       <div class="header__icons">
-        <i class="material-icons" id="bookmarks-icon" title="Show all bookmarks">bookmarks</i>
+        <i class="material-icons" id="home-icon" title="Home">home</i>
+        <i class="material-icons" id="show_bookmarks-icon" title="Show all bookmarks">bookmarks</i>
         <i class="material-icons" id="settings-icon" title="settings">settings</i>
         <i class="material-icons" id="invert_colors-icon" title="Toggle Dark Mode">invert_colors</i>
       </div>
     </header>
-    <div class="container">
-      <section class="section-search">
-        <input type="text" placeholder="search the commons..." id="section-search-input" autofocus />
-        <i class="material-icons" id="search-icon">search</i>
-        <i class="material-icons" id="filter-icon">filter_list</i>
-      </section>
-      <section class="section-filter">
-        <div class="section-filter__filter-wrapper section-filter__filter-wrapper--choose-usecase">
-          <input type="text" id="choose-usecase" placeholder="I want something that" />
-        </div>
-        <div class="section-filter__filter-wrapper section-filter__filter-wrapper--choose-license">
-          <input type="text" id="choose-license" placeholder="All licenses" />
-        </div>
-        <div class="section-filter__filter-wrapper section-filter__filter-wrapper--choose-provider">
-          <input type="text" id="choose-provider" placeholder="All Providers" />
-        </div>
-        <span class="section-filter__provider-loading-mes">Fetching Providers List . . .</span>
-        <a href="#" class="section-filter--apply-button" title="apply filters">Apply</a>
-        <a href="#" class="section-filter--reset-button" title="reset filters">Reset</a>
-      </section>
-      <span id="error-message"></span>
-      <section class="section-content">
-        <div class="row">
-          <p class="initial-info">
-            Search for free content in the public domain and under Creative Commons licenses.<br /><br />
-            Learn more about CC licenses
-            <a href="https://creativecommons.org/share-your-work/licensing-types-examples/" target="_blank">
-              here.
-            </a>
-          </p>
-        </div>
-        <div class="section-content__images-container">
-          <div class="grid">
-            <div class="gutter-sizer"></div>
+    <div class="section-primary">
+      <div class="container">
+        <section class="section-search">
+          <input type="text" placeholder="search the commons..." id="section-search-input" autofocus />
+          <i class="material-icons" id="search-icon">search</i>
+          <i class="material-icons" id="filter-icon">filter_list</i>
+        </section>
+        <section class="section-filter">
+          <div class="section-filter__filter-wrapper section-filter__filter-wrapper--choose-usecase">
+            <input type="text" id="choose-usecase" placeholder="I want something that" />
           </div>
-        </div>
-        <div id="spinner-placeholder--grid"></div>
-        <p class="no-more-images-mes display-none">No more images!</p>
-      </section>
+          <div class="section-filter__filter-wrapper section-filter__filter-wrapper--choose-license">
+            <input type="text" id="choose-license" placeholder="All licenses" />
+          </div>
+          <div class="section-filter__filter-wrapper section-filter__filter-wrapper--choose-provider">
+            <input type="text" id="choose-provider" placeholder="All Providers" />
+          </div>
+          <span class="section-filter__provider-loading-mes">Fetching Providers List . . .</span>
+          <a href="#" class="section-filter--apply-button" title="apply filters">Apply</a>
+          <a href="#" class="section-filter--reset-button" title="reset filters">Reset</a>
+        </section>
+        <span id="error-message"></span>
+        <section class="section-content">
+          <div class="row">
+            <p class="initial-info">
+              Search for free content in the public domain and under Creative Commons licenses.<br /><br />
+              Learn more about CC licenses
+              <a href="https://creativecommons.org/share-your-work/licensing-types-examples/" target="_blank">
+                here.
+              </a>
+            </p>
+          </div>
+          <div class="section-content__images-container">
+            <div class="grid">
+              <div class="gutter-sizer"></div>
+            </div>
+          </div>
+          <div id="spinner-placeholder--grid"></div>
+          <p class="no-more-images-mes display-none">No more images!</p>
+        </section>
+      </div>
+    </div>
+    <div class="section-bookmarks">
+      <h2>Your bookmarks</h2>
     </div>
     <div class="popup" id="popup">
       <div class="popup__body">
