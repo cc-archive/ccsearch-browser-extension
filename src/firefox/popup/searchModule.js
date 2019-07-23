@@ -14,7 +14,7 @@ export function checkInputError(inputText) {
 }
 
 export function removeInitialContent() {
-  const sectionContentParagraph = document.querySelector('.section-content p');
+  const sectionContentParagraph = document.querySelector('.section-content--primary p');
   if (sectionContentParagraph) {
     sectionContentParagraph.parentNode.removeChild(sectionContentParagraph);
   }
@@ -23,7 +23,7 @@ export function removeInitialContent() {
 export function removeOldSearchResults() {
   // remove old images for a new search
 
-  elements.grid.innerHTML = '<div class="gutter-sizer"></div>';
+  elements.gridPrimary.innerHTML = '<div class="gutter-sizer"></div>';
 }
 
 export function getRequestUrl(
@@ -70,7 +70,7 @@ function removeLoaderAnimation() {
 }
 
 // eslint-disable-next-line no-undef
-const msnry = new Masonry(elements.grid, {
+const msnry = new Masonry(elements.gridPrimary, {
   // options
   itemSelector: '.grid-item',
   columnWidth: '.grid-item',
@@ -195,7 +195,7 @@ export function addThumbnailsToDOM(resultArray) {
     console.log(gridItemDiv);
   });
 
-  appendToGrid(msnry, fragment, divs, elements.grid);
+  appendToGrid(msnry, fragment, divs, elements.gridPrimary);
 
   if (resultArray.length <= 10) {
     removeLoaderAnimation();
