@@ -42,6 +42,10 @@ function removeBookmark(e) {
     // eslint-disable-next-line no-undef
     chrome.storage.local.set({ bookmarks: bookmarksArray }, () => {
       console.log('bookmarks updated');
+      const imageDiv = document.getElementById(`id_${imageId}`);
+      imageDiv.parentElement.removeChild(imageDiv);
+      // eslint-disable-next-line no-use-before-define
+      msnry.layout(); // layout grid again
       showNotification('Bookmark removed');
     });
   });
@@ -185,6 +189,7 @@ function loadImages() {
           // make a div element to encapsulate image element
           const divElement = document.createElement('div');
           divElement.setAttribute('class', 'image');
+          divElement.id = `id_${imageId}`; // used for searching image div element
 
           // adding event listener to open popup.
           divElement.addEventListener('click', (e) => {
