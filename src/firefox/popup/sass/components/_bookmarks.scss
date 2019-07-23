@@ -4,4 +4,13 @@
 
 .section-bookmarks {
   display: none;
+
+  &--heading {
+    font-size: 2.5rem;
+    text-align: center;
+
+    h2 {
+      font-weight: 500;
+    }
+  }
 }
