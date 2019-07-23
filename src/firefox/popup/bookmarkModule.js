@@ -5,6 +5,7 @@ import { providerLogos, unicodeToString } from './helper';
 function showConfirmationMessage() {
   console.log('image bookmarked');
 }
+
 export default function bookmarkImage(e) {
   console.log('save bookmark');
   console.log(e.target);
@@ -43,10 +44,20 @@ const msnry = new Masonry(elements.gridBookmarks, {
   transitionDuration: '0',
 });
 
+function removeInitialContent() {
+  const sectionContentParagraph = document.querySelector('.section-content--bookmarks p');
+  if (sectionContentParagraph) {
+    sectionContentParagraph.parentNode.removeChild(sectionContentParagraph);
+  }
+}
+
 function loadImages() {
   // eslint-disable-next-line no-undef
   chrome.storage.local.get({ bookmarks: [] }, (items) => {
     const bookmarksArray = items.bookmarks;
+    if (bookmarksArray.length >= 0) {
+      removeInitialContent();
+    }
     console.log(bookmarksArray);
 
     // get the details of each image
@@ -179,19 +190,11 @@ function loadImages() {
   });
 }
 
-function removeInitialContent() {
-  const sectionContentParagraph = document.querySelector('.section-content--bookmarks p');
-  if (sectionContentParagraph) {
-    sectionContentParagraph.parentNode.removeChild(sectionContentParagraph);
-  }
-}
-
 elements.showBookmarksIcon.addEventListener('click', () => {
   elements.primarySection.style.display = 'none';
   elements.bookmarksSection.style.display = 'block';
   elements.homeIcon.style.visibility = 'visible';
 
-  removeInitialContent();
   loadImages();
 });
 
