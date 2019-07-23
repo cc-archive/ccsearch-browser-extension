@@ -178,11 +178,19 @@ function loadImages() {
   });
 }
 
+function removeInitialContent() {
+  const sectionContentParagraph = document.querySelector('.section-content--bookmarks p');
+  if (sectionContentParagraph) {
+    sectionContentParagraph.parentNode.removeChild(sectionContentParagraph);
+  }
+}
+
 elements.showBookmarksIcon.addEventListener('click', () => {
   elements.primarySection.style.display = 'none';
   elements.bookmarksSection.style.display = 'block';
   elements.homeIcon.style.visibility = 'visible';
 
+  removeInitialContent();
   loadImages();
 });
 
