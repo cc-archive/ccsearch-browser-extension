@@ -2,12 +2,15 @@ import { elements } from './base';
 import { activatePopup } from './infoPopupModule';
 import { providerLogos, unicodeToString } from './helper';
 
-function showConfirmationMessage(message) {
-  if (message === 'removed') {
-    console.log('bookmark removed');
-  } else if (message === 'added') {
-    console.log('image added to bookmarks');
-  }
+function showNotification(message) {
+  const snackbar = document.getElementById('snackbar');
+  snackbar.innerText = message;
+
+  snackbar.className = 'show';
+
+  setTimeout(() => {
+    snackbar.className = snackbar.className.replace('show', '');
+  }, 500);
 }
 
 export default function bookmarkImage(e) {
@@ -22,25 +25,24 @@ export default function bookmarkImage(e) {
     // eslint-disable-next-line no-undef
     chrome.storage.local.set({ bookmarks: bookmarksArray }, () => {
       console.log('bookmarks updated');
-      showConfirmationMessage('added');
+      showNotification('Image Bookmarked');
     });
   });
 }
 
 function removeBookmark(e) {
   console.log('remove bookmark');
-  console.log(e.target);
-  console.log(e.target.dataset.imageid);
+  const imageId = e.target.dataset.imageid;
   // eslint-disable-next-line no-undef
   chrome.storage.local.get({ bookmarks: [] }, (items) => {
     const bookmarksArray = items.bookmarks;
-    const bookmarkIndex = bookmarksArray.indexOf(e.target.dataset.imageid);
+    const bookmarkIndex = bookmarksArray.indexOf(imageId);
     bookmarksArray.splice(bookmarkIndex, 1);
     console.log(bookmarkIndex);
     // eslint-disable-next-line no-undef
     chrome.storage.local.set({ bookmarks: bookmarksArray }, () => {
       console.log('bookmarks updated');
-      showConfirmationMessage('removed');
+      showNotification('Bookmark removed');
     });
   });
 }
