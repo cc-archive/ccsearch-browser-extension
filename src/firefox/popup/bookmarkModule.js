@@ -193,7 +193,9 @@ function loadImages() {
 elements.showBookmarksIcon.addEventListener('click', () => {
   elements.primarySection.style.display = 'none';
   elements.bookmarksSection.style.display = 'block';
-  elements.homeIcon.style.visibility = 'visible';
+  // elements.homeIcon.style.visibility = 'visible';
+  elements.homeIcon.style.display = 'inline-block';
+  elements.showBookmarksIcon.style.display = 'none';
 
   loadImages();
 });
@@ -201,5 +203,7 @@ elements.showBookmarksIcon.addEventListener('click', () => {
 elements.homeIcon.addEventListener('click', (e) => {
   elements.primarySection.style.display = 'block';
   elements.bookmarksSection.style.display = 'none';
-  e.target.style.visibility = 'hidden';
+  elements.showBookmarksIcon.style.display = 'inline-block';
+  e.target.style.display = 'none';
+
 });
