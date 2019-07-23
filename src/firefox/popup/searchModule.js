@@ -66,7 +66,8 @@ function appendToGrid(msnry, fragment, divs, grid) {
 export function removeLoaderAnimation() {
   // elements.spinner.classList.remove('spinner');
   removeSpinner(elements.spinnerPlaceholderGrid);
-  elements.noMoreImagesMessage.classList.remove('display-none');
+  // TODO: use better logic
+  // elements.noMoreImagesMessage.classList.remove('display-none');
 }
 
 // eslint-disable-next-line no-undef
