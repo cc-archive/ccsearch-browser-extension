@@ -27,7 +27,6 @@
 .image {
   position: relative;
   backface-visibility: hidden;
-  transition: all 0.5s;
   box-shadow: 0 0.5rem 1rem rgba($color-black, 0.15);
   margin-bottom: 0.7rem;
 
@@ -45,7 +44,6 @@
       transparent 70%,
       rgba($color-black, 0.8)
     );
-    transition: all 0.5s;
     backface-visibility: hidden;
     opacity: 0;
   }
@@ -69,7 +67,6 @@
   }
 
   .image-title {
-    transition: all 0.7s;
     backface-visibility: hidden;
     position: absolute;
     bottom: -2.5px;
@@ -104,7 +101,6 @@
   }
 
   .image-license {
-    transition: all 0.6s;
     backface-visibility: hidden;
     position: absolute;
     top: 0.5rem;
