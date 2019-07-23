@@ -55,7 +55,7 @@ function loadImages() {
   // eslint-disable-next-line no-undef
   chrome.storage.local.get({ bookmarks: [] }, (items) => {
     const bookmarksArray = items.bookmarks;
-    if (bookmarksArray.length >= 0) {
+    if (bookmarksArray.length > 0) {
       removeInitialContent();
     }
     console.log(bookmarksArray);
@@ -190,6 +190,11 @@ function loadImages() {
   });
 }
 
+// TODO: use a general function
+function removeBookmarkImages() {
+  elements.gridBookmarks.innerHTML = '<div class="gutter-sizer"></div>';
+}
+
 elements.showBookmarksIcon.addEventListener('click', () => {
   elements.primarySection.style.display = 'none';
   elements.bookmarksSection.style.display = 'block';
@@ -206,4 +211,5 @@ elements.homeIcon.addEventListener('click', (e) => {
   elements.showBookmarksIcon.style.display = 'inline-block';
   e.target.style.display = 'none';
 
+  removeBookmarkImages();
 });
