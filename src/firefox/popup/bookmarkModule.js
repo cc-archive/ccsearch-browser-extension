@@ -62,7 +62,8 @@ function loadImages() {
 
           const thumbnail = res.thumbnail ? res.thumbnail : res.url;
           const title = unicodeToString(res.title);
-          const { license, provider, id } = res;
+          const { license, id } = res;
+          const provider = res.provider_code.toLowerCase();
           const licenseArray = license.split('-'); // split license in individual characteristics
           const foreignLandingUrl = res.foreign_landing_url;
 
