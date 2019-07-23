@@ -2,8 +2,12 @@ import { elements } from './base';
 import { activatePopup } from './infoPopupModule';
 import { providerLogos, unicodeToString } from './helper';
 
-function showConfirmationMessage() {
-  console.log('image bookmarked');
+function showConfirmationMessage(message) {
+  if (message === 'removed') {
+    console.log('bookmark removed');
+  } else if (message === 'added') {
+    console.log('image added to bookmarks');
+  }
 }
 
 export default function bookmarkImage(e) {
@@ -18,7 +22,25 @@ export default function bookmarkImage(e) {
     // eslint-disable-next-line no-undef
     chrome.storage.local.set({ bookmarks: bookmarksArray }, () => {
       console.log('bookmarks updated');
-      showConfirmationMessage();
+      showConfirmationMessage('added');
+    });
+  });
+}
+
+function removeBookmark(e) {
+  console.log('remove bookmark');
+  console.log(e.target);
+  console.log(e.target.dataset.imageid);
+  // eslint-disable-next-line no-undef
+  chrome.storage.local.get({ bookmarks: [] }, (items) => {
+    const bookmarksArray = items.bookmarks;
+    const bookmarkIndex = bookmarksArray.indexOf(e.target.dataset.imageid);
+    bookmarksArray.splice(bookmarkIndex, 1);
+    console.log(bookmarkIndex);
+    // eslint-disable-next-line no-undef
+    chrome.storage.local.set({ bookmarks: bookmarksArray }, () => {
+      console.log('bookmarks updated');
+      showConfirmationMessage('removed');
     });
   });
 }
@@ -146,17 +168,17 @@ function loadImages() {
             licenseLinkElement.appendChild(licenseIcon);
           });
 
-          // const bookmarkIcon = document.createElement('i');
-          // bookmarkIcon.classList.add('material-icons');
-          // bookmarkIcon.classList.add('bookmark-icon');
-          // bookmarkIcon.id = 'settings-icon';
-          // bookmarkIcon.title = 'Bookmark image';
-          // bookmarkIcon.innerText = 'bookmark_border';
-          // bookmarkIcon.setAttribute('data-imageid', id);
-          // bookmarkIcon.addEventListener('click', bookmarkImage);
+          const bookmarkIcon = document.createElement('i');
+          bookmarkIcon.classList.add('material-icons');
+          bookmarkIcon.classList.add('bookmark-icon');
+          bookmarkIcon.id = 'settings-icon';
+          bookmarkIcon.title = 'Remove bookmark';
+          bookmarkIcon.innerText = 'bookmark_border';
+          bookmarkIcon.setAttribute('data-imageid', id);
+          bookmarkIcon.addEventListener('click', removeBookmark);
 
           spanLicenseElement.appendChild(licenseLinkElement);
-          // spanLicenseElement.appendChild(bookmarkIcon);
+          spanLicenseElement.appendChild(bookmarkIcon);
 
           // make a div element to encapsulate image element
           const divElement = document.createElement('div');
