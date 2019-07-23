@@ -63,7 +63,7 @@ function appendToGrid(msnry, fragment, divs, grid) {
   });
 }
 
-function removeLoaderAnimation() {
+export function removeLoaderAnimation() {
   // elements.spinner.classList.remove('spinner');
   removeSpinner(elements.spinnerPlaceholderGrid);
   elements.noMoreImagesMessage.classList.remove('display-none');

@@ -7,6 +7,7 @@ import {
   getRequestUrl,
   checkResultLength,
   addThumbnailsToDOM,
+  removeLoaderAnimation,
 } from './searchModule';
 import {
   isObjectEmpty,
@@ -242,6 +243,7 @@ elements.searchIcon.addEventListener('click', () => {
   checkInputError(inputText);
   removeInitialContent();
   removeOldSearchResults();
+  removeLoaderAnimation();
   applyFilters();
 
   // enable spinner
