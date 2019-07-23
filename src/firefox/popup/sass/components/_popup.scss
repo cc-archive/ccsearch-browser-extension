@@ -108,13 +108,9 @@
   &__close-button {
     position: absolute;
     cursor: pointer;
-    color: lighten($color-black, 30);
+    color: $color-black;
     top: 0;
     right: 0.5rem;
-
-    &:hover {
-      color: $color-black;
-    }
   }
 
   &__tab-links {
