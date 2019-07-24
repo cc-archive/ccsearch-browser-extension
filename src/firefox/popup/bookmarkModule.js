@@ -1,6 +1,8 @@
 import { elements } from './base';
 import { activatePopup } from './infoPopupModule';
 import { providerLogos, unicodeToString } from './helper';
+// eslint-disable-next-line import/no-cycle
+import { removeOldSearchResults, removeLoaderAnimation } from './searchModule';
 
 function showNotification(message) {
   const snackbar = document.getElementById('snackbar');
@@ -224,13 +226,36 @@ function removeBookmarkImages() {
   elements.gridBookmarks.innerHTML = '<div class="gutter-sizer"></div>';
 }
 
+export function restoreInitialContent() {
+  const sectionContentPrimary = document.querySelector('.section-content--primary');
+
+  const sectionContentInitialInfo = document.querySelector(
+    '.section-content--primary .initial-info',
+  );
+
+  if (!sectionContentInitialInfo) {
+    const initialInfoElement = `<p class="initial-info">
+              Search for free content in the public domain and under Creative Commons licenses.<br /><br />
+              Learn more about CC licenses
+              <a href="https://creativecommons.org/share-your-work/licensing-types-examples/" target="_blank">
+                here.
+              </a>
+            </p>`;
+    sectionContentPrimary.querySelector('.row').innerHTML = initialInfoElement;
+  }
+}
+
 elements.showBookmarksIcon.addEventListener('click', () => {
   elements.primarySection.style.display = 'none';
   elements.bookmarksSection.style.display = 'block';
   // elements.homeIcon.style.visibility = 'visible';
   elements.homeIcon.style.display = 'inline-block';
   elements.showBookmarksIcon.style.display = 'none';
+  elements.inputField.value = '';
 
+  removeOldSearchResults();
+  removeLoaderAnimation();
+  restoreInitialContent();
   loadImages();
 });
 
