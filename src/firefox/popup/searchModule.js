@@ -2,6 +2,7 @@ import { elements } from './base';
 import { unicodeToString, providerLogos } from './helper';
 import { activatePopup } from './infoPopupModule';
 import { removeSpinner } from './spinner';
+// eslint-disable-next-line import/no-cycle
 import bookmarkImage from './bookmarkModule';
 
 export function checkInputError(inputText) {
