@@ -246,6 +246,8 @@ export function restoreInitialContent() {
 }
 
 elements.showBookmarksIcon.addEventListener('click', () => {
+  window.isBookmarksActive = true;
+
   elements.homeIcon.style.pointerEvents = 'none';
   setTimeout(() => {
     elements.homeIcon.style.pointerEvents = 'auto';
@@ -264,6 +266,8 @@ elements.showBookmarksIcon.addEventListener('click', () => {
 });
 
 elements.homeIcon.addEventListener('click', (e) => {
+  window.isBookmarksActive = false;
+
   elements.showBookmarksIcon.style.pointerEvents = 'none';
   setTimeout(() => {
     elements.showBookmarksIcon.style.pointerEvents = 'auto';

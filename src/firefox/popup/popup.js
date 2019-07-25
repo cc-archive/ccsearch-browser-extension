@@ -305,13 +305,19 @@ async function nextRequest(page) {
   processing = false;
 }
 
+// global varialbe to check the status if user is viewwing the bookmarks section
+window.isBookmarksActive = false;
+
 // Trigger nextRequest when we reach bottom of the page
 // credit: https://stackoverflow.com/a/10662576/10425980
 $(document).ready(() => {
   $(document).scroll(() => {
     if (processing) return false;
 
-    if ($(window).scrollTop() >= $(document).height() - $(window).height() - 700) {
+    if (
+      $(window).scrollTop() >= $(document).height() - $(window).height() - 700
+      && !window.isBookmarksActive
+    ) {
       processing = true;
 
       nextRequest(pageNo);
