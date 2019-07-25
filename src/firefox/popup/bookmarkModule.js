@@ -23,13 +23,17 @@ export default function bookmarkImage(e) {
   // eslint-disable-next-line no-undef
   chrome.storage.local.get({ bookmarks: [] }, (items) => {
     const bookmarksArray = items.bookmarks;
-    bookmarksArray.push(e.target.dataset.imageid);
-    console.log(bookmarksArray);
-    // eslint-disable-next-line no-undef
-    chrome.storage.local.set({ bookmarks: bookmarksArray }, () => {
-      console.log('bookmarks updated');
-      showNotification('Image Bookmarked');
-    });
+    if (bookmarksArray.indexOf(e.target.dataset.imageid) === -1) {
+      bookmarksArray.push(e.target.dataset.imageid);
+      console.log(bookmarksArray);
+      // eslint-disable-next-line no-undef
+      chrome.storage.local.set({ bookmarks: bookmarksArray }, () => {
+        console.log('bookmarks updated');
+        showNotification('Image Bookmarked');
+      });
+    } else {
+      showNotification('Image already bookmarked!');
+    }
   });
 }
 
