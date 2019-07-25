@@ -92,6 +92,8 @@ function loadImages() {
     const bookmarksArray = items.bookmarks;
     if (bookmarksArray.length > 0) {
       removeInitialContent();
+    } else {
+      removeSpinner(elements.spinnerPlaceholderBookmarks);
     }
     console.log(bookmarksArray);
 
