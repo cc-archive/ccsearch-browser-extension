@@ -246,6 +246,10 @@ export function restoreInitialContent() {
 }
 
 elements.showBookmarksIcon.addEventListener('click', () => {
+  elements.homeIcon.style.pointerEvents = 'none';
+  setTimeout(() => {
+    elements.homeIcon.style.pointerEvents = 'auto';
+  }, 500);
   elements.primarySection.style.display = 'none';
   elements.bookmarksSection.style.display = 'block';
   // elements.homeIcon.style.visibility = 'visible';
@@ -260,6 +264,10 @@ elements.showBookmarksIcon.addEventListener('click', () => {
 });
 
 elements.homeIcon.addEventListener('click', (e) => {
+  elements.showBookmarksIcon.style.pointerEvents = 'none';
+  setTimeout(() => {
+    elements.showBookmarksIcon.style.pointerEvents = 'auto';
+  }, 500);
   elements.primarySection.style.display = 'block';
   elements.bookmarksSection.style.display = 'none';
   elements.showBookmarksIcon.style.display = 'inline-block';
