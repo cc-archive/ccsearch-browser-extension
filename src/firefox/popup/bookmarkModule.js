@@ -5,11 +5,13 @@ import { providerLogos, unicodeToString } from './helper';
 import { removeOldSearchResults, removeLoaderAnimation } from './searchModule';
 import { addSpinner, removeSpinner } from './spinner';
 
-function showNotification(message) {
+function showNotification(message, context) {
   const snackbar = document.getElementById('snackbar');
   snackbar.innerText = message;
 
-  snackbar.className = 'show';
+  snackbar.classList.add('show');
+  if (context === 'positive') snackbar.classList.add('snackbar-positive');
+  else if (context === 'positive') snackbar.classList.add('snackbar-negative');
 
   setTimeout(() => {
     snackbar.className = snackbar.className.replace('show', '');
@@ -29,10 +31,10 @@ export default function bookmarkImage(e) {
       // eslint-disable-next-line no-undef
       chrome.storage.local.set({ bookmarks: bookmarksArray }, () => {
         console.log('bookmarks updated');
-        showNotification('Image Bookmarked');
+        showNotification('Image Bookmarked', 'positive');
       });
     } else {
-      showNotification('Image already bookmarked!');
+      showNotification('Image already bookmarked!', 'negative');
     }
   });
 }
@@ -53,7 +55,7 @@ function removeBookmark(e) {
       imageDiv.parentElement.removeChild(imageDiv);
       // eslint-disable-next-line no-use-before-define
       msnry.layout(); // layout grid again
-      showNotification('Bookmark removed');
+      showNotification('Bookmark removed', 'positive');
     });
   });
 }

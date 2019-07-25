@@ -1,16 +1,25 @@
 #snackbar {
   visibility: hidden;
-  min-width: 150px;
-  margin-left: -125px;
+  min-width: 15rem;
+  transform: translate(-50%);
   background-color: #333;
-  color: #fff;
+  color: $color-white;
   text-align: center;
-  border-radius: 2px;
-  padding: 10px;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  font-size: 1.6rem;
   position: fixed;
   z-index: 1;
   left: 50%;
-  bottom: 30px;
+  bottom: 5rem;
+}
+
+.snackbar-positive {
+  border-left: solid 10px $color-context-positive-dark;
+}
+
+.snackbar-negative {
+  border-left: solid 10px $color-context-negative;
 }
 
 .show {
@@ -25,7 +34,7 @@
     opacity: 0;
   }
   to {
-    bottom: 30px;
+    bottom: 5rem;
     opacity: 1;
   }
 }
