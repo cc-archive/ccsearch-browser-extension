@@ -3,6 +3,7 @@ import { activatePopup } from './infoPopupModule';
 import { providerLogos, unicodeToString } from './helper';
 // eslint-disable-next-line import/no-cycle
 import { removeOldSearchResults, removeLoaderAnimation } from './searchModule';
+import { addSpinner, removeSpinner } from './spinner';
 
 function showNotification(message) {
   const snackbar = document.getElementById('snackbar');
@@ -215,6 +216,7 @@ function loadImages() {
 
           console.log(gridItemDiv);
 
+          removeSpinner(elements.spinnerPlaceholderBookmarks);
           appendToGrid(msnry, fragment, gridItemDiv, elements.gridBookmarks);
         });
     });
@@ -259,6 +261,7 @@ elements.showBookmarksIcon.addEventListener('click', () => {
   elements.showBookmarksIcon.style.display = 'none';
   elements.inputField.value = '';
 
+  addSpinner(elements.spinnerPlaceholderBookmarks);
   removeOldSearchResults();
   removeLoaderAnimation();
   restoreInitialContent();

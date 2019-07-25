@@ -5,6 +5,7 @@ export const elements = {
   errorMessage: document.getElementById('error-message'),
   spinnerPlaceholderGrid: document.getElementById('spinner-placeholder--grid'),
   spinnerPlaceholderPopup: document.getElementById('spinner-placeholder--popup'),
+  spinnerPlaceholderBookmarks: document.getElementById('spinner-placeholder--bookmarks'),
   useCaseChooser: document.querySelector('#choose-usecase'),
   licenseChooser: document.querySelector('#choose-license'),
   providerChooser: document.querySelector('#choose-provider'),
