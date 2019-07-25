@@ -11,10 +11,10 @@ function showNotification(message, context) {
 
   snackbar.classList.add('show');
   if (context === 'positive') snackbar.classList.add('snackbar-positive');
-  else if (context === 'positive') snackbar.classList.add('snackbar-negative');
+  else if (context === 'negative') snackbar.classList.add('snackbar-negative');
 
   setTimeout(() => {
-    snackbar.className = snackbar.className.replace('show', '');
+    snackbar.className = '';
   }, 500);
 }
 
