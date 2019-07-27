@@ -47,6 +47,7 @@ export default function bookmarkImage(e) {
       // eslint-disable-next-line no-undef
       chrome.storage.local.set({ bookmarks: bookmarksArray }, () => {
         console.log('bookmarks updated');
+        e.target.innerText = 'bookmark';
         showNotification('Image Bookmarked', 'positive');
       });
     } else {
