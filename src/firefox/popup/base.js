@@ -35,6 +35,7 @@ export const elements = {
   homeIcon: document.getElementById('home-icon'),
   primarySection: document.querySelector('.section-primary'),
   bookmarksSection: document.querySelector('.section-bookmarks'),
+  deleteAllBookmarksButton: document.querySelector('.delete-all-button'),
 };
 
 export const attributionTabLink = elements.popupTabLinks[0];

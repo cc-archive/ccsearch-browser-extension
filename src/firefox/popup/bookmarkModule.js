@@ -319,3 +319,25 @@ elements.homeIcon.addEventListener('click', (e) => {
 
   removeBookmarkImages();
 });
+
+elements.deleteAllBookmarksButton.addEventListener('click', () => {
+  // eslint-disable-next-line no-undef
+  chrome.storage.local.get({ bookmarks: [] }, (items) => {
+    const bookmarksArray = items.bookmarks;
+    console.log(bookmarksArray);
+    if (bookmarksArray.length === 0) {
+      showNotification('No Bookmarks Available', 'negative');
+    } else {
+      bookmarksArray.splice(0, bookmarksArray.length); // empty array
+      // eslint-disable-next-line no-undef
+      chrome.storage.local.set({ bookmarks: bookmarksArray }, () => {
+        // restoring initial layout of bookmarks section
+        removeBookmarkImages();
+        msnry.layout();
+        restoreInitialContentBookmarks();
+        // confirm user action
+        showNotification('Bookmarks successfully removed', 'positive');
+      });
+    }
+  });
+});
