@@ -219,7 +219,7 @@ function loadImages() {
           bookmarkIcon.classList.add('bookmark-icon');
           bookmarkIcon.id = 'settings-icon';
           bookmarkIcon.title = 'Remove bookmark';
-          bookmarkIcon.innerText = 'bookmark_border';
+          bookmarkIcon.innerText = 'bookmark';
           bookmarkIcon.setAttribute('data-imageid', id);
           bookmarkIcon.addEventListener('click', removeBookmark);
 
