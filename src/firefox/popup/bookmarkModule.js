@@ -18,6 +18,22 @@ function showNotification(message, context) {
   }, 500);
 }
 
+function restoreInitialContentBookmarks() {
+  const sectionContentBookmarks = document.querySelector('.section-content--bookmarks');
+
+  const sectionContentInitialInfo = document.querySelector(
+    '.section-content--bookmarks .initial-info',
+  );
+
+  if (!sectionContentInitialInfo) {
+    const initialInfoElement = `<p class="initial-info">
+              No Bookmarks yet
+            </p>`;
+
+    sectionContentBookmarks.querySelector('.row').innerHTML = initialInfoElement;
+  }
+}
+
 export default function bookmarkImage(e) {
   console.log('save bookmark');
   console.log(e.target);
@@ -45,8 +61,15 @@ function removeBookmark(e) {
   // eslint-disable-next-line no-undef
   chrome.storage.local.get({ bookmarks: [] }, (items) => {
     const bookmarksArray = items.bookmarks;
+
     const bookmarkIndex = bookmarksArray.indexOf(imageId);
     bookmarksArray.splice(bookmarkIndex, 1);
+
+    let isLastImage = false;
+    if (bookmarksArray.length === 0) {
+      isLastImage = true;
+    }
+
     console.log(bookmarkIndex);
     // eslint-disable-next-line no-undef
     chrome.storage.local.set({ bookmarks: bookmarksArray }, () => {
@@ -56,6 +79,10 @@ function removeBookmark(e) {
       // eslint-disable-next-line no-use-before-define
       msnry.layout(); // layout grid again
       showNotification('Bookmark removed', 'positive');
+
+      if (isLastImage) {
+        restoreInitialContentBookmarks();
+      }
     });
   });
 }
@@ -96,6 +123,7 @@ function loadImages() {
       removeInitialContent();
     } else {
       removeSpinner(elements.spinnerPlaceholderBookmarks);
+      restoreInitialContentBookmarks();
     }
     console.log(bookmarksArray);
 
@@ -236,7 +264,7 @@ function removeBookmarkImages() {
   elements.gridBookmarks.innerHTML = '<div class="gutter-sizer"></div>';
 }
 
-export function restoreInitialContent() {
+export function restoreInitialContentPrimary() {
   const sectionContentPrimary = document.querySelector('.section-content--primary');
 
   const sectionContentInitialInfo = document.querySelector(
@@ -272,7 +300,7 @@ elements.showBookmarksIcon.addEventListener('click', () => {
   addSpinner(elements.spinnerPlaceholderBookmarks);
   removeOldSearchResults();
   removeLoaderAnimation();
-  restoreInitialContent();
+  restoreInitialContentPrimary();
   loadImages();
 });
 
