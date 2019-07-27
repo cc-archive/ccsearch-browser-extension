@@ -15,7 +15,7 @@ function showNotification(message, context) {
 
   setTimeout(() => {
     snackbar.className = '';
-  }, 500);
+  }, 1100);
 }
 
 function restoreInitialContentBookmarks() {
