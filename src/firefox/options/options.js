@@ -157,6 +157,24 @@ function showNotification(message, context) {
   }, 1100);
 }
 
+function updateBookmarks(newBookmarksids) {
+  // eslint-disable-next-line no-undef
+  chrome.storage.local.get({ bookmarks: [] }, (items) => {
+    const bookmarksArray = items.bookmarks;
+    newBookmarksids.forEach((bookmarkId) => {
+      if (bookmarksArray.indexOf(bookmarkId) === -1) {
+        bookmarksArray.push(bookmarkId);
+        console.log(bookmarksArray);
+        // eslint-disable-next-line no-undef
+        chrome.storage.local.set({ bookmarks: bookmarksArray }, () => {
+          console.log('bookmarks updated');
+        });
+      }
+    });
+    showNotification('Bookmarks updated!', 'positive');
+  });
+}
+
 elements.importBookmarksButton.addEventListener('click', () => {
   const file = elements.importBookmarksInput.files[0];
   if (!file) {
@@ -173,7 +191,7 @@ elements.importBookmarksButton.addEventListener('click', () => {
       if (Array.isArray(bookmarksArray)) {
         if (!bookmarksArray.length > 0) showNotification('No bookmark ids found in file', 'negative');
         else {
-          console.log('correct');
+          updateBookmarks();
         }
       } else showNotification('Contents not in valid format of ["id1", "id2", ...]', 'negative');
     };
