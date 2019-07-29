@@ -1,3 +1,4 @@
+import { elements } from '../popup/base';
 import { backupProviderAPIQueryStrings } from '../popup/helper';
 
 console.log('options page');
@@ -129,3 +130,14 @@ function getLatestProviders() {
 }
 
 getLatestProviders();
+
+elements.exportBookmarksButton.addEventListener('click', () => {
+  // eslint-disable-next-line no-undef
+  chrome.storage.local.get({ bookmarks: [] }, (items) => {
+    const bookmarksArray = items.bookmarks;
+    console.log(bookmarksArray);
+    const bookmarksString = JSON.stringify(bookmarksArray);
+    // eslint-disable-next-line no-undef
+    download(bookmarksString, 'bookmarks.json', 'text/plain');
+  });
+});
