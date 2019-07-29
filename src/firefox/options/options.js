@@ -142,12 +142,27 @@ elements.exportBookmarksButton.addEventListener('click', () => {
   });
 });
 
+function showNotification(message, context) {
+  const snackbar = document.getElementById('snackbar-options');
+  console.log(snackbar);
+  snackbar.innerText = message;
+
+  snackbar.classList.add('show');
+  if (context === 'positive') snackbar.classList.add('snackbar-positive');
+  else if (context === 'negative') snackbar.classList.add('snackbar-negative');
+
+  setTimeout(() => {
+    snackbar.className = '';
+    snackbar.classList.add('snackbar');
+  }, 1100);
+}
+
 elements.importBookmarksButton.addEventListener('click', () => {
   const file = elements.importBookmarksInput.files[0];
   if (!file) {
-    console.log('No file choosen');
+    showNotification('No file choosen', 'negative');
   } else if (file.type !== 'application/json') {
-    console.log('Wrong file type. Choose json file');
+    console.log('Wrong file type. Choose json file', 'negative');
   } else {
     const reader = new FileReader();
     reader.readAsText(file, 'UTF-8');
@@ -156,11 +171,11 @@ elements.importBookmarksButton.addEventListener('click', () => {
       // TODO: handle JSON parsing errors
       const bookmarksArray = JSON.parse(fileContents);
       if (Array.isArray(bookmarksArray)) {
-        if (!bookmarksArray.length > 0) console.log('No bookmark ids found in file');
+        if (!bookmarksArray.length > 0) showNotification('No bookmark ids found in file', 'negative');
         else {
           console.log('correct');
         }
-      } else console.log('Contents not in valid format of ["id1", "id2", ...]');
+      } else showNotification('Contents not in valid format of ["id1", "id2", ...]', 'negative');
     };
   }
 });

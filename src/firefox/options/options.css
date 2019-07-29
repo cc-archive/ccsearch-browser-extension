@@ -70,3 +70,44 @@ ul {
 .margin-top-small {
   margin-top: 0.5rem;
 }
+
+.snackbar {
+  visibility: hidden;
+  min-width: 15rem;
+  transform: translate(-50%);
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  font-size: 1.6rem;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 5rem;
+}
+
+.snackbar-positive {
+  border-left: solid 10px green;
+}
+
+.snackbar-negative {
+  border-left: solid 10px red;
+}
+
+.show {
+  visibility: visible !important;
+
+  animation: fadein 0.2s;
+}
+
+@keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+  to {
+    bottom: 5rem;
+    opacity: 1;
+  }
+}

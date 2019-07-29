@@ -6,7 +6,7 @@ import { removeOldSearchResults, removeLoaderAnimation } from './searchModule';
 import { addSpinner, removeSpinner } from './spinner';
 
 function showNotification(message, context) {
-  const snackbar = document.getElementById('snackbar');
+  const snackbar = document.getElementById('snackbar-bookmarks');
   snackbar.innerText = message;
 
   snackbar.classList.add('show');
@@ -14,7 +14,7 @@ function showNotification(message, context) {
   else if (context === 'negative') snackbar.classList.add('snackbar-negative');
 
   setTimeout(() => {
-    snackbar.className = '';
+    snackbar.className = 'snackbar';
   }, 1100);
 }
 
