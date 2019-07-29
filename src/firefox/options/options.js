@@ -141,3 +141,26 @@ elements.exportBookmarksButton.addEventListener('click', () => {
     download(bookmarksString, 'bookmarks.json', 'text/plain');
   });
 });
+
+elements.importBookmarksButton.addEventListener('click', () => {
+  const file = elements.importBookmarksInput.files[0];
+  if (!file) {
+    console.log('No file choosen');
+  } else if (file.type !== 'application/json') {
+    console.log('Wrong file type. Choose json file');
+  } else {
+    const reader = new FileReader();
+    reader.readAsText(file, 'UTF-8');
+    reader.onload = (evt) => {
+      const fileContents = evt.target.result;
+      // TODO: handle JSON parsing errors
+      const bookmarksArray = JSON.parse(fileContents);
+      if (Array.isArray(bookmarksArray)) {
+        if (!bookmarksArray.length > 0) console.log('No bookmark ids found in file');
+        else {
+          console.log('correct');
+        }
+      } else console.log('Contents not in valid format of ["id1", "id2", ...]');
+    };
+  }
+});
