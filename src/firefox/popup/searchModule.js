@@ -41,15 +41,25 @@ export function getRequestUrl(
 }
 
 function showNoResultFoundMessage() {
-  const sectionContent = document.querySelector('.section-content');
-  const noResultFoundPara = document.createElement('p');
-  noResultFoundPara.textContent = 'No result Found. Please try a different search query.';
-  sectionContent.appendChild(noResultFoundPara);
+  const sectionContentPrimary = document.querySelector('.section-content--primary');
+
+  const sectionContentInitialInfo = document.querySelector(
+    '.section-content--primary .initial-info',
+  );
+
+  if (!sectionContentInitialInfo) {
+    const initialInfoElement = `<p class="initial-info">
+    No Images Found. Please enter a different query.
+            </p>`;
+    sectionContentPrimary.querySelector('.row').innerHTML = initialInfoElement;
+  }
 }
 
 export function checkResultLength(resultArray) {
   if (resultArray.length === 0) {
     showNoResultFoundMessage();
+    // eslint-disable-next-line no-use-before-define
+    msnry.layout();
   }
 }
 
