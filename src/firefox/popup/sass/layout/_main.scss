@@ -2,7 +2,7 @@
   padding-top: 5%;
 
   .initial-info {
-    min-height: 23rem;
+    min-height: 14.3rem;
     width: 90%;
     margin: 0 auto;
     text-align: center;
@@ -14,7 +14,7 @@
   }
 
   &__images-container {
-    min-width: 400px;
+    min-width: 25rem;
   }
 }
 
@@ -27,8 +27,8 @@
 .image {
   position: relative;
   backface-visibility: hidden;
-  box-shadow: 0 0.5rem 1rem rgba($color-black, 0.15);
-  margin-bottom: 0.7rem;
+  box-shadow: 0 5px 10px rgba($color-black, 0.15);
+  margin-bottom: 7px;
 
   &:after {
     content: "";
@@ -70,9 +70,9 @@
     backface-visibility: hidden;
     position: absolute;
     bottom: -2.5px;
-    left: 0.5rem;
+    left: 5px;
     color: $color-white;
-    font-size: 1.3rem;
+    font-size: $size-small;
     font-weight: 700;
     width: 90%;
     opacity: 0;
@@ -92,10 +92,10 @@
 
       .provider-image {
         vertical-align: middle;
-        max-height: 3rem;
-        max-width: 4rem;
-        margin-right: 0.5rem;
-        padding-bottom: 0.3rem;
+        max-height: 1.875rem;
+        max-width: 2.5rem;
+        margin-right: 5px;
+        padding-bottom: 3px;
       }
     }
   }
@@ -103,13 +103,13 @@
   .image-license {
     backface-visibility: hidden;
     position: absolute;
-    top: 0.5rem;
-    left: 0.5rem;
+    top: 5px;
+    left: 5px;
     display: block;
     width: 90%;
     opacity: 0;
     z-index: 3;
-    height: 2rem;
+    height: 1.25rem;
 
     a {
       height: inherit;

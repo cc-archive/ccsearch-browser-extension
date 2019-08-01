@@ -28,7 +28,7 @@
   }
 
   &__tab-content {
-    padding: 2rem;
+    padding: 1.25rem;
 
     label {
       display: block;
@@ -37,11 +37,11 @@
     .attribution-label {
       text-decoration: none;
       font-weight: 700;
-      font-size: 1.6rem;
+      font-size: $size-normal;
     }
 
     #attribution-rich-text {
-      font-size: 1.4rem;
+      font-size: 0.875rem;
       font-weight: 500;
     }
 
@@ -53,7 +53,7 @@
 
     .btn-popup {
       display: block;
-      padding: 0.9rem 2rem;
+      padding: 9px 1.25rem;
       box-sizing: content-box;
       position: relative;
       text-decoration: none;
@@ -70,7 +70,7 @@
     }
 
     .btn-copy {
-      width: 4rem;
+      width: 2.5rem;
     }
 
     .download-buttons {
@@ -79,7 +79,7 @@
       .btn-download {
         background-color: $color-secondary-light;
         float: left;
-        margin-right: 1rem;
+        margin-right: 10px;
 
         &:hover {
           background-color: $color-secondary-dark;
@@ -90,12 +90,12 @@
     .info {
       &__label {
         display: block;
-        font-size: 1.9rem;
+        font-size: 1.18rem;
         font-weight: 700;
       }
 
       &__content {
-        font-size: 1.5rem;
+        font-size: 0.9rem;
         font-weight: 500;
       }
     }
@@ -110,16 +110,16 @@
     cursor: pointer;
     color: $color-black;
     top: 0;
-    right: 0.5rem;
+    right: 5px;
   }
 
   &__tab-links {
     text-decoration: none;
     width: 33.3333%;
-    line-height: 4rem;
+    line-height: 2.5rem;
     float: left;
     display: block;
-    font-size: 1.7rem;
+    font-size: $size-normal;
     // color: $color-black;
     background-color: $color-white;
     border: none;

@@ -1,12 +1,13 @@
 footer {
-  height: 4rem;
+  height: 2.5rem;
   background-color: #242424;
   text-align: center;
 }
 
 .footer-box {
   display: inline;
-  margin: 0 2rem;
+  margin: 0 1.25rem;
+  letter-spacing: 2px;
 
   a {
     font-size: 70%;
@@ -15,12 +16,12 @@ footer {
   }
 
   img {
-    width: 3rem;
-    transform: translateY(0.5rem);
+    width: 1.87rem;
+    transform: translateY(5px);
     transition: all 0.2s;
 
     &:hover {
-      transform: translateY(0.45rem) scale(1.1);
+      transform: translateY(4.5px) scale(1.1);
     }
   }
 }
