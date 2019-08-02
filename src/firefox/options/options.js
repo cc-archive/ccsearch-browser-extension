@@ -180,7 +180,7 @@ elements.importBookmarksButton.addEventListener('click', () => {
   if (!file) {
     showNotification('No file choosen', 'negative');
   } else if (file.type !== 'application/json') {
-    console.log('Wrong file type. Choose json file', 'negative');
+    showNotification('Wrong file type. Choose json file', 'negative');
   } else {
     const reader = new FileReader();
     reader.readAsText(file, 'UTF-8');
@@ -191,7 +191,7 @@ elements.importBookmarksButton.addEventListener('click', () => {
       if (Array.isArray(bookmarksArray)) {
         if (!bookmarksArray.length > 0) showNotification('No bookmark ids found in file', 'negative');
         else {
-          updateBookmarks();
+          updateBookmarks(bookmarksArray);
         }
       } else showNotification('Contents not in valid format of ["id1", "id2", ...]', 'negative');
     };
