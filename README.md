@@ -13,25 +13,27 @@ A Cross-Browser Extension which lets you search and filter content in the public
 - Options-ui for custom settings.
 - Dark Mode.
 
-## Development
-You can test and develop the extension locally on your system.
+## Installation from source
+You can install the extension directly from the source. Follow the following steps:
 
-**NOTE**: Right now the focus is on Firefox Browser so the extension might show some unexpected behavior in Chrome.
 1. Clone the repo: `git clone https://github.com/creativecommons/ccsearch-browser-extension.git`.
 
 2. Run: `npm install`.
 
 3. Run: `npm run dev`. This would compile SASS to CSS and bundle JS. The compiled version will be in dist folder.
 
-### Load the extension in Firefox
-1. Open Firefox browser and navigate to _about:debugging_.
-
-2. Click "Load Temporary Add-on"
-
-3. From the file browser, choose `ccsearch-browser-extension/dist/firefox/manifest.json`.
+4. Load the extension to the browser:
+    - **Mozilla Firefox**
+      - Navigate to _about:debugging_.
+      - Click on "Load Temporary Add-on" button.
+      - From the file explorer, choose `ccsearch-browser-extension/dist/firefox/manifest.json`.
+    - **Google Chrome**
+      - Navigate to _chrome://extensions_.
+      - Click on "Load Unpacked" button (make sure you have enabled the _Developer mode_).
+      - From the file explorer, choose `ccsearch-browser-extension/dist/firefox`.
 
 ### Using `web-ext` for development
-You can also use node-based command line utility [web-ext](https://github.com/mozilla/web-ext) by Mozilla to speed up the development process. It adds automatic extension reloading out of the box.
+You can use node-based command line utility [web-ext](https://github.com/mozilla/web-ext) by Mozilla to speed up the development process. It adds automatic extension reloading out of the box.
 
 1. Install: `npm install --global web-ext`
 
