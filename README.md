@@ -2,28 +2,38 @@
 
 # CC Browser Extension
 
-This is a Cross-Browser Extension which you can use to search content in the public domain and under Creative Commons licenses.
-The project is in initial phase and any help in the form of bug reports, feature requests, discussion, patches, etc is appreciated.
+A Cross-Browser Extension which lets you search and filter content in the public domain and under Creative Commons licenses.
 
-## Development
-You can test and develop the extension locally on your system.
+## Features
+- Search and filter CC Licensed content.
+- One click attribution.
+- Download images (and attribution).
+- Bookmark images to preserve them across sessions.
+- Export and import bookmarks in JSON.
+- Options-ui for custom settings.
+- Dark Mode.
 
-**NOTE**: Right now the focus is on Firefox Browser so the extension might show some unexpected behavior in Chrome.
+## Installation from source
+You can install the extension directly from the source. Follow the following steps:
+
 1. Clone the repo: `git clone https://github.com/creativecommons/ccsearch-browser-extension.git`.
 
 2. Run: `npm install`.
 
 3. Run: `npm run dev`. This would compile SASS to CSS and bundle JS. The compiled version will be in dist folder.
 
-### Load the extension in Firefox
-1. Open Firefox browser and navigate to _about:debugging_.
-
-2. Click "Load Temporary Add-on"
-
-3. From the file browser, choose `ccsearch-browser-extension/dist/firefox/manifest.json`.
+4. Load the extension to the browser:
+    - **Mozilla Firefox**
+      - Navigate to _about:debugging_.
+      - Click on "Load Temporary Add-on" button.
+      - From the file explorer, choose `ccsearch-browser-extension/dist/firefox/manifest.json`.
+    - **Google Chrome**
+      - Navigate to _chrome://extensions_.
+      - Click on "Load Unpacked" button (make sure you have enabled the _Developer mode_).
+      - From the file explorer, choose `ccsearch-browser-extension/dist/firefox`.
 
 ### Using `web-ext` for development
-You can also use node-based command line utility [web-ext](https://github.com/mozilla/web-ext) by Mozilla to speed up the development process. It adds automatic extension reloading out of the box.
+You can use node-based command line utility [web-ext](https://github.com/mozilla/web-ext) by Mozilla to speed up the development process. It adds automatic extension reloading out of the box.
 
 1. Install: `npm install --global web-ext`
 
