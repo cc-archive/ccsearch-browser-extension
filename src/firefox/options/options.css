@@ -50,7 +50,12 @@ ul {
 
 #save {
   padding: 0.5rem 0.7rem;
-  margin: 1rem 0 5rem 2rem;
+  margin: 10px 5px 20px;
+  background-color: aqua;
+}
+
+.options-button {
+  padding: 0.5rem 0.7rem;
   background-color: aqua;
 }
 
