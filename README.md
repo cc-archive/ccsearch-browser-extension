@@ -2,8 +2,16 @@
 
 # CC Browser Extension
 
-This is a Cross-Browser Extension which you can use to search content in the public domain and under Creative Commons licenses.
-The project is in initial phase and any help in the form of bug reports, feature requests, discussion, patches, etc is appreciated.
+A Cross-Browser Extension which lets you search and filter content in the public domain and under Creative Commons licenses.
+
+## Features
+- Search and filter CC Licensed content.
+- One click attribution.
+- Download images (and attribution).
+- Bookmark images to preserve them across sessions.
+- Export and import bookmarks in JSON.
+- Options-ui for custom settings.
+- Dark Mode.
 
 ## Development
 You can test and develop the extension locally on your system.
