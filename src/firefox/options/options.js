@@ -36,12 +36,10 @@ Array.prototype.forEach.call(licenseInputs, (element) => {
 function restoreFilters(inputElements) {
   for (let i = 0; i < inputElements.length; i += 1) {
     const { id } = inputElements[i];
-    // eslint-disable-next-line no-undef
     chrome.storage.local.get({ [id]: false }, (items) => {
       // default value is false
       document.getElementById(id).checked = items[id];
     });
-    // eslint-disable-next-line no-undef
     chrome.storage.local.get(null, (items) => {
       console.log('all the storage items');
       console.log(items);
@@ -61,7 +59,6 @@ function saveSingleFilter(inputElements) {
   for (let i = 0; i < inputElements.length; i += 1) {
     const { id } = inputElements[i];
     const value = inputElements[i].checked;
-    // eslint-disable-next-line no-undef
     chrome.storage.local.set(
       {
         [id]: value, // using ES6 to use variable as key of object
@@ -132,7 +129,6 @@ function getLatestProviders() {
 getLatestProviders();
 
 elements.exportBookmarksButton.addEventListener('click', () => {
-  // eslint-disable-next-line no-undef
   chrome.storage.local.get({ bookmarks: [] }, (items) => {
     const bookmarksArray = items.bookmarks;
     console.log(bookmarksArray);
@@ -158,14 +154,12 @@ function showNotification(message, context) {
 }
 
 function updateBookmarks(newBookmarksids) {
-  // eslint-disable-next-line no-undef
   chrome.storage.local.get({ bookmarks: [] }, (items) => {
     const bookmarksArray = items.bookmarks;
     newBookmarksids.forEach((bookmarkId) => {
       if (bookmarksArray.indexOf(bookmarkId) === -1) {
         bookmarksArray.push(bookmarkId);
         console.log(bookmarksArray);
-        // eslint-disable-next-line no-undef
         chrome.storage.local.set({ bookmarks: bookmarksArray }, () => {
           console.log('bookmarks updated');
         });

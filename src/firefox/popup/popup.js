@@ -327,7 +327,6 @@ $(document).ready(() => {
 });
 
 document.getElementById('settings-icon').addEventListener('click', () => {
-  // eslint-disable-next-line no-undef
   chrome.runtime.openOptionsPage();
 });
 

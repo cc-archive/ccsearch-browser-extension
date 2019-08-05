@@ -38,13 +38,11 @@ export default function bookmarkImage(e) {
   console.log('save bookmark');
   console.log(e.target);
   console.log(e.target.dataset.imageid);
-  // eslint-disable-next-line no-undef
   chrome.storage.local.get({ bookmarks: [] }, (items) => {
     const bookmarksArray = items.bookmarks;
     if (bookmarksArray.indexOf(e.target.dataset.imageid) === -1) {
       bookmarksArray.push(e.target.dataset.imageid);
       console.log(bookmarksArray);
-      // eslint-disable-next-line no-undef
       chrome.storage.local.set({ bookmarks: bookmarksArray }, () => {
         console.log('bookmarks updated');
         e.target.innerText = 'bookmark';
@@ -59,7 +57,6 @@ export default function bookmarkImage(e) {
 function removeBookmark(e) {
   console.log('remove bookmark');
   const imageId = e.target.dataset.imageid;
-  // eslint-disable-next-line no-undef
   chrome.storage.local.get({ bookmarks: [] }, (items) => {
     const bookmarksArray = items.bookmarks;
 
@@ -72,7 +69,6 @@ function removeBookmark(e) {
     }
 
     console.log(bookmarkIndex);
-    // eslint-disable-next-line no-undef
     chrome.storage.local.set({ bookmarks: bookmarksArray }, () => {
       console.log('bookmarks updated');
       const imageDiv = document.getElementById(`id_${imageId}`);
@@ -117,7 +113,6 @@ function removeInitialContent() {
 }
 
 function loadImages() {
-  // eslint-disable-next-line no-undef
   chrome.storage.local.get({ bookmarks: [] }, (items) => {
     const bookmarksArray = items.bookmarks;
     if (bookmarksArray.length > 0) {
@@ -321,7 +316,6 @@ elements.homeIcon.addEventListener('click', (e) => {
 });
 
 elements.deleteAllBookmarksButton.addEventListener('click', () => {
-  // eslint-disable-next-line no-undef
   chrome.storage.local.get({ bookmarks: [] }, (items) => {
     const bookmarksArray = items.bookmarks;
     console.log(bookmarksArray);
@@ -329,7 +323,6 @@ elements.deleteAllBookmarksButton.addEventListener('click', () => {
       showNotification('No Bookmarks Available', 'negative');
     } else {
       bookmarksArray.splice(0, bookmarksArray.length); // empty array
-      // eslint-disable-next-line no-undef
       chrome.storage.local.set({ bookmarks: bookmarksArray }, () => {
         // restoring initial layout of bookmarks section
         removeBookmarkImages();
