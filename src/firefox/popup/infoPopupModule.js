@@ -1,7 +1,7 @@
 import { elements, attributionTabLink } from './base';
 import { addSpinner, removeSpinner } from './spinner';
 
-function getRichTextAttribution(image) {
+export function getRichTextAttribution(image) {
   if (!image) {
     return '';
   }
@@ -160,6 +160,8 @@ function getImageData(imageId) {
       popupLicense.innerHTML = `<a href=${licenseUrl}>CC ${license.toUpperCase()}</a>`;
       // Attribution tab
       attributionRichTextPara.innerHTML = getRichTextAttribution(res);
+      console.log('xxxxxxxxxxxxx looking for this xxxxxxxxxxx');
+      console.log(getRichTextAttribution(res));
       attributionHtmlTextArea.value = getHtmlAttribution(res);
       elements.downloadImageButton.addEventListener('click', handleImageDownload);
       elements.downloadImageAttributionButton.addEventListener(
