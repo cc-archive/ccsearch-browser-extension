@@ -1,12 +1,9 @@
 import elements from './base';
 import { backupProviderAPIQueryStrings } from '../popup/helper';
 
-console.log('options page');
-
-const useCaseInputs = document.querySelector('.use-case').getElementsByTagName('input');
-const licenseInputs = document.querySelector('.license').getElementsByTagName('input');
-const providerInputs = document.querySelector('.provider').getElementsByTagName('input');
-const darkModeInput = document.querySelector('.dark-mode').getElementsByTagName('input');
+const {
+  useCaseInputs, licenseInputs, providerInputs, darkModeInput,
+} = elements;
 
 // Making sure that only license or use-case is selected at the same time
 Array.prototype.forEach.call(useCaseInputs, (element) => {
@@ -64,7 +61,7 @@ function saveSingleFilter(inputElements) {
         [id]: value, // using ES6 to use variable as key of object
       },
       () => {
-        const status = document.getElementById('status');
+        const { status } = elements;
         status.textContent = 'Saved!';
         setTimeout(() => {
           status.textContent = '';
@@ -82,10 +79,10 @@ function saveFilters() {
   saveSingleFilter(darkModeInput);
 }
 
-document.getElementById('save').addEventListener('click', saveFilters);
+elements.saveButton.addEventListener('click', saveFilters);
 
 function addProvidersToDom(providers) {
-  const providerWrapper = document.querySelector('.provider');
+  const { providerWrapper } = elements;
   providerWrapper.innerText = '';
 
   Object.keys(providers).forEach((key) => {
@@ -139,7 +136,7 @@ elements.exportBookmarksButton.addEventListener('click', () => {
 });
 
 function showNotification(message, context) {
-  const snackbar = document.getElementById('snackbar-options');
+  const { snackbar } = elements;
   console.log(snackbar);
   snackbar.innerText = message;
 
