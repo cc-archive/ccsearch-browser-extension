@@ -36,9 +36,6 @@ export const elements = {
   primarySection: document.querySelector('.section-primary'),
   bookmarksSection: document.querySelector('.section-bookmarks'),
   deleteAllBookmarksButton: document.querySelector('.delete-all-button'),
-  exportBookmarksButton: document.querySelector('.export-bookmarks-button'),
-  importBookmarksButton: document.querySelector('.import-bookmarks-button'),
-  importBookmarksInput: document.getElementById('import-bookmarks-input'),
 };
 
 export const attributionTabLink = elements.popupTabLinks[0];

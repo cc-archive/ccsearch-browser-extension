@@ -1,4 +1,4 @@
-import { elements } from '../popup/base';
+import elements from './base';
 import { backupProviderAPIQueryStrings } from '../popup/helper';
 
 console.log('options page');
