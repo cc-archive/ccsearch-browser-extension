@@ -1,129 +1,36 @@
 import elements from './base';
-import { backupProviderAPIQueryStrings } from '../popup/helper';
-
-const {
-  useCaseInputs, licenseInputs, providerInputs, darkModeInput,
-} = elements;
-
-// Making sure that only license or use-case is selected at the same time
-Array.prototype.forEach.call(useCaseInputs, (element) => {
-  element.addEventListener('click', (e) => {
-    console.log(`${e.target} clicked`);
-    if (e.target.checked) {
-      Array.prototype.forEach.call(licenseInputs, (licenseElement) => {
-        // eslint-disable-next-line no-param-reassign
-        licenseElement.checked = false;
-      });
-    }
-  });
-});
-
-Array.prototype.forEach.call(licenseInputs, (element) => {
-  element.addEventListener('click', (e) => {
-    console.log(`${e.target} clicked`);
-    if (e.target.checked) {
-      Array.prototype.forEach.call(useCaseInputs, (licenseElement) => {
-        // eslint-disable-next-line no-param-reassign
-        licenseElement.checked = false;
-      });
-    }
-  });
-});
-
-function restoreFilters(inputElements) {
-  for (let i = 0; i < inputElements.length; i += 1) {
-    const { id } = inputElements[i];
-    chrome.storage.local.get({ [id]: false }, (items) => {
-      // default value is false
-      document.getElementById(id).checked = items[id];
-    });
-    chrome.storage.local.get(null, (items) => {
-      console.log('all the storage items');
-      console.log(items);
-    });
-  }
-}
-
-function init() {
-  restoreFilters(useCaseInputs);
-  restoreFilters(licenseInputs);
-  restoreFilters(darkModeInput);
-}
+import {
+  init, saveFilters, showNotification, updateBookmarks,
+} from './utils';
 
 document.addEventListener('DOMContentLoaded', init);
 
-function saveSingleFilter(inputElements) {
-  for (let i = 0; i < inputElements.length; i += 1) {
-    const { id } = inputElements[i];
-    const value = inputElements[i].checked;
-    chrome.storage.local.set(
-      {
-        [id]: value, // using ES6 to use variable as key of object
-      },
-      () => {
-        const { status } = elements;
-        status.textContent = 'Saved!';
-        setTimeout(() => {
-          status.textContent = '';
-        }, 1000);
-        console.log(`${id} has been set to ${value}`);
-      },
-    );
-  }
-}
-
-function saveFilters() {
-  saveSingleFilter(useCaseInputs);
-  saveSingleFilter(licenseInputs);
-  saveSingleFilter(providerInputs);
-  saveSingleFilter(darkModeInput);
-}
-
 elements.saveButton.addEventListener('click', saveFilters);
 
-function addProvidersToDom(providers) {
-  const { providerWrapper } = elements;
-  providerWrapper.innerText = '';
-
-  Object.keys(providers).forEach((key) => {
-    const input = document.createElement('input');
-    input.type = 'checkbox';
-    input.id = providers[key];
-
-    const label = document.createElement('label');
-    console.log(input.id);
-    label.setAttribute('for', input.id);
-    label.innerText = key;
-
-    const breakLine = document.createElement('br');
-
-    providerWrapper.appendChild(input);
-    providerWrapper.appendChild(label);
-    providerWrapper.appendChild(breakLine);
-  });
-  restoreFilters(providerInputs);
-}
-
-function getLatestProviders() {
-  const getProviderURL = 'https://api.creativecommons.engineering/statistics/image';
-  let providers = {};
-
-  fetch(getProviderURL)
-    .then(data => data.json())
-    .then((res) => {
-      res.forEach((provider) => {
-        providers[provider.display_name] = provider.provider_name;
+// Making sure that only license or use-case is selected at the same time
+Array.prototype.forEach.call(elements.useCaseInputs, (element) => {
+  element.addEventListener('click', (e) => {
+    console.log(`${e.target} clicked`);
+    if (e.target.checked) {
+      Array.prototype.forEach.call(elements.licenseInputs, (licenseElement) => {
+        // eslint-disable-next-line no-param-reassign
+        licenseElement.checked = false;
       });
-      addProvidersToDom(providers);
-    })
-    .catch((error) => {
-      console.log(error);
-      providers = backupProviderAPIQueryStrings;
-      addProvidersToDom(providers);
-    });
-}
+    }
+  });
+});
 
-getLatestProviders();
+Array.prototype.forEach.call(elements.licenseInputs, (element) => {
+  element.addEventListener('click', (e) => {
+    console.log(`${e.target} clicked`);
+    if (e.target.checked) {
+      Array.prototype.forEach.call(elements.useCaseInputs, (licenseElement) => {
+        // eslint-disable-next-line no-param-reassign
+        licenseElement.checked = false;
+      });
+    }
+  });
+});
 
 elements.exportBookmarksButton.addEventListener('click', () => {
   chrome.storage.local.get({ bookmarks: [] }, (items) => {
@@ -134,37 +41,6 @@ elements.exportBookmarksButton.addEventListener('click', () => {
     download(bookmarksString, 'bookmarks.json', 'text/plain');
   });
 });
-
-function showNotification(message, context) {
-  const { snackbar } = elements;
-  console.log(snackbar);
-  snackbar.innerText = message;
-
-  snackbar.classList.add('show');
-  if (context === 'positive') snackbar.classList.add('snackbar-positive');
-  else if (context === 'negative') snackbar.classList.add('snackbar-negative');
-
-  setTimeout(() => {
-    snackbar.className = '';
-    snackbar.classList.add('snackbar');
-  }, 1100);
-}
-
-function updateBookmarks(newBookmarksids) {
-  chrome.storage.local.get({ bookmarks: [] }, (items) => {
-    const bookmarksArray = items.bookmarks;
-    newBookmarksids.forEach((bookmarkId) => {
-      if (bookmarksArray.indexOf(bookmarkId) === -1) {
-        bookmarksArray.push(bookmarkId);
-        console.log(bookmarksArray);
-        chrome.storage.local.set({ bookmarks: bookmarksArray }, () => {
-          console.log('bookmarks updated');
-        });
-      }
-    });
-    showNotification('Bookmarks updated!', 'positive');
-  });
-}
 
 elements.importBookmarksButton.addEventListener('click', () => {
   const file = elements.importBookmarksInput.files[0];
