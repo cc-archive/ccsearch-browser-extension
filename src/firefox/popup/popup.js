@@ -240,7 +240,7 @@ elements.searchIcon.addEventListener('click', () => {
   inputText = elements.inputField.value;
   pageNo = 1;
 
-  checkInputError(inputText);
+  checkInputError(inputText, 'error-message');
   removeInitialContent();
   removeOldSearchResults();
   removeLoaderAnimation();

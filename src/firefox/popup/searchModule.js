@@ -3,16 +3,17 @@ import { unicodeToString, providerLogos } from './helper';
 import { activatePopup } from './infoPopupModule';
 import { removeSpinner } from './spinner';
 // eslint-disable-next-line import/no-cycle
-import bookmarkImage from './bookmarkModule';
+import { bookmarkImage } from './bookmarkModule';
 
 const Masonry = require('masonry-layout');
 
-export function checkInputError(inputText) {
+export function checkInputError(inputText, errorSpanId) {
+  const errorMessageSpan = document.getElementById(errorSpanId);
   if (inputText === '') {
-    elements.errorMessage.textContent = 'Please enter a search query';
+    errorMessageSpan.textContent = 'Please enter a search query';
     throw new Error('Please enter a search query');
   } else {
-    elements.errorMessage.textContent = '';
+    errorMessageSpan.textContent = '';
   }
 }
 

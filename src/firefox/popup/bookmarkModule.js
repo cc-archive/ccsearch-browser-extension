@@ -24,7 +24,7 @@ function restoreInitialContentBookmarks() {
   }
 }
 
-export default function bookmarkImage(e) {
+export function bookmarkImage(e) {
   console.log('save bookmark');
   console.log(e.target);
   console.log(e.target.dataset.imageid);
@@ -268,58 +268,60 @@ export function restoreInitialContentPrimary() {
   }
 }
 
-elements.showBookmarksIcon.addEventListener('click', () => {
-  window.isBookmarksActive = true;
+document.addEventListener('DOMContentLoaded', () => {
+  elements.showBookmarksIcon.addEventListener('click', () => {
+    window.isBookmarksActive = true;
 
-  elements.homeIcon.style.pointerEvents = 'none';
-  setTimeout(() => {
-    elements.homeIcon.style.pointerEvents = 'auto';
-  }, 500);
-  elements.primarySection.style.display = 'none';
-  elements.bookmarksSection.style.display = 'block';
-  // elements.homeIcon.style.visibility = 'visible';
-  elements.homeIcon.style.display = 'inline-block';
-  elements.showBookmarksIcon.style.display = 'none';
-  elements.inputField.value = '';
+    elements.homeIcon.style.pointerEvents = 'none';
+    setTimeout(() => {
+      elements.homeIcon.style.pointerEvents = 'auto';
+    }, 500);
+    elements.primarySection.style.display = 'none';
+    elements.bookmarksSection.style.display = 'block';
+    // elements.homeIcon.style.visibility = 'visible';
+    elements.homeIcon.style.display = 'inline-block';
+    elements.showBookmarksIcon.style.display = 'none';
+    elements.inputField.value = '';
 
-  addSpinner(elements.spinnerPlaceholderBookmarks);
-  removeOldSearchResults();
-  removeLoaderAnimation();
-  restoreInitialContentPrimary();
-  loadImages();
-});
+    addSpinner(elements.spinnerPlaceholderBookmarks);
+    removeOldSearchResults();
+    removeLoaderAnimation();
+    restoreInitialContentPrimary();
+    loadImages();
+  });
 
-elements.homeIcon.addEventListener('click', (e) => {
-  window.isBookmarksActive = false;
+  elements.homeIcon.addEventListener('click', (e) => {
+    window.isBookmarksActive = false;
 
-  elements.showBookmarksIcon.style.pointerEvents = 'none';
-  setTimeout(() => {
-    elements.showBookmarksIcon.style.pointerEvents = 'auto';
-  }, 500);
-  elements.primarySection.style.display = 'block';
-  elements.bookmarksSection.style.display = 'none';
-  elements.showBookmarksIcon.style.display = 'inline-block';
-  e.target.style.display = 'none';
+    elements.showBookmarksIcon.style.pointerEvents = 'none';
+    setTimeout(() => {
+      elements.showBookmarksIcon.style.pointerEvents = 'auto';
+    }, 500);
+    elements.primarySection.style.display = 'block';
+    elements.bookmarksSection.style.display = 'none';
+    elements.showBookmarksIcon.style.display = 'inline-block';
+    e.target.style.display = 'none';
 
-  removeBookmarkImages();
-});
+    removeBookmarkImages();
+  });
 
-elements.deleteAllBookmarksButton.addEventListener('click', () => {
-  chrome.storage.local.get({ bookmarks: [] }, (items) => {
-    const bookmarksArray = items.bookmarks;
-    console.log(bookmarksArray);
-    if (bookmarksArray.length === 0) {
-      showNotification('No Bookmarks Available', 'negative', 'snackbar-bookmarks');
-    } else {
-      bookmarksArray.splice(0, bookmarksArray.length); // empty array
-      chrome.storage.local.set({ bookmarks: bookmarksArray }, () => {
-        // restoring initial layout of bookmarks section
-        removeBookmarkImages();
-        msnry.layout();
-        restoreInitialContentBookmarks();
-        // confirm user action
-        showNotification('Bookmarks successfully removed', 'positive', 'snackbar-bookmarks');
-      });
-    }
+  elements.deleteAllBookmarksButton.addEventListener('click', () => {
+    chrome.storage.local.get({ bookmarks: [] }, (items) => {
+      const bookmarksArray = items.bookmarks;
+      console.log(bookmarksArray);
+      if (bookmarksArray.length === 0) {
+        showNotification('No Bookmarks Available', 'negative', 'snackbar-bookmarks');
+      } else {
+        bookmarksArray.splice(0, bookmarksArray.length); // empty array
+        chrome.storage.local.set({ bookmarks: bookmarksArray }, () => {
+          // restoring initial layout of bookmarks section
+          removeBookmarkImages();
+          msnry.layout();
+          restoreInitialContentBookmarks();
+          // confirm user action
+          showNotification('Bookmarks successfully removed', 'positive', 'snackbar-bookmarks');
+        });
+      }
+    });
   });
 });
