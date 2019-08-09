@@ -4,27 +4,11 @@ import { providerLogos, unicodeToString } from './helper';
 // eslint-disable-next-line import/no-cycle
 import { removeOldSearchResults, removeLoaderAnimation } from './searchModule';
 import { addSpinner, removeSpinner } from './spinner';
-import { showNotification, removeInitialContent } from '../utils';
+import { showNotification, removeInitialContent, restoreInitialContent } from '../utils';
 
 const Masonry = require('masonry-layout');
 
-function restoreInitialContentBookmarks() {
-  const sectionContentBookmarks = document.querySelector('.section-content--bookmarks');
-
-  const sectionContentInitialInfo = document.querySelector(
-    '.section-content--bookmarks .initial-info',
-  );
-
-  if (!sectionContentInitialInfo) {
-    const initialInfoElement = `<p class="initial-info">
-              No Bookmarks yet
-            </p>`;
-
-    sectionContentBookmarks.querySelector('.row').innerHTML = initialInfoElement;
-  }
-}
-
-export function bookmarkImage(e) {
+export default function bookmarkImage(e) {
   console.log('save bookmark');
   console.log(e.target);
   console.log(e.target.dataset.imageid);
@@ -68,7 +52,7 @@ function removeBookmark(e) {
       showNotification('Bookmark removed', 'positive', 'snackbar-bookmarks');
 
       if (isLastImage) {
-        restoreInitialContentBookmarks();
+        restoreInitialContent('bookmarks');
       }
     });
   });
@@ -101,7 +85,7 @@ function loadImages() {
       removeInitialContent('bookmarks__initial-info');
     } else {
       removeSpinner(elements.spinnerPlaceholderBookmarks);
-      restoreInitialContentBookmarks();
+      restoreInitialContent('bookmarks');
     }
     console.log(bookmarksArray);
 
@@ -242,25 +226,6 @@ function removeBookmarkImages() {
   elements.gridBookmarks.innerHTML = '<div class="gutter-sizer"></div>';
 }
 
-export function restoreInitialContentPrimary() {
-  const sectionContentPrimary = document.querySelector('.section-content--primary');
-
-  const sectionContentInitialInfo = document.querySelector(
-    '.section-content--primary .initial-info',
-  );
-
-  if (!sectionContentInitialInfo) {
-    const initialInfoElement = `<p class="initial-info">
-              Search for free content in the public domain and under Creative Commons licenses.<br /><br />
-              Learn more about CC licenses
-              <a href="https://creativecommons.org/share-your-work/licensing-types-examples/" target="_blank">
-                here.
-              </a>
-            </p>`;
-    sectionContentPrimary.querySelector('.row').innerHTML = initialInfoElement;
-  }
-}
-
 document.addEventListener('DOMContentLoaded', () => {
   elements.showBookmarksIcon.addEventListener('click', () => {
     window.isBookmarksActive = true;
@@ -279,7 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
     addSpinner(elements.spinnerPlaceholderBookmarks);
     removeOldSearchResults();
     removeLoaderAnimation();
-    restoreInitialContentPrimary();
+    restoreInitialContent('primary');
     loadImages();
   });
 
@@ -310,7 +275,7 @@ document.addEventListener('DOMContentLoaded', () => {
           // restoring initial layout of bookmarks section
           removeBookmarkImages();
           msnry.layout();
-          restoreInitialContentBookmarks();
+          restoreInitialContent('bookmarks');
           // confirm user action
           showNotification('Bookmarks successfully removed', 'positive', 'snackbar-bookmarks');
         });
