@@ -6,7 +6,8 @@
     "lint": "eslint './src/**/*.js'",
     "compile-sass": "node-sass src/firefox/popup/sass/main.scss src/firefox/popup/popup.css",
     "compile-sass:watch": "node-sass src/firefox/popup/sass/main.scss src/firefox/popup/popup.css --watch",
-    "dev": "npm run compile-sass && webpack --mode development",
+    "clean": "rm -rf './dist'",
+    "dev": "npm run clean && npm run compile-sass && webpack --mode development",
     "webpack:watch": "webpack --mode development --watch",
     "test": "jest"
   },
