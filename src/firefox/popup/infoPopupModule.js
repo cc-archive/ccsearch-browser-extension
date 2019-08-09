@@ -21,7 +21,7 @@ export function getRichTextAttribution(image) {
   return `${imgLink}${creator}${licenseLink}`;
 }
 
-function getHtmlAttribution(image) {
+export function getHtmlAttribution(image) {
   if (!image) {
     return '';
   }
@@ -53,7 +53,7 @@ function getHtmlAttribution(image) {
   return `<p style="font-size: 0.9rem;font-style: italic;">${imgLink}${creator}${licenseLink}${licenseImgLink}</p>`;
 }
 
-function getPlainAttribution(image) {
+export function getPlainAttribution(image) {
   if (!image) {
     return '';
   }
@@ -93,6 +93,7 @@ function downloadImage(imageUrl, imageName) {
   x.send();
   // eventHandlerTarget.removeEventListener('click', eventHandlerFunction);
 }
+
 function downloadImageAttribution(image) {
   // eslint-disable-next-line no-undef
   download(getPlainAttribution(image), `${image.title}.txt`, 'text/plain');
@@ -160,8 +161,6 @@ function getImageData(imageId) {
       popupLicense.innerHTML = `<a href=${licenseUrl}>CC ${license.toUpperCase()}</a>`;
       // Attribution tab
       attributionRichTextPara.innerHTML = getRichTextAttribution(res);
-      console.log('xxxxxxxxxxxxx looking for this xxxxxxxxxxx');
-      console.log(getRichTextAttribution(res));
       attributionHtmlTextArea.value = getHtmlAttribution(res);
       elements.downloadImageButton.addEventListener('click', handleImageDownload);
       elements.downloadImageAttributionButton.addEventListener(
