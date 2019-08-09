@@ -18,16 +18,5 @@
     "page": "options/options.html",
     "open_in_tab": true
   },
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "js": [
-        "content.js",
-        "popup/vendors/js/jquery.min.js",
-        "popup/vendors/js/comboTreePlugin.js",
-        "popup/vendors/js/imagesloaded.min.js"
-      ]
-    }
-  ],
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
 }
