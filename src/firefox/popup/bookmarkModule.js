@@ -4,7 +4,7 @@ import { providerLogos, unicodeToString } from './helper';
 // eslint-disable-next-line import/no-cycle
 import { removeOldSearchResults, removeLoaderAnimation } from './searchModule';
 import { addSpinner, removeSpinner } from './spinner';
-import showNotification from '../utils';
+import { showNotification, removeInitialContent } from '../utils';
 
 const Masonry = require('masonry-layout');
 
@@ -94,18 +94,11 @@ const msnry = new Masonry(elements.gridBookmarks, {
   transitionDuration: '0',
 });
 
-function removeInitialContent() {
-  const sectionContentParagraph = document.querySelector('.section-content--bookmarks p');
-  if (sectionContentParagraph) {
-    sectionContentParagraph.parentNode.removeChild(sectionContentParagraph);
-  }
-}
-
 function loadImages() {
   chrome.storage.local.get({ bookmarks: [] }, (items) => {
     const bookmarksArray = items.bookmarks;
     if (bookmarksArray.length > 0) {
-      removeInitialContent();
+      removeInitialContent('bookmarks__initial-info');
     } else {
       removeSpinner(elements.spinnerPlaceholderBookmarks);
       restoreInitialContentBookmarks();

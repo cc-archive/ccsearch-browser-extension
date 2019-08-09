@@ -1,6 +1,6 @@
 import elements from './base';
 import { backupProviderAPIQueryStrings } from '../popup/helper';
-import showNotification from '../utils';
+import { showNotification } from '../utils';
 
 export function restoreFilters(inputElements) {
   for (let i = 0; i < inputElements.length; i += 1) {

@@ -1,6 +1,6 @@
 import elements from './base';
 import { init, saveFilters, updateBookmarks } from './helper';
-import showNotification from '../utils';
+import { showNotification } from '../utils';
 
 const download = require('downloadjs');
 

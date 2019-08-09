@@ -17,13 +17,6 @@ export function checkInputError(inputText, errorSpanId) {
   }
 }
 
-export function removeInitialContent() {
-  const sectionContentParagraph = document.querySelector('.section-content--primary p');
-  if (sectionContentParagraph) {
-    sectionContentParagraph.parentNode.removeChild(sectionContentParagraph);
-  }
-}
-
 export function removeOldSearchResults() {
   // remove old images for a new search
 

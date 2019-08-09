@@ -2,7 +2,6 @@
 import { elements } from './base';
 import {
   checkInputError,
-  removeInitialContent,
   removeOldSearchResults,
   getRequestUrl,
   checkResultLength,
@@ -22,6 +21,7 @@ import {
 import { populateProviderList, resetLicenseDropDown, loadUserDefaults } from './filterModule';
 import { handleImageAttributionDownload, handleImageDownload } from './infoPopupModule';
 import { addSpinner } from './spinner';
+import { removeInitialContent } from '../utils';
 
 let inputText;
 let pageNo;
@@ -241,7 +241,7 @@ elements.searchIcon.addEventListener('click', () => {
   pageNo = 1;
 
   checkInputError(inputText, 'error-message');
-  removeInitialContent();
+  removeInitialContent('primary__initial-info');
   removeOldSearchResults();
   removeLoaderAnimation();
   applyFilters();

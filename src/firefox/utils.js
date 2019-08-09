@@ -1,4 +1,4 @@
-export default function showNotification(message, context, snackbarPlaceholderId) {
+export function showNotification(message, context, snackbarPlaceholderId) {
   const snackbar = document.getElementById(snackbarPlaceholderId);
   snackbar.innerText = message;
 
@@ -10,4 +10,11 @@ export default function showNotification(message, context, snackbarPlaceholderId
     snackbar.className = '';
     snackbar.classList.add('snackbar');
   }, 1100);
+}
+
+export function removeInitialContent(className) {
+  const sectionContentParagraph = document.querySelector(`.${className}`);
+  if (sectionContentParagraph) {
+    sectionContentParagraph.parentNode.removeChild(sectionContentParagraph);
+  }
 }
