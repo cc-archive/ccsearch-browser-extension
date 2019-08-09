@@ -92,20 +92,6 @@ export function saveFilters() {
   saveSingleFilter(elements.darkModeInput);
 }
 
-// export function showNotification(message, context) {
-//   const { snackbar } = elements;
-//   snackbar.innerText = message;
-
-//   snackbar.classList.add('show');
-//   if (context === 'positive') snackbar.classList.add('snackbar-positive');
-//   else if (context === 'negative') snackbar.classList.add('snackbar-negative');
-
-//   setTimeout(() => {
-//     snackbar.className = '';
-//     snackbar.classList.add('snackbar');
-//   }, 1100);
-// }
-
 export function updateBookmarks(newBookmarksids) {
   chrome.storage.local.get({ bookmarks: [] }, (items) => {
     const bookmarksArray = items.bookmarks;

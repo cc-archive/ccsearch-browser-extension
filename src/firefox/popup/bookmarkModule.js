@@ -6,19 +6,6 @@ import { removeOldSearchResults, removeLoaderAnimation } from './searchModule';
 import { addSpinner, removeSpinner } from './spinner';
 import showNotification from '../utils';
 
-// function showNotification(message, context) {
-//   const snackbar = document.getElementById('snackbar-bookmarks');
-//   snackbar.innerText = message;
-
-//   snackbar.classList.add('show');
-//   if (context === 'positive') snackbar.classList.add('snackbar-positive');
-//   else if (context === 'negative') snackbar.classList.add('snackbar-negative');
-
-//   setTimeout(() => {
-//     snackbar.className = 'snackbar';
-//   }, 1100);
-// }
-
 function restoreInitialContentBookmarks() {
   const sectionContentBookmarks = document.querySelector('.section-content--bookmarks');
 
