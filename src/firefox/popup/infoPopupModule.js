@@ -1,6 +1,8 @@
 import { elements, attributionTabLink } from './base';
 import { addSpinner, removeSpinner } from './spinner';
 
+const download = require('downloadjs');
+
 export function getRichTextAttribution(image) {
   if (!image) {
     return '';
@@ -87,7 +89,6 @@ function downloadImage(imageUrl, imageName) {
   x.open('GET', imageUrl, true);
   x.responseType = 'blob';
   x.onload = () => {
-    // eslint-disable-next-line no-undef
     download(x.response, imageName, 'image/gif'); // using download.js (http://danml.com/download.html)
   };
   x.send();
@@ -95,7 +96,6 @@ function downloadImage(imageUrl, imageName) {
 }
 
 function downloadImageAttribution(image) {
-  // eslint-disable-next-line no-undef
   download(getPlainAttribution(image), `${image.title}.txt`, 'text/plain');
 }
 

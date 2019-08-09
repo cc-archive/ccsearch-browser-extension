@@ -2,6 +2,8 @@ import elements from './base';
 import { init, saveFilters, updateBookmarks } from './helper';
 import showNotification from '../utils';
 
+const download = require('downloadjs');
+
 document.addEventListener('DOMContentLoaded', init);
 
 elements.saveButton.addEventListener('click', saveFilters);
@@ -36,7 +38,6 @@ elements.exportBookmarksButton.addEventListener('click', () => {
     const bookmarksArray = items.bookmarks;
     console.log(bookmarksArray);
     const bookmarksString = JSON.stringify(bookmarksArray);
-    // eslint-disable-next-line no-undef
     download(bookmarksString, 'bookmarks.json', 'text/plain');
   });
 });
