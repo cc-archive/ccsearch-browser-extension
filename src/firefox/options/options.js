@@ -1,7 +1,7 @@
 import elements from './base';
 import {
   init, saveFilters, showNotification, updateBookmarks,
-} from './utils';
+} from './helper';
 
 document.addEventListener('DOMContentLoaded', init);
 
