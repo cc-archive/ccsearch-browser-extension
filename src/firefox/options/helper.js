@@ -39,23 +39,27 @@ function addProvidersToDom(providers) {
   restoreFilters(elements.providerInputs);
 }
 
-export function getLatestProviders() {
+async function fetchProviders() {
   const getProviderURL = 'https://api.creativecommons.engineering/statistics/image';
-  let providers = {};
+  const data = await fetch(getProviderURL);
+  console.log(data);
 
-  fetch(getProviderURL)
-    .then(data => data.json())
-    .then((res) => {
-      res.forEach((provider) => {
-        providers[provider.display_name] = provider.provider_name;
-      });
-      addProvidersToDom(providers);
-    })
-    .catch((error) => {
-      console.log(error);
-      providers = backupProviderAPIQueryStrings;
-      addProvidersToDom(providers);
+  return data.json();
+}
+
+async function getLatestProviders() {
+  let providers = {};
+  try {
+    const result = await fetchProviders();
+    result.forEach((provider) => {
+      providers[provider.display_name] = provider.provider_name;
     });
+    addProvidersToDom(providers);
+  } catch (error) {
+    console.log(error);
+    providers = backupProviderAPIQueryStrings;
+    addProvidersToDom(providers);
+  }
 }
 
 export function init() {
