@@ -34,7 +34,7 @@ let userSelectedLicensesList = [];
 let userSelectedUseCaseList = [];
 
 // object to map Provider display names to valid query names.
-const providerAPIQueryStrings = {};
+let providerAPIQueryStrings = {};
 
 // eslint-disable-next-line no-undef
 const clipboard = new ClipboardJS('.btn-copy');
@@ -91,7 +91,7 @@ elements.inputField.addEventListener('keydown', (event) => {
 });
 
 async function populateProviderList() {
-  const providerAPIQueryStrings = await getLatestProviders();
+  providerAPIQueryStrings = await getLatestProviders();
 
   let count = 0;
   const providersList = [];
