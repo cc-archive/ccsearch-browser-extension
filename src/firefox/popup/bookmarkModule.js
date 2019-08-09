@@ -4,19 +4,20 @@ import { providerLogos, unicodeToString } from './helper';
 // eslint-disable-next-line import/no-cycle
 import { removeOldSearchResults, removeLoaderAnimation } from './searchModule';
 import { addSpinner, removeSpinner } from './spinner';
+import showNotification from '../utils';
 
-function showNotification(message, context) {
-  const snackbar = document.getElementById('snackbar-bookmarks');
-  snackbar.innerText = message;
+// function showNotification(message, context) {
+//   const snackbar = document.getElementById('snackbar-bookmarks');
+//   snackbar.innerText = message;
 
-  snackbar.classList.add('show');
-  if (context === 'positive') snackbar.classList.add('snackbar-positive');
-  else if (context === 'negative') snackbar.classList.add('snackbar-negative');
+//   snackbar.classList.add('show');
+//   if (context === 'positive') snackbar.classList.add('snackbar-positive');
+//   else if (context === 'negative') snackbar.classList.add('snackbar-negative');
 
-  setTimeout(() => {
-    snackbar.className = 'snackbar';
-  }, 1100);
-}
+//   setTimeout(() => {
+//     snackbar.className = 'snackbar';
+//   }, 1100);
+// }
 
 function restoreInitialContentBookmarks() {
   const sectionContentBookmarks = document.querySelector('.section-content--bookmarks');
@@ -46,10 +47,10 @@ export default function bookmarkImage(e) {
       chrome.storage.local.set({ bookmarks: bookmarksArray }, () => {
         console.log('bookmarks updated');
         e.target.innerText = 'bookmark';
-        showNotification('Image Bookmarked', 'positive');
+        showNotification('Image Bookmarked', 'positive', 'snackbar-bookmarks');
       });
     } else {
-      showNotification('Image already bookmarked!', 'negative');
+      showNotification('Image already bookmarked!', 'negative', 'snackbar-bookmarks');
     }
   });
 }
@@ -75,7 +76,7 @@ function removeBookmark(e) {
       imageDiv.parentElement.removeChild(imageDiv);
       // eslint-disable-next-line no-use-before-define
       msnry.layout(); // layout grid again
-      showNotification('Bookmark removed', 'positive');
+      showNotification('Bookmark removed', 'positive', 'snackbar-bookmarks');
 
       if (isLastImage) {
         restoreInitialContentBookmarks();
@@ -320,7 +321,7 @@ elements.deleteAllBookmarksButton.addEventListener('click', () => {
     const bookmarksArray = items.bookmarks;
     console.log(bookmarksArray);
     if (bookmarksArray.length === 0) {
-      showNotification('No Bookmarks Available', 'negative');
+      showNotification('No Bookmarks Available', 'negative', 'snackbar-bookmarks');
     } else {
       bookmarksArray.splice(0, bookmarksArray.length); // empty array
       chrome.storage.local.set({ bookmarks: bookmarksArray }, () => {
@@ -329,7 +330,7 @@ elements.deleteAllBookmarksButton.addEventListener('click', () => {
         msnry.layout();
         restoreInitialContentBookmarks();
         // confirm user action
-        showNotification('Bookmarks successfully removed', 'positive');
+        showNotification('Bookmarks successfully removed', 'positive', 'snackbar-bookmarks');
       });
     }
   });

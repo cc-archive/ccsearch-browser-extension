@@ -7,7 +7,6 @@ const elements = {
   providerInputs: document.querySelector('.provider').getElementsByTagName('input'),
   darkModeInput: document.querySelector('.dark-mode').getElementsByTagName('input'),
   providerWrapper: document.querySelector('.provider'),
-  snackbar: document.getElementById('snackbar-options'),
   status: document.getElementById('status'),
   saveButton: document.getElementById('save'),
 };

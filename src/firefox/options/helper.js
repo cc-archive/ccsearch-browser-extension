@@ -1,5 +1,6 @@
 import elements from './base';
 import { backupProviderAPIQueryStrings } from '../popup/helper';
+import showNotification from '../utils';
 
 export function restoreFilters(inputElements) {
   for (let i = 0; i < inputElements.length; i += 1) {
@@ -91,20 +92,19 @@ export function saveFilters() {
   saveSingleFilter(elements.darkModeInput);
 }
 
-export function showNotification(message, context) {
-  const { snackbar } = elements;
-  console.log(snackbar);
-  snackbar.innerText = message;
+// export function showNotification(message, context) {
+//   const { snackbar } = elements;
+//   snackbar.innerText = message;
 
-  snackbar.classList.add('show');
-  if (context === 'positive') snackbar.classList.add('snackbar-positive');
-  else if (context === 'negative') snackbar.classList.add('snackbar-negative');
+//   snackbar.classList.add('show');
+//   if (context === 'positive') snackbar.classList.add('snackbar-positive');
+//   else if (context === 'negative') snackbar.classList.add('snackbar-negative');
 
-  setTimeout(() => {
-    snackbar.className = '';
-    snackbar.classList.add('snackbar');
-  }, 1100);
-}
+//   setTimeout(() => {
+//     snackbar.className = '';
+//     snackbar.classList.add('snackbar');
+//   }, 1100);
+// }
 
 export function updateBookmarks(newBookmarksids) {
   chrome.storage.local.get({ bookmarks: [] }, (items) => {
@@ -118,6 +118,6 @@ export function updateBookmarks(newBookmarksids) {
         });
       }
     });
-    showNotification('Bookmarks updated!', 'positive');
+    showNotification('Bookmarks updated!', 'positive', 'snackbar-options');
   });
 }

@@ -1,7 +1,6 @@
 import elements from './base';
-import {
-  init, saveFilters, showNotification, updateBookmarks,
-} from './helper';
+import { init, saveFilters, updateBookmarks } from './helper';
+import showNotification from '../utils';
 
 document.addEventListener('DOMContentLoaded', init);
 
@@ -45,9 +44,9 @@ elements.exportBookmarksButton.addEventListener('click', () => {
 elements.importBookmarksButton.addEventListener('click', () => {
   const file = elements.importBookmarksInput.files[0];
   if (!file) {
-    showNotification('No file choosen', 'negative');
+    showNotification('No file choosen', 'negative', 'snackbar-options');
   } else if (file.type !== 'application/json') {
-    showNotification('Wrong file type. Choose json file', 'negative');
+    showNotification('Wrong file type. Choose json file', 'negative', 'snackbar-options');
   } else {
     const reader = new FileReader();
     reader.readAsText(file, 'UTF-8');
@@ -56,11 +55,17 @@ elements.importBookmarksButton.addEventListener('click', () => {
       // TODO: handle JSON parsing errors
       const bookmarksArray = JSON.parse(fileContents);
       if (Array.isArray(bookmarksArray)) {
-        if (!bookmarksArray.length > 0) showNotification('No bookmark ids found in file', 'negative');
+        if (!bookmarksArray.length > 0) showNotification('No bookmark ids found in file', 'negative', 'snackbar-options');
         else {
           updateBookmarks(bookmarksArray);
         }
-      } else showNotification('Contents not in valid format of ["id1", "id2", ...]', 'negative');
+      } else {
+        showNotification(
+          'Contents not in valid format of ["id1", "id2", ...]',
+          'negative',
+          'snackbar-options',
+        );
+      }
     };
   }
 });
