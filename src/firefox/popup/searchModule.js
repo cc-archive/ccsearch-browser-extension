@@ -5,6 +5,8 @@ import { removeSpinner } from './spinner';
 // eslint-disable-next-line import/no-cycle
 import bookmarkImage from './bookmarkModule';
 
+const Masonry = require('masonry-layout');
+
 export function checkInputError(inputText) {
   if (inputText === '') {
     elements.errorMessage.textContent = 'Please enter a search query';

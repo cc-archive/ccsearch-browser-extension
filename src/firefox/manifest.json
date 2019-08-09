@@ -25,7 +25,6 @@
         "content.js",
         "popup/vendors/js/jquery.min.js",
         "popup/vendors/js/comboTreePlugin.js",
-        "popup/vendors/js/masonry.min.js",
         "popup/vendors/js/imagesloaded.min.js"
       ]
     }

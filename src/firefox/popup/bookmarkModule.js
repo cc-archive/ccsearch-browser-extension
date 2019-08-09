@@ -6,6 +6,8 @@ import { removeOldSearchResults, removeLoaderAnimation } from './searchModule';
 import { addSpinner, removeSpinner } from './spinner';
 import showNotification from '../utils';
 
+const Masonry = require('masonry-layout');
+
 function restoreInitialContentBookmarks() {
   const sectionContentBookmarks = document.querySelector('.section-content--bookmarks');
 
@@ -83,7 +85,6 @@ function appendToGrid(msnry, fragment, e, grid) {
   });
 }
 
-// eslint-disable-next-line no-undef
 const msnry = new Masonry(elements.gridBookmarks, {
   // options
   itemSelector: '.grid-item',
