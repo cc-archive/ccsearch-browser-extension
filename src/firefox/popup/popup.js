@@ -9,19 +9,17 @@ import {
   removeLoaderAnimation,
 } from './searchModule';
 import {
-  isObjectEmpty,
   licensesList,
   usecasesList,
   licenseAPIQueryStrings,
   useCaseAPIQueryStrings,
-  backupProviderAPIQueryStrings,
   makeElementsDisplayNone,
   removeClassFromElements,
 } from './helper';
-import { populateProviderList, resetLicenseDropDown, loadUserDefaults } from './filterModule';
+import { loadProvidersToDom, resetLicenseDropDown, loadUserDefaults } from './filterModule';
 import { handleImageAttributionDownload, handleImageDownload } from './infoPopupModule';
 import { addSpinner } from './spinner';
-import { removeInitialContent } from '../utils';
+import { removeInitialContent, getLatestProviders } from '../utils';
 
 let inputText;
 let pageNo;
@@ -36,7 +34,7 @@ let userSelectedLicensesList = [];
 let userSelectedUseCaseList = [];
 
 // object to map Provider display names to valid query names.
-let providerAPIQueryStrings = {};
+const providerAPIQueryStrings = {};
 
 // eslint-disable-next-line no-undef
 const clipboard = new ClipboardJS('.btn-copy');
@@ -92,28 +90,26 @@ elements.inputField.addEventListener('keydown', (event) => {
   }
 });
 
-function fetchProviders() {
-  const getProviderURL = 'https://api.creativecommons.engineering/statistics/image';
+async function populateProviderList() {
+  const providerAPIQueryStrings = await getLatestProviders();
 
-  if (isObjectEmpty(providerAPIQueryStrings)) {
-    console.log('inside provider fetch');
-    fetch(getProviderURL)
-      .then(data => data.json())
-      .then((res) => {
-        res.forEach((provider) => {
-          providerAPIQueryStrings[provider.display_name] = provider.provider_name;
-        });
-        populateProviderList(providerAPIQueryStrings);
-      })
-      .catch((error) => {
-        console.log(error);
-        providerAPIQueryStrings = backupProviderAPIQueryStrings;
-        populateProviderList(providerAPIQueryStrings);
-      });
-  }
+  let count = 0;
+  const providersList = [];
+
+  // iterating over provider object
+  Object.keys(providerAPIQueryStrings).forEach((key) => {
+    providersList[count] = {
+      id: providerAPIQueryStrings[key],
+      title: key,
+    };
+    count += 1;
+  });
+
+  console.log(providersList);
+  loadProvidersToDom(providersList);
 }
 
-fetchProviders();
+populateProviderList();
 
 elements.filterIcon.addEventListener('click', () => {
   elements.filterSection.classList.toggle('section-filter--active');

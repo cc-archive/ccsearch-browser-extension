@@ -1,3 +1,5 @@
+import { backupProviderAPIQueryStrings } from './popup/helper';
+
 export function showNotification(message, context, snackbarPlaceholderId) {
   const snackbar = document.getElementById(snackbarPlaceholderId);
   snackbar.innerText = message;
@@ -47,5 +49,28 @@ export function restoreInitialContent(context) {
     }
     console.log(initialInfoElement);
     sectionContent.querySelector('.row').innerHTML = initialInfoElement;
+  }
+}
+
+export async function fetchProviders() {
+  const getProviderURL = 'https://api.creativecommons.engineering/statistics/image';
+  const data = await fetch(getProviderURL);
+  console.log(data);
+
+  return data.json();
+}
+
+export async function getLatestProviders() {
+  let providers = {};
+  try {
+    const result = await fetchProviders();
+    result.forEach((provider) => {
+      providers[provider.display_name] = provider.provider_name;
+    });
+    return providers;
+  } catch (error) {
+    console.log(error);
+    providers = backupProviderAPIQueryStrings;
+    return providers;
   }
 }

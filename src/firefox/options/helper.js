@@ -1,6 +1,5 @@
 import elements from './base';
-import { backupProviderAPIQueryStrings } from '../popup/helper';
-import { showNotification } from '../utils';
+import { showNotification, getLatestProviders } from '../utils';
 
 export function restoreFilters(inputElements) {
   for (let i = 0; i < inputElements.length; i += 1) {
@@ -39,34 +38,12 @@ function addProvidersToDom(providers) {
   restoreFilters(elements.providerInputs);
 }
 
-async function fetchProviders() {
-  const getProviderURL = 'https://api.creativecommons.engineering/statistics/image';
-  const data = await fetch(getProviderURL);
-  console.log(data);
-
-  return data.json();
-}
-
-async function getLatestProviders() {
-  let providers = {};
-  try {
-    const result = await fetchProviders();
-    result.forEach((provider) => {
-      providers[provider.display_name] = provider.provider_name;
-    });
-    addProvidersToDom(providers);
-  } catch (error) {
-    console.log(error);
-    providers = backupProviderAPIQueryStrings;
-    addProvidersToDom(providers);
-  }
-}
-
-export function init() {
+export async function init() {
   restoreFilters(elements.useCaseInputs);
   restoreFilters(elements.licenseInputs);
   restoreFilters(elements.darkModeInput);
-  getLatestProviders();
+  const providers = await getLatestProviders();
+  addProvidersToDom(providers);
 }
 
 export function saveSingleFilter(inputElements) {
