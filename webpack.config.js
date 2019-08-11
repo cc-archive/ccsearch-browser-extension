@@ -1,9 +1,6 @@
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 
-console.log(path.resolve(__dirname, 'src/firefox/*'));
-console.log(path.resolve(__dirname, 'dist/firefox/'));
-
 module.exports = {
   context: path.resolve(__dirname, 'src'),
   entry: {
