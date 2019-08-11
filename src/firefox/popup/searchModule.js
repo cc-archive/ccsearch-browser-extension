@@ -44,7 +44,7 @@ function showNoResultFoundMessage() {
   );
 
   if (!sectionContentInitialInfo) {
-    const initialInfoElement = `<p class="initial-info">
+    const initialInfoElement = `<p class="no-image-found initial-info">
     No Images Found. Please enter a different query.
             </p>`;
     sectionContentPrimary.querySelector('.row').innerHTML = initialInfoElement;
