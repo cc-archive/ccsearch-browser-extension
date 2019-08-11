@@ -48,7 +48,8 @@ ul {
   margin-left: 1rem;
 }
 
-#save {
+#save-filters,
+#save-dark-mode {
   padding: 0.5rem 0.7rem;
   margin: 10px 5px 20px;
   background-color: aqua;

@@ -1,12 +1,15 @@
 import elements from './base';
-import { init, saveFilters, updateBookmarks } from './helper';
+import {
+  init, saveFiltersOptions, saveDarkModeOptions, updateBookmarks,
+} from './helper';
 import { showNotification } from '../utils';
 
 const download = require('downloadjs');
 
 document.addEventListener('DOMContentLoaded', init);
 
-elements.saveButton.addEventListener('click', saveFilters);
+elements.saveFiltersButton.addEventListener('click', saveFiltersOptions);
+elements.saveDarkModeButton.addEventListener('click', saveDarkModeOptions);
 
 // Making sure that only license or use-case is selected at the same time
 Array.prototype.forEach.call(elements.useCaseInputs, (element) => {

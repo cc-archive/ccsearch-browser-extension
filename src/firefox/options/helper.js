@@ -66,10 +66,13 @@ export function saveSingleFilter(inputElements) {
   }
 }
 
-export function saveFilters() {
+export function saveFiltersOptions() {
   saveSingleFilter(elements.useCaseInputs);
   saveSingleFilter(elements.licenseInputs);
   saveSingleFilter(elements.providerInputs);
+}
+
+export function saveDarkModeOptions() {
   saveSingleFilter(elements.darkModeInput);
 }
 

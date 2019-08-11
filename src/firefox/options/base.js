@@ -8,7 +8,8 @@ const elements = {
   darkModeInput: document.querySelector('.dark-mode').getElementsByTagName('input'),
   providerWrapper: document.querySelector('.provider'),
   status: document.getElementById('status'),
-  saveButton: document.getElementById('save'),
+  saveFiltersButton: document.getElementById('save-filters'),
+  saveDarkModeButton: document.getElementById('save-dark-mode'),
 };
 
 export default elements;
