@@ -55,11 +55,7 @@ export function saveSingleFilter(inputElements) {
         [id]: value, // using ES6 to use variable as key of object
       },
       () => {
-        const { status } = elements;
-        status.textContent = 'Saved!';
-        setTimeout(() => {
-          status.textContent = '';
-        }, 1000);
+        showNotification('Settings saved!', 'positive', 'snackbar-options');
         console.log(`${id} has been set to ${value}`);
       },
     );
