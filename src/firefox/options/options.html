@@ -5,69 +5,86 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,300i,400&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <link rel="stylesheet" href="options.css" />
+    <link rel="stylesheet" href="https://unpkg.com/@creativecommons/vocabulary/vocabulary.css" />
   </head>
   <body>
-    <div class="header margin-bottom-medium">
-      <img src="../icons/cc128.png" alt="cc-icon" class="cc-icon" />
-    </div>
-
-    <div class="note">
-      <span><strong>Note:</strong></span>
-      <ul class="margin-bottom-medium">
-        <li>Don't Forget to save the changes.</li>
-        <li>You can select either licenses or use-case at the same time, not both.</li>
+    <div class="vocab tabbed magenta-colored">
+      <ul id="vocab-tabbed-header" class="tabs">
+        <li class="tab active" data-tab-no="1">
+          Filters
+        </li>
+        <li class="tab" data-tab-no="2">
+          Bookmarks
+        </li>
+        <li class="tab" data-tab-no="3">
+          Dark Mode
+        </li>
       </ul>
-    </div>
+      <div id="vocab-tabbed-contents" class="vocab section contents magenta-colored raised bottom-accented clingy">
+        <div class="content active" data-content-no="1">
+          <div class="note">
+            <span><strong>Note:</strong></span>
+            <ul class="margin-bottom-medium">
+              <li>Don't Forget to save the changes.</li>
+              <li>You can select either licenses or use-case at the same time, not both.</li>
+            </ul>
+          </div>
 
-    <h3 class="margin-bottom-small">Default Dark Mode:</h3>
-    <div class="dark-mode filter-checkboxes">
-      <input type="checkbox" id="darkmode" />
-      <label for="darkmode">On</label><br />
-    </div>
+          <h3 class="margin-top-medium">Default Filters:</h3>
 
-    <h3 class="margin-top-medium">Default Filters:</h3>
+          <h4>I want something that (use-case)</h4>
+          <div class="use-case filter-checkboxes">
+            <input type="checkbox" id="commercial" />
+            <label for="commercial">I can use commercially</label><br />
+            <input type="checkbox" id="modifiable" />
+            <label for="modifiable">I can modify or adapt</label><br />
+          </div>
 
-    <h4>I want something that (use-case)</h4>
-    <div class="use-case filter-checkboxes">
-      <input type="checkbox" id="commercial" />
-      <label for="commercial">I can use commercially</label><br />
-      <input type="checkbox" id="modifiable" />
-      <label for="modifiable">I can modify or adapt</label><br />
-    </div>
+          <h4 class="margin-top-medium">All licenses</h4>
+          <div class="license filter-checkboxes">
+            <input type="checkbox" id="CC0" />
+            <label for="CC0">CC0</label><br />
+            <input type="checkbox" id="Public Domain Mark" />
+            <label for="Public Domain Mark">Public Domain Mark</label><br />
+            <input type="checkbox" id="BY" />
+            <label for="BY">BY</label><br />
+            <input type="checkbox" id="BY-SA" />
+            <label for="BY-SA">BY-SA</label><br />
+            <input type="checkbox" id="BY-NC" />
+            <label for="BY-NC">BY-NC</label><br />
+            <input type="checkbox" id="BY-ND" />
+            <label for="BY-ND">BY-ND</label><br />
+            <input type="checkbox" id="BY-NC-SA" />
+            <label for="BY-NC-SA">BY-NC-SA</label><br />
+            <input type="checkbox" id="BY-NC-ND" />
+            <label for="BY-NC-ND">BY-NC-ND</label><br />
+          </div>
 
-    <h4 class="margin-top-medium">All licenses</h4>
-    <div class="license filter-checkboxes">
-      <input type="checkbox" id="CC0" />
-      <label for="CC0">CC0</label><br />
-      <input type="checkbox" id="Public Domain Mark" />
-      <label for="Public Domain Mark">Public Domain Mark</label><br />
-      <input type="checkbox" id="BY" />
-      <label for="BY">BY</label><br />
-      <input type="checkbox" id="BY-SA" />
-      <label for="BY-SA">BY-SA</label><br />
-      <input type="checkbox" id="BY-NC" />
-      <label for="BY-NC">BY-NC</label><br />
-      <input type="checkbox" id="BY-ND" />
-      <label for="BY-ND">BY-ND</label><br />
-      <input type="checkbox" id="BY-NC-SA" />
-      <label for="BY-NC-SA">BY-NC-SA</label><br />
-      <input type="checkbox" id="BY-NC-ND" />
-      <label for="BY-NC-ND">BY-NC-ND</label><br />
-    </div>
+          <h4 class="margin-top-medium">All Providers</h4>
+          <div class="provider filter-checkboxes">
+            Fetching Latest Providers ...
+          </div>
 
-    <h4 class="margin-top-medium">All Providers</h4>
-    <div class="provider filter-checkboxes">
-      Fetching Latest Providers ...
+          <button id="save">Save</button>
+          <span id="status"></span>
+        </div>
+        <div class="content" data-content-no="2">
+          <h4 class="margin-top-small margin-bottom-medium">Bookmarks</h4>
+          <button class="export-bookmarks-button options-button">Export Bookmarks</button><br />
+          <input type="file" id="import-bookmarks-input" />
+          <button class="import-bookmarks-button options-button margin-bottom-medium">Import Bookmarks</button>
+        </div>
+        <div class="content" data-content-no="3">
+          <h3 class="margin-bottom-small">Default Dark Mode:</h3>
+          <div class="dark-mode filter-checkboxes">
+            <input type="checkbox" id="darkmode" />
+            <label for="darkmode">On</label><br />
+          </div>
+        </div>
+      </div>
     </div>
 
     <div id="snackbar-options" class="snackbar"></div>
-
-    <button id="save">Save</button>
-    <span id="status"></span>
-    <h4 class="margin-top-small margin-bottom-medium">Bookmarks</h4>
-    <button class="export-bookmarks-button options-button">Export Bookmarks</button><br />
-    <input type="file" id="import-bookmarks-input" />
-    <button class="import-bookmarks-button options-button margin-bottom-medium">Import Bookmarks</button>
 
     <script src="options.js"></script>
   </body>
