@@ -70,3 +70,32 @@ elements.importBookmarksButton.addEventListener('click', () => {
     };
   }
 });
+
+// tab switching logic
+document.getElementById('vocab-tabbed-header').addEventListener('click', (e) => {
+  // removing active class
+  Array.prototype.forEach.call(e.currentTarget.getElementsByClassName('tab active'), (element) => {
+    element.classList.remove('active');
+  });
+
+  // add active class to the clicked tab header
+  e.target.classList.add('active');
+
+  const tabNo = e.target.getAttribute('data-tab-no');
+  let targetContentDiv;
+
+  // removing active class from any tab content div
+  Array.prototype.forEach.call(
+    document.getElementById('vocab-tabbed-contents').children,
+    (element) => {
+      element.classList.remove('active');
+      if (element.getAttribute('data-content-no') === tabNo) {
+        // saving the target content div
+        targetContentDiv = element;
+      }
+    },
+  );
+
+  // adding active class to target content div
+  targetContentDiv.classList.add('active');
+});
