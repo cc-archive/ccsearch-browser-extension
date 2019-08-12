@@ -7,36 +7,30 @@
 }
 
 html {
-  font-size: 62.5%;
+  font-size: 100%;
 }
 
 body {
   font-family: "Lato", "Arial", sans-serif;
   font-weight: 500;
-  font-size: 1.5rem;
+  font-size: 1rem;
   color: #383838;
 }
 
 h4 {
-  font-size: 1.7rem;
+  font-size: 1.2rem;
 }
 
 h3 {
-  font-size: 2.3rem;
+  font-size: 1.7rem;
 }
 
 .header {
   padding: 2px;
 }
 
-.cc-icon {
-  display: block;
-  height: 30px;
-  margin: 0 auto;
-}
-
 ul {
-  padding-left: 1.5rem;
+  padding-left: 1.1rem;
 }
 
 .note {
@@ -73,18 +67,18 @@ ul {
 /* snackbar */
 .snackbar {
   visibility: hidden;
-  min-width: 15rem;
+  min-width: 10rem;
   transform: translate(-50%);
   background-color: #333;
   color: #fff;
   text-align: center;
-  border-radius: 0.5rem;
-  padding: 0.5rem;
-  font-size: 1.6rem;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 1.2rem;
   position: fixed;
   z-index: 1;
   left: 50%;
-  bottom: 5rem;
+  bottom: 4rem;
 }
 
 .snackbar-positive {
@@ -107,7 +101,7 @@ ul {
     opacity: 0;
   }
   to {
-    bottom: 5rem;
+    bottom: 4rem;
     opacity: 1;
   }
 }
