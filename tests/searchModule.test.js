@@ -1,23 +1,22 @@
+// import { JestEnvironment } from '@jest/environment';
 import { checkInputError, getRequestUrl } from '../src/firefox/popup/searchModule';
+import * as utils from '../src/firefox/utils';
+
+utils.showNotification = jest.fn();
 
 test('testing checkInputError', () => {
-  // error message placeholder
-  document.body.innerHTML = `<div>
-      <span id="error-message"></span>
-    </div>`;
-
-  // testing empty inputText
-  expect(() => {
-    checkInputError('', 'error-message');
-  }).toThrow('Please enter a search query');
-
-  expect(document.getElementById('error-message').textContent).toEqual(
-    'Please enter a search query',
+  // testing checkInputError with empty search query
+  checkInputError('');
+  expect(utils.showNotification).toHaveBeenCalled();
+  expect(utils.showNotification).toHaveBeenCalledWith(
+    'No search query provided',
+    'negative',
+    'snackbar-bookmarks',
   );
 
-  // testing non-empty inputText
-  checkInputError('hello', 'error-message');
-  expect(document.getElementById('error-message').textContent).toEqual('');
+  checkInputError('dogs');
+  // showNotification should be called only in case of empty search query
+  expect(utils.showNotification).toHaveBeenCalledTimes(2);
 });
 
 test('testing getRequestUrl', () => {
