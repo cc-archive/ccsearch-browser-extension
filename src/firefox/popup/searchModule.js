@@ -4,16 +4,13 @@ import { activatePopup } from './infoPopupModule';
 import { removeSpinner } from './spinner';
 // eslint-disable-next-line import/no-cycle
 import bookmarkImage from './bookmarkModule';
+import { showNotification } from '../utils';
 
 const Masonry = require('masonry-layout');
 
-export function checkInputError(inputText, errorSpanId) {
-  const errorMessageSpan = document.getElementById(errorSpanId);
+export function checkInputError(inputText) {
   if (inputText === '') {
-    errorMessageSpan.textContent = 'Please enter a search query';
-    throw new Error('Please enter a search query');
-  } else {
-    errorMessageSpan.textContent = '';
+    showNotification('No search query provided', 'negative', 'snackbar-bookmarks');
   }
 }
 
