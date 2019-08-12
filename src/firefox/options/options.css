@@ -63,6 +63,10 @@ ul {
   margin-top: 0.25rem;
 }
 
+.padding-left-smaller {
+  padding-left: 0.25rem;
+}
+
 /* snackbar */
 .snackbar {
   visibility: hidden;

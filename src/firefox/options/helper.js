@@ -23,11 +23,13 @@ function addProvidersToDom(providers) {
     const input = document.createElement('input');
     input.type = 'checkbox';
     input.id = providers[key];
+    input.classList = 'vocab choice-field magenta-colored small-sized';
 
     const label = document.createElement('label');
     console.log(input.id);
     label.setAttribute('for', input.id);
     label.innerText = key;
+    label.classList = 'padding-left-smaller';
 
     const breakLine = document.createElement('br');
 
