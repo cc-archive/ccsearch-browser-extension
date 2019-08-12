@@ -1,4 +1,4 @@
-import { showNotification } from '../src/firefox/utils';
+import { showNotification, removeNode } from '../src/firefox/utils';
 
 test('testing showNotification', () => {
   document.body.innerHTML = '<div id="snackbar-bookmarks" class="snackbar"></div>';
@@ -16,4 +16,13 @@ test('testing showNotification', () => {
 
   showNotification('test', 'negative', 'snackbar-bookmarks');
   expect(snackbar.classList).toContain('snackbar-negative');
+});
+
+test('testing removeNode', () => {
+  document.body.innerHTML = '<div><p class="initial-info primary__initial-info">Some content</p></div>';
+
+  const className = 'primary__initial-info';
+  removeNode(className);
+  const targetNode = document.querySelector(`.${className}`);
+  expect(targetNode).toBeNull();
 });
