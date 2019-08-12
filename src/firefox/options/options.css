@@ -48,13 +48,6 @@ ul {
   margin-left: 1rem;
 }
 
-#save-filters,
-#save-dark-mode {
-  padding: 0.5rem 0.7rem;
-  margin: 10px 5px 20px;
-  background-color: aqua;
-}
-
 .options-button {
   padding: 0.5rem 0.7rem;
   background-color: aqua;
@@ -77,6 +70,7 @@ ul {
   margin-top: 0.5rem;
 }
 
+/* snackbar */
 .snackbar {
   visibility: hidden;
   min-width: 15rem;
