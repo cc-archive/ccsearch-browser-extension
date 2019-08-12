@@ -16,7 +16,7 @@ test('testing checkInputError', () => {
 
   checkInputError('dogs');
   // showNotification should be called only in case of empty search query
-  expect(utils.showNotification).toHaveBeenCalledTimes(2);
+  expect(utils.showNotification).toHaveBeenCalledTimes(1);
 });
 
 test('testing getRequestUrl', () => {
