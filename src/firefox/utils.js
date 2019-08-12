@@ -14,7 +14,7 @@ export function showNotification(message, context, snackbarPlaceholderId) {
   }, 1100);
 }
 
-export function removeParaContent(className) {
+export function removeNode(className) {
   const sectionContentParagraph = document.querySelector(`.${className}`);
   if (sectionContentParagraph) {
     sectionContentParagraph.parentNode.removeChild(sectionContentParagraph);

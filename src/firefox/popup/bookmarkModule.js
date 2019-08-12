@@ -4,7 +4,7 @@ import { providerLogos, unicodeToString } from './helper';
 // eslint-disable-next-line import/no-cycle
 import { removeOldSearchResults, removeLoaderAnimation } from './searchModule';
 import { addSpinner, removeSpinner } from './spinner';
-import { showNotification, removeParaContent, restoreInitialContent } from '../utils';
+import { showNotification, removeNode, restoreInitialContent } from '../utils';
 
 const Masonry = require('masonry-layout');
 
@@ -82,7 +82,7 @@ function loadImages() {
   chrome.storage.local.get({ bookmarks: [] }, (items) => {
     const bookmarksArray = items.bookmarks;
     if (bookmarksArray.length > 0) {
-      removeParaContent('bookmarks__initial-info');
+      removeNode('bookmarks__initial-info');
     } else {
       removeSpinner(elements.spinnerPlaceholderBookmarks);
       restoreInitialContent('bookmarks');

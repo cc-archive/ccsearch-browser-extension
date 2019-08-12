@@ -19,7 +19,7 @@ import {
 import { loadProvidersToDom, resetLicenseDropDown, loadUserDefaults } from './filterModule';
 import { handleImageAttributionDownload, handleImageDownload } from './infoPopupModule';
 import { addSpinner } from './spinner';
-import { removeParaContent, getLatestProviders } from '../utils';
+import { removeNode, getLatestProviders } from '../utils';
 
 let inputText;
 let pageNo;
@@ -237,8 +237,8 @@ elements.searchIcon.addEventListener('click', () => {
   pageNo = 1;
 
   checkInputError(inputText, 'error-message');
-  removeParaContent('primary__initial-info');
-  removeParaContent('no-image-found');
+  removeNode('primary__initial-info');
+  removeNode('no-image-found');
   removeOldSearchResults();
   removeLoaderAnimation();
   applyFilters();
