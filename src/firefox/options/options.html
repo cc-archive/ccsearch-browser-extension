@@ -65,7 +65,7 @@
             Fetching Latest Providers ...
           </div>
           <div class="margin-top-medium">
-            <button id="save-filters" class="vocab button green-colored dark-shaded big-sized">
+            <button id="save-filters" class="vocab button green-colored dark-shaded">
               <div class="content">
                 Save
               </div>
@@ -73,10 +73,26 @@
           </div>
         </div>
         <div class="content" data-content-no="2">
-          <h4 class="margin-top-small margin-bottom-medium">Bookmarks</h4>
-          <button class="export-bookmarks-button options-button">Export Bookmarks</button><br />
-          <input type="file" id="import-bookmarks-input" />
-          <button class="import-bookmarks-button options-button margin-bottom-medium">Import Bookmarks</button>
+          <!-- <h4 class="margin-top-small margin-bottom-medium">Bookmarks</h4> -->
+          <div class="margin-bottom-small">
+            <button id="export-bookmarks-button" class="vocab button magenta-colored normal-sized">
+              <div class="content">
+                Export Bookmarks
+              </div>
+            </button>
+          </div>
+          <br />
+          <div class="vocab input-field magenta-colored normal-sized">
+            <input type="file" class="field" id="import-bookmarks-input" />
+          </div>
+          <br />
+          <div class="margin-top-smaller">
+            <button id="import-bookmarks-button" class="vocab button magenta-colored normal-sized">
+              <div class="content">
+                Import Bookmarks
+              </div>
+            </button>
+          </div>
         </div>
         <div class="content" data-content-no="3">
           <h3 class="margin-bottom-small">Default Dark Mode:</h3>
@@ -85,7 +101,7 @@
             <label for="darkmode">On</label><br />
           </div>
           <div class="margin-top-medium">
-            <button id="save-dark-mode" class="vocab button green-colored dark-shaded big-sized">
+            <button id="save-dark-mode" class="vocab button green-colored dark-shaded">
               <div class="content">
                 Save
               </div>

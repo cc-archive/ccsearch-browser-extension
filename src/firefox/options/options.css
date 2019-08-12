@@ -42,11 +42,6 @@ ul {
   margin-left: 1rem;
 }
 
-.options-button {
-  padding: 0.5rem 0.7rem;
-  background-color: aqua;
-}
-
 /* Utils */
 .margin-bottom-medium {
   margin-bottom: 1rem;
@@ -62,6 +57,10 @@ ul {
 
 .margin-top-small {
   margin-top: 0.5rem;
+}
+
+.margin-top-smaller {
+  margin-top: 0.25rem;
 }
 
 /* snackbar */

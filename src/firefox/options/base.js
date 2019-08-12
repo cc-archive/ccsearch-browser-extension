@@ -1,6 +1,6 @@
 const elements = {
-  exportBookmarksButton: document.querySelector('.export-bookmarks-button'),
-  importBookmarksButton: document.querySelector('.import-bookmarks-button'),
+  exportBookmarksButton: document.getElementById('export-bookmarks-button'),
+  importBookmarksButton: document.getElementById('import-bookmarks-button'),
   importBookmarksInput: document.getElementById('import-bookmarks-input'),
   useCaseInputs: document.querySelector('.use-case').getElementsByTagName('input'),
   licenseInputs: document.querySelector('.license').getElementsByTagName('input'),
