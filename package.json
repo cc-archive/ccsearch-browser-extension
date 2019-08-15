@@ -9,7 +9,8 @@
     "clean": "rm -rf './dist'",
     "build-chrome": "TARGET=chrome webpack --mode development",
     "build-firefox": "TARGET=firefox webpack --mode development",
-    "dev": "npm run clean && npm run compile-sass && npm run build-firefox && npm run build-chrome",
+    "build-opera": "TARGET=opera webpack --mode development",
+    "dev": "npm run clean && npm run compile-sass && npm run build-firefox && npm run build-chrome && npm run build-opera",
     "webpack:watch": "webpack --mode development --watch",
     "test": "jest"
   },
