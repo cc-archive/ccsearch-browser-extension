@@ -332,7 +332,7 @@ document.getElementById('invert_colors-icon').addEventListener('click', () => {
 });
 
 // eslint-disable-next-line no-undef
-chrome.storage.local.get('darkmode', (items) => {
+chrome.storage.sync.get('darkmode', (items) => {
   if (items.darkmode) {
     document.body.classList.add('dark');
   }

@@ -12,12 +12,12 @@ export default function bookmarkImage(e) {
   console.log('save bookmark');
   console.log(e.target);
   console.log(e.target.dataset.imageid);
-  chrome.storage.local.get({ bookmarks: [] }, (items) => {
+  chrome.storage.sync.get({ bookmarks: [] }, (items) => {
     const bookmarksArray = items.bookmarks;
     if (bookmarksArray.indexOf(e.target.dataset.imageid) === -1) {
       bookmarksArray.push(e.target.dataset.imageid);
       console.log(bookmarksArray);
-      chrome.storage.local.set({ bookmarks: bookmarksArray }, () => {
+      chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
         console.log('bookmarks updated');
         e.target.innerText = 'bookmark';
         showNotification('Image Bookmarked', 'positive', 'snackbar-bookmarks');
@@ -31,7 +31,7 @@ export default function bookmarkImage(e) {
 function removeBookmark(e) {
   console.log('remove bookmark');
   const imageId = e.target.dataset.imageid;
-  chrome.storage.local.get({ bookmarks: [] }, (items) => {
+  chrome.storage.sync.get({ bookmarks: [] }, (items) => {
     const bookmarksArray = items.bookmarks;
 
     const bookmarkIndex = bookmarksArray.indexOf(imageId);
@@ -43,7 +43,7 @@ function removeBookmark(e) {
     }
 
     console.log(bookmarkIndex);
-    chrome.storage.local.set({ bookmarks: bookmarksArray }, () => {
+    chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
       console.log('bookmarks updated');
       const imageDiv = document.getElementById(`id_${imageId}`);
       imageDiv.parentElement.removeChild(imageDiv);
@@ -79,7 +79,7 @@ const msnry = new Masonry(elements.gridBookmarks, {
 });
 
 function loadImages() {
-  chrome.storage.local.get({ bookmarks: [] }, (items) => {
+  chrome.storage.sync.get({ bookmarks: [] }, (items) => {
     const bookmarksArray = items.bookmarks;
     if (bookmarksArray.length > 0) {
       removeNode('bookmarks__initial-info');
@@ -264,14 +264,14 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   elements.deleteAllBookmarksButton.addEventListener('click', () => {
-    chrome.storage.local.get({ bookmarks: [] }, (items) => {
+    chrome.storage.sync.get({ bookmarks: [] }, (items) => {
       const bookmarksArray = items.bookmarks;
       console.log(bookmarksArray);
       if (bookmarksArray.length === 0) {
         showNotification('No Bookmarks Available', 'negative', 'snackbar-bookmarks');
       } else {
         bookmarksArray.splice(0, bookmarksArray.length); // empty array
-        chrome.storage.local.set({ bookmarks: bookmarksArray }, () => {
+        chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
           // restoring initial layout of bookmarks section
           removeBookmarkImages();
           msnry.layout();

@@ -37,7 +37,7 @@ Array.prototype.forEach.call(elements.licenseInputs, (element) => {
 });
 
 elements.exportBookmarksButton.addEventListener('click', () => {
-  chrome.storage.local.get({ bookmarks: [] }, (items) => {
+  chrome.storage.sync.get({ bookmarks: [] }, (items) => {
     const bookmarksArray = items.bookmarks;
     console.log(bookmarksArray);
     const bookmarksString = JSON.stringify(bookmarksArray);

@@ -11,7 +11,7 @@ function loadFilterSection(wrapperElement) {
   for (let i = 0; i < inputCheckboxes.length; i += 1) {
     // data attribute is at the parent span element of input
     const id = inputCheckboxes[i].parentElement.getAttribute('data-id');
-    chrome.storage.local.get({ [id]: false }, (items) => {
+    chrome.storage.sync.get({ [id]: false }, (items) => {
       if (items[id]) {
         inputCheckboxes[i].click();
       }

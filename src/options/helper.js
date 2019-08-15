@@ -4,11 +4,11 @@ import { showNotification, getLatestProviders } from '../utils';
 export function restoreFilters(inputElements) {
   for (let i = 0; i < inputElements.length; i += 1) {
     const { id } = inputElements[i];
-    chrome.storage.local.get({ [id]: false }, (items) => {
+    chrome.storage.sync.get({ [id]: false }, (items) => {
       // default value is false
       document.getElementById(id).checked = items[id];
     });
-    chrome.storage.local.get(null, (items) => {
+    chrome.storage.sync.get(null, (items) => {
       console.log('all the storage items');
       console.log(items);
     });
@@ -52,7 +52,7 @@ export function saveSingleFilter(inputElements) {
   for (let i = 0; i < inputElements.length; i += 1) {
     const { id } = inputElements[i];
     const value = inputElements[i].checked;
-    chrome.storage.local.set(
+    chrome.storage.sync.set(
       {
         [id]: value, // using ES6 to use variable as key of object
       },
@@ -75,13 +75,13 @@ export function saveDarkModeOptions() {
 }
 
 export function updateBookmarks(newBookmarksids) {
-  chrome.storage.local.get({ bookmarks: [] }, (items) => {
+  chrome.storage.sync.get({ bookmarks: [] }, (items) => {
     const bookmarksArray = items.bookmarks;
     newBookmarksids.forEach((bookmarkId) => {
       if (bookmarksArray.indexOf(bookmarkId) === -1) {
         bookmarksArray.push(bookmarkId);
         console.log(bookmarksArray);
-        chrome.storage.local.set({ bookmarks: bookmarksArray }, () => {
+        chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
           console.log('bookmarks updated');
         });
       }
