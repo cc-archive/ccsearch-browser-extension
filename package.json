@@ -4,10 +4,12 @@
   "description": "CC Search Browser Extension.",
   "scripts": {
     "lint": "eslint './src/**/*.js'",
-    "compile-sass": "node-sass src/firefox/popup/sass/main.scss src/firefox/popup/popup.css",
+    "compile-sass": "node-sass src/popup/sass/main.scss src/popup/popup.css",
     "compile-sass:watch": "node-sass src/firefox/popup/sass/main.scss src/firefox/popup/popup.css --watch",
     "clean": "rm -rf './dist'",
-    "dev": "npm run clean && npm run compile-sass && webpack --mode development",
+    "build-chrome": "TARGET=chrome webpack --mode development",
+    "build-firefox": "TARGET=firefox webpack --mode development",
+    "dev": "npm run clean && npm run compile-sass && npm run build-firefox && npm run build-chrome",
     "webpack:watch": "webpack --mode development --watch",
     "test": "jest"
   },
