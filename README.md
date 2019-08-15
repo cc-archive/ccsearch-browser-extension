@@ -30,7 +30,11 @@ You can install the extension directly from the source. Follow the following ste
     - **Google Chrome**
       - Navigate to _chrome://extensions_.
       - Click on "Load Unpacked" button (make sure you have enabled the _Developer mode_).
-      - From the file explorer, choose `ccsearch-browser-extension/dist/firefox`.
+      - From the file explorer, choose `ccsearch-browser-extension/dist/chrome`.
+    - **Opera**
+      - Navigate to _about://extensions_.
+      - Click on "Load Unpacked" button (make sure you have enabled the _Developer mode_).
+      - From the file explorer, choose `ccsearch-browser-extension/dist/opera`.
 
 ### Using `web-ext` for development
 You can use node-based command line utility [web-ext](https://github.com/mozilla/web-ext) by Mozilla to speed up the development process. It adds automatic extension reloading out of the box.
