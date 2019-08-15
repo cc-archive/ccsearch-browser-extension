@@ -2,7 +2,7 @@ import {
   getRichTextAttribution,
   getHtmlAttribution,
   getPlainAttribution,
-} from '../src/firefox/popup/infoPopupModule';
+} from '../src/popup/infoPopupModule';
 
 // sample image response used for testing
 const image = {

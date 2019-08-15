@@ -1,6 +1,6 @@
 // import { JestEnvironment } from '@jest/environment';
-import { checkInputError, getRequestUrl } from '../src/firefox/popup/searchModule';
-import * as utils from '../src/firefox/utils';
+import { checkInputError, getRequestUrl } from '../src/popup/searchModule';
+import * as utils from '../src/utils';
 
 utils.showNotification = jest.fn();
 

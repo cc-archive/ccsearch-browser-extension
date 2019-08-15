@@ -1,4 +1,4 @@
-import { showNotification, removeNode } from '../src/firefox/utils';
+import { showNotification, removeNode } from '../src/utils';
 
 test('testing showNotification', () => {
   document.body.innerHTML = '<div id="snackbar-bookmarks" class="snackbar"></div>';

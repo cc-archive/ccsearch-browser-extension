@@ -1,4 +1,4 @@
-import { getSpinnerMarkup } from '../src/firefox/popup/spinner';
+import { getSpinnerMarkup } from '../src/popup/spinner';
 
 test('Checking spinner markup', () => {
   const spinnerMarkup = getSpinnerMarkup();

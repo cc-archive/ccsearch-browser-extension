@@ -1,4 +1,4 @@
-import { isObjectEmpty, unicodeToString } from '../src/firefox/popup/helper';
+import { isObjectEmpty, unicodeToString } from '../src/popup/helper';
 
 test('Testing isObjectEmpty', () => {
   const test1 = isObjectEmpty({});
