@@ -6,7 +6,10 @@ utils.showNotification = jest.fn();
 
 test('testing checkInputError', () => {
   // testing checkInputError with empty search query
-  checkInputError('');
+  expect(() => {
+    checkInputError('');
+  }).toThrow('No search query provided');
+
   expect(utils.showNotification).toHaveBeenCalled();
   expect(utils.showNotification).toHaveBeenCalledWith(
     'No search query provided',
@@ -14,7 +17,11 @@ test('testing checkInputError', () => {
     'snackbar-bookmarks',
   );
 
-  checkInputError('dogs');
+  // testing checkInputError with a non-empty search
+  expect(() => {
+    checkInputError('dogs');
+  }).not.toThrow('No search query provided');
+
   // showNotification should be called only in case of empty search query
   expect(utils.showNotification).toHaveBeenCalledTimes(1);
 });
