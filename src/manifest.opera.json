@@ -1,0 +1,22 @@
+{
+  "name": "ccsearch-browser-extension",
+  "description": "A browser extension to find CC Licensed content and provide one click attribution.",
+  "version": "1.0",
+  "manifest_version": 2,
+  "browser_action": {
+    "default_title": "Creative Commons",
+    "default_icon": {
+      "16": "icons/cc16.png",
+      "38": "icons/cc38.png",
+      "48": "icons/cc48.png",
+      "128": "icons/cc128.png"
+    },
+    "default_popup": "popup/popup.html"
+  },
+  "permissions": ["storage"],
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}
