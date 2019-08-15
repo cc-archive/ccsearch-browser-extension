@@ -22,9 +22,8 @@ module.exports = {
   plugins: [
     new CopyPlugin([
       {
-        from: './*',
-        to: './',
-        flatten: true,
+        from: `./manifest.${process.env.TARGET}.json`,
+        to: './manifest.json',
       },
       {
         from: './icons/*',
