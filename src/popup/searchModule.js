@@ -11,6 +11,8 @@ const Masonry = require('masonry-layout');
 export function checkInputError(inputText) {
   if (inputText === '') {
     showNotification('No search query provided', 'negative', 'snackbar-bookmarks');
+    // to stop further js execution
+    throw new Error('No search query provided');
   }
 }
 
