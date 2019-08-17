@@ -9,16 +9,11 @@ import { showNotification, removeNode, restoreInitialContent } from '../utils';
 const Masonry = require('masonry-layout');
 
 export default function bookmarkImage(e) {
-  console.log('save bookmark');
-  console.log(e.target);
-  console.log(e.target.dataset.imageid);
   chrome.storage.sync.get({ bookmarks: [] }, (items) => {
     const bookmarksArray = items.bookmarks;
     if (bookmarksArray.indexOf(e.target.dataset.imageid) === -1) {
       bookmarksArray.push(e.target.dataset.imageid);
-      console.log(bookmarksArray);
       chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
-        console.log('bookmarks updated');
         e.target.innerText = 'bookmark';
         showNotification('Image Bookmarked', 'positive', 'snackbar-bookmarks');
       });
@@ -29,7 +24,6 @@ export default function bookmarkImage(e) {
 }
 
 function removeBookmark(e) {
-  console.log('remove bookmark');
   const imageId = e.target.dataset.imageid;
   chrome.storage.sync.get({ bookmarks: [] }, (items) => {
     const bookmarksArray = items.bookmarks;
@@ -42,9 +36,7 @@ function removeBookmark(e) {
       isLastImage = true;
     }
 
-    console.log(bookmarkIndex);
     chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
-      console.log('bookmarks updated');
       const imageDiv = document.getElementById(`id_${imageId}`);
       imageDiv.parentElement.removeChild(imageDiv);
       // eslint-disable-next-line no-use-before-define
@@ -65,7 +57,6 @@ function appendToGrid(msnry, fragment, e, grid) {
   imagesLoaded(grid).on('progress', () => {
     // layout Masonry after each image loads
     msnry.layout();
-    // console.log('this function was called');
   });
 }
 
@@ -87,7 +78,6 @@ function loadImages() {
       removeSpinner(elements.spinnerPlaceholderBookmarks);
       restoreInitialContent('bookmarks');
     }
-    console.log(bookmarksArray);
 
     // get the details of each image
 
@@ -96,8 +86,6 @@ function loadImages() {
       fetch(url)
         .then(data => data.json())
         .then((res) => {
-          console.log(res);
-
           const fragment = document.createDocumentFragment();
 
           const thumbnail = res.thumbnail ? res.thumbnail : res.url;
@@ -212,8 +200,6 @@ function loadImages() {
 
           fragment.appendChild(gridItemDiv);
 
-          console.log(gridItemDiv);
-
           removeSpinner(elements.spinnerPlaceholderBookmarks);
           appendToGrid(msnry, fragment, gridItemDiv, elements.gridBookmarks);
         });
@@ -266,7 +252,6 @@ document.addEventListener('DOMContentLoaded', () => {
   elements.deleteAllBookmarksButton.addEventListener('click', () => {
     chrome.storage.sync.get({ bookmarks: [] }, (items) => {
       const bookmarksArray = items.bookmarks;
-      console.log(bookmarksArray);
       if (bookmarksArray.length === 0) {
         showNotification('No Bookmarks Available', 'negative', 'snackbar-bookmarks');
       } else {

@@ -65,7 +65,6 @@ function appendToGrid(msnry, fragment, divs, grid) {
   imagesLoaded(grid).on('progress', () => {
     // layout Masonry after each image loads
     msnry.layout();
-    // console.log('this function was called');
   });
 }
 
@@ -199,7 +198,7 @@ export function addThumbnailsToDOM(resultArray) {
     fragment.appendChild(gridItemDiv);
     divs.push(gridItemDiv);
 
-    console.log(gridItemDiv);
+    // console.log(gridItemDiv);
   });
 
   appendToGrid(msnry, fragment, divs, elements.gridPrimary);

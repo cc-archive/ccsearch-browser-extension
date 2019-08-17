@@ -126,7 +126,6 @@ function getImageData(imageId) {
   fetch(url)
     .then(data => data.json())
     .then((res) => {
-      console.log(res);
       const {
         title,
         provider,
@@ -182,6 +181,5 @@ export function activatePopup(imageThumbnail) {
   elements.popup.style.visibility = 'visible';
   addSpinner(elements.spinnerPlaceholderPopup);
   getImageData(imageThumbnail.id);
-  console.log(attributionTabLink);
   attributionTabLink.click();
 }

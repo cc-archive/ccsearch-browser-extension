@@ -4,7 +4,6 @@ import { elements } from './base';
 // the list must have objects with id and title as properties.
 // see https://github.com/kirlisakal/combo-tree#sample-json-data
 function loadFilterSection(wrapperElement) {
-  console.log('loading defaults');
   const dropdownContainer = wrapperElement.querySelector('.comboTreeDropDownContainer');
   const inputCheckboxes = dropdownContainer.getElementsByTagName('input');
   // unchecking all the options

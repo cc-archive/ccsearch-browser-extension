@@ -47,7 +47,6 @@ export function restoreInitialContent(context) {
               No Bookmarks yet
             </p>`;
     }
-    console.log(initialInfoElement);
     sectionContent.querySelector('.row').innerHTML = initialInfoElement;
   }
 }
@@ -55,7 +54,7 @@ export function restoreInitialContent(context) {
 export async function fetchProviders() {
   const getProviderURL = 'https://api.creativecommons.engineering/statistics/image';
   const data = await fetch(getProviderURL);
-  console.log(data);
+  // console.log(data);
 
   return data.json();
 }
@@ -69,7 +68,7 @@ export async function getLatestProviders() {
     });
     return providers;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     providers = backupProviderAPIQueryStrings;
     return providers;
   }

@@ -8,10 +8,10 @@ export function restoreFilters(inputElements) {
       // default value is false
       document.getElementById(id).checked = items[id];
     });
-    chrome.storage.sync.get(null, (items) => {
-      console.log('all the storage items');
-      console.log(items);
-    });
+    // chrome.storage.sync.get(null, (items) => {
+    //   console.log('all the storage items');
+    //   console.log(items);
+    // });
   }
 }
 
@@ -26,7 +26,6 @@ function addProvidersToDom(providers) {
     input.classList = 'vocab choice-field magenta-colored small-sized';
 
     const label = document.createElement('label');
-    console.log(input.id);
     label.setAttribute('for', input.id);
     label.innerText = key;
     label.classList = 'padding-left-smaller';
@@ -58,7 +57,7 @@ export function saveSingleFilter(inputElements) {
       },
       () => {
         showNotification('Settings saved!', 'positive', 'snackbar-options');
-        console.log(`${id} has been set to ${value}`);
+        // console.log(`${id} has been set to ${value}`);
       },
     );
   }
@@ -80,9 +79,8 @@ export function updateBookmarks(newBookmarksids) {
     newBookmarksids.forEach((bookmarkId) => {
       if (bookmarksArray.indexOf(bookmarkId) === -1) {
         bookmarksArray.push(bookmarkId);
-        console.log(bookmarksArray);
         chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
-          console.log('bookmarks updated');
+          // console.log('bookmarks updated');
         });
       }
     });

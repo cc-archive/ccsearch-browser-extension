@@ -73,7 +73,6 @@ Array.prototype.forEach.call(elements.popupTabLinks, (element) => {
   element.addEventListener('click', (e) => {
     const targetElement = e.target;
     const targetElementText = e.target.textContent;
-    console.log(targetElementText);
 
     makeElementsDisplayNone(elements.popupTabContent);
     removeClassFromElements(elements.popupTabLinks, 'popup__tab-links-active');
@@ -105,7 +104,6 @@ async function populateProviderList() {
     count += 1;
   });
 
-  console.log(providersList);
   loadProvidersToDom(providersList);
 }
 
@@ -152,7 +150,6 @@ elements.filterResetButton.addEventListener('click', () => {
 elements.useCaseChooserWrapper.addEventListener(
   'click',
   (event) => {
-    console.log('capture event occured');
     const useCaseDropDownContainer = elements.useCaseChooserWrapper.querySelector(
       '.comboTreeDropDownContainer',
     );
@@ -211,19 +208,15 @@ function applyFilters() {
   if (elements.licenseChooser.value) {
     const userInputLicensesList = elements.licenseChooser.value.split(', ');
     userInputLicensesList.forEach((element) => {
-      console.log(element);
       userSelectedLicensesList.push(licenseAPIQueryStrings[element]);
     });
-    console.log(userSelectedLicensesList);
   }
 
   if (elements.useCaseChooser.value) {
     const userInputUseCaseList = elements.useCaseChooser.value.split(', ');
     userInputUseCaseList.forEach((element) => {
-      console.log(element);
       userSelectedUseCaseList.push(useCaseAPIQueryStrings[element]);
     });
-    console.log(userSelectedUseCaseList);
   }
 }
 
@@ -255,14 +248,14 @@ elements.searchIcon.addEventListener('click', () => {
     pageNo,
   );
 
-  console.log(url);
+  // console.log(url);
   pageNo += 1;
 
   fetch(url)
     .then(data => data.json())
     .then((res) => {
       const resultArray = res.results;
-      console.log(resultArray);
+      // console.log(resultArray);
 
       checkResultLength(resultArray);
       addThumbnailsToDOM(resultArray);
@@ -292,11 +285,11 @@ async function nextRequest(page) {
     page,
   );
 
-  console.log(url);
+  // console.log(url);
   const response = await fetch(url);
   const json = await response.json();
   const result = json.results;
-  console.log(result);
+  // console.log(result);
   addThumbnailsToDOM(result);
   pageNo += 1;
   processing = false;

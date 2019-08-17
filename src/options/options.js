@@ -14,7 +14,6 @@ elements.saveDarkModeButton.addEventListener('click', saveDarkModeOptions);
 // Making sure that only license or use-case is selected at the same time
 Array.prototype.forEach.call(elements.useCaseInputs, (element) => {
   element.addEventListener('click', (e) => {
-    console.log(`${e.target} clicked`);
     if (e.target.checked) {
       Array.prototype.forEach.call(elements.licenseInputs, (licenseElement) => {
         // eslint-disable-next-line no-param-reassign
@@ -26,7 +25,6 @@ Array.prototype.forEach.call(elements.useCaseInputs, (element) => {
 
 Array.prototype.forEach.call(elements.licenseInputs, (element) => {
   element.addEventListener('click', (e) => {
-    console.log(`${e.target} clicked`);
     if (e.target.checked) {
       Array.prototype.forEach.call(elements.useCaseInputs, (licenseElement) => {
         // eslint-disable-next-line no-param-reassign
@@ -39,7 +37,6 @@ Array.prototype.forEach.call(elements.licenseInputs, (element) => {
 elements.exportBookmarksButton.addEventListener('click', () => {
   chrome.storage.sync.get({ bookmarks: [] }, (items) => {
     const bookmarksArray = items.bookmarks;
-    console.log(bookmarksArray);
     const bookmarksString = JSON.stringify(bookmarksArray);
     download(bookmarksString, 'bookmarks.json', 'text/plain');
   });
