@@ -1,5 +1,6 @@
 {
-  "name": "ccsearch-browser-extension",
+  "name": "CC Search Browser Extension",
+  "author": "Creative Commons",
   "description": "A browser extension to find CC Licensed content and provide one click attribution.",
   "version": "1.0",
   "manifest_version": 2,
