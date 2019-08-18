@@ -67,44 +67,5 @@ ul {
   padding-left: 0.25rem;
 }
 
-/* snackbar */
-.snackbar {
-  visibility: hidden;
-  min-width: 10rem;
-  transform: translate(-50%);
-  background-color: #333;
-  color: #fff;
-  text-align: center;
-  border-radius: 5px;
-  padding: 5px;
-  font-size: 1.2rem;
-  position: fixed;
-  z-index: 1;
-  left: 50%;
-  bottom: 4rem;
-}
-
-.snackbar-positive {
-  border-left: solid 10px green;
-}
-
-.snackbar-negative {
-  border-left: solid 10px red;
-}
-
-.show {
-  visibility: visible !important;
-
-  animation: fadein 0.2s;
-}
-
-@keyframes fadein {
-  from {
-    bottom: 0;
-    opacity: 0;
-  }
-  to {
-    bottom: 4rem;
-    opacity: 1;
-  }
-}
+@import "../../popup/sass/abstract/variables";
+@import "../../popup/sass/components/snackbar";
