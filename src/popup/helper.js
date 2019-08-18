@@ -19,7 +19,7 @@ export const providerLogos = [
   'eol_logo.png',
   'flickr_logo.png',
   'floraon_logo.png',
-  'geographorguk_logo.gif',
+  'geographorguk_logo.png',
   'iha_logo.png',
   'mccordmuseum_logo.png',
   'met_logo.png',
