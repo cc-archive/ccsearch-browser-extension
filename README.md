@@ -1,17 +1,37 @@
-[![CircleCI](https://circleci.com/gh/creativecommons/ccsearch-browser-extension/tree/master.svg?style=shield)](https://circleci.com/gh/creativecommons/ccsearch-browser-extension/tree/master)
+<p align="center">
+  <img src="https://mirrors.creativecommons.org/presskit/icons/cc.xlarge.png" height="150">
+  <h2 align="center">CC Search Browser Extension</h2>
+  <p align="center">A Cross-Browser Extension which lets you search and filter content in the public domain and under Creative Commons licenses.<p>
+  <p align="center">
+    <a href="https://github.com/creativecommons/ccsearch-browser-extension/blob/master/LICENSE">
+      <img alt="MIT License" src="https://img.shields.io/github/license/creativecommons/ccsearch-browser-extension.svg?color=brightgreen" />
+    </a>
+    <a href="https://circleci.com/gh/creativecommons/ccsearch-browser-extension/tree/master">
+    	<img src="https://circleci.com/gh/creativecommons/ccsearch-browser-extension/tree/master.svg?style=shield" alt="platforms" />
+    </a>
+    <a href="https://github.com/creativecommons/ccsearch-browser-extension/blob/master/CONTRIBUTING.md">
+	    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="prs welcome">
+    </a>
+  </p>
+</p>
 
-# CC Browser Extension
-
-A Cross-Browser Extension which lets you search and filter content in the public domain and under Creative Commons licenses.
+<p align="center">
+  <img src="https://i.imgur.com/KOgFgWU.png" width="900px">
+</p>
 
 ## Features
-- Search and filter CC Licensed content.
-- One click attribution.
-- Download images (and attribution).
-- Bookmark images to preserve them across sessions.
-- Export and import bookmarks in JSON.
-- Options-ui for custom settings.
-- Dark Mode.
+- Search and filter CC Licensed content.  <img src="https://i.imgur.com/pzh4yiv.png" alt="Firefox" width="16px" height="16px" /> <img src="https://i.imgur.com/Iqv3Wxs.png" alt="Chrome" width="16px" height="16px" /> <img src="https://i.imgur.com/S85lDyi.png" alt="Opera" width="16px" height="16px" />
+- One click attribution. <img src="https://i.imgur.com/pzh4yiv.png" alt="Firefox" width="16px" height="16px" /> <img src="https://i.imgur.com/Iqv3Wxs.png" alt="Chrome" width="16px" height="16px" /> <img src="https://i.imgur.com/S85lDyi.png" alt="Opera" width="16px" height="16px" />
+- Download images (and attribution). <img src="https://i.imgur.com/pzh4yiv.png" alt="Firefox" width="16px" height="16px" /> <img src="https://i.imgur.com/Iqv3Wxs.png" alt="Chrome" width="16px" height="16px" /> <img src="https://i.imgur.com/S85lDyi.png" alt="Opera" width="16px" height="16px" />
+- Bookmark images. <img src="https://i.imgur.com/pzh4yiv.png" alt="Firefox" width="16px" height="16px" /> <img src="https://i.imgur.com/Iqv3Wxs.png" alt="Chrome" width="16px" height="16px" /> <img src="https://i.imgur.com/S85lDyi.png" alt="Opera" width="16px" height="16px" />
+- Export and import bookmarks. <img src="https://i.imgur.com/pzh4yiv.png" alt="Firefox" width="16px" height="16px" /> <img src="https://i.imgur.com/Iqv3Wxs.png" alt="Chrome" width="16px" height="16px" /> <img src="https://i.imgur.com/S85lDyi.png" alt="Opera" width="16px" height="16px" />
+- Sync your custom setting and bookmarks across devices. <img src="https://i.imgur.com/pzh4yiv.png" alt="Firefox" width="16px" height="16px" /> <img src="https://i.imgur.com/Iqv3Wxs.png" alt="Chrome" width="16px" height="16px" />
+- Options-UI for custom settings. <img src="https://i.imgur.com/pzh4yiv.png" alt="Firefox" width="16px" height="16px" /> <img src="https://i.imgur.com/Iqv3Wxs.png" alt="Chrome" width="16px" height="16px" /> <img src="https://i.imgur.com/S85lDyi.png" alt="Opera" width="16px" height="16px" />
+- Dark Mode. <img src="https://i.imgur.com/pzh4yiv.png" alt="Firefox" width="16px" height="16px" /> <img src="https://i.imgur.com/Iqv3Wxs.png" alt="Chrome" width="16px" height="16px" /> <img src="https://i.imgur.com/S85lDyi.png" alt="Opera" width="16px" height="16px" />
+
+<p align="center">
+  <img src="https://i.imgur.com/OSXlDeK.png" width="900px">
+</p>
 
 ## Installation from source
 You can install the extension directly from the source. Follow the following steps:
