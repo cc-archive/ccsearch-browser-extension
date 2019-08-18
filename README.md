@@ -1,8 +1,19 @@
-[![CircleCI](https://circleci.com/gh/creativecommons/ccsearch-browser-extension/tree/master.svg?style=shield)](https://circleci.com/gh/creativecommons/ccsearch-browser-extension/tree/master)
-
-# CC Browser Extension
-
-A Cross-Browser Extension which lets you search and filter content in the public domain and under Creative Commons licenses.
+<p align="center">
+  <img src="https://mirrors.creativecommons.org/presskit/icons/cc.xlarge.png" height="150">
+  <h2 align="center">CC Search Browser Extension</h2>
+  <p align="center">A Cross-Browser Extension which lets you search and filter content in the public domain and under Creative Commons licenses.<p>
+  <p align="center">
+    <a href="https://github.com/creativecommons/ccsearch-browser-extension/blob/master/LICENSE">
+      <img alt="MIT License" src="https://img.shields.io/github/license/creativecommons/ccsearch-browser-extension.svg?color=brightgreen" />
+    </a>
+    <a href="https://circleci.com/gh/creativecommons/ccsearch-browser-extension/tree/master">
+    	<img src="https://circleci.com/gh/creativecommons/ccsearch-browser-extension/tree/master.svg?style=shield" alt="platforms" />
+    </a>
+    <a href="https://github.com/creativecommons/ccsearch-browser-extension/blob/master/CONTRIBUTING.md">
+	    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="prs welcome">
+    </a>
+  </p>
+</p>
 
 ## Features
 - Search and filter CC Licensed content.
