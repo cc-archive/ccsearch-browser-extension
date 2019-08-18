@@ -32,6 +32,10 @@ module.exports = {
         to: './manifest.json',
       },
       {
+        from: './content.js',
+        to: './content.js',
+      },
+      {
         from: './icons/*',
         to: './icons',
         flatten: true,
