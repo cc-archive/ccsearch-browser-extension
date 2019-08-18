@@ -11,7 +11,7 @@
   position: fixed;
   z-index: 1;
   left: 50%;
-  bottom: 3.2rem;
+  bottom: 4rem;
 }
 
 .snackbar-positive {
@@ -34,7 +34,7 @@
     opacity: 0;
   }
   to {
-    bottom: 3.2rem;
+    bottom: 4rem;
     opacity: 1;
   }
 }
