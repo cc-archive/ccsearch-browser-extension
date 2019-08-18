@@ -4,8 +4,10 @@
   "description": "CC Search Browser Extension.",
   "scripts": {
     "lint": "eslint './src/**/*.js'",
-    "compile-sass": "node-sass src/popup/sass/main.scss src/popup/popup.css",
-    "compile-sass:watch": "node-sass src/popup/sass/main.scss src/popup/popup.css --watch",
+    "compile-sass-popup:dev": "node-sass src/popup/sass/main.scss src/popup/popup.css",
+    "compile-sass-options:dev": "node-sass src/options/sass/options.scss src/options/options.css",
+    "compile-sass-popup:prod": "node-sass src/popup/sass/main.scss src/popup/popup.css --output-style compressed",
+    "compile-sass-options:prod": "node-sass src/options/sass/options.scss src/options/options.css --output-style compressed",
     "clean": "rm -rf './dist'",
     "build-chrome:dev": "TARGET=chrome webpack --mode development",
     "build-firefox:dev": "TARGET=firefox webpack --mode development",
@@ -13,8 +15,8 @@
     "build-chrome:prod": "TARGET=chrome webpack --mode production",
     "build-firefox:prod": "TARGET=firefox webpack --mode production",
     "build-opera:prod": "TARGET=opera webpack --mode production",
-    "dev": "npm run clean && npm run compile-sass && npm run build-firefox:dev && npm run build-chrome:dev && npm run build-opera:dev",
-    "build": "npm run clean && npm run compile-sass && npm run build-firefox:prod && npm run build-chrome:prod && npm run build-opera:prod",
+    "dev": "npm run clean && npm run compile-sass-popup:dev compile-sass-options:dev && npm run build-firefox:dev && npm run build-chrome:dev && npm run build-opera:dev",
+    "build": "npm run clean && npm run compile-sass-popup:prod compile-sass-options:prod && npm run build-firefox:prod && npm run build-chrome:prod && npm run build-opera:prod",
     "webpack-watch:chrome": "TARGET=chrome webpack --mode development --watch",
     "webpack-watch:firefox": "TARGET=chrome webpack --mode development --watch",
     "test": "jest"
