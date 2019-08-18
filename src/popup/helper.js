@@ -25,6 +25,7 @@ export const providerLogos = [
   'met_logo.png',
   'museumsvictoria_logo.svg',
   'nypl_logo.svg',
+  'phylopic_log.png',
   'rawpixel_logo.png',
   'rijksmuseum_logo.png',
   'sciencemuseum_logo.svg',
@@ -32,6 +33,7 @@ export const providerLogos = [
   'thingiverse_logo.png',
   'thorvaldsensmuseum_logo.png',
   'WoRMS_logo.png',
+  'wikimedia_logo.png',
 ];
 
 export function isObjectEmpty(obj) {
@@ -117,12 +119,16 @@ export const backupProviderAPIQueryStrings = {
   'Flora-on': 'floraon',
   'Metropolitan Museum of Art': 'met',
   'Museums Victoria': 'museumsvictoria',
+  'McCord Museum': 'mccordmuseum',
+  PhyloPic: 'phylopic',
   'Science Museum - UK': 'sciencemuseum',
   Rijksmuseum: 'rijksmuseum',
+  Rawpixel: 'rawpixel',
   'SVG Silh': 'svgsilh',
   Thingiverse: 'thingiverse',
   'Thorvaldsens Museum': 'thorvaldsensmuseum',
   'World Register of Marine Species': 'WoRMS',
+  'Wikimedia Commons': 'wikimedia',
 };
 
 export function removeClassFromElements(elemArray, className) {
