@@ -56,16 +56,10 @@ You can install the extension directly from the source. Follow the following ste
       - Click on "Load Unpacked" button (make sure you have enabled the _Developer mode_).
       - From the file explorer, choose `ccsearch-browser-extension/dist/opera`.
 
-### Using `web-ext` for development
-You can use node-based command line utility [web-ext](https://github.com/mozilla/web-ext) by Mozilla to speed up the development process. It adds automatic extension reloading out of the box.
+## Contribution
+Checkout [CONTRIBUTING.md](https://github.com/creativecommons/ccsearch-browser-extension/blob/master/CONTRIBUTING.md) for general guidelines for contributing code to CC Open Source.
 
-1. Install: `npm install --global web-ext`
-
-2. `cd` into `ccsearch-browser-extension/src/firefox/`.
-
-3. Run: `web-ext run` 
-
-You can read more about `web-ext` [here](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Getting_started_with_web-ext)
+For contribution guidelines and development instructions specific to this particular project, please checkout [INSTRUCTIONS.md](https://github.com/creativecommons/ccsearch-browser-extension/blob/master/INSTRUCTIONS.md).
 
 ## License
 See [LICENSE](https://github.com/creativecommons/ccsearch-browser-extension/blob/master/LICENSE).
