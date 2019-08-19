@@ -21,14 +21,17 @@
 
 
 ## Features
-- Search and filter CC Licensed content.  <img src="https://i.imgur.com/pzh4yiv.png" alt="Firefox" width="16px" height="16px" /> <img src="https://i.imgur.com/Iqv3Wxs.png" alt="Chrome" width="16px" height="16px" /> <img src="https://i.imgur.com/S85lDyi.png" alt="Opera" width="16px" height="16px" />
-- One click attribution. <img src="https://i.imgur.com/pzh4yiv.png" alt="Firefox" width="16px" height="16px" /> <img src="https://i.imgur.com/Iqv3Wxs.png" alt="Chrome" width="16px" height="16px" /> <img src="https://i.imgur.com/S85lDyi.png" alt="Opera" width="16px" height="16px" />
-- Download images (and attribution). <img src="https://i.imgur.com/pzh4yiv.png" alt="Firefox" width="16px" height="16px" /> <img src="https://i.imgur.com/Iqv3Wxs.png" alt="Chrome" width="16px" height="16px" /> <img src="https://i.imgur.com/S85lDyi.png" alt="Opera" width="16px" height="16px" />
-- Bookmark images. <img src="https://i.imgur.com/pzh4yiv.png" alt="Firefox" width="16px" height="16px" /> <img src="https://i.imgur.com/Iqv3Wxs.png" alt="Chrome" width="16px" height="16px" /> <img src="https://i.imgur.com/S85lDyi.png" alt="Opera" width="16px" height="16px" />
-- Export and import bookmarks. <img src="https://i.imgur.com/pzh4yiv.png" alt="Firefox" width="16px" height="16px" /> <img src="https://i.imgur.com/Iqv3Wxs.png" alt="Chrome" width="16px" height="16px" /> <img src="https://i.imgur.com/S85lDyi.png" alt="Opera" width="16px" height="16px" />
-- Sync your custom setting and bookmarks across devices. <img src="https://i.imgur.com/pzh4yiv.png" alt="Firefox" width="16px" height="16px" /> <img src="https://i.imgur.com/Iqv3Wxs.png" alt="Chrome" width="16px" height="16px" />
-- Options-UI for custom settings. <img src="https://i.imgur.com/pzh4yiv.png" alt="Firefox" width="16px" height="16px" /> <img src="https://i.imgur.com/Iqv3Wxs.png" alt="Chrome" width="16px" height="16px" /> <img src="https://i.imgur.com/S85lDyi.png" alt="Opera" width="16px" height="16px" />
-- Dark Mode. <img src="https://i.imgur.com/pzh4yiv.png" alt="Firefox" width="16px" height="16px" /> <img src="https://i.imgur.com/Iqv3Wxs.png" alt="Chrome" width="16px" height="16px" /> <img src="https://i.imgur.com/S85lDyi.png" alt="Opera" width="16px" height="16px" />
+
+| Feature | <img src="https://i.imgur.com/tVOpDmP.png" width="16" height="16"> Firefox | <img src="https://i.imgur.com/r33ZXs4.png" height="16" width="16"> Chrome | <img src="https://i.imgur.com/CBgAqSl.png" heigth="16" width="16"> Opera |
+|--------------------------------------------------------|---------|--------|-------|
+| Search and filter CC Licensed content.                 |  Yes    | Yes    | Yes   |
+| One click attribution.                                 | Yes     | Yes    | Yes   |
+| Download images (and attribution).                     | Yes     | Yes    | Yes   |
+| Bookmark images.                                       | Yes     | Yes    | Yes   |
+| Export and import bookmarks.                           | Yes     | Yes    | Yes   |
+| Sync your custom setting and bookmarks across devices. | Yes     | Yes    | No    |
+| Options-UI for custom settings.                        | Yes     | Yes    | Yes   |
+| Dark Mode.                                             | Yes     | Yes    | Yes   |
 
 <p align="center">
   <img src="https://i.imgur.com/Dh7wczv.png">
