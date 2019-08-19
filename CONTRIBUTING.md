@@ -22,6 +22,8 @@ you'd like to see documented.
 Please follow the processes in our general [Contributing Code][contributing]
 guidelines on the Creative Common Open Source website.
 
+For contribution guidelines specific to this particular project, please checkout [INSTRUCTIONS.md](https://github.com/creativecommons/ccsearch-browser-extension/blob/master/INSTRUCTIONS.md).
+
 [contributing]:https://creativecommons.github.io/contributing-code/
 
 ## Questions or Thoughts?
