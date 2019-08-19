@@ -19,6 +19,7 @@
   <img src="https://i.imgur.com/KOgFgWU.png" width="900px">
 </p>
 
+
 ## Features
 - Search and filter CC Licensed content.  <img src="https://i.imgur.com/pzh4yiv.png" alt="Firefox" width="16px" height="16px" /> <img src="https://i.imgur.com/Iqv3Wxs.png" alt="Chrome" width="16px" height="16px" /> <img src="https://i.imgur.com/S85lDyi.png" alt="Opera" width="16px" height="16px" />
 - One click attribution. <img src="https://i.imgur.com/pzh4yiv.png" alt="Firefox" width="16px" height="16px" /> <img src="https://i.imgur.com/Iqv3Wxs.png" alt="Chrome" width="16px" height="16px" /> <img src="https://i.imgur.com/S85lDyi.png" alt="Opera" width="16px" height="16px" />
@@ -30,7 +31,7 @@
 - Dark Mode. <img src="https://i.imgur.com/pzh4yiv.png" alt="Firefox" width="16px" height="16px" /> <img src="https://i.imgur.com/Iqv3Wxs.png" alt="Chrome" width="16px" height="16px" /> <img src="https://i.imgur.com/S85lDyi.png" alt="Opera" width="16px" height="16px" />
 
 <p align="center">
-  <img src="https://i.imgur.com/OSXlDeK.png" width="900px">
+  <img src="https://i.imgur.com/Dh7wczv.png">
 </p>
 
 ## Installation from source
