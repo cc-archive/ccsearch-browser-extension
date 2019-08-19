@@ -38,3 +38,14 @@ The following are some general steps that you can take to make your development 
 - Run `compile-sass-<target>:watch` to watch for changes. `<target>` can be `popup` or `options`.
 - The above commands will only compile `scss` to `css`. To include them in the build, also run `npm run webpack-watch:<browser>` in a different terminal session.
 - Load the extension in the browser and test your styles without worrying to build every time you make some change.
+
+### Coding Style
+
+#### Editorconfig
+- The repository has a [.editorconfig](https://github.com/creativecommons/ccsearch-browser-extension/blob/master/.editorconfig) file at the root. It defines some general rules for the editor.
+- The plugin for editorconfig will pickup the defaults automatically. In case your editor does not have the plugin, Download it from [here](https://editorconfig.org/#download).
+
+#### Linter
+- The project uses eslint. Running `npm run lint` will show linter errors in the code, if any.
+- If you are using vscode, installing [eslint extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) will show linter errors and warnings in real time.
+- You can go one step ahead and install [prettier extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) for vscode. After [enabling eslint integration](https://github.com/prettier/prettier-vscode#vscode-eslint-and-tslint-integration), prettier will format the code according to the linter rules.
