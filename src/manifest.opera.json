@@ -2,7 +2,7 @@
   "name": "CC Search Browser Extension",
   "author": "Creative Commons",
   "description": "A browser extension to find CC Licensed content and provide one click attribution.",
-  "version": "1.0",
+  "version": "1.0.0",
   "manifest_version": 2,
   "browser_action": {
     "default_title": "Creative Commons",
