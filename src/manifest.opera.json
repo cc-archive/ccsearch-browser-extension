@@ -1,11 +1,11 @@
 {
   "name": "CC Search Browser Extension",
   "author": "Creative Commons",
-  "description": "A browser extension to find CC Licensed content and provide one click attribution.",
+  "description": "Extension which lets you search and filter images in the public domain and under Creative Commons licenses.",
   "version": "1.0.0",
   "manifest_version": 2,
   "browser_action": {
-    "default_title": "Creative Commons",
+    "default_title": "CC Search",
     "default_icon": {
       "16": "icons/cc16.png",
       "38": "icons/cc38.png",
