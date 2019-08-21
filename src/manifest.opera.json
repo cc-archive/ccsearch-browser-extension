@@ -1,7 +1,7 @@
 {
   "name": "CC Search Browser Extension",
   "author": "Creative Commons",
-  "description": "Extension which lets you search and filter images in the public domain and under Creative Commons licenses.",
+  "description": "Search and filter images in the public domain and under Creative Commons licenses.",
   "version": "1.0.0",
   "manifest_version": 2,
   "browser_action": {
