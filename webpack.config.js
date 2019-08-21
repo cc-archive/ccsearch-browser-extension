@@ -1,5 +1,6 @@
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
+const webpack = require('webpack');
 
 if (!process.env.TARGET) {
   throw Error("Please specify env var TARGET, 'chrome', 'firefox' or 'opera'.");
@@ -24,6 +25,9 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist', process.env.TARGET),
     filename: '[name].js',
+  },
+  node: {
+    global: false,
   },
   plugins: [
     new CopyPlugin([
@@ -78,5 +82,8 @@ module.exports = {
         flatten: true,
       },
     ]),
+    new webpack.DefinePlugin({
+      global: 'window', // Placeholder for global used in any node_modules
+    }),
   ],
 };
