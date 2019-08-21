@@ -4,7 +4,7 @@ import { activatePopup } from './infoPopupModule';
 import { removeSpinner } from './spinner';
 // eslint-disable-next-line import/no-cycle
 import bookmarkImage from './bookmarkModule';
-import { showNotification } from '../utils';
+import { showNotification, removeChildNodes } from '../utils';
 
 const Masonry = require('masonry-layout');
 
@@ -18,8 +18,10 @@ export function checkInputError(inputText) {
 
 export function removeOldSearchResults() {
   // remove old images for a new search
-
-  elements.gridPrimary.innerHTML = '<div class="gutter-sizer"></div>';
+  const div = document.createElement('div');
+  div.classList.add('gutter-sizer');
+  removeChildNodes(elements.gridPrimary);
+  elements.gridPrimary.appendChild(div);
 }
 
 export function getRequestUrl(
@@ -43,10 +45,16 @@ function showNoResultFoundMessage() {
   );
 
   if (!sectionContentInitialInfo) {
-    const initialInfoElement = `<p class="no-image-found initial-info">
-    No Images Found. Please enter a different query.
-            </p>`;
-    sectionContentPrimary.querySelector('.row').innerHTML = initialInfoElement;
+    // const initialInfoElement = `<p class="no-image-found initial-info">
+    // No Images Found. Please enter a different query.
+    //         </p>`;
+    const paragraph = document.createElement('p');
+    paragraph.classList.add('no-image-found');
+    paragraph.classList.add('initial-info');
+    paragraph.textContent = 'No Images Found. Please enter a different query.';
+
+    removeChildNodes(sectionContentPrimary.querySelector('.row'));
+    sectionContentPrimary.querySelector('.row').appendChild(paragraph);
   }
 }
 

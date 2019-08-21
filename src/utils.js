@@ -47,7 +47,11 @@ export function restoreInitialContent(context) {
               No Bookmarks yet
             </p>`;
     }
-    sectionContent.querySelector('.row').innerHTML = initialInfoElement;
+    const parser = new DOMParser();
+    const parsed = parser.parseFromString(initialInfoElement, 'text/html');
+    const tags = parsed.getElementsByTagName('p');
+
+    sectionContent.querySelector('.row').appendChild(tags[0]);
   }
 }
 
@@ -71,5 +75,11 @@ export async function getLatestProviders() {
     // console.log(error);
     providers = backupProviderAPIQueryStrings;
     return providers;
+  }
+}
+
+export function removeChildNodes(targetNode) {
+  while (targetNode.lastChild) {
+    targetNode.removeChild(targetNode.lastChild);
   }
 }

@@ -1,9 +1,11 @@
 import { elements, attributionTabLink } from './base';
 import { addSpinner, removeSpinner } from './spinner';
+import { removeChildNodes } from '../utils';
 
 const download = require('downloadjs');
 
-export function getRichTextAttribution(image) {
+// eslint-disable-next-line consistent-return
+export function getRichTextAttribution(image, targetNode) {
   if (!image) {
     return '';
   }
@@ -20,7 +22,12 @@ export function getRichTextAttribution(image) {
     image.license_url
   }" target="_blank">CC ${image.license.toUpperCase()} ${image.license_version}</a>`;
 
-  return `${imgLink}${creator}${licenseLink}`;
+  // return `${imgLink}${creator}${licenseLink}`;
+  const final = `<div>${imgLink}${creator}${licenseLink}</div>`;
+  const parser = new DOMParser();
+  const parsed = parser.parseFromString(final, 'text/html');
+  const tags = parsed.getElementsByTagName('div');
+  targetNode.appendChild(tags[0]);
 }
 
 export function getHtmlAttribution(image) {
@@ -120,6 +127,30 @@ function getPinterestShareLink(sourceLink, imageLink) {
   return `https://pinterest.com/pin/create/button/?url=${sourceLink}&media=${imageLink}&description=I%20found%20an%20image%20through%20CC%20search%20%40creativecommons%3A%20${sourceLink}`;
 }
 
+function getPopupCreatorChildNode(creatorUrl, creator) {
+  const link = document.createElement('a');
+  link.href = creatorUrl;
+  link.target = '_blank';
+  link.textContent = creator;
+  return link;
+}
+
+function getPopupProviderChildNode(foreignLandingUrl, provider) {
+  const link = document.createElement('a');
+  link.href = foreignLandingUrl;
+  link.target = '_blank';
+  link.textContent = provider;
+  return link;
+}
+
+function getPopupLicenseChildNode(licenseUrl, license) {
+  const link = document.createElement('a');
+  link.href = licenseUrl;
+  link.target = '_blank';
+  link.textContent = license;
+  return link;
+}
+
 function getImageData(imageId) {
   const url = `https://api.creativecommons.engineering/image/${imageId}`;
 
@@ -154,12 +185,16 @@ function getImageData(imageId) {
       const attributionRichTextPara = document.getElementById('attribution-rich-text');
       const attributionHtmlTextArea = document.getElementById('attribution-html');
       // filling the info tab
-      popupTitle.innerHTML = `${title}`;
-      popupCreator.innerHTML = `<a href=${creatorUrl}>${creator}</a>`;
-      popupProvider.innerHTML = `<a href=${foreignLandingUrl}>${provider}</a>`;
-      popupLicense.innerHTML = `<a href=${licenseUrl}>CC ${license.toUpperCase()}</a>`;
-      // Attribution tab
-      attributionRichTextPara.innerHTML = getRichTextAttribution(res);
+      popupTitle.textContent = `${title}`;
+      removeChildNodes(popupCreator);
+      popupCreator.appendChild(getPopupCreatorChildNode(creatorUrl, creator));
+      removeChildNodes(popupProvider);
+      popupProvider.appendChild(getPopupProviderChildNode(foreignLandingUrl, provider));
+      removeChildNodes(popupLicense);
+      popupLicense.appendChild(getPopupLicenseChildNode(licenseUrl, license.toUpperCase()));
+      // attributionRichTextPara.textContent = getRichTextAttribution(res, attributionRichTextPara);
+      removeChildNodes(attributionRichTextPara);
+      getRichTextAttribution(res, attributionRichTextPara);
       attributionHtmlTextArea.value = getHtmlAttribution(res);
       elements.downloadImageButton.addEventListener('click', handleImageDownload);
       elements.downloadImageAttributionButton.addEventListener(

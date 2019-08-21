@@ -4,7 +4,9 @@ import { providerLogos, unicodeToString } from './helper';
 // eslint-disable-next-line import/no-cycle
 import { removeOldSearchResults, removeLoaderAnimation } from './searchModule';
 import { addSpinner, removeSpinner } from './spinner';
-import { showNotification, removeNode, restoreInitialContent } from '../utils';
+import {
+  showNotification, removeNode, restoreInitialContent, removeChildNodes,
+} from '../utils';
 
 const Masonry = require('masonry-layout');
 
@@ -209,7 +211,10 @@ function loadImages() {
 
 // TODO: use a general function
 function removeBookmarkImages() {
-  elements.gridBookmarks.innerHTML = '<div class="gutter-sizer"></div>';
+  const div = document.createElement('div');
+  div.classList.add('gutter-sizer');
+  removeChildNodes(elements.gridBookmarks);
+  elements.gridBookmarks.appendChild(div);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
