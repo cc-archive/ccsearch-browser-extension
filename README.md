@@ -1,6 +1,19 @@
 <p align="center">
   <img src="https://mirrors.creativecommons.org/presskit/icons/cc.xlarge.png" height="150">
   <h2 align="center">CC Search Browser Extension</h2>
+    <h4 align="center">
+    <a href="https://addons.mozilla.org/en-US/firefox/addon/cc-search-extension/">
+      Firefox
+    </a>
+    <span> | </span>
+    <a href="https://chrome.google.com/webstore/detail/cc-search/agohkbfananbebiaphblgcfhcclklfnh">
+      Chrome
+    </a>
+    <span> | </span>
+    <a href="https://addons.opera.com/en/extensions/details/cc-search/">
+      Opera
+    </a>
+  </h4>
   <p align="center">A Cross-Browser Extension which lets you search and filter content in the public domain and under Creative Commons licenses.<p>
   <p align="center">
     <a href="https://github.com/creativecommons/ccsearch-browser-extension/blob/master/LICENSE">
@@ -19,6 +32,10 @@
   <img src="https://i.imgur.com/KOgFgWU.png" width="900px">
 </p>
 
+## Install
+
+| [Firefox addon store](https://addons.mozilla.org/en-US/firefox/addon/cc-search-extension/) | [Chrome web store](https://chrome.google.com/webstore/detail/cc-search/agohkbfananbebiaphblgcfhcclklfnh) | [Opera addon store](https://addons.opera.com/en/extensions/details/cc-search/) |
+|---------|--------|-------|
 
 ## Features
 
