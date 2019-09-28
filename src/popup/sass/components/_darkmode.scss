@@ -9,6 +9,10 @@ body.dark {
     color: $color-white !important;
   }
 
+  input::placeholder {
+    color: $color-white !important;
+  }
+  
   .popup__body {
     background-color: $color-darkmode-1 !important ;
   }
