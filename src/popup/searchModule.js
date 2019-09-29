@@ -13,7 +13,7 @@ export function checkInputError(inputText) {
     showNotification('No search query provided', 'negative', 'snackbar-bookmarks');
     // to stop further js execution
     throw new Error('No search query provided');
-  } else if (!/^[A-Za-z0-9 ]+$/.test(inputText)) {
+  } else if (!/^[A-Za-z0-9]( ?[A-Za-z0-9])*$/.test(inputText)) {
     showNotification('No valid search query provided, search query must be alphanumeric', 'negative', 'snackbar-bookmarks');
     // to stop further js execution
     throw new Error('No valid search query provided');
