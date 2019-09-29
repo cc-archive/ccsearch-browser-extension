@@ -226,7 +226,7 @@ elements.filterApplyButton.addEventListener('click', () => {
 });
 
 elements.searchIcon.addEventListener('click', () => {
-  inputText = elements.inputField.value;
+  inputText = elements.inputField.value().trim().replace('/[ ]+/g', ' ');
   pageNo = 1;
 
   checkInputError(inputText, 'error-message');
