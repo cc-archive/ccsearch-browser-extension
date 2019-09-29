@@ -17,13 +17,25 @@ test('testing checkInputError', () => {
     'snackbar-bookmarks',
   );
 
+  // testing checkInputError with not alphanumeric search query
+  expect(() => {
+    checkInputError('not alpha-numeric');
+  }).toThrow('No valid search query provided');
+
+  expect(utils.showNotification).toHaveBeenCalled();
+  expect(utils.showNotification).toHaveBeenCalledWith(
+    'No valid search query provided, search query must be alphanumeric',
+    'negative',
+    'snackbar-bookmarks',
+  );
+
   // testing checkInputError with a non-empty search
   expect(() => {
     checkInputError('dogs');
   }).not.toThrow('No search query provided');
 
   // showNotification should be called only in case of empty search query
-  expect(utils.showNotification).toHaveBeenCalledTimes(1);
+  expect(utils.showNotification).toHaveBeenCalledTimes(2);
 });
 
 test('testing getRequestUrl', () => {
