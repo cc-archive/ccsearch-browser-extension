@@ -49,3 +49,6 @@ The following are some general steps that you can take to make your development 
 - The project uses eslint. Running `npm run lint` will show linter errors in the code, if any.
 - If you are using vscode, installing [eslint extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) will show linter errors and warnings in real time.
 - You can go one step ahead and install [prettier extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) for vscode. After [enabling eslint integration](https://github.com/prettier/prettier-vscode#vscode-eslint-and-tslint-integration), prettier will format the code according to the linter rules.
+
+#### Misc
+- Column width: 120 charachters.
