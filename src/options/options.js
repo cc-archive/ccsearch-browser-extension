@@ -53,19 +53,22 @@ elements.importBookmarksButton.addEventListener('click', () => {
     reader.readAsText(file, 'UTF-8');
     reader.onload = (evt) => {
       const fileContents = evt.target.result;
-      // TODO: handle JSON parsing errors
-      const bookmarksArray = JSON.parse(fileContents);
-      if (Array.isArray(bookmarksArray)) {
-        if (!bookmarksArray.length > 0) showNotification('No bookmark ids found in file', 'negative', 'snackbar-options');
-        else {
-          updateBookmarks(bookmarksArray);
+      try {
+        const bookmarksArray = JSON.parse(fileContents);
+        if (Array.isArray(bookmarksArray)) {
+          if (!bookmarksArray.length > 0) showNotification('No bookmark ids found in file', 'negative', 'snackbar-options');
+          else {
+            updateBookmarks(bookmarksArray);
+          }
+        } else {
+          showNotification(
+            'Contents not in valid format of ["id1", "id2", ...]',
+            'negative',
+            'snackbar-options',
+          );
         }
-      } else {
-        showNotification(
-          'Contents not in valid format of ["id1", "id2", ...]',
-          'negative',
-          'snackbar-options',
-        );
+      } catch (error) {
+        showNotification('This is not a valid JSON', 'negative', 'snackbar-options');
       }
     };
   }
