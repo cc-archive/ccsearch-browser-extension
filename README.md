@@ -77,6 +77,23 @@ You can install the extension directly from the source. Follow the following ste
       - Click on "Load Unpacked" button (make sure you have enabled the _Developer mode_).
       - From the file explorer, choose `ccsearch-browser-extension/dist/opera`.
 
+## Troubleshooting buid failures
+1. If you get following error:
+```shell
+'TARGET' is not recognized as an internal or external command
+```
+then most likely webpack-cli is not installed on your dev machine.
+
+- Here are the few things you can try:
+  - Try deleting the folder node_modules and reinstalling webpack-cli
+```shell
+  npm install --save-dev webpack-cli
+  ```
+  - if reinstalling node modules do not solve the issue then run following to install webpack-cli globally.
+  ```shell
+  npm install -g webpack-cli
+  ```
+
 ## Contribution
 Checkout [CONTRIBUTING.md](https://github.com/creativecommons/ccsearch-browser-extension/blob/master/CONTRIBUTING.md) for general guidelines for contributing code to CC Open Source.
 
