@@ -1,6 +1,6 @@
 import { backupProviderAPIQueryStrings } from './popup/helper';
 
-export function showNotification(message, context, snackbarPlaceholderId) {
+export function showNotification(message, context, snackbarPlaceholderId, timeout) {
   const snackbar = document.getElementById(snackbarPlaceholderId);
   snackbar.innerText = message;
 
@@ -11,7 +11,7 @@ export function showNotification(message, context, snackbarPlaceholderId) {
   setTimeout(() => {
     snackbar.className = '';
     snackbar.classList.add('snackbar');
-  }, 1100);
+  }, timeout || 1100);
 }
 
 export function removeNode(className) {
@@ -72,7 +72,7 @@ export async function getLatestProviders() {
     });
     return providers;
   } catch (error) {
-    // console.log(error);
+    showNotification('unable to fetch providers. using default providers', 'positive', 'snackbar-bookmarks', 2500);
     providers = backupProviderAPIQueryStrings;
     return providers;
   }
