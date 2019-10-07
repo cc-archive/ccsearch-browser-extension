@@ -8,7 +8,7 @@
   position: relative;
   border: 1.2px solid $color-primary-light;
   input[type="text"] {
-    width: 84%;
+    width: 85%;
     font-size: 130%;
     background: $color-white;
     padding: 2%;
@@ -16,8 +16,6 @@
     border : none;
     &:focus {
       outline: none;
-      box-shadow: 0 0 10px $color-primary-dark;
-      border: 1.3px solid $color-primary-dark;
     }
   }
 
