@@ -6,18 +6,16 @@
 .section-search {
   margin-top: 4%;
   position: relative;
-
+  border: 1.2px solid $color-primary-light;
   input[type="text"] {
-    width: 100%;
+    width: 85%;
     font-size: 130%;
     background: $color-white;
     padding: 2%;
-    border: 1.2px solid $color-primary-light;
     transition: all 0.3s ease-in-out;
-
+    border : none;
     &:focus {
-      box-shadow: 0 0 5px $color-primary-dark;
-      border: 1.2px solid $color-primary-dark;
+      outline: none;
     }
   }
 
