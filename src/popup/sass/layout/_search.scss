@@ -21,14 +21,13 @@
 
   i {
     position: absolute;
-    right: 3%;
+    right: 0;
     top: 50%;
     transform: translateY(-50%);
     color: $color-secondary-light;
-    font-size: 170%;
 
     &#filter-icon {
-      right: 10%;
+      right: 6%;
     }
 
     &:hover {
