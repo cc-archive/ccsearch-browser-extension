@@ -20,15 +20,9 @@
     },
     "default_popup": "popup/popup.html"
   },
-  "permissions": ["storage"],
+  "permissions": ["storage", "https://*/"],
   "options_ui": {
     "page": "options/options.html",
     "open_in_tab": true
-  },
-  "content_scripts": [
-    {
-      "matches": ["https://*/*"],
-      "js": ["content.js"]
-    }
-  ]
+  }
 }
