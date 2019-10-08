@@ -2,6 +2,10 @@ footer {
   height: 2.5rem;
   background-color: #242424;
   text-align: center;
+  position: fixed;
+  width: 100%;
+  bottom: 0px;
+  z-index: 10;
 }
 
 .footer-box {
