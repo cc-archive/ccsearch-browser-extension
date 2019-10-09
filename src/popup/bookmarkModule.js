@@ -16,7 +16,6 @@ export default function bookmarkImage(e) {
     if (bookmarksArray.indexOf(e.target.dataset.imageid) === -1) {
       bookmarksArray.push(e.target.dataset.imageid);
       chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
-        e.target.innerText = 'bookmark';
         showNotification('Image Bookmarked', 'positive', 'snackbar-bookmarks');
       });
     } else {
@@ -166,11 +165,11 @@ function loadImages() {
           });
 
           const bookmarkIcon = document.createElement('i');
-          bookmarkIcon.classList.add('material-icons');
+          bookmarkIcon.classList.add('fa');
+          bookmarkIcon.classList.add('fa-bookmark');
           bookmarkIcon.classList.add('bookmark-icon');
-          bookmarkIcon.id = 'settings-icon';
+          bookmarkIcon.id = 'bookmark-icon';
           bookmarkIcon.title = 'Remove bookmark';
-          bookmarkIcon.innerText = 'bookmark';
           bookmarkIcon.setAttribute('data-imageid', id);
           bookmarkIcon.addEventListener('click', removeBookmark);
 
