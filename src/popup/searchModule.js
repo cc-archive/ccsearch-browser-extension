@@ -101,121 +101,131 @@ export function addThumbnailsToDOM(resultArray) {
   const divs = [];
   const fragment = document.createDocumentFragment();
 
-  resultArray.forEach((element) => {
-    const thumbnail = element.thumbnail ? element.thumbnail : element.url;
-    const title = unicodeToString(element.title);
-    const { license, provider, id } = element;
-    const licenseArray = license.split('-'); // split license in individual characteristics
-    const foreignLandingUrl = element.foreign_landing_url;
+  chrome.storage.sync.get({ bookmarks: [] }, (items) => {
+    const bookmarksArray = items.bookmarks;
 
-    // make an image element
-    const imgElement = document.createElement('img');
-    imgElement.setAttribute('src', thumbnail);
-    imgElement.setAttribute('class', 'image-thumbnails');
-    imgElement.setAttribute('id', id);
+    resultArray.forEach((element) => {
+      const thumbnail = element.thumbnail ? element.thumbnail : element.url;
+      const title = unicodeToString(element.title);
+      const { license, provider, id } = element;
+      const licenseArray = license.split('-'); // split license in individual characteristics
+      const foreignLandingUrl = element.foreign_landing_url;
 
-    // make a span to hold the title
-    const spanTitleElement = document.createElement('span');
-    spanTitleElement.setAttribute('class', 'image-title');
-    spanTitleElement.setAttribute('title', title);
-    const imageTitleNode = document.createTextNode(title);
+      // make an image element
+      const imgElement = document.createElement('img');
+      imgElement.setAttribute('src', thumbnail);
+      imgElement.setAttribute('class', 'image-thumbnails');
+      imgElement.setAttribute('id', id);
 
-    // make a link to foreign landing page of image
-    const foreignLandingLinkElement = document.createElement('a');
-    foreignLandingLinkElement.setAttribute('href', foreignLandingUrl);
-    foreignLandingLinkElement.setAttribute('target', '_blank');
-    foreignLandingLinkElement.setAttribute('class', 'foreign-landing-url');
+      // make a span to hold the title
+      const spanTitleElement = document.createElement('span');
+      spanTitleElement.setAttribute('class', 'image-title');
+      spanTitleElement.setAttribute('title', title);
+      const imageTitleNode = document.createTextNode(title);
 
-    const providerImageElement = document.createElement('img');
-    let providerLogoName;
-    for (let i = 0; i < providerLogos.length; i += 1) {
-      if (providerLogos[i].includes(provider)) {
-        providerLogoName = providerLogos[i];
-        break;
+      // make a link to foreign landing page of image
+      const foreignLandingLinkElement = document.createElement('a');
+      foreignLandingLinkElement.setAttribute('href', foreignLandingUrl);
+      foreignLandingLinkElement.setAttribute('target', '_blank');
+      foreignLandingLinkElement.setAttribute('class', 'foreign-landing-url');
+
+      const providerImageElement = document.createElement('img');
+      let providerLogoName;
+      for (let i = 0; i < providerLogos.length; i += 1) {
+        if (providerLogos[i].includes(provider)) {
+          providerLogoName = providerLogos[i];
+          break;
+        }
       }
-    }
-    providerImageElement.setAttribute('src', `img/provider_logos/${providerLogoName}`);
-    providerImageElement.setAttribute('class', 'provider-image');
+      providerImageElement.setAttribute('src', `img/provider_logos/${providerLogoName}`);
+      providerImageElement.setAttribute('class', 'provider-image');
 
-    foreignLandingLinkElement.appendChild(providerImageElement);
-    foreignLandingLinkElement.appendChild(imageTitleNode);
+      foreignLandingLinkElement.appendChild(providerImageElement);
+      foreignLandingLinkElement.appendChild(imageTitleNode);
 
-    spanTitleElement.appendChild(foreignLandingLinkElement);
+      spanTitleElement.appendChild(foreignLandingLinkElement);
 
-    // make a span to hold the license icons
-    const spanLicenseElement = document.createElement('span');
-    spanLicenseElement.setAttribute('class', 'image-license');
+      // make a span to hold the license icons
+      const spanLicenseElement = document.createElement('span');
+      spanLicenseElement.setAttribute('class', 'image-license');
 
-    // make a link to license description
-    const licenseLinkElement = document.createElement('a');
-    licenseLinkElement.setAttribute('href', `https://creativecommons.org/licenses/${license}/2.0/`);
-    licenseLinkElement.setAttribute('target', '_blank'); // open link in new tab
-    licenseLinkElement.setAttribute('title', license); // open link in new tab
+      // make a link to license description
+      const licenseLinkElement = document.createElement('a');
+      licenseLinkElement.setAttribute('href', `https://creativecommons.org/licenses/${license}/2.0/`);
+      licenseLinkElement.setAttribute('target', '_blank'); // open link in new tab
+      licenseLinkElement.setAttribute('title', license); // open link in new tab
 
-    // Array to hold license image elements
-    const licenseIconElementsArray = [];
+      // Array to hold license image elements
+      const licenseIconElementsArray = [];
 
-    // Add the default cc icon
-    let licenseIconElement = document.createElement('img');
-    licenseIconElement.setAttribute('src', 'img/license_logos/cc_icon.svg');
-    licenseIconElement.setAttribute('alt', 'cc_icon');
-    licenseIconElementsArray.push(licenseIconElement);
-
-    // make and push license image elements
-    licenseArray.forEach((name) => {
-      licenseIconElement = document.createElement('img');
-      licenseIconElement.setAttribute('src', `img/license_logos/cc-${name}_icon.svg`);
-      licenseIconElement.setAttribute('alt', `cc-${name}_icon`);
+      // Add the default cc icon
+      let licenseIconElement = document.createElement('img');
+      licenseIconElement.setAttribute('src', 'img/license_logos/cc_icon.svg');
+      licenseIconElement.setAttribute('alt', 'cc_icon');
       licenseIconElementsArray.push(licenseIconElement);
-    });
 
-    licenseIconElementsArray.forEach((licenseIcon) => {
-      licenseLinkElement.appendChild(licenseIcon);
-    });
+      // make and push license image elements
+      licenseArray.forEach((name) => {
+        licenseIconElement = document.createElement('img');
+        licenseIconElement.setAttribute('src', `img/license_logos/cc-${name}_icon.svg`);
+        licenseIconElement.setAttribute('alt', `cc-${name}_icon`);
+        licenseIconElementsArray.push(licenseIconElement);
+      });
 
-    const bookmarkIcon = document.createElement('i');
-    bookmarkIcon.classList.add('fa');
-    bookmarkIcon.classList.add('fa-bookmark-o');
-    bookmarkIcon.classList.add('bookmark-icon');
-    bookmarkIcon.id = 'bookmark-icon';
-    bookmarkIcon.title = 'Bookmark image';
-    bookmarkIcon.setAttribute('data-imageid', id);
-    bookmarkIcon.addEventListener('click', bookmarkImage);
+      licenseIconElementsArray.forEach((licenseIcon) => {
+        licenseLinkElement.appendChild(licenseIcon);
+      });
 
-    spanLicenseElement.appendChild(licenseLinkElement);
-    spanLicenseElement.appendChild(bookmarkIcon);
+      const bookmarkIcon = document.createElement('i');
+      bookmarkIcon.classList.add('fa');
+      bookmarkIcon.classList.add('bookmark-icon');
+      bookmarkIcon.id = 'bookmark-icon';
+      bookmarkIcon.setAttribute('data-imageid', id);
+      bookmarkIcon.addEventListener('click', bookmarkImage);
 
-    // make a div element to encapsulate image element
-    const divElement = document.createElement('div');
-    divElement.setAttribute('class', 'image');
-
-    // adding event listener to open popup.
-    divElement.addEventListener('click', (e) => {
-      if (e.target.classList.contains('image')) {
-        const imageThumbnail = e.target.querySelector('.image-thumbnails');
-        activatePopup(imageThumbnail);
+      if (bookmarksArray.indexOf(id) === -1) {
+        bookmarkIcon.classList.add('fa-bookmark-o');
+        bookmarkIcon.title = 'Bookmark image';
+      } else {
+        bookmarkIcon.classList.add('fa-bookmark');
+        bookmarkIcon.title = 'Image bookmarked';
       }
+
+      spanLicenseElement.appendChild(licenseLinkElement);
+      spanLicenseElement.appendChild(bookmarkIcon);
+
+      // make a div element to encapsulate image element
+      const divElement = document.createElement('div');
+      divElement.setAttribute('class', 'image');
+
+      // adding event listener to open popup.
+      divElement.addEventListener('click', (e) => {
+        if (e.target.classList.contains('image')) {
+          const imageThumbnail = e.target.querySelector('.image-thumbnails');
+          activatePopup(imageThumbnail);
+        }
+      });
+
+      divElement.appendChild(imgElement);
+      divElement.appendChild(spanTitleElement);
+      divElement.appendChild(spanLicenseElement);
+
+      // div to act as grid itemj
+      const gridItemDiv = document.createElement('div');
+      gridItemDiv.setAttribute('class', 'grid-item');
+
+      gridItemDiv.appendChild(divElement);
+
+      fragment.appendChild(gridItemDiv);
+      divs.push(gridItemDiv);
+
+      // console.log(gridItemDiv);
     });
 
-    divElement.appendChild(imgElement);
-    divElement.appendChild(spanTitleElement);
-    divElement.appendChild(spanLicenseElement);
+    appendToGrid(msnry, fragment, divs, elements.gridPrimary);
 
-    // div to act as grid itemj
-    const gridItemDiv = document.createElement('div');
-    gridItemDiv.setAttribute('class', 'grid-item');
-
-    gridItemDiv.appendChild(divElement);
-
-    fragment.appendChild(gridItemDiv);
-    divs.push(gridItemDiv);
-
-    // console.log(gridItemDiv);
+    if (resultArray.length <= 10) {
+      removeLoaderAnimation();
+    }
   });
-
-  appendToGrid(msnry, fragment, divs, elements.gridPrimary);
-
-  if (resultArray.length <= 10) {
-    removeLoaderAnimation();
-  }
 }
