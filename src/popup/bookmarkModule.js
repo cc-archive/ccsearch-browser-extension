@@ -16,6 +16,8 @@ export default function bookmarkImage(e) {
     if (bookmarksArray.indexOf(e.target.dataset.imageid) === -1) {
       bookmarksArray.push(e.target.dataset.imageid);
       chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
+        e.target.classList.remove('fa-bookmark-o');
+        e.target.classList.add('fa-bookmark');
         showNotification('Image Bookmarked', 'positive', 'snackbar-bookmarks');
       });
     } else {
