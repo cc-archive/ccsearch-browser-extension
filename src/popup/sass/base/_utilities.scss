@@ -2,17 +2,19 @@
   display: none;
 }
 
+//  important to have more specificity than vocab defaults
 .margin-bottom-small {
-  margin-bottom: 7px;
+  margin-bottom: 7px !important;
 }
 
 .margin-bottom-medium {
-  margin-bottom: 15px;
+  margin-bottom: 15px !important;
 }
+
 .margin-top-medium {
-  margin-top: 15px;
+  margin-top: 15px !important;
 }
 
 .margin-right-small {
-  margin-right: 7px;
+  margin-right: 7px !important;
 }
