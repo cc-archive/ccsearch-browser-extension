@@ -13,7 +13,7 @@
     background: $color-white;
     padding: 2%;
     transition: all 0.3s ease-in-out;
-    border : none;
+    border: none;
     &:focus {
       outline: none;
     }
@@ -77,43 +77,15 @@
     }
   }
 
-  &--reset-button:link,
-  &--reset-button:visited {
-    display: inline-block;
+  &--reset-filter-container {
     position: absolute;
-    right: 0px;
-    bottom: -13px;
-    text-decoration: none;
-    color: $color-white;
-    padding: 0 4.5px;
-    background-color: $color-secondary-dark;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s;
-    border-radius: 2px;
-
-    &:active {
-      transform: translateY(1px);
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-    }
+    right: 5px;
+    bottom: -14px;
   }
 
-  &--apply-button:link,
-  &--apply-button:visited {
-    display: inline-block;
+  &--apply-filter-container {
     position: absolute;
-    right: 0px;
-    top: 4px;
-    text-decoration: none;
-    background-color: $color-primary-dark;
-    color: $color-white;
-    padding: 0 4.5px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s;
-    border-radius: 2px;
-
-    &:active {
-      transform: translateY(1px);
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-    }
+    right: 4px;
+    top: 3px;
   }
 }
