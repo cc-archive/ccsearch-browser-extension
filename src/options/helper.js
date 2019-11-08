@@ -24,6 +24,7 @@ function addProvidersToDom(providers) {
     input.type = 'checkbox';
     input.id = providers[key];
     input.classList = 'vocab choice-field magenta-colored small-sized';
+    input.addEventListener("change",delayedSaveFiltersOptions);
 
     const label = document.createElement('label');
     label.setAttribute('for', input.id);
@@ -45,6 +46,8 @@ export async function init() {
   restoreFilters(elements.darkModeInput);
   const providers = await getLatestProviders();
   addProvidersToDom(providers);
+  [...elements.useCaseInputs].map((x) => {x.addEventListener('change', delayedSaveFiltersOptions)});
+  [...elements.licenseInputs].map((x) => {x.addEventListener('change', delayedSaveFiltersOptions)});
 }
 
 export function saveSingleFilter(inputElements) {
@@ -61,6 +64,10 @@ export function saveSingleFilter(inputElements) {
       },
     );
   }
+}
+
+export function delayedSaveFiltersOptions() {
+  setTimeout(saveFiltersOptions, 1500);
 }
 
 export function saveFiltersOptions() {

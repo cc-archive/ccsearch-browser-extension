@@ -8,7 +8,6 @@ const download = require('downloadjs');
 
 document.addEventListener('DOMContentLoaded', init);
 
-elements.saveFiltersButton.addEventListener('click', saveFiltersOptions);
 elements.saveDarkModeButton.addEventListener('click', saveDarkModeOptions);
 
 // Making sure that only license or use-case is selected at the same time
