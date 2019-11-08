@@ -2,7 +2,7 @@
   "name": "CC Search Browser Extension",
   "author": "Creative Commons",
   "description": "Search and filter images in the public domain and under Creative Commons licenses.",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "manifest_version": 2,
   "icons": {
     "16": "icons/cc16.png",
@@ -20,15 +20,9 @@
     },
     "default_popup": "popup/popup.html"
   },
-  "permissions": ["storage"],
+  "permissions": ["storage", "https://*/"],
   "options_ui": {
     "page": "options/options.html",
     "open_in_tab": true
-  },
-  "content_scripts": [
-    {
-      "matches": ["https://*/*"],
-      "js": ["content.js"]
-    }
-  ]
+  }
 }
