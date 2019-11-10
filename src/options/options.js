@@ -1,6 +1,6 @@
 import elements from './base';
 import {
-  init, saveFiltersOptions, saveDarkModeOptions, updateBookmarks,
+  init, saveDarkModeOptions, updateBookmarks,
 } from './helper';
 import { showNotification } from '../utils';
 

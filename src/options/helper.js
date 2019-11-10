@@ -24,7 +24,6 @@ function addProvidersToDom(providers) {
     input.type = 'checkbox';
     input.id = providers[key];
     input.classList = 'vocab choice-field magenta-colored small-sized';
-    input.addEventListener("change",delayedSaveFiltersOptions);
 
     const label = document.createElement('label');
     label.setAttribute('for', input.id);
@@ -40,15 +39,6 @@ function addProvidersToDom(providers) {
   restoreFilters(elements.providerInputs);
 }
 
-export async function init() {
-  restoreFilters(elements.useCaseInputs);
-  restoreFilters(elements.licenseInputs);
-  restoreFilters(elements.darkModeInput);
-  const providers = await getLatestProviders();
-  addProvidersToDom(providers);
-  [...elements.useCaseInputs].map((x) => {x.addEventListener('change', delayedSaveFiltersOptions)});
-  [...elements.licenseInputs].map((x) => {x.addEventListener('change', delayedSaveFiltersOptions)});
-}
 
 export function saveSingleFilter(inputElements) {
   for (let i = 0; i < inputElements.length; i += 1) {
@@ -59,15 +49,15 @@ export function saveSingleFilter(inputElements) {
         [id]: value, // using ES6 to use variable as key of object
       },
       () => {
-        showNotification('Settings saved!', 'positive', 'snackbar-options');
-        // console.log(`${id} has been set to ${value}`);
+        if (chrome.runtime.lastError) {
+          showNotification('Too many changes! Please try again after some time', 'negative', 'snackbar-options');
+        } else {
+          showNotification('Settings saved!', 'positive', 'snackbar-options');
+          // console.log(`${id} has been set to ${value}`);
+        }
       },
     );
   }
-}
-
-export function delayedSaveFiltersOptions() {
-  setTimeout(saveFiltersOptions, 1500);
 }
 
 export function saveFiltersOptions() {
@@ -76,8 +66,32 @@ export function saveFiltersOptions() {
   saveSingleFilter(elements.providerInputs);
 }
 
+export function delayedSaveFiltersOptions() {
+  setTimeout(saveFiltersOptions, 2000);
+}
+
 export function saveDarkModeOptions() {
   saveSingleFilter(elements.darkModeInput);
+}
+
+export async function init() {
+  restoreFilters(elements.useCaseInputs);
+  restoreFilters(elements.licenseInputs);
+  restoreFilters(elements.darkModeInput);
+  const providers = await getLatestProviders();
+  addProvidersToDom(providers);
+  [...elements.useCaseInputs].map((x) => {
+    x.addEventListener('change', delayedSaveFiltersOptions);
+    return x;
+  });
+  [...elements.licenseInputs].map((x) => {
+    x.addEventListener('change', delayedSaveFiltersOptions);
+    return x;
+  });
+  [...elements.providerInputs].map((x) => {
+    x.addEventListener('change', delayedSaveFiltersOptions);
+    return x;
+  });
 }
 
 export function updateBookmarks(newBookmarksids) {
