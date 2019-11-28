@@ -1,16 +1,16 @@
-import { elements, attributionTabLink } from "./base";
-import { addSpinner, removeSpinner } from "./spinner";
-import { removeChildNodes } from "../utils";
+import { elements, attributionTabLink } from './base';
+import { addSpinner, removeSpinner } from './spinner';
+import { removeChildNodes } from '../utils';
 
-const download = require("downloadjs");
+const download = require('downloadjs');
 
 // eslint-disable-next-line consistent-return
 export function getRichTextAttribution(image, targetNode) {
   if (!image) {
-    return "";
+    return '';
   }
   const imgLink = `<a href="${image.foreign_landing_url}" target="_blank">"${image.title}"</a>`;
-  let creator = "";
+  let creator = '';
   if (image.creator && image.creator_url) {
     creator = `<span> by <a href="${image.creator_url}" target="_blank">${image.creator}</a></span>`;
   } else if (image.creator && !image.creator_url) {
@@ -25,18 +25,18 @@ export function getRichTextAttribution(image, targetNode) {
   // return `${imgLink}${creator}${licenseLink}`;
   const final = `<div>${imgLink}${creator}${licenseLink}</div>`;
   const parser = new DOMParser();
-  const parsed = parser.parseFromString(final, "text/html");
-  const tags = parsed.getElementsByTagName("div");
+  const parsed = parser.parseFromString(final, 'text/html');
+  const tags = parsed.getElementsByTagName('div');
   targetNode.appendChild(tags[0]);
 }
 
 export function getHtmlAttribution(image) {
   if (!image) {
-    return "";
+    return '';
   }
-  const baseAssetsPath = "https://search.creativecommons.org/static/img"; // path is not dynamic. Change if assets are moved.
+  const baseAssetsPath = 'https://search.creativecommons.org/static/img'; // path is not dynamic. Change if assets are moved.
   const imgLink = `<a href="${image.foreign_landing_url}">"${image.title}"</a>`;
-  let creator = "";
+  let creator = '';
   if (image.creator && image.creator_url) {
     creator = `<span> by <a href="${image.creator_url}">${image.creator}</a></span>`;
   } else if (image.creator && !image.creator_url) {
@@ -51,12 +51,11 @@ export function getHtmlAttribution(image) {
   let licenseIcons = `<img style="height: inherit;margin-right: 3px;display: inline-block;" src="${baseAssetsPath}/cc_icon.svg" />`;
   if (image.license) {
     licenseIcons += image.license
-      .split("-")
+      .split('-')
       .map(
-        license =>
-          `<img style="height: inherit;margin-right: 3px;display: inline-block;" src="${baseAssetsPath}/cc-${license.toLowerCase()}_icon.svg" />`
+        license => `<img style="height: inherit;margin-right: 3px;display: inline-block;" src="${baseAssetsPath}/cc-${license.toLowerCase()}_icon.svg" />`,
       )
-      .join("");
+      .join('');
   }
 
   const licenseImgLink = `<a href="${image.license_url}" target="_blank" rel="noopener noreferrer" style="display: inline-block;white-space: none;margin-top: 2px;margin-left: 3px;height: 22px !important;">${licenseIcons}</a>`;
@@ -65,9 +64,9 @@ export function getHtmlAttribution(image) {
 
 export function getPlainAttribution(image) {
   if (!image) {
-    return "";
+    return '';
   }
-  let creatorUrl = "Not Available";
+  let creatorUrl = 'Not Available';
   // eslint-disable-next-line no-use-before-define
   const HtmlAttribution = getHtmlAttribution(image);
   if (image.creator_url) {
@@ -96,17 +95,17 @@ ${HtmlAttribution}`;
 
 function downloadImage(imageUrl, imageName) {
   const x = new XMLHttpRequest();
-  x.open("GET", imageUrl, true);
-  x.responseType = "blob";
+  x.open('GET', imageUrl, true);
+  x.responseType = 'blob';
   x.onload = () => {
-    download(x.response, imageName, "image/gif"); // using download.js (http://danml.com/download.html)
+    download(x.response, imageName, 'image/gif'); // using download.js (http://danml.com/download.html)
   };
   x.send();
   // eventHandlerTarget.removeEventListener('click', eventHandlerFunction);
 }
 
 function downloadImageAttribution(image) {
-  download(getPlainAttribution(image), `${image.title}.txt`, "text/plain");
+  download(getPlainAttribution(image), `${image.title}.txt`, 'text/plain');
 }
 
 export function handleImageDownload(e) {
@@ -131,30 +130,30 @@ function getPinterestShareLink(sourceLink, imageLink) {
 }
 
 // Added the share link for tumblr
-function getTumblrShareLink(sourceLink,imageLink) {
+function getTumblrShareLink(sourceLink, imageLink) {
   return `http://tumblr.com/widgets/share/tool?canonicalUrl=${sourceLink}&posttype=photo&content=${imageLink}`;
 }
 
 function getPopupCreatorChildNode(creatorUrl, creator) {
-  const link = document.createElement("a");
+  const link = document.createElement('a');
   link.href = creatorUrl;
-  link.target = "_blank";
+  link.target = '_blank';
   link.textContent = creator;
   return link;
 }
 
 function getPopupProviderChildNode(foreignLandingUrl, provider) {
-  const link = document.createElement("a");
+  const link = document.createElement('a');
   link.href = foreignLandingUrl;
-  link.target = "_blank";
+  link.target = '_blank';
   link.textContent = provider;
   return link;
 }
 
 function getPopupLicenseChildNode(licenseUrl, license) {
-  const link = document.createElement("a");
+  const link = document.createElement('a');
   link.href = licenseUrl;
-  link.target = "_blank";
+  link.target = '_blank';
   link.textContent = license;
   return link;
 }
@@ -164,7 +163,7 @@ function getImageData(imageId) {
 
   fetch(url)
     .then(data => data.json())
-    .then(res => {
+    .then((res) => {
       const {
         title,
         provider,
@@ -172,33 +171,33 @@ function getImageData(imageId) {
         license_url: licenseUrl,
         license,
         id,
-        url: imageUrl
+        url: imageUrl,
       } = res;
       let { creator, creator_url: creatorUrl } = res;
       if (!creatorUrl) {
-        creatorUrl = "#";
+        creatorUrl = '#';
       }
       if (!creator) {
-        creator = "Not Available";
+        creator = 'Not Available';
       }
       // adding arguments for event handlers to the target itself
       elements.downloadImageButton.imageUrl = res.url;
       elements.downloadImageButton.title = `${res.title}.${res.url
-        .split(".")
+        .split('.')
         .pop()}`;
       elements.downloadImageAttributionButton.image = res;
       elements.downloadImageAttributionButton.title = `${
         res.title
-      }.${res.url.split(".").pop()}`;
-      const popupTitle = document.querySelector(".info__content-title");
-      const popupCreator = document.querySelector(".info__content-creator");
-      const popupProvider = document.querySelector(".info__content-provider");
-      const popupLicense = document.querySelector(".info__content-license");
+      }.${res.url.split('.').pop()}`;
+      const popupTitle = document.querySelector('.info__content-title');
+      const popupCreator = document.querySelector('.info__content-creator');
+      const popupProvider = document.querySelector('.info__content-provide');
+      const popupLicense = document.querySelector('.info__content-license');
       const attributionRichTextPara = document.getElementById(
-        "attribution-rich-text"
+        'attribution-rich-text',
       );
       const attributionHtmlTextArea = document.getElementById(
-        "attribution-html"
+        'attribution-html',
       );
       // filling the info tab
       popupTitle.textContent = `${title}`;
@@ -206,42 +205,42 @@ function getImageData(imageId) {
       popupCreator.appendChild(getPopupCreatorChildNode(creatorUrl, creator));
       removeChildNodes(popupProvider);
       popupProvider.appendChild(
-        getPopupProviderChildNode(foreignLandingUrl, provider)
+        getPopupProviderChildNode(foreignLandingUrl, provider),
       );
       removeChildNodes(popupLicense);
       popupLicense.appendChild(
-        getPopupLicenseChildNode(licenseUrl, license.toUpperCase())
+        getPopupLicenseChildNode(licenseUrl, license.toUpperCase()),
       );
       // attributionRichTextPara.textContent = getRichTextAttribution(res, attributionRichTextPara);
       removeChildNodes(attributionRichTextPara);
       getRichTextAttribution(res, attributionRichTextPara);
       attributionHtmlTextArea.value = getHtmlAttribution(res);
       elements.downloadImageButton.addEventListener(
-        "click",
-        handleImageDownload
+        'click',
+        handleImageDownload,
       );
       elements.downloadImageAttributionButton.addEventListener(
-        "click",
-        handleImageAttributionDownload
+        'click',
+        handleImageAttributionDownload,
       );
       // share tab
       elements.facebookShareButton.href = getFacebookShareLink(id);
       elements.twitterShareButton.href = getTwitterShareLink(foreignLandingUrl);
-      //Added Tumblr Share Button
-      elements.tumblrShareButton.href = getTumblrShareLink(foreignLandingUrl,imageUrl);
+      // Added Tumblr Share Button
+      elements.tumblrShareButton.href = getTumblrShareLink(foreignLandingUrl, imageUrl);
       elements.pinterestShareButton.href = getPinterestShareLink(
         foreignLandingUrl,
-        imageUrl
+        imageUrl,
       );
       removeSpinner(elements.spinnerPlaceholderPopup);
       elements.popupMain.style.opacity = 1;
-      elements.popupMain.style.visibility = "visible";
+      elements.popupMain.style.visibility = 'visible';
     });
 }
 
 export function activatePopup(imageThumbnail) {
   elements.popup.style.opacity = 1;
-  elements.popup.style.visibility = "visible";
+  elements.popup.style.visibility = 'visible';
   addSpinner(elements.spinnerPlaceholderPopup);
   getImageData(imageThumbnail.id);
   attributionTabLink.click();

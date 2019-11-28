@@ -107,6 +107,7 @@ async function populateProviderList() {
   loadProvidersToDom(providersList);
 }
 
+
 populateProviderList();
 
 elements.filterIcon.addEventListener('click', () => {
