@@ -156,9 +156,10 @@ function loadImages() {
 
           // make and push license image elements
           licenseArray.forEach((name) => {
+            const lowerCaseName = `${name}`.toLowerCase();
             licenseIconElement = document.createElement('img');
-            licenseIconElement.setAttribute('src', `img/license_logos/cc-${name}_icon.svg`);
-            licenseIconElement.setAttribute('alt', `cc-${name}_icon`);
+            licenseIconElement.setAttribute('src', `img/license_logos/cc-${lowerCaseName}_icon.svg`);
+            licenseIconElement.setAttribute('alt', `cc-${lowerCaseName}_icon`);
             licenseIconElementsArray.push(licenseIconElement);
           });
 
