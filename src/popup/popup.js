@@ -106,7 +106,7 @@ async function populateProviderList() {
 
   loadProvidersToDom(providersList);
 }
-//Fubncr
+
 
 populateProviderList();
 
