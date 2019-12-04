@@ -126,7 +126,7 @@ function getTwitterShareLink(sourceLink) {
 function getPinterestShareLink(sourceLink, imageLink) {
   return `https://pinterest.com/pin/create/button/?url=${sourceLink}&media=${imageLink}&description=I%20found%20an%20image%20through%20CC%20search%20%40creativecommons%3A%20${sourceLink}`;
 }
-// Tumblr Share Link
+// Shares the image to Tumblt
 function getTumblrShareLink(sourceLink, imageLink) {
   return `http://tumblr.com/widgets/share/tool?canonicalUrl=${sourceLink}&posttype=photo&content=${imageLink}`;
 }
