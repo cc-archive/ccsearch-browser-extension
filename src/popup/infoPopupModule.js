@@ -126,6 +126,10 @@ function getTwitterShareLink(sourceLink) {
 function getPinterestShareLink(sourceLink, imageLink) {
   return `https://pinterest.com/pin/create/button/?url=${sourceLink}&media=${imageLink}&description=I%20found%20an%20image%20through%20CC%20search%20%40creativecommons%3A%20${sourceLink}`;
 }
+// Shares the image to Tumblt
+function getTumblrShareLink(sourceLink, imageLink) {
+  return `http://tumblr.com/widgets/share/tool?canonicalUrl=${sourceLink}&posttype=photo&content=${imageLink}`;
+}
 
 function getPopupCreatorChildNode(creatorUrl, creator) {
   const link = document.createElement('a');
@@ -205,6 +209,7 @@ function getImageData(imageId) {
       elements.facebookShareButton.href = getFacebookShareLink(id);
       elements.twitterShareButton.href = getTwitterShareLink(foreignLandingUrl);
       elements.pinterestShareButton.href = getPinterestShareLink(foreignLandingUrl, imageUrl);
+      elements.tumblrShareButton.href = getTumblrShareLink(foreignLandingUrl, imageUrl);
       removeSpinner(elements.spinnerPlaceholderPopup);
       elements.popupMain.style.opacity = 1;
       elements.popupMain.style.visibility = 'visible';
