@@ -7,7 +7,14 @@ import bookmarkImage from './bookmarkModule';
 import { showNotification, removeChildNodes } from '../utils';
 
 const Masonry = require('masonry-layout');
-
+// Checks the Internet Connection and returns a valid response to the user instead of spinner
+export function checkInternetConnection() {
+  const { navigator } = window;
+  if (!navigator.onLine) {
+    showNotification('Please Connect to the Internet', 'negative', 'snackbar-bookmarks');
+    throw new Error('No Connection');
+  }
+}
 export function checkInputError(inputText) {
   if (inputText === '') {
     showNotification('No search query provided', 'negative', 'snackbar-bookmarks');

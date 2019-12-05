@@ -7,6 +7,7 @@ import {
   checkResultLength,
   addThumbnailsToDOM,
   removeLoaderAnimation,
+  checkInternetConnection,
 } from './searchModule';
 import {
   licensesList,
@@ -231,6 +232,7 @@ elements.searchIcon.addEventListener('click', () => {
   pageNo = 1;
 
   checkInputError(inputText, 'error-message');
+  checkInternetConnection();
   removeNode('primary__initial-info');
   removeNode('no-image-found');
   removeOldSearchResults();
