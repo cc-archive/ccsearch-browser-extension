@@ -26,6 +26,7 @@
   visibility: visible !important;
 
   animation: fadein 0.2s;
+  z-index: 105; // info-popup is 100
 }
 
 @keyframes fadein {

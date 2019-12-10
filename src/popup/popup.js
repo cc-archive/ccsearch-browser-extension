@@ -19,7 +19,7 @@ import {
 import { loadProvidersToDom, resetLicenseDropDown, loadUserDefaults } from './filterModule';
 import { handleImageAttributionDownload, handleImageDownload } from './infoPopupModule';
 import { addSpinner } from './spinner';
-import { removeNode, getLatestProviders } from '../utils';
+import { showNotification, removeNode, getLatestProviders } from '../utils';
 
 let inputText;
 let pageNo;
@@ -41,10 +41,7 @@ const clipboard = new ClipboardJS('.btn-copy');
 
 clipboard.on('success', (e) => {
   e.clearSelection();
-  e.trigger.textContent = 'Copied';
-  setTimeout(() => {
-    e.trigger.textContent = 'Copy';
-  }, 1000);
+  showNotification('Copied', 'positive', 'snackbar-bookmarks');
 });
 
 elements.popupCloseButton.addEventListener('click', () => {
