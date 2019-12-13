@@ -1,4 +1,3 @@
-/* eslint-disable no-shadow */
 import { elements } from './base';
 import {
   checkInputError,
@@ -320,9 +319,16 @@ document.getElementById('settings-icon').addEventListener('click', () => {
 
 document.getElementById('invert_colors-icon').addEventListener('click', () => {
   document.body.classList.toggle('dark');
+  chrome.storage.sync.get('darkmode', (items) => {
+    const value = !items.darkmode;
+    chrome.storage.sync.set(
+      {
+        darkmode: value, // using ES6 to use variable as key of object
+      },
+    );
+  });
 });
 
-// eslint-disable-next-line no-undef
 chrome.storage.sync.get('darkmode', (items) => {
   if (items.darkmode) {
     document.body.classList.add('dark');
