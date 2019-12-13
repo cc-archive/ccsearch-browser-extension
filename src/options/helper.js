@@ -42,7 +42,6 @@ function addProvidersToDom(providers) {
 export async function init() {
   restoreFilters(elements.useCaseInputs);
   restoreFilters(elements.licenseInputs);
-  restoreFilters(elements.darkModeInput);
   const providers = await getLatestProviders();
   addProvidersToDom(providers);
 }
@@ -67,10 +66,6 @@ export function saveFiltersOptions() {
   saveSingleFilter(elements.useCaseInputs);
   saveSingleFilter(elements.licenseInputs);
   saveSingleFilter(elements.providerInputs);
-}
-
-export function saveDarkModeOptions() {
-  saveSingleFilter(elements.darkModeInput);
 }
 
 export function updateBookmarks(newBookmarksids) {

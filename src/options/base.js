@@ -5,10 +5,8 @@ const elements = {
   useCaseInputs: document.querySelector('.use-case').getElementsByTagName('input'),
   licenseInputs: document.querySelector('.license').getElementsByTagName('input'),
   providerInputs: document.querySelector('.provider').getElementsByTagName('input'),
-  darkModeInput: document.querySelector('.dark-mode').getElementsByTagName('input'),
   providerWrapper: document.querySelector('.provider'),
   saveFiltersButton: document.getElementById('save-filters'),
-  saveDarkModeButton: document.getElementById('save-dark-mode'),
 };
 
 export default elements;
