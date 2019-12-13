@@ -67,7 +67,6 @@ export function getPlainAttribution(image) {
     return '';
   }
   let creatorUrl = 'Not Available';
-  // eslint-disable-next-line no-use-before-define
   const HtmlAttribution = getHtmlAttribution(image);
   if (image.creator_url) {
     creatorUrl = image.creator_url;

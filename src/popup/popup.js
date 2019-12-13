@@ -1,4 +1,3 @@
-/* eslint-disable no-shadow */
 import { elements } from './base';
 import {
   checkInputError,
@@ -322,7 +321,6 @@ document.getElementById('invert_colors-icon').addEventListener('click', () => {
   document.body.classList.toggle('dark');
 });
 
-// eslint-disable-next-line no-undef
 chrome.storage.sync.get('darkmode', (items) => {
   if (items.darkmode) {
     document.body.classList.add('dark');
