@@ -77,7 +77,7 @@ You can install the extension directly from the source. Follow the following ste
       - Click on "Load Unpacked" button (make sure you have enabled the _Developer mode_).
       - From the file explorer, choose `ccsearch-browser-extension/dist/opera`.
 
-## Troubleshooting buid failures
+## Troubleshooting build failures
 1. If you get following error:
 ```shell
 'TARGET' is not recognized as an internal or external command
