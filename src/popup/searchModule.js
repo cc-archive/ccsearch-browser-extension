@@ -8,6 +8,13 @@ import { showNotification, removeChildNodes } from '../utils';
 
 const Masonry = require('masonry-layout');
 
+export function checkInternetConnection() {
+  if (!navigator.onLine) {
+    showNotification('No Internet Connection', 'negative', 'snackbar-bookmarks');
+    throw new Error('No Internet Connection');
+  }
+}
+
 export function checkInputError(inputText) {
   if (inputText === '') {
     showNotification('No search query provided', 'negative', 'snackbar-bookmarks');
