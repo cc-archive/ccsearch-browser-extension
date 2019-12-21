@@ -2,7 +2,7 @@ import { elements } from './base';
 import { activatePopup } from './infoPopupModule';
 import { providerLogos, unicodeToString } from './helper';
 // eslint-disable-next-line import/no-cycle
-import { removeOldSearchResults, removeLoaderAnimation } from './searchModule';
+import { removeOldSearchResults, removeLoaderAnimation, checkInternetConnection } from './searchModule';
 import { addSpinner, removeSpinner } from './spinner';
 import {
   showNotification, removeNode, restoreInitialContent, removeChildNodes,
@@ -187,6 +187,7 @@ function loadImages() {
           // adding event listener to open popup.
           divElement.addEventListener('click', (e) => {
             if (e.target.classList.contains('image')) {
+              checkInternetConnection();
               const imageThumbnail = e.target.querySelector('.image-thumbnails');
               activatePopup(imageThumbnail);
             }
@@ -222,7 +223,6 @@ function removeBookmarkImages() {
 document.addEventListener('DOMContentLoaded', () => {
   elements.showBookmarksIcon.addEventListener('click', () => {
     window.isBookmarksActive = true;
-
     elements.homeIcon.style.pointerEvents = 'none';
     setTimeout(() => {
       elements.homeIcon.style.pointerEvents = 'auto';
@@ -233,7 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
     elements.homeIcon.style.display = 'inline-block';
     elements.showBookmarksIcon.style.display = 'none';
     elements.inputField.value = '';
-
+    checkInternetConnection();
     addSpinner(elements.spinnerPlaceholderBookmarks);
     removeOldSearchResults();
     removeLoaderAnimation();

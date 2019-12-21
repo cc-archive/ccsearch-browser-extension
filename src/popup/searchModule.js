@@ -10,8 +10,11 @@ const Masonry = require('masonry-layout');
 
 export function checkInternetConnection() {
   if (!navigator.onLine) {
-    showNotification('No Internet Connection', 'negative', 'snackbar-bookmarks');
+    removeSpinner(elements.spinnerPlaceholderPopup);
+    showNotification('No Internet Connection', 'negative', 'snackbar-bookmarks', 1);
     throw new Error('No Internet Connection');
+  } else {
+    showNotification('Connected to Network', 'positive', 'snackbar-bookmarks');
   }
 }
 
@@ -208,6 +211,7 @@ export function addThumbnailsToDOM(resultArray) {
       // adding event listener to open popup.
       divElement.addEventListener('click', (e) => {
         if (e.target.classList.contains('image')) {
+          checkInternetConnection();
           const imageThumbnail = e.target.querySelector('.image-thumbnails');
           activatePopup(imageThumbnail);
         }
