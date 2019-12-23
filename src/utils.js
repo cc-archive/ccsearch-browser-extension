@@ -74,7 +74,7 @@ export async function getLatestProviders() {
     });
     return providers;
   } catch (error) {
-    showNotification('unable to fetch providers. using default providers', 'positive', 'snackbar-bookmarks', 2500);
+    showNotification('Unable to fetch providers. Using default providers', 'negative', 'snackbar-bookmarks', 2500);
     providers = backupProviderAPIQueryStrings;
     return providers;
   }
