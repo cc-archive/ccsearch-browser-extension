@@ -8,6 +8,19 @@ import { showNotification, removeChildNodes } from '../utils';
 
 const Masonry = require('masonry-layout');
 
+let online = 1;
+export function checkInternetConnection() {
+  if (!navigator.onLine) {
+    online = 0;
+    removeSpinner(elements.spinnerPlaceholderPopup);
+    showNotification('No Internet Connection', 'negative', 'snackbar-bookmarks', 1);
+    throw new Error('No Internet Connection');
+  } else if (online === 0) {
+    showNotification('Connected to Network', 'positive', 'snackbar-bookmarks', 0, 3000);
+    online = 1;
+  }
+}
+
 export function checkInputError(inputText) {
   if (inputText === '') {
     showNotification('No search query provided', 'negative', 'snackbar-bookmarks');
@@ -201,6 +214,7 @@ export function addThumbnailsToDOM(resultArray) {
       // adding event listener to open popup.
       divElement.addEventListener('click', (e) => {
         if (e.target.classList.contains('image')) {
+          checkInternetConnection();
           const imageThumbnail = e.target.querySelector('.image-thumbnails');
           activatePopup(imageThumbnail);
         }
