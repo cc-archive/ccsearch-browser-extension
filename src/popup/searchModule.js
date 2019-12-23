@@ -8,13 +8,16 @@ import { showNotification, removeChildNodes } from '../utils';
 
 const Masonry = require('masonry-layout');
 
+let online = 1;
 export function checkInternetConnection() {
   if (!navigator.onLine) {
+    online = 0;
     removeSpinner(elements.spinnerPlaceholderPopup);
     showNotification('No Internet Connection', 'negative', 'snackbar-bookmarks', 1);
     throw new Error('No Internet Connection');
-  } else {
-    showNotification('Connected to Network', 'positive', 'snackbar-bookmarks');
+  } else if (online === 0) {
+    showNotification('Connected to Network', 'positive', 'snackbar-bookmarks', 0, 3000);
+    online = 1;
   }
 }
 
