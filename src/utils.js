@@ -1,6 +1,6 @@
 import { backupProviderAPIQueryStrings } from './popup/helper';
 
-export function showNotification(message, context, snackbarPlaceholderId, flag = 0, timeout) {
+export function showNotification(message, context, snackbarPlaceholderId, timeout) {
   const snackbar = document.getElementById(snackbarPlaceholderId);
   snackbar.innerText = message;
 
@@ -8,12 +8,10 @@ export function showNotification(message, context, snackbarPlaceholderId, flag =
   if (context === 'positive') snackbar.classList.add('snackbar-positive');
   else if (context === 'negative') snackbar.classList.add('snackbar-negative');
 
-  if (flag !== 1) {
-    setTimeout(() => {
-      snackbar.className = '';
-      snackbar.classList.add('snackbar');
-    }, timeout || 1100);
-  }
+  setTimeout(() => {
+    snackbar.className = '';
+    snackbar.classList.add('snackbar');
+  }, timeout || 1100);
 }
 
 export function removeNode(className) {
