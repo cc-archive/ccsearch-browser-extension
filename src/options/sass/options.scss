@@ -47,27 +47,27 @@ ul {
 
 /* Utils */
 .margin-bottom-medium {
-  margin-bottom: 1rem;
+  margin-bottom: 1rem !important;
 }
 
 .margin-bottom-small {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.5rem !important;
 }
 
 .margin-top-medium {
-  margin-top: 1rem;
+  margin-top: 1rem !important;
 }
 
 .margin-top-small {
-  margin-top: 0.5rem;
+  margin-top: 0.5rem !important;
 }
 
 .margin-top-smaller {
-  margin-top: 0.25rem;
+  margin-top: 0.25rem !important;
 }
 
 .padding-left-smaller {
-  padding-left: 0.25rem;
+  padding-left: 0.25rem !important;
 }
 
 @import "../../popup/sass/abstract/variables";
