@@ -18,6 +18,14 @@ body {
   height: 31rem;
 }
 
+// for firefox: when the extension is in overflow menu.
+// the horizontal width is capped at below the extension size.
+@-moz-document url-prefix() {
+  body {
+    overflow-x: auto;
+  }
+}
+
 a {
   text-decoration: none;
   color: rgb(234, 0, 255);
