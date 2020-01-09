@@ -14,6 +14,8 @@
     "build-chrome": "TARGET=chrome webpack --mode production",
     "build-firefox": "TARGET=firefox webpack --mode production",
     "build-opera": "TARGET=opera webpack --mode production",
+    "package-chrome": "npm run dev && (cd dist/chrome/ && zip -r ../chrome.zip .)",
+    "package-firefox": "npm run dev && (cd dist/firefox/ && zip -r ../firefox.zip .)",
     "dev": "npm run clean && npm run compile-sass-popup:dev && npm run compile-sass-options:dev && npm run build-firefox && npm run build-chrome && npm run build-opera",
     "build": "npm run clean && npm run compile-sass-popup:prod && npm run compile-sass-options:prod && npm run build-firefox && npm run build-chrome && npm run build-opera",
     "webpack-watch:firefox": "TARGET=chrome webpack --watch",
