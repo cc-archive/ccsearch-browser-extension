@@ -34,34 +34,38 @@
           <i class="fa fa-filter" id="filter-icon"></i>
         </section>
         <section class="section-filter">
-          <div class="section-filter__filter-wrapper section-filter__filter-wrapper--choose-usecase">
-            <input type="text" id="choose-usecase" placeholder="I want something that" />
-          </div>
-          <div class="section-filter__filter-wrapper section-filter__filter-wrapper--choose-license">
-            <input type="text" id="choose-license" placeholder="All licenses" />
-          </div>
-          <div class="section-filter__filter-wrapper section-filter__filter-wrapper--choose-provider">
-            <input type="text" id="choose-provider" placeholder="All Providers" />
-          </div>
-          <span class="section-filter__provider-loading-mes">Fetching Providers List . . .</span>
-          <div class="section-filter--apply-filter-container">
-            <a href="#" class="section-filter--apply-button" title="apply filters">
-              <button class="vocab button small-sized positive-indicating">
-                <div class="content">
-                  Apply
-                </div>
-              </button>
-            </a>
-          </div>
-          <div class="section-filter--reset-filter-container">
-            <a href="#" class="section-filter--reset-button" title="reset filters">
-              <button class="vocab button small-sized negative-indicating">
-                <div class="content">
-                  Reset
-                </div>
-              </button>
-            </a>
-          </div>
+          <div class="section-filter__filter-wrapper">
+            <div class="section-filter__filter-wrapper--choose-usecase">
+              <input type="text" id="choose-usecase" placeholder="I want something that" />
+            </div>
+            <div class="section-filter__filter-wrapper--choose-license">
+              <input type="text" id="choose-license" placeholder="All licenses" />
+            </div>
+            <div class="section-filter__filter-wrapper--choose-provider">
+              <input type="text" id="choose-provider" placeholder="All Providers" />
+            </div>
+            <span class="section-filter__provider-loading-mes">Fetching Providers List . . .</span>
+          </div> 
+          <div class="section-filter__filter-button">
+            <div class="section-filter__filter-button--apply-filter-container">
+              <a href="#" class="section-filter--apply-button" title="apply filters">
+                <button class="vocab button small-sized positive-indicating">
+                  <div class="content">
+                    Apply
+                  </div>
+                </button>
+              </a>
+            </div>
+            <div class="section-filter__filter-button--reset-filter-container">
+              <a href="#" class="section-filter--reset-button" title="reset filters">
+                <button class="vocab button small-sized negative-indicating">
+                  <div class="content">
+                    Reset
+                  </div>
+                </button>
+              </a>
+            </div>
+          </div>  
         </section>
         <span id="error-message"></span>
         <section class="section-content section-content--primary">
