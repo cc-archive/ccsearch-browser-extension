@@ -1,6 +1,7 @@
 .container {
   width: 90%;
   margin: 0 auto;
+  background: inherit;
 }
 
 .section-search {
@@ -88,4 +89,15 @@
     right: 4px;
     top: 3px;
   }
+}
+
+.container-search-filter{
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  background: inherit;
+}
+
+.section-primary{
+  background: inherit;
 }
