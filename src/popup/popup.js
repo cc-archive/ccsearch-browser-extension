@@ -336,3 +336,15 @@ chrome.storage.sync.get('darkmode', (items) => {
     document.body.classList.add('dark');
   }
 });
+
+const buttonBackToTop = document.getElementsByClassName('button-backToTop')[0];
+
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 400) {
+    buttonBackToTop.classList.add('show');
+  } else {
+    buttonBackToTop.classList.remove('show');
+  }
+});
+
+buttonBackToTop.addEventListener('click', () => window.scrollTo(0, 0));
