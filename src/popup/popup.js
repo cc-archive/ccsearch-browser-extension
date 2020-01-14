@@ -337,14 +337,12 @@ chrome.storage.sync.get('darkmode', (items) => {
   }
 });
 
-const buttonBackToTop = document.getElementsByClassName('button-backToTop')[0];
-
 window.addEventListener('scroll', () => {
   if (window.scrollY > 400) {
-    buttonBackToTop.classList.add('show');
+    elements.buttonBackToTop.classList.add('show');
   } else {
-    buttonBackToTop.classList.remove('show');
+    elements.buttonBackToTop.classList.remove('show');
   }
 });
 
-buttonBackToTop.addEventListener('click', () => window.scrollTo(0, 0));
+elements.buttonBackToTop.addEventListener('click', () => window.scrollTo(0, 0));
