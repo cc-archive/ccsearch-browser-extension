@@ -336,3 +336,13 @@ chrome.storage.sync.get('darkmode', (items) => {
     document.body.classList.add('dark');
   }
 });
+
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 400) {
+    elements.buttonBackToTop.classList.add('show');
+  } else {
+    elements.buttonBackToTop.classList.remove('show');
+  }
+});
+
+elements.buttonBackToTop.addEventListener('click', () => window.scrollTo(0, 0));

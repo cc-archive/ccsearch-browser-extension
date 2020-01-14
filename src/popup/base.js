@@ -37,6 +37,7 @@ export const elements = {
   primarySection: document.querySelector('.section-primary'),
   bookmarksSection: document.querySelector('.section-bookmarks'),
   deleteAllBookmarksButton: document.querySelector('.delete-all-button'),
+  buttonBackToTop: document.getElementsByClassName('button-backToTop')[0],
 };
 
 export const attributionTabLink = elements.popupTabLinks[0];
