@@ -36,6 +36,11 @@ let userSelectedUseCaseList = [];
 // object to map Provider display names to valid query names.
 let providerAPIQueryStrings = {};
 
+// Store Search to session
+const storeSearch = {};
+storeSearch.title = '';
+storeSearch.pageNo = '';
+
 // eslint-disable-next-line no-undef
 const clipboard = new ClipboardJS('.btn-copy');
 
@@ -234,6 +239,7 @@ elements.searchIcon.addEventListener('click', () => {
   removeOldSearchResults();
   removeLoaderAnimation();
   applyFilters();
+  localStorage.clear();
 
   // enable spinner
   addSpinner(elements.spinnerPlaceholderGrid);
@@ -248,16 +254,23 @@ elements.searchIcon.addEventListener('click', () => {
   );
 
   // console.log(url);
-  pageNo += 1;
 
   fetch(url)
     .then(data => data.json())
     .then((res) => {
       const resultArray = res.results;
       // console.log(resultArray);
-
+      
       checkResultLength(resultArray);
       addThumbnailsToDOM(resultArray);
+
+      // Store Data to local storage
+      storeSearch.title = inputText;
+      storeSearch.pageNo = pageNo;
+      storeSearch.page = { ...resultArray };
+      localStorage.setItem('title', storeSearch.title);
+      localStorage.setItem('pageNo', storeSearch.pageNo);
+      localStorage.setItem(pageNo, JSON.stringify(storeSearch.page));
     });
 });
 
@@ -292,14 +305,36 @@ async function nextRequest(page) {
   addThumbnailsToDOM(result);
   pageNo += 1;
   processing = false;
+
+  // Update Local Storage Data
+  storeSearch.pageNo = pageNo;
+  storeSearch.page = { ...result };
+  localStorage.setItem('pageNo', JSON.stringify(storeSearch.pageNo));
+  localStorage.setItem(pageNo, JSON.stringify(storeSearch.page));
 }
 
 // global varialbe to check the status if user is viewwing the bookmarks section
 window.isBookmarksActive = false;
 
 // Trigger nextRequest when we reach bottom of the page
-// credit: https://stackoverflow.com/a/10662576/10425980
 $(document).ready(() => {
+  if (localStorage !== null) {
+    inputText = localStorage.getItem('title') ? localStorage.getItem('title') : '';
+    elements.inputField.value = inputText;
+
+    storeSearch.pageNo = localStorage.getItem('pageNo');
+    ({ pageNo } = storeSearch);
+    console.log(pageNo);
+    if (pageNo) {
+      removeNode('primary__initial-info');
+      for (let pageCount = 1; pageCount <= storeSearch.pageNo; pageCount += 1) {
+        const pageData = Object.values(JSON.parse(localStorage.getItem(pageCount)));
+        addThumbnailsToDOM(pageData);
+      }
+    }
+  }
+
+  // credit: https://stackoverflow.com/a/10662576/10425980
   $(document).scroll(() => {
     if (processing) return false;
 
