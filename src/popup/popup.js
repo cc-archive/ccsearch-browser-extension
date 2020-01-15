@@ -38,8 +38,6 @@ let providerAPIQueryStrings = {};
 
 // Store Search to session
 const storeSearch = {};
-storeSearch.title = '';
-storeSearch.pageNo = '';
 
 // eslint-disable-next-line no-undef
 const clipboard = new ClipboardJS('.btn-copy');
@@ -260,7 +258,7 @@ elements.searchIcon.addEventListener('click', () => {
     .then((res) => {
       const resultArray = res.results;
       // console.log(resultArray);
-      
+
       checkResultLength(resultArray);
       addThumbnailsToDOM(resultArray);
 
@@ -271,6 +269,8 @@ elements.searchIcon.addEventListener('click', () => {
       localStorage.setItem('title', storeSearch.title);
       localStorage.setItem('pageNo', storeSearch.pageNo);
       localStorage.setItem(pageNo, JSON.stringify(storeSearch.page));
+
+      pageNo += 1;
     });
 });
 
@@ -289,52 +289,58 @@ loadUserDefaults();
 let processing;
 
 async function nextRequest(page) {
-  const url = getRequestUrl(
-    inputText,
-    userSelectedUseCaseList,
-    userSelectedLicensesList,
-    userSelectedProvidersList,
-    page,
-  );
+  if (localStorage.getItem(pageNo)) {
+    addSpinner(elements.spinnerPlaceholderGrid);
+    const pageData = Object.values(JSON.parse(localStorage.getItem(pageNo)));
+    addThumbnailsToDOM(pageData);
+    processing = false;
+    pageNo = Number(pageNo) + 1;
+  } else {
+    addSpinner(elements.spinnerPlaceholderGrid);
+    const url = getRequestUrl(
+      inputText,
+      userSelectedUseCaseList,
+      userSelectedLicensesList,
+      userSelectedProvidersList,
+      page,
+    );
 
-  // console.log(url);
-  const response = await fetch(url);
-  const json = await response.json();
-  const result = json.results;
-  // console.log(result);
-  addThumbnailsToDOM(result);
-  pageNo += 1;
-  processing = false;
+    // console.log(url);
+    const response = await fetch(url);
+    const json = await response.json();
+    const result = json.results;
+    // console.log(result);
+    addThumbnailsToDOM(result);
+    processing = false;
 
-  // Update Local Storage Data
-  storeSearch.pageNo = pageNo;
-  storeSearch.page = { ...result };
-  localStorage.setItem('pageNo', JSON.stringify(storeSearch.pageNo));
-  localStorage.setItem(pageNo, JSON.stringify(storeSearch.page));
+    // Update Local Storage Data
+    storeSearch.pageNo = pageNo;
+    storeSearch.page = { ...result };
+    localStorage.setItem('pageNo', JSON.stringify(storeSearch.pageNo));
+    localStorage.setItem(pageNo, JSON.stringify(storeSearch.page));
+
+    pageNo = Number(pageNo) + 1;
+  }
 }
 
 // global varialbe to check the status if user is viewwing the bookmarks section
 window.isBookmarksActive = false;
 
-// Trigger nextRequest when we reach bottom of the page
 $(document).ready(() => {
   if (localStorage !== null) {
     inputText = localStorage.getItem('title') ? localStorage.getItem('title') : '';
     elements.inputField.value = inputText;
 
     storeSearch.pageNo = localStorage.getItem('pageNo');
-    ({ pageNo } = storeSearch);
-    console.log(pageNo);
-    if (pageNo) {
+    pageNo = 1;
+    if (localStorage.getItem(pageNo)) {
       removeNode('primary__initial-info');
-      for (let pageCount = 1; pageCount <= storeSearch.pageNo; pageCount += 1) {
-        const pageData = Object.values(JSON.parse(localStorage.getItem(pageCount)));
-        addThumbnailsToDOM(pageData);
-      }
+      const pageData = Object.values(JSON.parse(localStorage.getItem(pageNo)));
+      addThumbnailsToDOM(pageData);
+      pageNo = Number(pageNo) + 1;
     }
   }
 
-  // credit: https://stackoverflow.com/a/10662576/10425980
   $(document).scroll(() => {
     if (processing) return false;
 
