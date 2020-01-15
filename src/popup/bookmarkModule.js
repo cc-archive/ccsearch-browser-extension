@@ -262,15 +262,19 @@ document.addEventListener('DOMContentLoaded', () => {
       if (bookmarksArray.length === 0) {
         showNotification('No Bookmarks Available', 'negative', 'snackbar-bookmarks');
       } else {
-        bookmarksArray.splice(0, bookmarksArray.length); // empty array
-        chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
-          // restoring initial layout of bookmarks section
-          removeBookmarkImages();
-          msnry.layout();
-          restoreInitialContent('bookmarks');
-          // confirm user action
-          showNotification('Bookmarks successfully removed', 'positive', 'snackbar-bookmarks');
-        });
+        // eslint-disable-next-line
+        const result = confirm('Delete all bookmarks?');
+        if (result) {
+          bookmarksArray.splice(0, bookmarksArray.length); // empty array
+          chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
+            // restoring initial layout of bookmarks section
+            removeBookmarkImages();
+            msnry.layout();
+            restoreInitialContent('bookmarks');
+            // confirm user action
+            showNotification('Bookmarks successfully removed', 'positive', 'snackbar-bookmarks');
+          });
+        }
       }
     });
   });
