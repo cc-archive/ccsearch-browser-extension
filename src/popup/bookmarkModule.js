@@ -1,3 +1,4 @@
+import swal from 'sweetalert';
 import { elements } from './base';
 import { activatePopup } from './infoPopupModule';
 import { providerLogos, unicodeToString } from './helper';
@@ -262,19 +263,24 @@ document.addEventListener('DOMContentLoaded', () => {
       if (bookmarksArray.length === 0) {
         showNotification('No Bookmarks Available', 'negative', 'snackbar-bookmarks');
       } else {
-        // eslint-disable-next-line
-        const result = confirm('Delete all bookmarks?');
-        if (result) {
-          bookmarksArray.splice(0, bookmarksArray.length); // empty array
-          chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
-            // restoring initial layout of bookmarks section
-            removeBookmarkImages();
-            msnry.layout();
-            restoreInitialContent('bookmarks');
-            // confirm user action
-            showNotification('Bookmarks successfully removed', 'positive', 'snackbar-bookmarks');
-          });
-        }
+        swal({
+          title: 'Delete all bookmarks?',
+          icon: 'warning',
+          buttons: true,
+          dangerMode: true,
+        }).then((result) => {
+          if (result) {
+            bookmarksArray.splice(0, bookmarksArray.length); // empty array
+            chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
+              // restoring initial layout of bookmarks section
+              removeBookmarkImages();
+              msnry.layout();
+              restoreInitialContent('bookmarks');
+              // confirm user action
+              showNotification('Bookmarks successfully removed', 'positive', 'snackbar-bookmarks');
+            });
+          }
+        });
       }
     });
   });

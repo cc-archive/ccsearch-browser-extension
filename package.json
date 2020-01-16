@@ -49,6 +49,7 @@
   },
   "dependencies": {
     "downloadjs": "^1.4.7",
-    "masonry-layout": "^4.2.2"
+    "masonry-layout": "^4.2.2",
+    "sweetalert": "^2.1.2"
   }
 }
