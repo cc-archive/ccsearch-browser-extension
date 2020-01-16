@@ -41,6 +41,31 @@ elements.exportBookmarksButton.addEventListener('click', () => {
   });
 });
 
+elements.exportSpecificBookmarksButton.addEventListener('click', () => {
+  chrome.storage.sync.get({ bookmarks: [] }, (items) => {
+    const bookmarksArray = items.bookmarks;
+
+    bookmarksArray.forEach((bookmarkId) => {
+      const url = `http://api.creativecommons.engineering/image/${bookmarkId}`;
+
+      fetch(url)
+        .then(data => data.json())
+        .then((res) => {
+          console.log(res);
+
+          elements.exportBookmark['0'].innerHTML += `
+            <br />
+            <div class="license filter-checkboxes">
+              <input type="checkbox" class="vocab choice-field magenta-colored small-sized" id=${bookmarkId} />
+              <label class="padding-left-smaller">${bookmarkId}</label>
+              <img src = ${res.url} width= "300px" height = "300px" />
+              <br />
+            </div>`;
+        });
+    });
+  });
+});
+
 elements.importBookmarksButton.addEventListener('click', () => {
   const file = elements.importBookmarksInput.files[0];
   if (!file) {
