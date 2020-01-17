@@ -4,7 +4,7 @@ import { activatePopup } from './infoPopupModule';
 import { removeSpinner } from './spinner';
 // eslint-disable-next-line import/no-cycle
 import bookmarkImage from './bookmarkModule';
-import { showNotification, removeChildNodes } from '../utils';
+import { showNotification, removeChildNodes, restoreInitialContent } from '../utils';
 
 const Masonry = require('masonry-layout');
 
@@ -21,10 +21,6 @@ export function checkInputError(inputText) {
     showNotification('No search query provided', 'negative', 'snackbar-bookmarks');
     // to stop further js execution
     throw new Error('No search query provided');
-  } else if (!/^[A-Za-z0-9]( ?[A-Za-z0-9])*$/.test(inputText)) {
-    showNotification('No valid search query provided, search query must be alphanumeric', 'negative', 'snackbar-bookmarks');
-    // to stop further js execution
-    throw new Error('No valid search query provided');
   }
 }
 
@@ -93,6 +89,16 @@ export function removeLoaderAnimation() {
   removeSpinner(elements.spinnerPlaceholderGrid);
   // TODO: use better logic
   // elements.noMoreImagesMessage.classList.remove('display-none');
+}
+
+// TODO: be more specific
+export function checkValidationError(apiResponse) {
+  if (Object.prototype.hasOwnProperty.call(apiResponse, 'validation_error')) {
+    showNotification('Not a valid search query', 'negative', 'snackbar-bookmarks');
+    removeLoaderAnimation();
+    restoreInitialContent('primary');
+    throw new Error('Not valid search query');
+  }
 }
 
 // eslint-disable-next-line no-undef

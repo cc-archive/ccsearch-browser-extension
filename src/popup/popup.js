@@ -7,6 +7,7 @@ import {
   addThumbnailsToDOM,
   removeLoaderAnimation,
   checkInternetConnection,
+  checkValidationError,
 } from './searchModule';
 import {
   licensesList,
@@ -253,6 +254,7 @@ elements.searchIcon.addEventListener('click', () => {
   fetch(url)
     .then(data => data.json())
     .then((res) => {
+      checkValidationError(res);
       const resultArray = res.results;
       // console.log(resultArray);
 
