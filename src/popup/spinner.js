@@ -8,11 +8,11 @@ export function getSpinnerMarkup() {
 }
 
 export function addSpinner(spinnerPlaceholder) {
-  spinnerPlaceholder.insertAdjacentHTML('afterbegin', getSpinnerMarkup());
+  // eslint-disable-next-line no-param-reassign
+  spinnerPlaceholder.innerHTML = getSpinnerMarkup();
 }
 
 export function removeSpinner(spinnerPlaceholder) {
-  while (spinnerPlaceholder.firstChild) {
-    spinnerPlaceholder.removeChild(spinnerPlaceholder.firstChild);
-  }
+  // eslint-disable-next-line no-param-reassign
+  spinnerPlaceholder.innerHTML = '';
 }
