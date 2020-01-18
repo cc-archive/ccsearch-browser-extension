@@ -70,5 +70,39 @@ ul {
   padding-left: 0.25rem !important;
 }
 
+//  Styles for "Export Bookmark"
+.export-bookmark {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.export-specific-bookmark {
+  margin: 0.2rem 0.5rem;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #b62b6e;
+  padding: 0.2rem;
+  text-align: center;
+
+  img {
+    width: 200px;
+    height: 200px;
+  }
+  
+  &__title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 200px;
+    white-space: nowrap;
+    display: inline-block;
+
+    &:hover {
+      overflow: visible;
+      width: 200px;
+    }
+  }
+}
+
 @import "../../popup/sass/abstract/variables";
 @import "../../popup/sass/components/snackbar";

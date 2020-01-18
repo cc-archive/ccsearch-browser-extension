@@ -54,11 +54,11 @@ elements.exportSpecificBookmarksButton.addEventListener('click', () => {
           console.log(res);
 
           elements.exportBookmark['0'].innerHTML += `
-            <br />
-            <div class="license filter-checkboxes">
+            <div class="export-specific-bookmark">
+              <img src = ${res.url}/>
+              <br />
               <input type="checkbox" class="vocab choice-field magenta-colored small-sized" id=${bookmarkId} />
-              <label class="padding-left-smaller">${bookmarkId}</label>
-              <img src = ${res.url} width= "300px" height = "300px" />
+              <div class="export-specific-bookmark__title">${res.title}</div>
               <br />
             </div>`;
         });
