@@ -51,19 +51,29 @@ elements.exportSpecificBookmarksButton.addEventListener('click', () => {
       fetch(url)
         .then(data => data.json())
         .then((res) => {
-          console.log(res);
-
           elements.exportBookmark['0'].innerHTML += `
             <div class="export-specific-bookmark">
               <img src = ${res.url}/>
               <br />
-              <input type="checkbox" class="vocab choice-field magenta-colored small-sized" id=${bookmarkId} />
+              <input type="checkbox" class="export-specific-bookmark-choice vocab choice-field magenta-colored small-sized" id=${bookmarkId} />
               <div class="export-specific-bookmark__title">${res.title}</div>
               <br />
             </div>`;
         });
     });
   });
+});
+
+elements.exportSpecificBookmarksNow.addEventListener('click', () => {
+  const options = Object.entries(elements.exportSpecificBookmarksChoice);
+  const bookmarksArray = [];
+
+  options.forEach((choice) => {
+    if (choice['1'].checked === true) bookmarksArray.push(choice['1'].id);
+  });
+
+  const bookmarksString = JSON.stringify(bookmarksArray);
+  download(bookmarksString, 'bookmarks.json', 'text/plain');
 });
 
 elements.importBookmarksButton.addEventListener('click', () => {
