@@ -45,24 +45,27 @@ elements.exportSpecificBookmarksButton.addEventListener('click', () => {
   chrome.storage.sync.get({ bookmarks: [] }, (items) => {
     const bookmarksArray = items.bookmarks;
 
-    elements.exportBookmark['0'].innerHTML = '';
+    if (!bookmarksArray.length) elements.exportBookmark['0'].innerHTML = ' No Bookmarks Avaliable ';
+    else {
+      elements.exportBookmark['0'].innerHTML = '';
 
-    bookmarksArray.forEach((bookmarkId) => {
-      const url = `http://api.creativecommons.engineering/image/${bookmarkId}`;
+      bookmarksArray.forEach((bookmarkId) => {
+        const url = `http://api.creativecommons.engineering/image/${bookmarkId}`;
 
-      fetch(url)
-        .then(data => data.json())
-        .then((res) => {
-          elements.exportBookmark['0'].innerHTML += `
-            <div class="export-specific-bookmark">
-              <img src = ${res.url}/>
-              <br />
-              <input type="checkbox" class="export-specific-bookmark-choice vocab choice-field magenta-colored small-sized" id=${bookmarkId} />
-              <div class="export-specific-bookmark__title">${res.title}</div>
-              <br />
-            </div>`;
-        });
-    });
+        fetch(url)
+          .then(data => data.json())
+          .then((res) => {
+            elements.exportBookmark['0'].innerHTML += `
+              <div class="export-specific-bookmark">
+                <img src = ${res.url}/>
+                <br />
+                <input type="checkbox" class="export-specific-bookmark-choice vocab choice-field magenta-colored small-sized" id=${bookmarkId} />
+                <div class="export-specific-bookmark__title">${res.title}</div>
+                <br />
+              </div>`;
+          });
+      });
+    }
   });
 });
 
