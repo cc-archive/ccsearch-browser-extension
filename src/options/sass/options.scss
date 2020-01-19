@@ -75,6 +75,10 @@ ul {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+
+  &-button{
+    margin-right: 1rem;
+  }
 }
 
 .export-specific-bookmark {
@@ -102,6 +106,11 @@ ul {
       width: 200px;
     }
   }
+}
+
+.export-bookmarks-button-container {
+  display: flex;
+  justify-content: space-between;
 }
 
 @import "../../popup/sass/abstract/variables";
