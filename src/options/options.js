@@ -45,6 +45,8 @@ elements.exportSpecificBookmarksButton.addEventListener('click', () => {
   chrome.storage.sync.get({ bookmarks: [] }, (items) => {
     const bookmarksArray = items.bookmarks;
 
+    elements.exportBookmark['0'].innerHTML = '';
+
     bookmarksArray.forEach((bookmarkId) => {
       const url = `http://api.creativecommons.engineering/image/${bookmarkId}`;
 
