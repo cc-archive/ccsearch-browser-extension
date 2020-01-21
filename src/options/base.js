@@ -7,6 +7,7 @@ const elements = {
   providerInputs: document.querySelector('.provider').getElementsByTagName('input'),
   providerWrapper: document.querySelector('.provider'),
   saveFiltersButton: document.getElementById('save-filters'),
+  accordionItems: document.querySelectorAll('.accordion .accordion-link'),
 };
 
 export default elements;

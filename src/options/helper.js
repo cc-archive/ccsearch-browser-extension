@@ -82,3 +82,8 @@ export function updateBookmarks(newBookmarksids) {
     showNotification('Bookmarks updated!', 'positive', 'snackbar-options');
   });
 }
+
+export function toggleAccordion() {
+  this.classList.toggle('active');
+  this.nextElementSibling.classList.toggle('active');
+}
