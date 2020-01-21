@@ -9,9 +9,15 @@
     position: relative;
 
     .delete-all-button {
-      position: absolute;
-      left: 10px;
-      top: 1.25rem;
+      // position: absolute;
+      // left: 10px;
+      // top: 1.25rem;
+      margin-left: 0.2rem;
+    }
+
+    .export-bookmarks-button {
+      margin-right: 0.2rem;
+      float: right;
     }
   }
 }
