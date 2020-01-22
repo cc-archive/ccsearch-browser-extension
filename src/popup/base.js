@@ -38,6 +38,9 @@ export const elements = {
   bookmarksSection: document.querySelector('.section-bookmarks'),
   deleteAllBookmarksButton: document.querySelector('.delete-all-button'),
   buttonBackToTop: document.getElementsByClassName('button-backToTop')[0],
+  exportBookmark: document.getElementsByClassName('export-bookmarks-button')[0],
+  getBookmarks: document.getElementsByClassName('grid-item'),
+  selectButtons: document.getElementsByClassName('select-btn'),
 };
 
 export const attributionTabLink = elements.popupTabLinks[0];

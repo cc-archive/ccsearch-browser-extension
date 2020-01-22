@@ -10,6 +10,8 @@ import {
 
 const Masonry = require('masonry-layout');
 
+const bookmarkDOM = {};
+
 export default function bookmarkImage(e) {
   chrome.storage.sync.get({ bookmarks: [] }, (items) => {
     const bookmarksArray = items.bookmarks;
@@ -132,6 +134,15 @@ function loadImages() {
 
           spanTitleElement.appendChild(foreignLandingLinkElement);
 
+          // make select button
+          const selectButtonElement = document.createElement('span');
+          selectButtonElement.setAttribute('class', 'bookmark-select');
+          const selectButton = document.createElement('input');
+          selectButton.setAttribute('type', 'checkbox');
+          selectButton.setAttribute('id', id);
+          selectButton.setAttribute('class', 'select-btn vocab choice-field magenta-colored small-sized');
+          selectButtonElement.appendChild(selectButton);
+
           // make a span to hold the license icons
           const spanLicenseElement = document.createElement('span');
           spanLicenseElement.setAttribute('class', 'image-license');
@@ -194,6 +205,7 @@ function loadImages() {
           });
 
           divElement.appendChild(imgElement);
+          divElement.appendChild(selectButtonElement);
           divElement.appendChild(spanTitleElement);
           divElement.appendChild(spanLicenseElement);
 
@@ -207,6 +219,18 @@ function loadImages() {
 
           removeSpinner(elements.spinnerPlaceholderBookmarks);
           appendToGrid(msnry, fragment, gridItemDiv, elements.gridBookmarks);
+        })
+        .then(() => {
+          const btn = elements.selectButtons[elements.selectButtons.length - 1];
+
+          btn.isChecked = false;
+          bookmarkDOM[btn.getAttribute('id')] = btn;
+
+          btn.addEventListener('click', () => {
+            if (btn.isChecked) btn.parentElement.removeAttribute('style');
+            else btn.parentElement.setAttribute('style', 'opacity : 1');
+            btn.isChecked = !btn.isChecked;
+          });
         });
     });
   });
@@ -239,6 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
     removeLoaderAnimation();
     restoreInitialContent('primary');
     loadImages();
+    addEventToSelectBtns();
   });
 
   elements.homeIcon.addEventListener('click', (e) => {

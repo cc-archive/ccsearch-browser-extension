@@ -21,3 +21,20 @@
     }
   }
 }
+
+.bookmark-select {
+  backface-visibility: hidden;
+  position: absolute;
+  bottom: 30px;
+  left: 5px;
+  color: #fff;
+  font-size: 0.7937rem;
+  font-weight: 700;
+  width: 90%;
+  opacity: 0;
+  z-index: 3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle; 
+}
