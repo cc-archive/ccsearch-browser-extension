@@ -238,7 +238,7 @@ elements.searchIcon.addEventListener('click', () => {
   applyFilters();
 
   // enable spinner
-  addSpinner(elements.spinnerPlaceholderGrid);
+  addSpinner(elements.spinnerPlaceholderGrid, 'original');
   // elements.spinner.classList.add('spinner');
 
   const url = getRequestUrl(

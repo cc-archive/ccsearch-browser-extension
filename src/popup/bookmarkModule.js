@@ -234,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
     elements.showBookmarksIcon.style.display = 'none';
     elements.inputField.value = '';
     checkInternetConnection();
-    addSpinner(elements.spinnerPlaceholderBookmarks);
+    addSpinner(elements.spinnerPlaceholderBookmarks, 'original');
     removeOldSearchResults();
     removeLoaderAnimation();
     restoreInitialContent('primary');

@@ -1,5 +1,5 @@
 import { elements } from './base';
-import { unicodeToString, providerLogos } from './helper';
+import { unicodeToString, providerLogos, addLoadMoreButton } from './helper';
 import { activatePopup } from './infoPopupModule';
 import { removeSpinner } from './spinner';
 // eslint-disable-next-line import/no-cycle
