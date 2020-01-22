@@ -16,6 +16,7 @@ import {
   useCaseAPIQueryStrings,
   makeElementsDisplayNone,
   removeClassFromElements,
+  removeLoadMoreButton,
 } from './helper';
 import { loadProvidersToDom, resetLicenseDropDown, loadUserDefaults } from './filterModule';
 import { handleImageAttributionDownload, handleImageDownload } from './infoPopupModule';
@@ -275,8 +276,6 @@ $('#choose-license').comboTree({
 });
 loadUserDefaults();
 
-let processing;
-
 async function nextRequest(page) {
   const url = getRequestUrl(
     inputText,
@@ -293,28 +292,15 @@ async function nextRequest(page) {
   // console.log(result);
   addThumbnailsToDOM(result);
   pageNo += 1;
-  processing = false;
 }
 
 // global varialbe to check the status if user is viewwing the bookmarks section
 window.isBookmarksActive = false;
 
-// Trigger nextRequest when we reach bottom of the page
-// credit: https://stackoverflow.com/a/10662576/10425980
-$(document).ready(() => {
-  $(document).scroll(() => {
-    if (processing) return false;
-
-    if (
-      $(window).scrollTop() >= $(document).height() - $(window).height() - 700
-      && !window.isBookmarksActive
-    ) {
-      processing = true;
-
-      nextRequest(pageNo);
-    }
-    return undefined;
-  });
+elements.loadMoreButton.addEventListener('click', () => {
+  removeLoadMoreButton(elements.loadMoreButtonWrapper);
+  addSpinner(elements.spinnerPlaceholderGrid, 'for-bottom');
+  nextRequest(pageNo);
 });
 
 document.getElementById('settings-icon').addEventListener('click', () => {

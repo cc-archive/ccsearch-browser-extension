@@ -238,9 +238,5 @@ export function addThumbnailsToDOM(resultArray) {
     });
 
     appendToGrid(msnry, fragment, divs, elements.gridPrimary);
-
-    if (resultArray.length <= 10) {
-      removeLoaderAnimation();
-    }
   });
 }
