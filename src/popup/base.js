@@ -41,6 +41,7 @@ export const elements = {
   exportBookmark: document.getElementsByClassName('export-bookmarks-button')[0],
   getBookmarks: document.getElementsByClassName('grid-item'),
   selectButtons: document.getElementsByClassName('select-btn'),
+  selectAllButton: document.getElementsByClassName('select-all-button')[0],
 };
 
 export const attributionTabLink = elements.popupTabLinks[0];

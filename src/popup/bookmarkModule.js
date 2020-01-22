@@ -263,7 +263,6 @@ document.addEventListener('DOMContentLoaded', () => {
     removeLoaderAnimation();
     restoreInitialContent('primary');
     loadImages();
-    addEventToSelectBtns();
   });
 
   elements.homeIcon.addEventListener('click', (e) => {
@@ -298,5 +297,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
     });
+  });
+});
+
+elements.selectAllButton.addEventListener('click', () => {
+  const bookmarkDOMArray = Object.values(bookmarkDOM);
+  console.log(bookmarkDOMArray);
+
+  bookmarkDOMArray.forEach((btn) => {
+    if (!btn.checked) btn.click();
   });
 });
