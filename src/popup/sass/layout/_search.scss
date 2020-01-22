@@ -90,10 +90,17 @@
       display: inline-block;
       margin: 0.7rem 1rem 0rem;
     }
-  
+
     &--apply-filter-container {
       display: inline-block;
       margin: 0.7rem 1rem 0rem;
     }
+  }
+}
+
+.load-more-button {
+  &-wrapper {
+    margin-bottom: 6rem; // vertical height is increasing
+    text-align: center;
   }
 }

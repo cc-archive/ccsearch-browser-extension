@@ -1,5 +1,5 @@
 import { elements } from './base';
-import { unicodeToString, providerLogos } from './helper';
+import { unicodeToString, providerLogos, addLoadMoreButton } from './helper';
 import { activatePopup } from './infoPopupModule';
 import { removeSpinner } from './spinner';
 // eslint-disable-next-line import/no-cycle
@@ -66,9 +66,17 @@ function showNoResultFoundMessage() {
   }
 }
 
+export function removeLoaderAnimation() {
+  // elements.spinner.classList.remove('spinner');
+  removeSpinner(elements.spinnerPlaceholderGrid);
+  // TODO: use better logic
+  // elements.noMoreImagesMessage.classList.remove('display-none');
+}
+
 export function checkResultLength(resultArray) {
   if (resultArray.length === 0) {
     showNoResultFoundMessage();
+    removeLoaderAnimation();
     // eslint-disable-next-line no-use-before-define
     msnry.layout();
   }
@@ -82,13 +90,8 @@ function appendToGrid(msnry, fragment, divs, grid) {
     // layout Masonry after each image loads
     msnry.layout();
   });
-}
-
-export function removeLoaderAnimation() {
-  // elements.spinner.classList.remove('spinner');
-  removeSpinner(elements.spinnerPlaceholderGrid);
-  // TODO: use better logic
-  // elements.noMoreImagesMessage.classList.remove('display-none');
+  removeLoaderAnimation();
+  addLoadMoreButton(elements.loadMoreButtonWrapper);
 }
 
 // TODO: be more specific
@@ -238,9 +241,5 @@ export function addThumbnailsToDOM(resultArray) {
     });
 
     appendToGrid(msnry, fragment, divs, elements.gridPrimary);
-
-    if (resultArray.length <= 10) {
-      removeLoaderAnimation();
-    }
   });
 }
