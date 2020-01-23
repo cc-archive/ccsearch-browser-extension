@@ -1,0 +1,33 @@
+.button-backToTop {
+  display: inline-block;
+  background-color: #ff7d31;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  border-radius: 3px;
+  position: fixed;
+  bottom: 60px;
+  right: 20px;
+  transition: background-color .3s, 
+  opacity .5s, visibility .5s;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1000;
+}
+.button-backToTop::after {
+  content: "\f077";
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 1.5em;
+  line-height: 35px;
+  color: #fff;
+}
+.button-backToTop:hover {
+  cursor: pointer;
+  background-color: #ff4e14;
+}
+.button-backToTop.show{
+  opacity: 1;
+  visibility: visible;
+}

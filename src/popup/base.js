@@ -18,6 +18,8 @@ export const elements = {
   filterResetButton: document.querySelector('.section-filter--reset-button'),
   filterApplyButton: document.querySelector('.section-filter--apply-button'),
   noMoreImagesMessage: document.querySelector('.no-more-images-mes'),
+  loadMoreButton: document.querySelector('.load-more-button'),
+  loadMoreButtonWrapper: document.querySelector('.load-more-button-wrapper'),
   popup: document.getElementById('popup'),
   popupMain: document.querySelector('.popup__main'),
   downloadImageButton: document.getElementById('download-image'),
@@ -37,6 +39,7 @@ export const elements = {
   primarySection: document.querySelector('.section-primary'),
   bookmarksSection: document.querySelector('.section-bookmarks'),
   deleteAllBookmarksButton: document.querySelector('.delete-all-button'),
+  buttonBackToTop: document.getElementsByClassName('button-backToTop')[0],
 };
 
 export const attributionTabLink = elements.popupTabLinks[0];

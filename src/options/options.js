@@ -1,6 +1,6 @@
 import elements from './base';
 import {
-  init, saveFiltersOptions, updateBookmarks,
+  init, saveFiltersOptions, updateBookmarks, toggleAccordion,
 } from './helper';
 import { showNotification } from '../utils';
 
@@ -103,3 +103,6 @@ document.getElementById('vocab-tabbed-header').addEventListener('click', (e) => 
     targetContentDiv.classList.add('active');
   }
 });
+
+// to toggle FAQ page links
+elements.accordionItems.forEach(item => item.addEventListener('click', toggleAccordion));

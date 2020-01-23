@@ -1,7 +1,12 @@
 // // credit: https://github.com/tobiasahlin/SpinKit
-.spinner {
-  margin: 6.50rem auto;
+.spinner-original {
+  margin: 4.50rem auto;
   width: 4.3rem;
+  text-align: center;
+}
+
+.spinner-for-bottom {
+  margin: 0 auto 4rem auto;
   text-align: center;
 }
 

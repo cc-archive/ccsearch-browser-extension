@@ -1,6 +1,6 @@
 import { elements } from './base';
 import { activatePopup } from './infoPopupModule';
-import { providerLogos, unicodeToString } from './helper';
+import { providerLogos, unicodeToString, removeLoadMoreButton } from './helper';
 // eslint-disable-next-line import/no-cycle
 import { removeOldSearchResults, removeLoaderAnimation, checkInternetConnection } from './searchModule';
 import { addSpinner, removeSpinner } from './spinner';
@@ -234,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
     elements.showBookmarksIcon.style.display = 'none';
     elements.inputField.value = '';
     checkInternetConnection();
-    addSpinner(elements.spinnerPlaceholderBookmarks);
+    addSpinner(elements.spinnerPlaceholderBookmarks, 'original');
     removeOldSearchResults();
     removeLoaderAnimation();
     restoreInitialContent('primary');
@@ -251,6 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
     elements.primarySection.style.display = 'block';
     elements.bookmarksSection.style.display = 'none';
     elements.showBookmarksIcon.style.display = 'inline-block';
+    removeLoadMoreButton(elements.loadMoreButtonWrapper);
     e.target.style.display = 'none';
 
     removeBookmarkImages();

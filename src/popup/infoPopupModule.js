@@ -218,7 +218,7 @@ function getImageData(imageId) {
 export function activatePopup(imageThumbnail) {
   elements.popup.style.opacity = 1;
   elements.popup.style.visibility = 'visible';
-  addSpinner(elements.spinnerPlaceholderPopup);
+  addSpinner(elements.spinnerPlaceholderPopup, 'original');
   getImageData(imageThumbnail.id);
   attributionTabLink.click();
 }

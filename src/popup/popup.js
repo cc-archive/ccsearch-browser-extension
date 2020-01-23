@@ -7,6 +7,7 @@ import {
   addThumbnailsToDOM,
   removeLoaderAnimation,
   checkInternetConnection,
+  checkValidationError,
 } from './searchModule';
 import {
   licensesList,
@@ -15,6 +16,7 @@ import {
   useCaseAPIQueryStrings,
   makeElementsDisplayNone,
   removeClassFromElements,
+  removeLoadMoreButton,
 } from './helper';
 import { loadProvidersToDom, resetLicenseDropDown, loadUserDefaults } from './filterModule';
 import { handleImageAttributionDownload, handleImageDownload } from './infoPopupModule';
@@ -240,7 +242,7 @@ elements.searchIcon.addEventListener('click', () => {
   localStorage.clear();
 
   // enable spinner
-  addSpinner(elements.spinnerPlaceholderGrid);
+  addSpinner(elements.spinnerPlaceholderGrid, 'original');
   // elements.spinner.classList.add('spinner');
 
   const url = getRequestUrl(
@@ -256,6 +258,7 @@ elements.searchIcon.addEventListener('click', () => {
   fetch(url)
     .then(data => data.json())
     .then((res) => {
+      checkValidationError(res);
       const resultArray = res.results;
       // console.log(resultArray);
 
@@ -286,8 +289,6 @@ $('#choose-license').comboTree({
 });
 loadUserDefaults();
 
-let processing;
-
 async function nextRequest(page) {
   if (localStorage.getItem(pageNo)) {
     addSpinner(elements.spinnerPlaceholderGrid);
@@ -304,7 +305,7 @@ async function nextRequest(page) {
       userSelectedProvidersList,
       page,
     );
-
+    
     // console.log(url);
     const response = await fetch(url);
     const json = await response.json();
@@ -354,6 +355,11 @@ $(document).ready(() => {
     }
     return undefined;
   });
+  
+elements.loadMoreButton.addEventListener('click', () => {
+  removeLoadMoreButton(elements.loadMoreButtonWrapper);
+  addSpinner(elements.spinnerPlaceholderGrid, 'for-bottom');
+  nextRequest(pageNo);
 });
 
 document.getElementById('settings-icon').addEventListener('click', () => {
@@ -377,3 +383,13 @@ chrome.storage.sync.get('darkmode', (items) => {
     document.body.classList.add('dark');
   }
 });
+
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 400) {
+    elements.buttonBackToTop.classList.add('show');
+  } else {
+    elements.buttonBackToTop.classList.remove('show');
+  }
+});
+
+elements.buttonBackToTop.addEventListener('click', () => window.scrollTo(0, 0));

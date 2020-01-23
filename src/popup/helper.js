@@ -142,3 +142,11 @@ export function makeElementsDisplayNone(elemArray) {
     e.style.display = 'none';
   });
 }
+
+export function addLoadMoreButton(loadMoreButtonPlaceholder) {
+  loadMoreButtonPlaceholder.classList.remove('display-none');
+}
+
+export function removeLoadMoreButton(loadMoreButtonPlaceholder) {
+  loadMoreButtonPlaceholder.classList.add('display-none');
+}
