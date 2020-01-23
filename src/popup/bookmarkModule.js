@@ -316,7 +316,11 @@ document.addEventListener('DOMContentLoaded', () => {
       if (btn.checked) exportBookmark.push(btn.id);
     });
 
-    const bookmarksString = JSON.stringify(exportBookmark);
-    download(bookmarksString, 'bookmarks.json', 'text/plain');
+    if (exportBookmark.length) {
+      const bookmarksString = JSON.stringify(exportBookmark);
+      download(bookmarksString, 'bookmarks.json', 'text/plain');
+    } else {
+      showNotification('No bookmarks selected', 'negative', 'snackbar-bookmarks');
+    }
   });
 });
