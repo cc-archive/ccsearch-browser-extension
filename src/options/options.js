@@ -41,46 +41,6 @@ elements.exportBookmarksButton.addEventListener('click', () => {
   });
 });
 
-elements.exportSpecificBookmarksButton.addEventListener('click', () => {
-  chrome.storage.sync.get({ bookmarks: [] }, (items) => {
-    const bookmarksArray = items.bookmarks;
-
-    if (!bookmarksArray.length) elements.exportBookmark['0'].innerHTML = ' No Bookmarks Avaliable ';
-    else {
-      elements.exportBookmark['0'].innerHTML = '';
-
-      bookmarksArray.forEach((bookmarkId) => {
-        const url = `http://api.creativecommons.engineering/image/${bookmarkId}`;
-
-        fetch(url)
-          .then(data => data.json())
-          .then((res) => {
-            elements.exportBookmark['0'].innerHTML += `
-              <div class="export-specific-bookmark">
-                <img src = ${res.url}/>
-                <br />
-                <input type="checkbox" class="export-specific-bookmark-choice vocab choice-field magenta-colored small-sized" id=${bookmarkId} />
-                <div class="export-specific-bookmark__title">${res.title}</div>
-                <br />
-              </div>`;
-          });
-      });
-    }
-  });
-});
-
-elements.exportSpecificBookmarksNow.addEventListener('click', () => {
-  const options = Object.entries(elements.exportSpecificBookmarksChoice);
-  const bookmarksArray = [];
-
-  options.forEach((choice) => {
-    if (choice['1'].checked === true) bookmarksArray.push(choice['1'].id);
-  });
-
-  const bookmarksString = JSON.stringify(bookmarksArray);
-  download(bookmarksString, 'bookmarks.json', 'text/plain');
-});
-
 elements.importBookmarksButton.addEventListener('click', () => {
   const file = elements.importBookmarksInput.files[0];
   if (!file) {
