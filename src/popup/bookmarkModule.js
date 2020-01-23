@@ -8,6 +8,8 @@ import {
   showNotification, removeNode, restoreInitialContent, removeChildNodes,
 } from '../utils';
 
+const download = require('downloadjs');
+
 const Masonry = require('masonry-layout');
 
 const bookmarkDOM = {};
@@ -302,9 +304,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
 elements.selectAllButton.addEventListener('click', () => {
   const bookmarkDOMArray = Object.values(bookmarkDOM);
-  console.log(bookmarkDOMArray);
 
   bookmarkDOMArray.forEach((btn) => {
     if (!btn.checked) btn.click();
   });
+});
+
+elements.exportBookmark.addEventListener('click', () => {
+  const exportBookmark = [];
+
+  Object.values(bookmarkDOM).forEach((btn) => {
+    if (btn.checked) exportBookmark.push(btn.id);
+  });
+
+  const bookmarksString = JSON.stringify(exportBookmark);
+  download(bookmarksString, 'bookmarks.json', 'text/plain');
 });
