@@ -300,23 +300,23 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
-});
 
-elements.selectAllButton.addEventListener('click', () => {
-  const bookmarkDOMArray = Object.values(bookmarkDOM);
+  elements.selectAllButton.addEventListener('click', () => {
+    const bookmarkDOMArray = Object.values(bookmarkDOM);
 
-  bookmarkDOMArray.forEach((btn) => {
-    if (!btn.checked) btn.click();
-  });
-});
-
-elements.exportBookmark.addEventListener('click', () => {
-  const exportBookmark = [];
-
-  Object.values(bookmarkDOM).forEach((btn) => {
-    if (btn.checked) exportBookmark.push(btn.id);
+    bookmarkDOMArray.forEach((btn) => {
+      if (!btn.checked) btn.click();
+    });
   });
 
-  const bookmarksString = JSON.stringify(exportBookmark);
-  download(bookmarksString, 'bookmarks.json', 'text/plain');
+  elements.exportBookmark.addEventListener('click', () => {
+    const exportBookmark = [];
+
+    Object.values(bookmarkDOM).forEach((btn) => {
+      if (btn.checked) exportBookmark.push(btn.id);
+    });
+
+    const bookmarksString = JSON.stringify(exportBookmark);
+    download(bookmarksString, 'bookmarks.json', 'text/plain');
+  });
 });
