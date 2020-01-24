@@ -26,7 +26,7 @@
   backface-visibility: hidden;
   position: absolute;
   bottom: 30px;
-  left: 5px;
+  right: 5px;
   color: #fff;
   font-size: 0.7937rem;
   font-weight: 700;
@@ -37,4 +37,8 @@
   overflow: hidden;
   text-overflow: ellipsis;
   vertical-align: middle; 
+}
+
+.select-btn {
+  float: right;
 }

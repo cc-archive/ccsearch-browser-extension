@@ -12,7 +12,11 @@ const download = require('downloadjs');
 
 const Masonry = require('masonry-layout');
 
+// Store Select Button for All bookmarks, with their properties
 const bookmarkDOM = {};
+
+// Store number of selected bookmarks for export
+let selectedBookmarks = 0;
 
 export default function bookmarkImage(e) {
   chrome.storage.sync.get({ bookmarks: [] }, (items) => {
@@ -229,9 +233,29 @@ function loadImages() {
           bookmarkDOM[btn.getAttribute('id')] = btn;
 
           btn.addEventListener('click', () => {
-            if (btn.isChecked) btn.parentElement.removeAttribute('style');
-            else btn.parentElement.setAttribute('style', 'opacity : 1');
+            if (btn.isChecked) {
+              btn.parentElement.removeAttribute('style');
+              selectedBookmarks -= 1;
+            } else {
+              btn.parentElement.setAttribute('style', 'opacity : 1');
+              selectedBookmarks += 1;
+            }
             btn.isChecked = !btn.isChecked;
+
+            console.log(selectedBookmarks);
+            if (selectedBookmarks === elements.selectButtons.length) {
+              elements.selectAllButton.innerHTML = `
+                <div class = "content">
+                  Deselect All
+                </div>
+              `;
+            } else {
+              elements.selectAllButton.innerHTML = `
+                <div class = "content">
+                  Select All
+                </div>
+              `;
+            }
           });
         });
     });
@@ -304,9 +328,16 @@ document.addEventListener('DOMContentLoaded', () => {
   elements.selectAllButton.addEventListener('click', () => {
     const bookmarkDOMArray = Object.values(bookmarkDOM);
 
-    bookmarkDOMArray.forEach((btn) => {
-      if (!btn.checked) btn.click();
-    });
+    if (selectedBookmarks === elements.selectButtons.length) {
+      bookmarkDOMArray.forEach((btn) => {
+        btn.click();
+      });
+      selectedBookmarks = 0;
+    } else {
+      bookmarkDOMArray.forEach((btn) => {
+        if (!btn.checked) btn.click();
+      });
+    }
   });
 
   elements.exportBookmark.addEventListener('click', () => {
