@@ -1,22 +1,21 @@
 export function getSpinnerDiv(context) {
-  let divWrapper = document.createElement('div');
+  const divWrapper = document.createElement('div');
   divWrapper.classList.add('spinner');
 
   if (context === 'for-bottom') {
     divWrapper.classList.add('spinner-for-bottom');
-  }
-  else {
+  } else {
     // if context != 'for-bottom' (==original)
     divWrapper.classList.add('spinner-original');
   }
 
-  for (let i = 1; i <= 3; i++) {
-    let divBounce = document.createElement('div');
+  for (let i = 1; i <= 3; i += 1) {
+    const divBounce = document.createElement('div');
     divBounce.classList.add(`bounce${i}`);
     divWrapper.appendChild(divBounce);
   }
 
-  return divWrapper
+  return divWrapper;
 }
 
 
