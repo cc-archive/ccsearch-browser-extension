@@ -25,8 +25,8 @@
 .bookmark-select {
   backface-visibility: hidden;
   position: absolute;
-  bottom: 30px;
-  right: 5px;
+  top: 7px;
+  right: 15px;
   color: #fff;
   font-size: 0.7937rem;
   font-weight: 700;
@@ -39,6 +39,6 @@
   vertical-align: middle; 
 }
 
-.select-btn {
+.select-checkbox {
   float: right;
 }

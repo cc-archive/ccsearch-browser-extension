@@ -40,8 +40,9 @@ export const elements = {
   buttonBackToTop: document.getElementsByClassName('button-backToTop')[0],
   exportBookmark: document.getElementsByClassName('export-bookmarks-button')[0],
   getBookmarks: document.getElementsByClassName('grid-item'),
-  selectButtons: document.getElementsByClassName('select-btn'),
-  selectAllButton: document.getElementsByClassName('select-all-button')[0],
+  selectCheckboxes: document.getElementsByClassName('select-checkbox'),
+  selectAllCheckbox: document.getElementsByClassName('select-all-checkbox')[0],
+  selectAllCheckboxContent: document.getElementsByClassName('select-all-checkbox-content')[0],
 };
 
 export const attributionTabLink = elements.popupTabLinks[0];

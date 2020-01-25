@@ -130,7 +130,8 @@
     .bookmark-icon {
       padding: 0;
       margin: 0;
-      float: right;
+      right: 30px;
+      position: absolute;
       color: $color-white;
       cursor: pointer;
     }

@@ -141,13 +141,14 @@ function loadImages() {
           spanTitleElement.appendChild(foreignLandingLinkElement);
 
           // make select button
-          const selectButtonElement = document.createElement('span');
-          selectButtonElement.setAttribute('class', 'bookmark-select');
-          const selectButton = document.createElement('input');
-          selectButton.setAttribute('type', 'checkbox');
-          selectButton.setAttribute('id', id);
-          selectButton.setAttribute('class', 'select-btn vocab choice-field magenta-colored small-sized');
-          selectButtonElement.appendChild(selectButton);
+          const selectCheckboxElement = document.createElement('span');
+          selectCheckboxElement.setAttribute('class', 'bookmark-select');
+          const selectCheckbox = document.createElement('input');
+          selectCheckbox.setAttribute('type', 'checkbox');
+          selectCheckbox.setAttribute('id', id);
+          selectCheckbox.setAttribute('title', 'Select to Export');
+          selectCheckbox.setAttribute('class', 'select-checkbox vocab choice-field magenta-colored small-sized');
+          selectCheckboxElement.appendChild(selectCheckbox);
 
           // make a span to hold the license icons
           const spanLicenseElement = document.createElement('span');
@@ -211,7 +212,7 @@ function loadImages() {
           });
 
           divElement.appendChild(imgElement);
-          divElement.appendChild(selectButtonElement);
+          divElement.appendChild(selectCheckboxElement);
           divElement.appendChild(spanTitleElement);
           divElement.appendChild(spanLicenseElement);
 
@@ -227,34 +228,28 @@ function loadImages() {
           appendToGrid(msnry, fragment, gridItemDiv, elements.gridBookmarks);
         })
         .then(() => {
-          const btn = elements.selectButtons[elements.selectButtons.length - 1];
+          // Add onClick event to all the checkboxes
 
-          btn.isChecked = false;
-          bookmarkDOM[btn.getAttribute('id')] = btn;
+          // Get checkbox data from DOM
+          const checkbox = elements.selectCheckboxes[elements.selectCheckboxes.length - 1];
 
-          btn.addEventListener('click', () => {
-            if (btn.isChecked) {
-              btn.parentElement.removeAttribute('style');
+          checkbox.isChecked = false;
+          bookmarkDOM[checkbox.getAttribute('id')] = checkbox;
+
+          checkbox.addEventListener('click', () => {
+            if (checkbox.isChecked) {
+              checkbox.parentElement.removeAttribute('style');
               selectedBookmarks -= 1;
             } else {
-              btn.parentElement.setAttribute('style', 'opacity : 1');
+              checkbox.parentElement.setAttribute('style', 'opacity : 1');
               selectedBookmarks += 1;
             }
-            btn.isChecked = !btn.isChecked;
+            checkbox.isChecked = !checkbox.isChecked;
 
-            console.log(selectedBookmarks);
-            if (selectedBookmarks === elements.selectButtons.length) {
-              elements.selectAllButton.innerHTML = `
-                <div class = "content">
-                  Deselect All
-                </div>
-              `;
+            if (selectedBookmarks === elements.selectCheckboxes.length) {
+              elements.selectAllCheckboxContent.textContent = 'Deselect All';
             } else {
-              elements.selectAllButton.innerHTML = `
-                <div class = "content">
-                  Select All
-                </div>
-              `;
+              elements.selectAllCheckboxContent.textContent = 'Select All';
             }
           });
         });
@@ -325,17 +320,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  elements.selectAllButton.addEventListener('click', () => {
+  elements.selectAllCheckbox.addEventListener('click', () => {
+    // Stores data of Checkboxes for exporting
     const bookmarkDOMArray = Object.values(bookmarkDOM);
 
-    if (selectedBookmarks === elements.selectButtons.length) {
-      bookmarkDOMArray.forEach((btn) => {
-        btn.click();
+    if (selectedBookmarks === elements.selectCheckboxes.length) {
+      bookmarkDOMArray.forEach((checkbox) => {
+        checkbox.click();
       });
       selectedBookmarks = 0;
     } else {
-      bookmarkDOMArray.forEach((btn) => {
-        if (!btn.checked) btn.click();
+      bookmarkDOMArray.forEach((checkbox) => {
+        if (!checkbox.checked) checkbox.click();
       });
     }
   });
@@ -343,8 +339,8 @@ document.addEventListener('DOMContentLoaded', () => {
   elements.exportBookmark.addEventListener('click', () => {
     const exportBookmark = [];
 
-    Object.values(bookmarkDOM).forEach((btn) => {
-      if (btn.checked) exportBookmark.push(btn.id);
+    Object.values(bookmarkDOM).forEach((checkbox) => {
+      if (checkbox.checked) exportBookmark.push(checkbox.id);
     });
 
     if (exportBookmark.length) {
