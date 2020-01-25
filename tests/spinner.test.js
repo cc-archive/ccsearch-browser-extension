@@ -1,19 +1,22 @@
-import { getSpinnerMarkup } from '../src/popup/spinner';
+import { getSpinnerDiv } from '../src/popup/spinner';
 
 test('Checking spinner markup', () => {
-  const spinnerMarkupForBottom = getSpinnerMarkup('for-bottom');
+  const spinnerMarkupForBottom = getSpinnerDiv('for-bottom');
 
-  expect(spinnerMarkupForBottom).toBe(`<div class="spinner spinner-for-bottom">
-    <div class="bounce1"></div>
-    <div class="bounce2"></div>
-    <div class="bounce3"></div>
-  </div>`);
+  expect(spinnerMarkupForBottom.classList).toContain('spinner')
+  expect(spinnerMarkupForBottom.classList).toContain('spinner-for-bottom')
+  expect(spinnerMarkupForBottom.childElementCount).toBe(3)
+  let spinnerForBottomChildNodes = spinnerMarkupForBottom.childNodes
+  for (let i = 0; i < 3; i++) {
+    expect(spinnerForBottomChildNodes[i].classList).toContain(`bounce${i + 1}`);
+  }
 
-  const spinnerMarkupOriginal = getSpinnerMarkup('original');
-
-  expect(spinnerMarkupOriginal).toBe(`<div class="spinner spinner-original">
-    <div class="bounce1"></div>
-    <div class="bounce2"></div>
-    <div class="bounce3"></div>
-  </div>`);
+  const spinnerMarkupOriginal = getSpinnerDiv('original');
+  expect(spinnerMarkupOriginal.classList).toContain('spinner')
+  expect(spinnerMarkupOriginal.classList).toContain('spinner-original')
+  expect(spinnerMarkupOriginal.childElementCount).toBe(3)
+  let spinnerOriginalChildNodes = spinnerMarkupOriginal.childNodes
+  for (let i = 0; i < 3; i++) {
+    expect(spinnerOriginalChildNodes[i].classList).toContain(`bounce${i + 1}`);
+  }
 });
