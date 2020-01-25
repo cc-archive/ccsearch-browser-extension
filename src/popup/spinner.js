@@ -1,22 +1,27 @@
-export function getSpinnerMarkup(context) {
+export function getSpinnerDiv(context) {
+  let divWrapper = document.createElement('div');
+  divWrapper.classList.add('spinner');
+
   if (context === 'for-bottom') {
-    return `<div class="spinner spinner-for-bottom">
-    <div class="bounce1"></div>
-    <div class="bounce2"></div>
-    <div class="bounce3"></div>
-  </div>`;
+    divWrapper.classList.add('spinner-for-bottom');
   }
-  // if context != 'for-bottom' (==original)
-  return `<div class="spinner spinner-original">
-    <div class="bounce1"></div>
-    <div class="bounce2"></div>
-    <div class="bounce3"></div>
-  </div>`;
+  else {
+    // if context != 'for-bottom' (==original)
+    divWrapper.classList.add('spinner-original');
+  }
+
+  for (let i = 1; i <= 3; i++) {
+    let divBounce = document.createElement('div');
+    divBounce.classList.add(`bounce${i}`);
+    divWrapper.appendChild(divBounce);
+  }
+
+  return divWrapper
 }
 
 
 export function addSpinner(spinnerPlaceholder, context) {
-  spinnerPlaceholder.insertAdjacentHTML('afterbegin', getSpinnerMarkup(context));
+  spinnerPlaceholder.appendChild(getSpinnerDiv(context));
 }
 
 export function removeSpinner(spinnerPlaceholder) {
