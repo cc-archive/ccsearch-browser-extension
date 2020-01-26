@@ -1,6 +1,6 @@
 import { elements } from './base';
 import {
-  unicodeToString, providerLogos, addLoadMoreButton, removeLoadMoreButton,
+  unicodeToString, providerLogos, addLoadMoreButton,
 } from './helper';
 import { activatePopup } from './infoPopupModule';
 import { removeSpinner } from './spinner';
