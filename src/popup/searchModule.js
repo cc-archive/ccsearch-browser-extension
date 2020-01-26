@@ -4,7 +4,9 @@ import { activatePopup } from './infoPopupModule';
 import { removeSpinner } from './spinner';
 // eslint-disable-next-line import/no-cycle
 import bookmarkImage from './bookmarkModule';
-import { showNotification, removeChildNodes, restoreInitialContent } from '../utils';
+import {
+  showNotification, removeChildNodes, restoreInitialContent,
+} from '../utils';
 
 const Masonry = require('masonry-layout');
 
@@ -62,6 +64,7 @@ function showNoResultFoundMessage() {
     paragraph.textContent = 'No Images Found. Please enter a different query.';
 
     removeChildNodes(sectionContentPrimary.querySelector('.row'));
+    removeChildNodes(sectionContentPrimary.querySelector('.load-more-button-wrapper'));
     sectionContentPrimary.querySelector('.row').appendChild(paragraph);
   }
 }
