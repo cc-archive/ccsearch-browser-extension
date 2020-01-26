@@ -233,10 +233,13 @@ function loadImages() {
           // Get checkbox data from DOM
           const checkbox = elements.selectCheckboxes[elements.selectCheckboxes.length - 1];
 
+          // Initiate isChecked property of checkbox and update bookmarkDOM
           checkbox.isChecked = false;
           bookmarkDOM[checkbox.getAttribute('id')] = checkbox;
 
+          // Add click function to keep checkbox data in sync with DOM
           checkbox.addEventListener('click', () => {
+            // Check wheather the checkbox is already checked or not
             if (checkbox.isChecked) {
               checkbox.parentElement.removeAttribute('style');
               selectedBookmarks -= 1;
@@ -244,12 +247,13 @@ function loadImages() {
               checkbox.parentElement.setAttribute('style', 'opacity : 1');
               selectedBookmarks += 1;
             }
-            checkbox.isChecked = !checkbox.isChecked;
+            checkbox.isChecked = !checkbox.isChecked; // Update isChecked Property in checkbox
 
+            // Update SelectAll Button
             if (selectedBookmarks === elements.selectCheckboxes.length) {
-              elements.selectAllCheckboxContent.textContent = 'Deselect All';
+              elements.buttonSelectAllCheckbox[0].children[0].innerText = 'Deselect All';
             } else {
-              elements.selectAllCheckboxContent.textContent = 'Select All';
+              elements.buttonSelectAllCheckbox[0].children[0].innerText = 'Select All';
             }
           });
         });
@@ -320,7 +324,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  elements.selectAllCheckbox.addEventListener('click', () => {
+  elements.buttonSelectAllCheckbox[0].addEventListener('click', () => {
     // Stores data of Checkboxes for exporting
     const bookmarkDOMArray = Object.values(bookmarkDOM);
 

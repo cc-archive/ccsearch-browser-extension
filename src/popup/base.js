@@ -41,8 +41,7 @@ export const elements = {
   exportBookmark: document.getElementsByClassName('export-bookmarks-button')[0],
   getBookmarks: document.getElementsByClassName('grid-item'),
   selectCheckboxes: document.getElementsByClassName('select-checkbox'),
-  selectAllCheckbox: document.getElementsByClassName('select-all-checkbox')[0],
-  selectAllCheckboxContent: document.getElementsByClassName('select-all-checkbox-content')[0],
+  buttonSelectAllCheckbox: document.getElementsByClassName('select-all-checkbox-button'),
 };
 
 export const attributionTabLink = elements.popupTabLinks[0];
