@@ -1,5 +1,7 @@
 import { elements } from './base';
-import { unicodeToString, providerLogos, addLoadMoreButton } from './helper';
+import {
+  unicodeToString, providerLogos, addLoadMoreButton, removeLoadMoreButton,
+} from './helper';
 import { activatePopup } from './infoPopupModule';
 import { removeSpinner } from './spinner';
 // eslint-disable-next-line import/no-cycle
@@ -9,6 +11,9 @@ import {
 } from '../utils';
 
 const Masonry = require('masonry-layout');
+
+let removed = false;
+// let isLoadMoreRemoved = false;
 
 export function checkInternetConnection() {
   if (!navigator.onLine) {
@@ -64,7 +69,8 @@ function showNoResultFoundMessage() {
     paragraph.textContent = 'No Images Found. Please enter a different query.';
 
     removeChildNodes(sectionContentPrimary.querySelector('.row'));
-    removeChildNodes(sectionContentPrimary.querySelector('.load-more-button-wrapper'));
+    sectionContentPrimary.querySelector('.load-more-button-wrapper').classList.add('removeLoadMore');
+    removed = true;
     sectionContentPrimary.querySelector('.row').appendChild(paragraph);
   }
 }
@@ -82,6 +88,9 @@ export function checkResultLength(resultArray) {
     removeLoaderAnimation();
     // eslint-disable-next-line no-use-before-define
     msnry.layout();
+  } else if (removed === true) {
+    const sectionContentPrimary = document.querySelector('.section-content--primary');
+    sectionContentPrimary.querySelector('.load-more-button-wrapper').classList.remove('removeLoadMore');
   }
 }
 
