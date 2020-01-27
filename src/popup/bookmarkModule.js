@@ -146,7 +146,7 @@ function loadImages() {
           const selectCheckbox = document.createElement('input');
           selectCheckbox.setAttribute('type', 'checkbox');
           selectCheckbox.setAttribute('id', id);
-          selectCheckbox.setAttribute('title', 'Select to Export');
+          selectCheckbox.setAttribute('title', 'Select Image');
           selectCheckbox.setAttribute('class', 'select-checkbox vocab choice-field magenta-colored small-sized');
           selectCheckboxElement.appendChild(selectCheckbox);
 
