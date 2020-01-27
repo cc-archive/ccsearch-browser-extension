@@ -1,18 +1,13 @@
 import { elements } from './base';
-import {
-  unicodeToString, providerLogos, addLoadMoreButton,
-} from './helper';
+import { unicodeToString, providerLogos, addLoadMoreButton } from './helper';
 import { activatePopup } from './infoPopupModule';
 import { removeSpinner } from './spinner';
 // eslint-disable-next-line import/no-cycle
 import bookmarkImage from './bookmarkModule';
-import {
-  showNotification, removeChildNodes, restoreInitialContent,
-} from '../utils';
+import { showNotification, removeChildNodes, restoreInitialContent } from '../utils';
 
 const Masonry = require('masonry-layout');
 
-let removed = false;
 // let isLoadMoreRemoved = false;
 
 export function checkInternetConnection() {
@@ -69,8 +64,10 @@ function showNoResultFoundMessage() {
     paragraph.textContent = 'No Images Found. Please enter a different query.';
 
     removeChildNodes(sectionContentPrimary.querySelector('.row'));
-    sectionContentPrimary.querySelector('.load-more-button-wrapper').classList.add('removeLoadMore');
-    removed = true;
+    // This little code fixes the Issue #100, I am adding a new class
+    // "removeLoadMore" in "_popup.scss" file which removed the "Load More"
+    // button when there aren't any images to show
+    elements.loadMoreButtonWrapper.classList.add('removeLoadMore');
     sectionContentPrimary.querySelector('.row').appendChild(paragraph);
   }
 }
@@ -88,9 +85,10 @@ export function checkResultLength(resultArray) {
     removeLoaderAnimation();
     // eslint-disable-next-line no-use-before-define
     msnry.layout();
-  } else if (removed === true) {
-    const sectionContentPrimary = document.querySelector('.section-content--primary');
-    sectionContentPrimary.querySelector('.load-more-button-wrapper').classList.remove('removeLoadMore');
+  } else {
+    // If there are indeed more images to show, remove the "removeLoadMore" class from "Load More"
+    // button which will make the "Load More" button appear once again.
+    elements.loadMoreButtonWrapper.classList.remove('removeLoadMore');
   }
 }
 
