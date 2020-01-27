@@ -8,7 +8,15 @@ import {
   showNotification, removeNode, restoreInitialContent, removeChildNodes,
 } from '../utils';
 
+const download = require('downloadjs');
+
 const Masonry = require('masonry-layout');
+
+// Store Select Button for All bookmarks, with their properties
+const bookmarkDOM = {};
+
+// Store number of selected bookmarks for export
+let selectedBookmarks = 0;
 
 export default function bookmarkImage(e) {
   chrome.storage.sync.get({ bookmarks: [] }, (items) => {
@@ -132,6 +140,16 @@ function loadImages() {
 
           spanTitleElement.appendChild(foreignLandingLinkElement);
 
+          // make select button
+          const selectCheckboxElement = document.createElement('span');
+          selectCheckboxElement.setAttribute('class', 'bookmark-select');
+          const selectCheckbox = document.createElement('input');
+          selectCheckbox.setAttribute('type', 'checkbox');
+          selectCheckbox.setAttribute('id', id);
+          selectCheckbox.setAttribute('title', 'Select Image');
+          selectCheckbox.setAttribute('class', 'select-checkbox vocab choice-field magenta-colored small-sized');
+          selectCheckboxElement.appendChild(selectCheckbox);
+
           // make a span to hold the license icons
           const spanLicenseElement = document.createElement('span');
           spanLicenseElement.setAttribute('class', 'image-license');
@@ -194,6 +212,7 @@ function loadImages() {
           });
 
           divElement.appendChild(imgElement);
+          divElement.appendChild(selectCheckboxElement);
           divElement.appendChild(spanTitleElement);
           divElement.appendChild(spanLicenseElement);
 
@@ -207,6 +226,36 @@ function loadImages() {
 
           removeSpinner(elements.spinnerPlaceholderBookmarks);
           appendToGrid(msnry, fragment, gridItemDiv, elements.gridBookmarks);
+        })
+        .then(() => {
+          // Add onClick event to all the checkboxes
+
+          // Get checkbox data from DOM
+          const checkbox = elements.selectCheckboxes[elements.selectCheckboxes.length - 1];
+
+          // Initiate isChecked property of checkbox and update bookmarkDOM
+          checkbox.isChecked = false;
+          bookmarkDOM[checkbox.getAttribute('id')] = checkbox;
+
+          // Add click function to keep checkbox data in sync with DOM
+          checkbox.addEventListener('click', () => {
+            // Check wheather the checkbox is already checked or not
+            if (checkbox.isChecked) {
+              checkbox.parentElement.removeAttribute('style');
+              selectedBookmarks -= 1;
+            } else {
+              checkbox.parentElement.setAttribute('style', 'opacity : 1');
+              selectedBookmarks += 1;
+            }
+            checkbox.isChecked = !checkbox.isChecked; // Update isChecked Property in checkbox
+
+            // Update SelectAll Button
+            if (selectedBookmarks === elements.selectCheckboxes.length) {
+              elements.buttonSelectAllCheckbox[0].children[0].innerText = 'Deselect All';
+            } else {
+              elements.buttonSelectAllCheckbox[0].children[0].innerText = 'Select All';
+            }
+          });
         });
     });
   });
@@ -274,5 +323,36 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
     });
+  });
+
+  elements.buttonSelectAllCheckbox[0].addEventListener('click', () => {
+    // Stores data of Checkboxes for exporting
+    const bookmarkDOMArray = Object.values(bookmarkDOM);
+
+    if (selectedBookmarks === elements.selectCheckboxes.length) {
+      bookmarkDOMArray.forEach((checkbox) => {
+        checkbox.click();
+      });
+      selectedBookmarks = 0;
+    } else {
+      bookmarkDOMArray.forEach((checkbox) => {
+        if (!checkbox.checked) checkbox.click();
+      });
+    }
+  });
+
+  elements.exportBookmark.addEventListener('click', () => {
+    const exportBookmark = [];
+
+    Object.values(bookmarkDOM).forEach((checkbox) => {
+      if (checkbox.checked) exportBookmark.push(checkbox.id);
+    });
+
+    if (exportBookmark.length) {
+      const bookmarksString = JSON.stringify(exportBookmark);
+      download(bookmarksString, 'bookmarks.json', 'text/plain');
+    } else {
+      showNotification('No bookmarks selected', 'negative', 'snackbar-bookmarks');
+    }
   });
 });

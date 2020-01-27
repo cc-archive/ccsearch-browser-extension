@@ -57,6 +57,10 @@
       opacity: 1;
     }
 
+    .bookmark-select {
+      opacity: 1;
+    }
+
     .image-license {
       opacity: 1;
 
@@ -127,6 +131,8 @@
       padding: 0;
       margin: 0;
       float: right;
+      // right: 5px;
+      // position: absolute;
       color: $color-white;
       cursor: pointer;
     }
