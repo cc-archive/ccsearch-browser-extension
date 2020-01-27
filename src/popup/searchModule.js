@@ -8,8 +8,6 @@ import { showNotification, removeChildNodes, restoreInitialContent } from '../ut
 
 const Masonry = require('masonry-layout');
 
-// let isLoadMoreRemoved = false;
-
 export function checkInternetConnection() {
   if (!navigator.onLine) {
     removeSpinner(elements.spinnerPlaceholderPopup);
@@ -64,7 +62,7 @@ function showNoResultFoundMessage() {
     paragraph.textContent = 'No Images Found. Please enter a different query.';
 
     removeChildNodes(sectionContentPrimary.querySelector('.row'));
-    // This little code fixes the Issue #100, I am adding a new class
+    // This little code fixes the Issue #100, It add's a new class
     // "removeLoadMore" in "_popup.scss" file which removed the "Load More"
     // button when there aren't any images to show
     elements.loadMoreButtonWrapper.classList.add('removeLoadMore');
