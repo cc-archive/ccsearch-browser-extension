@@ -62,6 +62,10 @@ function showNoResultFoundMessage() {
     paragraph.textContent = 'No Images Found. Please enter a different query.';
 
     removeChildNodes(sectionContentPrimary.querySelector('.row'));
+    // This little code fixes the Issue #100, It add's a new class
+    // "removeLoadMore" in "_popup.scss" file which removed the "Load More"
+    // button when there aren't any images to show
+    elements.loadMoreButtonWrapper.classList.add('removeLoadMore');
     sectionContentPrimary.querySelector('.row').appendChild(paragraph);
   }
 }
@@ -79,6 +83,10 @@ export function checkResultLength(resultArray) {
     removeLoaderAnimation();
     // eslint-disable-next-line no-use-before-define
     msnry.layout();
+  } else {
+    // If there are indeed more images to show, remove the "removeLoadMore" class from "Load More"
+    // button which will make the "Load More" button appear once again.
+    elements.loadMoreButtonWrapper.classList.remove('removeLoadMore');
   }
 }
 
