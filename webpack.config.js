@@ -18,6 +18,7 @@ if (!process.env.TARGET) {
 
 module.exports = {
   context: path.resolve(__dirname, 'src'),
+  devtool: 'cheap-module-source-map',
   entry: {
     './popup/popup': './popup/popup.js',
     './options/options': './options/options.js',
