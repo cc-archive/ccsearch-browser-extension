@@ -237,6 +237,9 @@ function loadImages() {
           checkbox.isChecked = false;
           bookmarkDOM[checkbox.getAttribute('id')] = checkbox;
 
+          selectedBookmarks = 0;
+          elements.buttonSelectAllCheckbox[0].children[0].innerText = 'Select All';
+
           // Add click function to keep checkbox data in sync with DOM
           checkbox.addEventListener('click', () => {
             // Check wheather the checkbox is already checked or not
