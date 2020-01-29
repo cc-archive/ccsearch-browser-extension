@@ -306,18 +306,28 @@ async function loadStoredSearch() {
 loadStoredSearch();
 
 async function nextRequest(page) {
-  const url = getRequestUrl(
-    inputText,
-    userSelectedUseCaseList,
-    userSelectedLicensesList,
-    userSelectedProvidersList,
-    page,
-  );
+  let result = [];
 
-  // console.log(url);
-  const response = await fetch(url);
-  const json = await response.json();
-  const result = json.results;
+  if (localStorage.getItem(pageNo)) {
+    result = Object.values(JSON.parse(localStorage.getItem(pageNo)));
+  } else {
+    const url = getRequestUrl(
+      inputText,
+      userSelectedUseCaseList,
+      userSelectedLicensesList,
+      userSelectedProvidersList,
+      page,
+    );
+
+    // console.log(url);
+    const response = await fetch(url);
+    const json = await response.json();
+    result = json.results;
+
+    // Update Local Storage Data
+    storeSearch.page = { ...result };
+    localStorage.setItem(pageNo, JSON.stringify(storeSearch.page));
+  }
   // console.log(result);
   addThumbnailsToDOM(result);
   pageNo += 1;
