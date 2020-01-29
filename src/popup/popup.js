@@ -288,12 +288,11 @@ $('#choose-license').comboTree({
 });
 loadUserDefaults();
 
-async function loadStoredSearch() {
+function loadStoredSearch() {
   if (localStorage !== null) {
-    inputText = localStorage.getItem('title') ? localStorage.getItem('title') : '';
+    inputText = localStorage.getItem('title');
     elements.inputField.value = inputText;
 
-    storeSearch.pageNo = localStorage.getItem('pageNo');
     pageNo = 1;
     if (localStorage.getItem(pageNo)) {
       removeNode('primary__initial-info');
@@ -335,6 +334,8 @@ async function nextRequest(page) {
 
 // global varialbe to check the status if user is viewwing the bookmarks section
 window.isBookmarksActive = false;
+
+elements.homeIcon.addEventListener('click', loadStoredSearch);
 
 elements.loadMoreButton.addEventListener('click', () => {
   removeLoadMoreButton(elements.loadMoreButtonWrapper);
