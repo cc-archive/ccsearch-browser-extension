@@ -38,6 +38,9 @@ let userSelectedUseCaseList = [];
 // object to map Provider display names to valid query names.
 let providerAPIQueryStrings = {};
 
+// Search Storage
+const storeSearch = {};
+
 // eslint-disable-next-line no-undef
 const clipboard = new ClipboardJS('.btn-copy');
 
@@ -236,6 +239,7 @@ elements.searchIcon.addEventListener('click', () => {
   removeOldSearchResults();
   removeLoaderAnimation();
   applyFilters();
+  localStorage.clear();
 
   // enable spinner
   addSpinner(elements.spinnerPlaceholderGrid, 'original');
@@ -250,7 +254,7 @@ elements.searchIcon.addEventListener('click', () => {
   );
 
   // console.log(url);
-  pageNo += 1;
+  // pageNo += 1;
 
   fetch(url)
     .then(data => data.json())
@@ -261,6 +265,14 @@ elements.searchIcon.addEventListener('click', () => {
 
       checkResultLength(resultArray);
       addThumbnailsToDOM(resultArray);
+
+      // Store Data to local storage
+      storeSearch.title = inputText;
+      storeSearch.page = { ...resultArray };
+      localStorage.setItem('title', storeSearch.title);
+      localStorage.setItem(pageNo, JSON.stringify(storeSearch.page));
+
+      pageNo += 1;
     });
 });
 
@@ -275,6 +287,23 @@ $('#choose-license').comboTree({
   isMultiple: true,
 });
 loadUserDefaults();
+
+async function loadStoredSearch() {
+  if (localStorage !== null) {
+    inputText = localStorage.getItem('title') ? localStorage.getItem('title') : '';
+    elements.inputField.value = inputText;
+
+    storeSearch.pageNo = localStorage.getItem('pageNo');
+    pageNo = 1;
+    if (localStorage.getItem(pageNo)) {
+      removeNode('primary__initial-info');
+      const pageData = Object.values(JSON.parse(localStorage.getItem(pageNo)));
+      addThumbnailsToDOM(pageData);
+      pageNo = Number(pageNo) + 1;
+    }
+  }
+}
+loadStoredSearch();
 
 async function nextRequest(page) {
   const url = getRequestUrl(
