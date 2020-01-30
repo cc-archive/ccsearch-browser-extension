@@ -4,8 +4,6 @@ import {
 } from './helper';
 import { showNotification } from '../utils';
 
-const download = require('downloadjs');
-
 document.addEventListener('DOMContentLoaded', init);
 
 elements.saveFiltersButton.addEventListener('click', saveFiltersOptions);
@@ -30,14 +28,6 @@ Array.prototype.forEach.call(elements.licenseInputs, (element) => {
         licenseElement.checked = false;
       });
     }
-  });
-});
-
-elements.exportBookmarksButton.addEventListener('click', () => {
-  chrome.storage.sync.get({ bookmarks: [] }, (items) => {
-    const bookmarksArray = items.bookmarks;
-    const bookmarksString = JSON.stringify(bookmarksArray);
-    download(bookmarksString, 'bookmarks.json', 'text/plain');
   });
 });
 
