@@ -136,7 +136,6 @@ function getPopupCreatorChildNode(creatorUrl, creator) {
   // a anchor tag, instead we just create a paragraph tag
   if (creatorUrl === '#') {
     const paragraph = document.createElement('p');
-    paragraph.target = '__blank';
     paragraph.textContent = creator;
     return paragraph;
   }
