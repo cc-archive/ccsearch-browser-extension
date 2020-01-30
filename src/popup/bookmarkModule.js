@@ -29,7 +29,7 @@ export default function bookmarkImage(e) {
         showNotification('Image Bookmarked', 'positive', 'snackbar-bookmarks');
       });
     } else {
-      showNotification('Image already bookmarked!', 'negative', 'snackbar-bookmarks');
+      removeBookmark(e);
     }
   });
 }
