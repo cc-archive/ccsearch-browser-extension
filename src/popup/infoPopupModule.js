@@ -37,9 +37,9 @@ export function getHtmlAttribution(image) {
   const baseAssetsPath = 'https://search.creativecommons.org/static/img'; // path is not dynamic. Change if assets are moved.
   const imgLink = `<a href="${image.foreign_landing_url}">"${image.title}"</a>`;
   let creator = '';
-  if (image.creator && image.creator_url) {
+  if (image.creator && image.creator_url!=='#') {
     creator = `<span> by <a href="${image.creator_url}">${image.creator}</a></span>`;
-  } else if (image.creator && !image.creator_url) {
+  } else if (image.creator && image.creator_url==='#') {
     creator = `<span> by <span>${image.creator}</span></span>`;
   }
   const licenseLink = ` is licensed under <a href="${
