@@ -147,7 +147,7 @@ function loadImages() {
           selectCheckbox.setAttribute('type', 'checkbox');
           selectCheckbox.setAttribute('id', id);
           selectCheckbox.setAttribute('title', 'Select Image');
-          selectCheckbox.setAttribute('class', 'select-checkbox vocab choice-field magenta-colored small-sized');
+          selectCheckbox.setAttribute('class', 'select-checkbox vocab choice-field green-colored dark-shaded small-sized');
           selectCheckboxElement.appendChild(selectCheckbox);
 
           // make a span to hold the license icons
