@@ -4,8 +4,6 @@ import {
 } from './helper';
 import { showNotification } from '../utils';
 
-const download = require('downloadjs');
-
 document.addEventListener('DOMContentLoaded', init);
 
 elements.saveFiltersButton.addEventListener('click', saveFiltersOptions);
@@ -32,8 +30,6 @@ Array.prototype.forEach.call(elements.licenseInputs, (element) => {
     }
   });
 });
-
-
 
 elements.importBookmarksButton.addEventListener('click', () => {
   const file = elements.importBookmarksInput.files[0];
