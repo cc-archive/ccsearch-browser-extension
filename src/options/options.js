@@ -33,13 +33,7 @@ Array.prototype.forEach.call(elements.licenseInputs, (element) => {
   });
 });
 
-elements.exportBookmarksButton.addEventListener('click', () => {
-  chrome.storage.sync.get({ bookmarks: [] }, (items) => {
-    const bookmarksArray = items.bookmarks;
-    const bookmarksString = JSON.stringify(bookmarksArray);
-    download(bookmarksString, 'bookmarks.json', 'text/plain');
-  });
-});
+
 
 elements.importBookmarksButton.addEventListener('click', () => {
   const file = elements.importBookmarksInput.files[0];
