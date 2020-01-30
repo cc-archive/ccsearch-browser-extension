@@ -14,13 +14,13 @@ export function getRichTextAttribution(image, targetNode) {
   if (image.creator && image.creator_url) {
     creator = `<span> by <a href="${image.creator_url}" target="_blank">${
       image.creator
-    }</a></span>`;
+      }</a></span>`;
   } else if (image.creator && !image.creator_url) {
     creator = `<span> by <span>${image.creator}</span></span>`;
   }
   const licenseLink = ` is licensed under <a href="${
     image.license_url
-  }" target="_blank">CC ${image.license.toUpperCase()} ${image.license_version}</a>`;
+    }" target="_blank">CC ${image.license.toUpperCase()} ${image.license_version}</a>`;
 
   // return `${imgLink}${creator}${licenseLink}`;
   const final = `<div>${imgLink}${creator}${licenseLink}</div>`;
@@ -44,7 +44,7 @@ export function getHtmlAttribution(image) {
   }
   const licenseLink = ` is licensed under <a href="${
     image.license_url
-  }" style="margin-right: 5px;">CC ${image.license.toUpperCase()} ${image.license_version}</a>`;
+    }" style="margin-right: 5px;">CC ${image.license.toUpperCase()} ${image.license_version}</a>`;
 
   let licenseIcons = `<img style="height: inherit;margin-right: 3px;display: inline-block;" src="${baseAssetsPath}/cc_icon.svg" />`;
   if (image.license) {
@@ -58,7 +58,7 @@ export function getHtmlAttribution(image) {
 
   const licenseImgLink = `<a href="${
     image.license_url
-  }" target="_blank" rel="noopener noreferrer" style="display: inline-block;white-space: none;margin-top: 2px;margin-left: 3px;height: 22px !important;">${licenseIcons}</a>`;
+    }" target="_blank" rel="noopener noreferrer" style="display: inline-block;white-space: none;margin-top: 2px;margin-left: 3px;height: 22px !important;">${licenseIcons}</a>`;
   return `<p style="font-size: 0.9rem;font-style: italic;">${imgLink}${creator}${licenseLink}${licenseImgLink}</p>`;
 }
 
@@ -74,7 +74,7 @@ export function getPlainAttribution(image) {
   if (image.creator) {
     return `"${image.title}" by ${
       image.creator
-    } is licensed under CC ${image.license.toUpperCase()} ${image.license_version}\n\n
+      } is licensed under CC ${image.license.toUpperCase()} ${image.license_version}\n\n
 Image Link: ${image.foreign_landing_url}\n
 Creator Link: ${creatorUrl}\n
 License Link: ${image.license_url}\n\n
@@ -83,7 +83,7 @@ ${HtmlAttribution}`;
   }
   return `${image.title} is licensed under CC ${image.license.toUpperCase()} ${
     image.license_version
-  }\n\n
+    }\n\n
 Image Link: ${image.foreign_landing_url}\n
 Creator Link: ${creatorUrl}\n\n
 **********************HTML Attribution**********************
@@ -131,9 +131,7 @@ function getTumblrShareLink(sourceLink, imageLink) {
 }
 
 function getPopupCreatorChildNode(creatorUrl, creator) {
-  // This following code fixes the issue #106
-  // if the creatorURL doesn't exist, we do not create
-  // a anchor tag, instead we just create a paragraph tag
+  // return a paragraph tag if creatorURL not present
   if (creatorUrl === '#') {
     const paragraph = document.createElement('p');
     paragraph.textContent = creator;
