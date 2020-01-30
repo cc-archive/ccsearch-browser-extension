@@ -9,9 +9,36 @@
     position: relative;
 
     .delete-all-button {
-      position: absolute;
-      left: 10px;
-      top: 1.25rem;
+      // position: absolute;
+      // left: 10px;
+      // top: 1.25rem;
+      margin-left: 0.2rem;
+    }
+
+    .export-bookmarks-button {
+      margin-right: 0.2rem;
+      float: right;
     }
   }
+}
+
+.bookmark-select {
+  backface-visibility: hidden;
+  position: absolute;
+  top: 7px;
+  right: 40px;
+  color: #fff;
+  font-size: 0.7937rem;
+  font-weight: 700;
+  width: 90%;
+  opacity: 0;
+  z-index: 5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle; 
+}
+
+.select-checkbox {
+  float: right;
 }
