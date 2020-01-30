@@ -18,22 +18,6 @@ const bookmarkDOM = {};
 // Store number of selected bookmarks for export
 let selectedBookmarks = 0;
 
-export default function bookmarkImage(e) {
-  chrome.storage.sync.get({ bookmarks: [] }, (items) => {
-    const bookmarksArray = items.bookmarks;
-    if (bookmarksArray.indexOf(e.target.dataset.imageid) === -1) {
-      bookmarksArray.push(e.target.dataset.imageid);
-      chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
-        e.target.classList.remove('fa-bookmark-o');
-        e.target.classList.add('fa-bookmark');
-        showNotification('Image Bookmarked', 'positive', 'snackbar-bookmarks');
-      });
-    } else {
-      removeBookmark(e);
-    }
-  });
-}
-
 function removeBookmark(e) {
   const imageId = e.target.dataset.imageid;
   chrome.storage.sync.get({ bookmarks: [] }, (items) => {
@@ -58,6 +42,22 @@ function removeBookmark(e) {
         restoreInitialContent('bookmarks');
       }
     });
+  });
+}
+
+export default function bookmarkImage(e) {
+  chrome.storage.sync.get({ bookmarks: [] }, (items) => {
+    const bookmarksArray = items.bookmarks;
+    if (bookmarksArray.indexOf(e.target.dataset.imageid) === -1) {
+      bookmarksArray.push(e.target.dataset.imageid);
+      chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
+        e.target.classList.remove('fa-bookmark-o');
+        e.target.classList.add('fa-bookmark');
+        showNotification('Image Bookmarked', 'positive', 'snackbar-bookmarks');
+      });
+    } else {
+      removeBookmark(e);
+    }
   });
 }
 
