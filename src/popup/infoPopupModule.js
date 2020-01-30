@@ -11,7 +11,7 @@ export function getRichTextAttribution(image, targetNode) {
   }
   const imgLink = `<a href="${image.foreign_landing_url}" target="_blank">"${image.title}"</a>`;
   let creator = '';
-  if (image.creator && image.creator_url) {
+  if (image.creator && image.creator_url !== '#') {
     creator = `<span> by <a href="${image.creator_url}" target="_blank">${
       image.creator
     }</a></span>`;
