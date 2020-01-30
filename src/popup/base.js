@@ -40,7 +40,7 @@ export const elements = {
   bookmarksSection: document.querySelector('.section-bookmarks'),
   deleteAllBookmarksButton: document.querySelector('.delete-all-button'),
   buttonBackToTop: document.getElementsByClassName('button-backToTop')[0],
-  exportBookmark: document.getElementsByClassName('export-bookmarks-button')[0],
+  exportBookmarkskButton: document.getElementsByClassName('export-bookmarks-button')[0],
   getBookmarks: document.getElementsByClassName('grid-item'),
   selectCheckboxes: document.getElementsByClassName('select-checkbox'),
   buttonSelectAllCheckbox: document.getElementsByClassName('select-all-checkbox-button'),

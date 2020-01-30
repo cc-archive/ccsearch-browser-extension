@@ -131,9 +131,7 @@ function getTumblrShareLink(sourceLink, imageLink) {
 }
 
 function getPopupCreatorChildNode(creatorUrl, creator) {
-  // This following code fixes the issue #106
-  // if the creatorURL doesn't exist, we do not create
-  // a anchor tag, instead we just create a paragraph tag
+  // return a paragraph tag if creatorURL not present
   if (creatorUrl === '#') {
     const paragraph = document.createElement('p');
     paragraph.textContent = creator;
