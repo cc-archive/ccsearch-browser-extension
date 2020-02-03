@@ -7,7 +7,7 @@
 
 1. Run: `npm install`.
 
-2. Run: `npm run dev`. This would compile SASS to CSS and bundle JS. The compiled version will be in dist folder.
+2. Run: `npm run build`. This would compile SASS to CSS and bundle JS. The compiled version will be in dist folder.
 
 3. Load the extension to the browser:
    - **Mozilla Firefox**
