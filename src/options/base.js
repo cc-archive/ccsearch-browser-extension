@@ -7,7 +7,7 @@ const elements = {
   providerWrapper: document.querySelector('.provider'),
   saveFiltersButton: document.getElementById('save-filters'),
   accordionItems: document.querySelectorAll('.accordion .accordion-link'),
-  enableSearchStorage: document.getElementById('enable-search-storage'),
+  enableSearchStorageCheckbox: document.getElementById('enable-search-storage-checkbox'),
 };
 
 export default elements;

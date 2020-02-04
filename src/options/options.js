@@ -38,19 +38,19 @@ function initEnableSearchStorageButton() {
     if (chrome.runtime.error) enableSearchStorageOption = true;
     else enableSearchStorageOption = res.enableSearchStorage;
 
-    elements.enableSearchStorage.checked = enableSearchStorageOption;
+    elements.enableSearchStorageCheckbox.checked = enableSearchStorageOption;
   });
 }
 initEnableSearchStorageButton();
 
-elements.enableSearchStorage.addEventListener(('click'), () => {
+elements.enableSearchStorageCheckbox.addEventListener(('click'), () => {
   // eslint-disable-next-line quote-props
-  chrome.storage.sync.set({ 'enableSearchStorage': elements.enableSearchStorage.checked }, () => {
+  chrome.storage.sync.set({ 'enableSearchStorage': elements.enableSearchStorageCheckbox.checked }, () => {
     showNotification('Settings Saved', 'positive', 'snackbar-options');
   });
 
   // Clear Saved Search If user selects the option to not save their search.
-  if (!elements.enableSearchStorage.checked) localStorage.clear();
+  if (!elements.enableSearchStorageCheckbox.checked) localStorage.clear();
 });
 
 elements.importBookmarksButton.addEventListener('click', () => {
