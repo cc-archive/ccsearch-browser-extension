@@ -17,7 +17,7 @@ export const elements = {
   providerChooserLoadingMessage: document.querySelector('.section-filter__provider-loading-mes'),
   filterResetButton: document.querySelector('.section-filter--reset-button'),
   filterApplyButton: document.querySelector('.section-filter--apply-button'),
-  clearSearch: document.getElementsByClassName('clear-search'),
+  clearSearchButton: document.getElementsByClassName('clear-search-button'),
   noMoreImagesMessage: document.querySelector('.no-more-images-mes'),
   loadMoreButton: document.querySelector('.load-more-button'),
   loadMoreButtonWrapper: document.querySelector('.load-more-button-wrapper'),

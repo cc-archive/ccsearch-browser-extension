@@ -274,12 +274,12 @@ elements.searchIcon.addEventListener('click', () => {
 
       pageNo += 1;
     });
-  elements.clearSearch[0].removeAttribute('style');
+  elements.clearSearchButton[0].removeAttribute('style');
 });
 
-elements.clearSearch[0].addEventListener('click', () => {
+elements.clearSearchButton[0].addEventListener('click', () => {
   // Remove Old
-  elements.clearSearch[0].setAttribute('style', 'display: none');
+  elements.clearSearchButton[0].setAttribute('style', 'display: none');
   elements.inputField.value = '';
   removeLoaderAnimation();
   removeNode('no-image-found');
@@ -331,9 +331,9 @@ function loadStoredSearch() {
       addThumbnailsToDOM(pageData);
       pageNo = Number(pageNo) + 1;
     }
-    elements.clearSearch[0].removeAttribute('style');
+    elements.clearSearchButton[0].removeAttribute('style');
   } else {
-    elements.clearSearch[0].setAttribute('style', 'display: none');
+    elements.clearSearchButton[0].setAttribute('style', 'display: none');
   }
 }
 loadStoredSearch();
