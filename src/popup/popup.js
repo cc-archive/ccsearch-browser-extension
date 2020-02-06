@@ -274,6 +274,37 @@ elements.searchIcon.addEventListener('click', () => {
 
       pageNo += 1;
     });
+  elements.clearSearch[0].removeAttribute('style');
+});
+
+elements.clearSearch[0].addEventListener('click', () => {
+  // Remove Old
+  elements.clearSearch[0].setAttribute('style', 'display: none');
+  elements.inputField.value = '';
+  removeLoaderAnimation();
+  removeNode('no-image-found');
+  removeOldSearchResults();
+  removeLoadMoreButton(elements.loadMoreButtonWrapper);
+  elements.gridPrimary.setAttribute('style', 'position: relative; height: 0px;');
+  localStorage.clear();
+
+  // Bring Initial Content
+  const initialInfoElement = `<p class="vocab paragraph inherit-colored initial-info primary__initial-info">
+          Search for free content in the public domain and under Creative Commons licenses.<br /><br />
+          Learn more about CC licenses
+          <a href="https://creativecommons.org/share-your-work/licensing-types-examples/" target="_blank">
+            here.
+          </a><br>
+          License your own content
+          <a href="https://creativecommons.org/choose/" target="_blank">
+            here.
+          </a>
+        </p>`;
+  const parser = new DOMParser();
+  const parsed = parser.parseFromString(initialInfoElement, 'text/html');
+  const tags = parsed.getElementsByTagName('p');
+  document.getElementsByClassName('row')[0].appendChild(tags[0]);
+  applyFilters();
 });
 
 // applying comboTree (see https://github.com/kirlisakal/combo-tree)
@@ -289,7 +320,7 @@ $('#choose-license').comboTree({
 loadUserDefaults();
 
 function loadStoredSearch() {
-  if (localStorage !== null) {
+  if (localStorage.length !== 0) {
     inputText = localStorage.getItem('title');
     elements.inputField.value = inputText;
 
@@ -300,6 +331,9 @@ function loadStoredSearch() {
       addThumbnailsToDOM(pageData);
       pageNo = Number(pageNo) + 1;
     }
+    elements.clearSearch[0].removeAttribute('style');
+  } else {
+    elements.clearSearch[0].setAttribute('style', 'display: none');
   }
 }
 loadStoredSearch();
