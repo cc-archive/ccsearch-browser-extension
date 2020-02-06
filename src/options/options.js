@@ -35,9 +35,7 @@ Array.prototype.forEach.call(elements.licenseInputs, (element) => {
 
 function initEnableSearchStorageButton() {
   chrome.storage.sync.get(['enableSearchStorage'], (res) => {
-    if (chrome.runtime.error) enableSearchStorageOption = true;
-    else enableSearchStorageOption = res.enableSearchStorage;
-
+    enableSearchStorageOption = res.enableSearchStorage;
     elements.enableSearchStorageCheckbox.checked = enableSearchStorageOption;
   });
 }

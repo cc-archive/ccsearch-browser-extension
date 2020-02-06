@@ -295,8 +295,11 @@ loadUserDefaults();
 
 async function loadStoredSearch() {
   await chrome.storage.sync.get(['enableSearchStorage'], (res) => {
-    if (chrome.runtime.error) enableSearchStorageOption = true;
-    else enableSearchStorageOption = res.enableSearchStorage;
+    if (res.enableSearchStorage === undefined) {
+      enableSearchStorageOption = true;
+      // eslint-disable-next-line quote-props
+      chrome.storage.sync.set({ 'enableSearchStorage': enableSearchStorageOption });
+    } else enableSearchStorageOption = res.enableSearchStorage;
 
     if (enableSearchStorageOption) {
       if (localStorage !== null) {
