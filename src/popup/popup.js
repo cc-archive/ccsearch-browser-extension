@@ -293,13 +293,16 @@ $('#choose-license').comboTree({
 });
 loadUserDefaults();
 
+function setEnableSearchStorageOptionVariable(enableSearchStorage) {
+  if (enableSearchStorage === undefined) {
+    enableSearchStorageOption = true;
+    chrome.storage.sync.set({ enableSearchStorage: enableSearchStorageOption });
+  } else enableSearchStorageOption = enableSearchStorage;
+}
+
 async function loadStoredSearch() {
   await chrome.storage.sync.get(['enableSearchStorage'], (res) => {
-    if (res.enableSearchStorage === undefined) {
-      enableSearchStorageOption = true;
-      // eslint-disable-next-line quote-props
-      chrome.storage.sync.set({ 'enableSearchStorage': enableSearchStorageOption });
-    } else enableSearchStorageOption = res.enableSearchStorage;
+    setEnableSearchStorageOptionVariable(res.enableSearchStorage);
 
     if (enableSearchStorageOption) {
       if (localStorage !== null) {

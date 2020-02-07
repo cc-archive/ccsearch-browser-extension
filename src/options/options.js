@@ -42,10 +42,10 @@ function initEnableSearchStorageButton() {
 initEnableSearchStorageButton();
 
 elements.enableSearchStorageCheckbox.addEventListener(('click'), () => {
-  // eslint-disable-next-line quote-props
-  chrome.storage.sync.set({ 'enableSearchStorage': elements.enableSearchStorageCheckbox.checked }, () => {
-    showNotification('Settings Saved', 'positive', 'snackbar-options');
-  });
+  chrome.storage.sync.set({ enableSearchStorage: elements.enableSearchStorageCheckbox.checked },
+    () => {
+      showNotification('Settings Saved', 'positive', 'snackbar-options');
+    });
 
   // Clear Saved Search If user selects the option to not save their search.
   if (!elements.enableSearchStorageCheckbox.checked) localStorage.clear();
