@@ -347,10 +347,12 @@ async function loadStoredSearch() {
           addThumbnailsToDOM(pageData);
           pageNo = Number(pageNo) + 1;
         }
-          elements.clearSearchButton[0].removeAttribute('style');
-        } else {
-          elements.clearSearchButton[0].setAttribute('style', 'display: none');
+        elements.clearSearchButton[0].removeAttribute('style');
+      } else {
+        elements.clearSearchButton[0].setAttribute('style', 'display: none');
       }
+    } else {
+      elements.clearSearchButton[0].setAttribute('style', 'display: none');
     }
   });
 }
