@@ -56,7 +56,14 @@ export default function bookmarkImage(e) {
         showNotification('Image Bookmarked', 'positive', 'snackbar-bookmarks');
       });
     } else {
-      removeBookmark(e);
+    const imageId = e.target.dataset.imageid;
+      const bookmarkIndex = bookmarksArray.indexOf(imageId);  
+      bookmarksArray.splice(bookmarkIndex, 1);
+      chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
+        e.target.classList.remove('fa-bookmark');
+        e.target.classList.add('fa-bookmark-o');
+        showNotification('Bookmark removed', 'negative', 'snackbar-bookmarks');
+      });
     }
   });
 }
