@@ -14,6 +14,14 @@ const Masonry = require('masonry-layout');
 
 // Store Select Button for All bookmarks, with their properties
 const bookmarkDOM = {};
+var modal = document.getElementById('myModal');
+
+// Get the button that opens the modal
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName('close')[0];
+var deletebtn = document.getElementById('delete')
+
 
 // Store number of selected bookmarks for export
 let selectedBookmarks = 0;
@@ -316,24 +324,13 @@ document.addEventListener('DOMContentLoaded', () => {
         showNotification('No Bookmarks Available', 'negative', 'snackbar-bookmarks');
       } else
       {
-        var modal = document.getElementById("myModal");
-
-        // Get the button that opens the modal
-
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
-
         // When the user clicks the button, open the modal
-        modal.style.display = "block";
-
-
+        modal.style.display = 'block';
         // When the user clicks on <span> (x), close the modal
         span.onclick = function() {
-          modal.style.display = "none";
+          modal.style.display = 'none';
           }
-          var deletebtn = document.getElementById("delete")
-          deletebtn.onclick=function()
-          {
+          deletebtn.onclick=function(){
          bookmarksArray.splice(0, bookmarksArray.length); // empty array
          chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
            // restoring initial layout of bookmarks section
