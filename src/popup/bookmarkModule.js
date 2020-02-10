@@ -20,7 +20,7 @@ var modal = document.getElementById('myModal');
 
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName('close')[0];
-var deletebtn = document.getElementById('delete')
+var deletebtn = document.getElementById('delete');
 
 
 // Store number of selected bookmarks for export
