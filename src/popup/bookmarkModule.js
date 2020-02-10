@@ -314,17 +314,37 @@ document.addEventListener('DOMContentLoaded', () => {
       const bookmarksArray = items.bookmarks;
       if (bookmarksArray.length === 0) {
         showNotification('No Bookmarks Available', 'negative', 'snackbar-bookmarks');
-      } else {
-        bookmarksArray.splice(0, bookmarksArray.length); // empty array
-        chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
-          // restoring initial layout of bookmarks section
-          removeBookmarkImages();
-          msnry.layout();
-          restoreInitialContent('bookmarks');
-          // confirm user action
-          showNotification('Bookmarks successfully removed', 'positive', 'snackbar-bookmarks');
-        });
-      }
+      } else
+      {
+        var modal = document.getElementById("myModal");
+
+        // Get the button that opens the modal
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks the button, open the modal
+        modal.style.display = "block";
+
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+          modal.style.display = "none";
+          }
+          var deletebtn = document.getElementById("delete")
+          deletebtn.onclick=function()
+          {
+         bookmarksArray.splice(0, bookmarksArray.length); // empty array
+         chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
+           // restoring initial layout of bookmarks section
+           removeBookmarkImages();
+           msnry.layout();
+           restoreInitialContent('bookmarks');
+           // confirm user action
+           showNotification('Bookmarks successfully removed', 'positive', 'snackbar-bookmarks');
+         });
+       }
+        }
     });
   });
 

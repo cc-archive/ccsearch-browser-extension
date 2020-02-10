@@ -36,9 +36,72 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  vertical-align: middle; 
+  vertical-align: middle;
 }
 
 .select-checkbox {
   float: right;
+}
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  height:70%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 30px;
+  font-weight: bold;
+  position: relative;
+  top: -100px;
+  left:15px;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+.popup-header{
+    background-image: linear-gradient(to right, #ff4e14, #ff7d31);
+    margin-top: 0;
+    padding: 20px 20px 20px 40px;
+}
+.popup-text
+{
+  padding: 20px 20px 20px 100px;
+}
+.confirm_button
+{
+  position: relative;
+  text-align: center;
+  background-image: linear-gradient(to right, #ff4e14, #ff7d31);
+  font-size: 24px;
+  color: white;
+  top:60px;
+  left:200px;
+  margin: 4px 2px;
+  display: inline-block;
+  text-decoration: none;
 }
