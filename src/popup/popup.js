@@ -21,7 +21,12 @@ import {
 import { loadProvidersToDom, resetLicenseDropDown, loadUserDefaults } from './filterModule';
 import { handleImageAttributionDownload, handleImageDownload } from './infoPopupModule';
 import { addSpinner } from './spinner';
-import { showNotification, removeNode, getLatestProviders } from '../utils';
+import {
+  showNotification,
+  removeNode,
+  getLatestProviders,
+  restoreInitialContent,
+} from '../utils';
 
 let inputText;
 let pageNo;
@@ -279,36 +284,19 @@ elements.searchIcon.addEventListener('click', () => {
 
       pageNo += 1;
     });
-  elements.clearSearchButton[0].removeAttribute('style');
+  elements.clearSearchButton[0].classList.remove('display-none');
 });
 
 elements.clearSearchButton[0].addEventListener('click', () => {
-  // Remove Old
-  elements.clearSearchButton[0].setAttribute('style', 'display: none');
+  // Restore Initial Content
+  elements.clearSearchButton[0].classList.add('display-none');
   elements.inputField.value = '';
-  removeLoaderAnimation();
-  removeNode('no-image-found');
   removeOldSearchResults();
   removeLoadMoreButton(elements.loadMoreButtonWrapper);
   elements.gridPrimary.setAttribute('style', 'position: relative; height: 0px;');
   localStorage.clear();
+  restoreInitialContent('primary');
 
-  // Bring Initial Content
-  const initialInfoElement = `<p class="vocab paragraph inherit-colored initial-info primary__initial-info">
-          Search for free content in the public domain and under Creative Commons licenses.<br /><br />
-          Learn more about CC licenses
-          <a href="https://creativecommons.org/share-your-work/licensing-types-examples/" target="_blank">
-            here.
-          </a><br>
-          License your own content
-          <a href="https://creativecommons.org/choose/" target="_blank">
-            here.
-          </a>
-        </p>`;
-  const parser = new DOMParser();
-  const parsed = parser.parseFromString(initialInfoElement, 'text/html');
-  const tags = parsed.getElementsByTagName('p');
-  document.getElementsByClassName('row')[0].appendChild(tags[0]);
   applyFilters();
 });
 
@@ -347,12 +335,12 @@ async function loadStoredSearch() {
           addThumbnailsToDOM(pageData);
           pageNo = Number(pageNo) + 1;
         }
-        elements.clearSearchButton[0].removeAttribute('style');
+        elements.clearSearchButton[0].classList.remove('display-none');
       } else {
-        elements.clearSearchButton[0].setAttribute('style', 'display: none');
+        elements.clearSearchButton[0].classList.add('display-none');
       }
     } else {
-      elements.clearSearchButton[0].setAttribute('style', 'display: none');
+      elements.clearSearchButton[0].classList.add('display-none');
     }
   });
 }
