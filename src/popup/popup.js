@@ -21,7 +21,12 @@ import {
 import { loadProvidersToDom, resetLicenseDropDown, loadUserDefaults } from './filterModule';
 import { handleImageAttributionDownload, handleImageDownload } from './infoPopupModule';
 import { addSpinner } from './spinner';
-import { showNotification, removeNode, getLatestProviders } from '../utils';
+import {
+  showNotification,
+  removeNode,
+  getLatestProviders,
+  restoreInitialContent,
+} from '../utils';
 
 let inputText;
 let pageNo;
@@ -279,6 +284,20 @@ elements.searchIcon.addEventListener('click', () => {
 
       pageNo += 1;
     });
+  elements.clearSearchButton[0].classList.remove('display-none');
+});
+
+elements.clearSearchButton[0].addEventListener('click', () => {
+  // Restore Initial Content
+  elements.clearSearchButton[0].classList.add('display-none');
+  elements.inputField.value = '';
+  removeOldSearchResults();
+  removeLoadMoreButton(elements.loadMoreButtonWrapper);
+  elements.gridPrimary.setAttribute('style', 'position: relative; height: 0px;');
+  localStorage.clear();
+  restoreInitialContent('primary');
+
+  applyFilters();
 });
 
 // applying comboTree (see https://github.com/kirlisakal/combo-tree)
@@ -305,7 +324,7 @@ async function loadStoredSearch() {
     setEnableSearchStorageOptionVariable(res.enableSearchStorage);
 
     if (enableSearchStorageOption) {
-      if (localStorage !== null) {
+      if (localStorage.length !== 0) {
         inputText = localStorage.getItem('title');
         elements.inputField.value = inputText;
 
@@ -316,7 +335,12 @@ async function loadStoredSearch() {
           addThumbnailsToDOM(pageData);
           pageNo = Number(pageNo) + 1;
         }
+        elements.clearSearchButton[0].classList.remove('display-none');
+      } else {
+        elements.clearSearchButton[0].classList.add('display-none');
       }
+    } else {
+      elements.clearSearchButton[0].classList.add('display-none');
     }
   });
 }
