@@ -105,6 +105,7 @@ export function checkValidationError(apiResponse) {
     showNotification('Not a valid search query', 'negative', 'snackbar-bookmarks');
     removeLoaderAnimation();
     restoreInitialContent('primary');
+    elements.loadMoreButtonWrapper.classList.add('removeLoadMore');
     throw new Error('Not valid search query');
   }
 }
