@@ -72,7 +72,7 @@ export async function getLatestProviders() {
     });
     return providers;
   } catch (error) {
-    showNotification('Unable to fetch providers. Using default providers', 'negative', 'snackbar-bookmarks', 2500);
+    showNotification('Unable to fetch providers. Using backup providers', 'negative', 'snackbar-bookmarks', 2500);
     providers = backupProviderAPIQueryStrings;
     return providers;
   }
