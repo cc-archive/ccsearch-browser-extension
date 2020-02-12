@@ -18,18 +18,27 @@ const bookmarkDOM = {};
 // Store number of selected bookmarks for export
 let selectedBookmarks = 0;
 
-export default function bookmarkImage(e) {
+export default function toggleBookmark(e) {
   chrome.storage.sync.get({ bookmarks: [] }, (items) => {
     const bookmarksArray = items.bookmarks;
-    if (bookmarksArray.indexOf(e.target.dataset.imageid) === -1) {
-      bookmarksArray.push(e.target.dataset.imageid);
+    const imageId = e.target.dataset.imageid;
+    if (bookmarksArray.indexOf(imageId) === -1) {
+      bookmarksArray.push(imageId);
       chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
         e.target.classList.remove('fa-bookmark-o');
         e.target.classList.add('fa-bookmark');
+        e.target.title = 'Remove Bookmark';
         showNotification('Image Bookmarked', 'positive', 'snackbar-bookmarks');
       });
     } else {
-      showNotification('Image already bookmarked!', 'negative', 'snackbar-bookmarks');
+      const bookmarkIndex = bookmarksArray.indexOf(imageId);
+      bookmarksArray.splice(bookmarkIndex, 1);
+      chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
+        e.target.classList.remove('fa-bookmark');
+        e.target.classList.add('fa-bookmark-o');
+        e.target.title = 'Bookmark Image';
+        showNotification('Bookmark removed', 'negative', 'snackbar-bookmarks');
+      });
     }
   });
 }
