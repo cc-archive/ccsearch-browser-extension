@@ -27,16 +27,16 @@ export default function toggleBookmark(e) {
       chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
         e.target.classList.remove('fa-bookmark-o');
         e.target.classList.add('fa-bookmark');
-        e.target.title='Remove Bookmark';
+        e.target.title = 'Remove Bookmark';
         showNotification('Image Bookmarked', 'positive', 'snackbar-bookmarks');
       });
     } else {
-      const bookmarkIndex = bookmarksArray.indexOf(imageId);  
+      const bookmarkIndex = bookmarksArray.indexOf(imageId);
       bookmarksArray.splice(bookmarkIndex, 1);
       chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
         e.target.classList.remove('fa-bookmark');
         e.target.classList.add('fa-bookmark-o');
-        e.target.title='Bookmark Image';
+        e.target.title = 'Bookmark Image';
         showNotification('Bookmark removed', 'negative', 'snackbar-bookmarks');
       });
     }
