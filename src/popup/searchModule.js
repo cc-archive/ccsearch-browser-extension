@@ -3,7 +3,7 @@ import { unicodeToString, providerLogos, addLoadMoreButton } from './helper';
 import { activatePopup } from './infoPopupModule';
 import { removeSpinner } from './spinner';
 // eslint-disable-next-line import/no-cycle
-import bookmarkImage from './bookmarkModule';
+import toggleBookmark from './bookmarkModule';
 import { showNotification, removeChildNodes, restoreInitialContent } from '../utils';
 
 const Masonry = require('masonry-layout');
@@ -206,14 +206,14 @@ export function addThumbnailsToDOM(resultArray) {
       bookmarkIcon.classList.add('bookmark-icon');
       bookmarkIcon.id = 'bookmark-icon';
       bookmarkIcon.setAttribute('data-imageid', id);
-      bookmarkIcon.addEventListener('click', bookmarkImage);
+      bookmarkIcon.addEventListener('click', toggleBookmark);
 
       if (bookmarksArray.indexOf(id) === -1) {
         bookmarkIcon.classList.add('fa-bookmark-o');
         bookmarkIcon.title = 'Bookmark image';
       } else {
         bookmarkIcon.classList.add('fa-bookmark');
-        bookmarkIcon.title = 'Image bookmarked';
+        bookmarkIcon.title = 'Remove Bookmark';
       }
 
       spanLicenseElement.appendChild(licenseLinkElement);
