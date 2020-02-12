@@ -18,8 +18,6 @@ const bookmarkDOM = {};
 // Store number of selected bookmarks for export
 let selectedBookmarks = 0;
 
-<<<<<<< HEAD
-=======
 export default function toggleBookmark(e) {
   chrome.storage.sync.get({ bookmarks: [] }, (items) => {
     const bookmarksArray = items.bookmarks;
@@ -45,7 +43,6 @@ export default function toggleBookmark(e) {
   });
 }
 
->>>>>>> master
 function removeBookmark(e) {
   const imageId = e.target.dataset.imageid;
   chrome.storage.sync.get({ bookmarks: [] }, (items) => {
