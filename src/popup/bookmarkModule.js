@@ -70,29 +70,6 @@ function removeBookmark(e) {
   });
 }
 
-export default function bookmarkImage(e) {
-  chrome.storage.sync.get({ bookmarks: [] }, (items) => {
-    const bookmarksArray = items.bookmarks;
-    if (bookmarksArray.indexOf(e.target.dataset.imageid) === -1) {
-      bookmarksArray.push(e.target.dataset.imageid);
-      chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
-        e.target.classList.remove('fa-bookmark-o');
-        e.target.classList.add('fa-bookmark');
-        showNotification('Image Bookmarked', 'positive', 'snackbar-bookmarks');
-      });
-    } else {
-      const imageId = e.target.dataset.imageid;
-      const bookmarkIndex = bookmarksArray.indexOf(imageId);
-      bookmarksArray.splice(bookmarkIndex, 1);
-      chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
-        e.target.classList.remove('fa-bookmark');
-        e.target.classList.add('fa-bookmark-o');
-        showNotification('Bookmark removed', 'negative', 'snackbar-bookmarks');
-      });
-    }
-  });
-}
-
 function appendToGrid(msnry, fragment, e, grid) {
   grid.appendChild(fragment);
   msnry.appended(e);
