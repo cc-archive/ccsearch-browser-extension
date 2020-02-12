@@ -182,7 +182,7 @@ function loadImages() {
           selectCheckbox.setAttribute('type', 'checkbox');
           selectCheckbox.setAttribute('id', id);
           selectCheckbox.setAttribute('title', 'Select Image');
-          selectCheckbox.setAttribute('class', 'select-checkbox vocab choice-field magenta-colored small-sized');
+          selectCheckbox.setAttribute('class', 'select-checkbox vocab choice-field green-colored dark-shaded small-sized');
           selectCheckboxElement.appendChild(selectCheckbox);
 
           // make a span to hold the license icons
@@ -379,15 +379,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  elements.exportBookmark.addEventListener('click', () => {
-    const exportBookmark = [];
+  elements.exportBookmarkskButton.addEventListener('click', () => {
+    const bookmarks = [];
 
     Object.values(bookmarkDOM).forEach((checkbox) => {
-      if (checkbox.checked) exportBookmark.push(checkbox.id);
+      if (checkbox.checked) bookmarks.push(checkbox.id);
     });
 
-    if (exportBookmark.length) {
-      const bookmarksString = JSON.stringify(exportBookmark);
+    if (bookmarks.length) {
+      const bookmarksString = JSON.stringify(bookmarks);
       download(bookmarksString, 'bookmarks.json', 'text/plain');
     } else {
       showNotification('No bookmarks selected', 'negative', 'snackbar-bookmarks');

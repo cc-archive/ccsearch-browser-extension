@@ -21,7 +21,12 @@ import {
 import { loadProvidersToDom, resetLicenseDropDown, loadUserDefaults } from './filterModule';
 import { handleImageAttributionDownload, handleImageDownload } from './infoPopupModule';
 import { addSpinner } from './spinner';
-import { showNotification, removeNode, getLatestProviders } from '../utils';
+import {
+  showNotification,
+  removeNode,
+  getLatestProviders,
+  restoreInitialContent,
+} from '../utils';
 
 let inputText;
 let pageNo;
@@ -37,6 +42,12 @@ let userSelectedUseCaseList = [];
 
 // object to map Provider display names to valid query names.
 let providerAPIQueryStrings = {};
+
+// Store Wheather Search Storage is enabled or not
+let enableSearchStorageOption = true;
+
+// Search Storage
+const storeSearch = {};
 
 // eslint-disable-next-line no-undef
 const clipboard = new ClipboardJS('.btn-copy');
@@ -236,6 +247,7 @@ elements.searchIcon.addEventListener('click', () => {
   removeOldSearchResults();
   removeLoaderAnimation();
   applyFilters();
+  localStorage.clear();
 
   // enable spinner
   addSpinner(elements.spinnerPlaceholderGrid, 'original');
@@ -250,7 +262,7 @@ elements.searchIcon.addEventListener('click', () => {
   );
 
   // console.log(url);
-  pageNo += 1;
+  // pageNo += 1;
 
   fetch(url)
     .then(data => data.json())
@@ -261,7 +273,31 @@ elements.searchIcon.addEventListener('click', () => {
 
       checkResultLength(resultArray);
       addThumbnailsToDOM(resultArray);
+
+      if (enableSearchStorageOption) {
+        // Store Data to local storage
+        storeSearch.title = inputText;
+        storeSearch.page = { ...resultArray };
+        localStorage.setItem('title', storeSearch.title);
+        localStorage.setItem(pageNo, JSON.stringify(storeSearch.page));
+      }
+
+      pageNo += 1;
     });
+  elements.clearSearchButton[0].classList.remove('display-none');
+});
+
+elements.clearSearchButton[0].addEventListener('click', () => {
+  // Restore Initial Content
+  elements.clearSearchButton[0].classList.add('display-none');
+  elements.inputField.value = '';
+  removeOldSearchResults();
+  removeLoadMoreButton(elements.loadMoreButtonWrapper);
+  elements.gridPrimary.setAttribute('style', 'position: relative; height: 0px;');
+  localStorage.clear();
+  restoreInitialContent('primary');
+
+  applyFilters();
 });
 
 // applying comboTree (see https://github.com/kirlisakal/combo-tree)
@@ -276,19 +312,64 @@ $('#choose-license').comboTree({
 });
 loadUserDefaults();
 
-async function nextRequest(page) {
-  const url = getRequestUrl(
-    inputText,
-    userSelectedUseCaseList,
-    userSelectedLicensesList,
-    userSelectedProvidersList,
-    page,
-  );
+function setEnableSearchStorageOptionVariable(enableSearchStorage) {
+  if (enableSearchStorage === undefined) {
+    enableSearchStorageOption = true;
+    chrome.storage.sync.set({ enableSearchStorage: enableSearchStorageOption });
+  } else enableSearchStorageOption = enableSearchStorage;
+}
 
-  // console.log(url);
-  const response = await fetch(url);
-  const json = await response.json();
-  const result = json.results;
+async function loadStoredSearch() {
+  await chrome.storage.sync.get(['enableSearchStorage'], (res) => {
+    setEnableSearchStorageOptionVariable(res.enableSearchStorage);
+
+    if (enableSearchStorageOption) {
+      if (localStorage.length !== 0) {
+        inputText = localStorage.getItem('title');
+        elements.inputField.value = inputText;
+
+        pageNo = 1;
+        if (localStorage.getItem(pageNo)) {
+          removeNode('primary__initial-info');
+          const pageData = Object.values(JSON.parse(localStorage.getItem(pageNo)));
+          addThumbnailsToDOM(pageData);
+          pageNo = Number(pageNo) + 1;
+        }
+        elements.clearSearchButton[0].classList.remove('display-none');
+      } else {
+        elements.clearSearchButton[0].classList.add('display-none');
+      }
+    } else {
+      elements.clearSearchButton[0].classList.add('display-none');
+    }
+  });
+}
+loadStoredSearch();
+
+async function nextRequest(page) {
+  let result = [];
+  if (localStorage.getItem(pageNo)) {
+    result = Object.values(JSON.parse(localStorage.getItem(pageNo)));
+  } else {
+    const url = getRequestUrl(
+      inputText,
+      userSelectedUseCaseList,
+      userSelectedLicensesList,
+      userSelectedProvidersList,
+      page,
+    );
+
+    // console.log(url);
+    const response = await fetch(url);
+    const json = await response.json();
+    result = json.results;
+
+    if (enableSearchStorageOption) {
+      // Update Local Storage Data
+      storeSearch.page = { ...result };
+      localStorage.setItem(pageNo, JSON.stringify(storeSearch.page));
+    }
+  }
   // console.log(result);
   addThumbnailsToDOM(result);
   pageNo += 1;
@@ -296,6 +377,8 @@ async function nextRequest(page) {
 
 // global varialbe to check the status if user is viewwing the bookmarks section
 window.isBookmarksActive = false;
+
+elements.homeIcon.addEventListener('click', loadStoredSearch);
 
 elements.loadMoreButton.addEventListener('click', () => {
   removeLoadMoreButton(elements.loadMoreButtonWrapper);

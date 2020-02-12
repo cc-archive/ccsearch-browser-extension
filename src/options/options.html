@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="UTF-8">
     <title>CC Search Extension Options</title>
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,300i,400&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
@@ -14,9 +15,9 @@
         <li class="tab active" data-tab-no="1">
           Filters
         </li>
-        <!-- <li class="tab" data-tab-no="2">
+        <li class="tab" data-tab-no="2">
           Other Settings
-        </li> -->
+        </li>
         <li class="tab" data-tab-no="3">
           Bookmarks
         </li>
@@ -28,6 +29,9 @@
         </li>
         <li class="tab" data-tab-no="6">
           FAQ
+        </li>
+        <li class="tab" data-tab-no="7">
+          Syntax Guide
         </li>
       </ul>
       <div id="vocab-tabbed-contents" class="vocab section contents magenta-colored raised bottom-accented clingy">
@@ -81,8 +85,11 @@
           </div>
         </div>
         <div class="content" data-content-no="2">
-          <!-- Persist search even when extension is closed?
-          yes (checkbox) -->
+          <h6 class="vocab heading">Store and load the last search results when you open the extension?</h6>
+          <div class="enable-search-storage-container">
+            <input type="checkbox" class="vocab choice-field magenta-colored small-sized" id="enable-search-storage-checkbox" />
+            <label for="enable-search-storage-checkbox" class="padding-left-smaller">Yes</label><br />
+          </div>
         </div>
         <div class="content" data-content-no="3">
           <!-- <h4 class="margin-top-small margin-bottom-medium">Bookmarks</h4> -->
@@ -100,10 +107,7 @@
           </div>
           <div class="margin-top-medium">
             <p class="vocab paragraph">
-              <strong>Note</strong>: You can sync your settings and bookmarks by <strong>toggling on</strong> extensions
-              sync in your browser sync settings.<br />
-              (feature not available for Opera)
-            </p>
+              <strong>Note</strong>: To know more about how you can sync your settings and bookmarks, read the FAQ.</p>
           </div>
         </div>
         <div class="content" data-content-no="4">
@@ -220,6 +224,260 @@
                 </div>
             </div>
           </div>
+        </div>
+        <div class="content" data-content-no="7">
+          
+          <p class="vocab paragraph">When you search, you can enter special symbols or words to your search term to make your search results more precise.</p>
+          
+          <h5 class="vocab heading">Search for an exact match</h5>
+          <p class="vocab paragraph">Put a word or phrase inside quotes. For example, <u><strong>"Claude Monet"</strong></u>.</p>
+          
+          <h5 class="vocab heading">Search for multiple terms</h5>
+          <p class="vocab paragraph">Put <strong>'+'</strong> between the terms that you want to search for.
+          For example, <u><strong>india +"taj mahal"</strong></u> will return results that contain both "taj mahal" and "india".</p>
+          
+          <h5 class="vocab heading">Exclude terms</h5>
+          <p class="vocab paragraph">Put <strong>'-'</strong> before the term that you'd like excluded from the results.
+          For example, <u><strong>india -"taj mahal"</strong></u> will return results that contain "india" and not "taj mahal".</p>
+          
+          <h5 class="vocab heading">Search by title</h6>
+          <p class="vocab paragraph">Put <strong>title:</strong> in front of your search term to see only results whose title contains the specified.
+          For example, <u><strong>title:"cats"</strong></u>.</p>
+
+          <h5 class="vocab heading">Search by creator</h5>
+          <p class="vocab paragraph">Put <strong>creator:</strong> in front of your search term to see only results from that creator.
+          For example, <u><strong>creator:"Bernard van Orley"</strong></u>.</p>
+
+          <h5 class="vocab heading">Search by license</h5>
+          <p class="vocab paragraph">Put <strong>license:</strong> in front of your search term to see only results from the specified license. For example, <u><strong> license:"by"</strong></u>.</p>
+          <p class="vocab paragraph">The results will be images licensed under the CC-BY license. You can use any of the other CC licenses: "by", "by-sa", "by-nc", "by-nd", "by-nc-sa", "by-nc-nd", "cc0", "pdm".</p>
+
+          
+          <h5 class="vocab heading">Search by provider  </h6>
+          <p class="vocab paragraph">Put <strong>provider:</strong> in front of your search term to see only results from the specified source. For example, <u><strong>provider:"met"</strong></u>.</p>
+          <p class="vocab paragraph">Note that you must use one of the provider codes specified below, searching for something like <em>provider:"Metropolitan Museum of Art"</em> will not return any results.</p>
+          <p class="vocab paragraph">Use the following table with the provider code of every provider in our collection.</p>
+          <br />
+          <table class="vocab table orange-colored s9-shaded slightly-simple striped fixed">
+            <caption class="caption"> Valid provider codes </caption>
+              <thead class="head">
+                <tr>
+                  <th class="cell">
+                    Provider Name
+                  </th>
+                  <th class="cell">
+                    Provider Code 
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="body">
+                <tr>
+                  <th class="cell">
+                    Animal Diversity Web
+                  </th>
+                  <td class="cell">
+                    animaldiversity 
+                  </td>
+                </tr>
+                <tr>
+                  <th class="cell">
+                    Bēhance
+                  </th>
+                  <td class="cell">
+                    bēhance 
+                  </td>
+                </tr>
+                <tr>
+                  <th class="cell">
+                    Brooklyn Museum
+                  </th>
+                  <td class="cell">
+                    brooklynmuseum 
+                  </td>
+                </tr>
+                <tr>
+                  <th class="cell">
+                    Culturally Authentic Pictorial Lexicon
+                  </th>
+                  <td class="cell">
+                    CAPL 
+                  </td>
+                </tr>
+                <tr>
+                  <th class="cell">
+                    Cleveland Museum of Art
+                  </th>
+                  <td class="cell">
+                    clevelandmuseum 
+                  </td>
+                </tr>
+                <tr>
+                  <th class="cell">
+                    DeviantArt
+                  </th>
+                  <td class="cell">
+                    deviantart 
+                  </td>
+                </tr>
+                <tr>
+                  <th class="cell">
+                    Digitalt Museum
+                  </th>
+                  <td class="cell">
+                    digitaltmuseum 
+                  </td>
+                </tr>
+                <tr>
+                  <th class="cell">
+                    Flickr
+                  </th>
+                  <td class="cell">
+                    flickr 
+                  </td>
+                </tr>
+                <tr>
+                  <th class="cell">
+                    Flora-On
+                  </th>
+                  <td class="cell">
+                    floraon 
+                  </td>
+                </tr>
+                <tr>
+                  <th class="cell">
+                    Geograph Britain and Ireland
+                  </th>
+                  <td class="cell">
+                    geographorguk 
+                  </td>
+                </tr>
+                <tr>
+                  <th class="cell">
+                    McCord Museum
+                  </th>
+                  <td class="cell">
+                    mccordmuseum 
+                  </td>
+                </tr>
+                <tr>
+                  <th class="cell">
+                    Metropolitan Museum of Art
+                  </th>
+                  <td class="cell">
+                    met 
+                  </td>
+                </tr>
+                <tr>
+                  <th class="cell">
+                    Museums Victoria
+                  </th>
+                  <td class="cell">
+                    museumsvictoria 
+                  </td>
+                </tr>
+                <tr>
+                  <th class="cell">
+                    PhyloPic
+                  </th>
+                  <td class="cell">
+                    phylopic 
+                  </td>
+                </tr>
+                <tr>
+                  <th class="cell">
+                    Rawpixel
+                  </th>
+                  <td class="cell">
+                    rawpixel 
+                  </td>
+                </tr>
+                <tr>
+                  <th class="cell">
+                    Rijksmuseum
+                  </th>
+                  <td class="cell">
+                    rijksmuseum 
+                  </td>
+                </tr>
+                <tr>
+                  <th class="cell">
+                    SVG Silh
+                  </th>
+                  <td class="cell">
+                    svgsilh 
+                  </td>
+                </tr>
+                <tr>
+                  <th class="cell">
+                    Thingiverse
+                  </th>
+                  <td class="cell">
+                    thingiverse 
+                  </td>
+                </tr>
+                <tr>
+                  <th class="cell">
+                    Thorvaldsens Museum
+                  </th>
+                  <td class="cell">
+                    thorvaldsensmuseum 
+                  </td>
+                </tr>
+                <tr>
+                  <th class="cell">
+                    World Register of Marine Species
+                  </th>
+                  <td class="cell">
+                    WoRMS 
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <h5 class="vocab heading">Search by tags</h6>
+          <p class="vocab paragraph">Put <strong>tags.name:</strong> in front of your search term to see only results that are tagged with the specified tag. For example, <u><strong>tags.name:"sky"</strong></u>.</p>
+          <p class="vocab paragraph">If you want to combine tags, you can use the AND operator, or the OR operator, depending on your search preference. For example:</p>
+          <ul>
+            <li><u><strong>tags.name:"sky" AND tags.name:"airplane"</strong></u>. This will search for images with both tags, sky and airplane.</li>
+            <li class="margin-top-small"><u><strong>tags.name:"phone" OR tags.name:"sky"</strong></u>. This will search for images tagged with sky or with phone, but not necessarily both.</li>
+          </ul>
+          <p class="vocab paragraph"></p>
+          <p class="vocab paragraph"></p>
+          
+          <h5 class="vocab heading">Combining keywords</h5>
+          <p class="vocab paragraph">Put <strong>AND</strong> in between two queries to see only results that match both queries. For example:</p>
+          <p class="vocab paragraph">
+            <ul>
+              <li><u><strong>title:"nature" AND provider:"met"</strong></u> will return images from the MET and whose title contains nature.</li>
+            </ul>
+            <ul>
+              <li class="margin-top-small"><u><strong>tags.name:"sky" AND tags.name:"airplane"</strong></u> will return images tagged both sky and airplane.</li class="margin-top-medium">
+            </ul>
+          </p>
+          <p class="vocab paragraph margin-top-medium">Put <strong>OR</strong> in between two queries to see only results that match either query. For example:</p>
+          <p class="vocab paragraph">
+            <ul>
+              <li><u><strong>provider:"met" OR provider:"flickr"</strong></u> will return images which are either from MET or from Flickr.</li>
+            </ul>
+            <ul>
+              <li class="margin-top-small"><u><strong>tags.name:"phone" OR tags.name:"tablet"</strong></u> will return images tagged either phone or tablet.</li class="margin-top-medium">
+            </ul>
+          </p>
+          <p class="vocab paragraph margin-top-medium">Put <strong>NOT</strong> in between two queries to see only results that match the first query and do not match the second query. You can also use parentheses to combine more than one of these operations For example:</p>
+          <p class="vocab paragraph">
+            <ul>
+              <li><u><strong>license:"by" AND (NOT provider:"flickr")</strong></u> will return images licensed under CC BY from all providers except from Flickr.</li>
+            </ul>
+            <ul>
+              <li class="margin-top-small"><u><strong>tags.name:"bird" AND (NOT tags.name:"flamingo")</strong></u> will return all images tagged bird except images also tagged flamingo.</li class="margin-top-medium">
+            </ul>
+          </p>
+
+          <h5 class="vocab heading margin-top-medium">Boosting a term</h5>
+          <p class="vocab paragraph">To boost a term use the caret, <strong>"^"</strong>, symbol with a numberat the end of the term. The higher the number, the higher priority the term will be given in the search.</p>
+          <p class="vocab paragraph">For example, <u><strong>dogs huskies^4</strong></u>, will make results containing "huskies" appear higher in the search results.</p>
+
+
         </div>
       </div>
     </div>

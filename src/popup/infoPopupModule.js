@@ -131,6 +131,12 @@ function getTumblrShareLink(sourceLink, imageLink) {
 }
 
 function getPopupCreatorChildNode(creatorUrl, creator) {
+  // return a paragraph tag if creatorURL not present
+  if (creatorUrl === '#') {
+    const paragraph = document.createElement('p');
+    paragraph.textContent = creator;
+    return paragraph;
+  }
   const link = document.createElement('a');
   link.href = creatorUrl;
   link.target = '_blank';
