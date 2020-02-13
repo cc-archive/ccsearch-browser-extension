@@ -14,13 +14,13 @@ const Masonry = require('masonry-layout');
 
 // Store Select Button for All bookmarks, with their properties
 const bookmarkDOM = {};
-var modal = document.getElementById('myModal');
+const modal = document.getElementById('myModal');
 
 // Get the button that opens the modal
 
 // Get the <span> element that closes the modal
-var span = document.getElementsByClassName('close')[0];
-var deletebtn = document.getElementById('delete');
+const span = document.getElementsByClassName('close')[0];
+const deletebtn = document.getElementById('delete');
 
 
 // Store number of selected bookmarks for export
@@ -322,26 +322,25 @@ document.addEventListener('DOMContentLoaded', () => {
       const bookmarksArray = items.bookmarks;
       if (bookmarksArray.length === 0) {
         showNotification('No Bookmarks Available', 'negative', 'snackbar-bookmarks');
-      } else
-      {
+      } else {
         // When the user clicks the button, open the modal
         modal.style.display = 'block';
         // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
+        span.onclick = function () {
           modal.style.display = 'none';
-          }
-          deletebtn.onclick=function(){
-         bookmarksArray.splice(0, bookmarksArray.length); // empty array
-         chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
-           // restoring initial layout of bookmarks section
-           removeBookmarkImages();
-           msnry.layout();
-           restoreInitialContent('bookmarks');
-           // confirm user action
-           showNotification('Bookmarks successfully removed', 'positive', 'snackbar-bookmarks');
-         });
-       }
-        }
+        };
+        deletebtn.onclick = function () {
+          bookmarksArray.splice(0, bookmarksArray.length); // empty array
+          chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
+            // restoring initial layout of bookmarks section
+            removeBookmarkImages();
+            msnry.layout();
+            restoreInitialContent('bookmarks');
+            // confirm user action
+            showNotification('Bookmarks successfully removed', 'positive', 'snackbar-bookmarks');
+          });
+        };
+      }
     });
   });
 
