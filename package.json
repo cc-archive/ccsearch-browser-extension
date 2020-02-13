@@ -22,9 +22,9 @@
     "package-firefox": "npm run build && (cd dist/firefox/ && zip -r ../firefox.zip .) && npm run package-source-code",
     "dev": "npm run clean && npm run compile-sass-popup:dev && npm run compile-sass-options:dev && npm run build-firefox:dev && npm run build-chrome:dev && npm run build-opera:dev",
     "build": "npm run clean && npm run compile-sass-popup:prod && npm run compile-sass-options:prod && npm run build-firefox:prod && npm run build-chrome:prod && npm run build-opera:prod",
-    "webpack-watch:firefox": "TARGET=chrome webpack --watch",
-    "webpack-watch:chrome": "TARGET=chrome webpack --watch",
-    "webpack-watch:opera": "TARGET=opera webpack --watch",
+    "webpack-watch:firefox": "TARGET=chrome webpack --watch --mode development",
+    "webpack-watch:chrome": "TARGET=chrome webpack --watch --mode development",
+    "webpack-watch:opera": "TARGET=opera webpack --watch --mode development",
     "test": "jest"
   },
   "repository": {
