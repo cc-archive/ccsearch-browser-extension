@@ -30,6 +30,14 @@
       right: 6%;
     }
 
+    &.clear-search-button {
+      color: #ff4e14;
+      right: 12%;
+
+      &:hover {
+        color: #fb4102;
+      }
+    }
     &:hover {
       color: $color-secondary-dark;
       cursor: pointer;
