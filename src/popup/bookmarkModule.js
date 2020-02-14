@@ -264,8 +264,7 @@ function loadImages() {
             // Update SelectAll Button
             if (selectedBookmarks === 0) {
               elements.buttonSelectAllCheckbox[0].children[0].innerText = 'Select All';
-            }
-            else if (selectedBookmarks > 0) {
+            } else if (selectedBookmarks > 0) {
               elements.buttonSelectAllCheckbox[0].children[0].innerText = 'Deselect All';
             }
           });
