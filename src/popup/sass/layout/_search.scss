@@ -8,7 +8,7 @@
   position: relative;
   border: 1.2px solid $color-primary-light;
   input[type="text"] {
-    width: 85%;
+    width: 80%;
     font-size: 130%;
     background: $color-white;
     padding: 2%;
@@ -103,14 +103,4 @@
     margin-bottom: 6rem; // vertical height is increasing
     text-align: center;
   }
-}
-
-.clear-search-button {
-  position: absolute;
-  top: 16px;
-  right: -20px;
-  background-color: #ff4e14;
-  border: #ff4e14;
-  height: 20px;
-  width: 15px;
 }
