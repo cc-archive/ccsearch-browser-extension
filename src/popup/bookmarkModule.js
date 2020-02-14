@@ -262,10 +262,10 @@ function loadImages() {
             checkbox.isChecked = !checkbox.isChecked; // Update isChecked Property in checkbox
 
             // Update SelectAll Button
-            if (selectedBookmarks !== elements.selectCheckboxes.length) {
+            if (selectedBookmarks === 0) {
               elements.buttonSelectAllCheckbox[0].children[0].innerText = 'Select All';
             }
-            if (selectedBookmarks > 0) {
+            else if (selectedBookmarks > 0) {
               elements.buttonSelectAllCheckbox[0].children[0].innerText = 'Deselect All';
             }
           });
