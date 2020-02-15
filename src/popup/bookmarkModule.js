@@ -346,7 +346,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (checkbox.checked) checkbox.click();
       });
       selectedBookmarks = 0;
-    } else {
+    } else if (selectedBookmarks === 0) {
       bookmarkDOMArray.forEach((checkbox) => {
         if (!checkbox.checked) checkbox.click();
       });
