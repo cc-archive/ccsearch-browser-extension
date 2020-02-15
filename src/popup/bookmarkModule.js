@@ -1,16 +1,15 @@
 import { elements } from './base';
 import { activatePopup } from './infoPopupModule';
+import { msnry, removeBookmarkImages } from './bookmarkModule.utils';
 import { providerLogos, unicodeToString, removeLoadMoreButton } from './helper';
 // eslint-disable-next-line import/no-cycle
 import { removeOldSearchResults, removeLoaderAnimation, checkInternetConnection } from './searchModule';
 import { addSpinner, removeSpinner } from './spinner';
 import {
-  showNotification, removeNode, restoreInitialContent, removeChildNodes,
+  showNotification, removeNode, restoreInitialContent,
 } from '../utils';
 
 const download = require('downloadjs');
-
-const Masonry = require('masonry-layout');
 
 // Store Select Button for All bookmarks, with their properties
 const bookmarkDOM = {};
@@ -70,24 +69,15 @@ function removeBookmark(e) {
   });
 }
 
-function appendToGrid(msnry, fragment, e, grid) {
+function appendToGrid(msnryObject, fragment, e, grid) {
   grid.appendChild(fragment);
-  msnry.appended(e);
+  msnryObject.appended(e);
   // eslint-disable-next-line no-undef
   imagesLoaded(grid).on('progress', () => {
     // layout Masonry after each image loads
-    msnry.layout();
+    msnryObject.layout();
   });
 }
-
-const msnry = new Masonry(elements.gridBookmarks, {
-  // options
-  itemSelector: '.grid-item',
-  columnWidth: '.grid-item',
-  gutter: '.gutter-sizer',
-  percentPosition: true,
-  transitionDuration: '0',
-});
 
 function loadImages() {
   chrome.storage.sync.get({ bookmarks: [] }, (items) => {
@@ -274,12 +264,6 @@ function loadImages() {
 }
 
 // TODO: use a general function
-function removeBookmarkImages() {
-  const div = document.createElement('div');
-  div.classList.add('gutter-sizer');
-  removeChildNodes(elements.gridBookmarks);
-  elements.gridBookmarks.appendChild(div);
-}
 
 document.addEventListener('DOMContentLoaded', () => {
   elements.showBookmarksIcon.addEventListener('click', () => {
