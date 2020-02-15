@@ -262,10 +262,10 @@ function loadImages() {
             checkbox.isChecked = !checkbox.isChecked; // Update isChecked Property in checkbox
 
             // Update SelectAll Button
-            if (selectedBookmarks === elements.selectCheckboxes.length) {
-              elements.buttonSelectAllCheckbox[0].children[0].innerText = 'Deselect All';
-            } else {
+            if (selectedBookmarks === 0) {
               elements.buttonSelectAllCheckbox[0].children[0].innerText = 'Select All';
+            } else if (selectedBookmarks > 0) {
+              elements.buttonSelectAllCheckbox[0].children[0].innerText = 'Deselect All';
             }
           });
         });
@@ -341,12 +341,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Stores data of Checkboxes for exporting
     const bookmarkDOMArray = Object.values(bookmarkDOM);
 
-    if (selectedBookmarks === elements.selectCheckboxes.length) {
+    if (selectedBookmarks > 0) {
       bookmarkDOMArray.forEach((checkbox) => {
-        checkbox.click();
+        if (checkbox.checked) checkbox.click();
       });
       selectedBookmarks = 0;
-    } else {
+    } else if (selectedBookmarks === 0) {
       bookmarkDOMArray.forEach((checkbox) => {
         if (!checkbox.checked) checkbox.click();
       });
