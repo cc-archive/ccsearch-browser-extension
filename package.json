@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "CC Search Browser Extension.",
   "scripts": {
-    "lint": "eslint './src/**/*.js'",
+    "lint": "eslint './src/**/*.js' './tests/**/*.js'",
     "compile-sass-popup:dev": "node-sass src/popup/sass/main.scss src/popup/popup.css",
     "compile-sass-options:dev": "node-sass src/options/sass/main.scss src/options/options.css",
     "compile-sass-popup:prod": "node-sass src/popup/sass/main.scss src/popup/popup.css --output-style compressed",
