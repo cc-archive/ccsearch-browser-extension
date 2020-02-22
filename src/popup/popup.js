@@ -32,7 +32,7 @@ let inputText;
 let pageNo;
 
 // List to hold providers selected by the user from the drop down.
-let userSelectedProvidersList = [];
+let userSelectedSourcesList = [];
 
 // List to hold user selected licenses
 let userSelectedLicensesList = [];
@@ -152,7 +152,7 @@ elements.filterResetButton.addEventListener('click', () => {
 
   // clear the datastructures and make a fresh search
   userSelectedLicensesList = [];
-  userSelectedProvidersList = [];
+  userSelectedSourcesList = [];
   userSelectedUseCaseList = [];
   elements.searchIcon.click();
 });
@@ -205,14 +205,14 @@ elements.useCaseChooserWrapper.addEventListener(
 
 function applyFilters() {
   //  reset filter data structures
-  userSelectedProvidersList = [];
+  userSelectedSourcesList = [];
   userSelectedLicensesList = [];
   userSelectedUseCaseList = [];
 
   if (elements.providerChooser.value) {
     const userInputProvidersList = elements.providerChooser.value.split(', ');
     userInputProvidersList.forEach((element) => {
-      userSelectedProvidersList.push(providerAPIQueryStrings[element]);
+      userSelectedSourcesList.push(providerAPIQueryStrings[element]);
     });
   }
 
@@ -257,7 +257,7 @@ elements.searchIcon.addEventListener('click', () => {
     inputText,
     userSelectedUseCaseList,
     userSelectedLicensesList,
-    userSelectedProvidersList,
+    userSelectedSourcesList,
     pageNo,
   );
 
@@ -355,7 +355,7 @@ async function nextRequest(page) {
       inputText,
       userSelectedUseCaseList,
       userSelectedLicensesList,
-      userSelectedProvidersList,
+      userSelectedSourcesList,
       page,
     );
 
