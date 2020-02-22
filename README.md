@@ -79,11 +79,11 @@ You can install the extension directly from the source. Follow the following ste
 ## Debugging in Development Mode
    - **Mozilla Firefox**
       - Navigate to _about:debugging_ and from sidebar select _This Firefox_.
-      - Click on "Load Temporary Add-on" button. ![Load Temporary Add-on](debug-image/debuging in firefox.png)
+      - Click on "Load Temporary Add-on" button. ![Load Temporary Add-on](debug-image/debuging-in-firefox.png)
       - From the file explorer, choose `ccsearch-browser-extension/dist/firefox/manifest.json`.
       - You will be now able to see CC search browser extension. Now click on the Inspect button. ![Inspect](debug-image/inspect-firefox.png)
       - A new tab will open with firefox debugger. Now first, click on the _three dots_ and select "Disable Popup Auto-Hide". ![Disable Popup Auto-hide Image](debug-image/three-dots-firefox.png)
-      - Now click on the browser extension from top right corner and the DOM will be loaded with the content to debug. ![Firefox debug](debug-image/click on extension.png)
+      - Now click on the browser extension from top right corner and the DOM will be loaded with the content to debug. ![Firefox debug](debug-image/click-on-extension.png)
    - **Google Chrome**
       - Navigate to _chrome://extensions_.
       - Make sure Developer mode in ON, if not, please ON it.
