@@ -89,7 +89,8 @@ You can install the extension directly from the source. Follow the following ste
       - Make sure Developer mode in ON, if not, please ON it.
       - Click on "Load Unpacked" button. ![Load Temporary Add-on](debug-image/chrome-load-unpacked.png)
       - From the file explorer, choose `ccsearch-browser-extension/dist/chrome`.
-      - You will be now able to see CC search browser extension. Now right click on the extension area and select "Inspect". ![Inspect in Chrome](debug-image/inspect-in-chrome.png)
+      - You will be now able to see CC search browser extension. Now right click on the extension area and select "Inspect". 
+![Inspect in Chrome](debug-image/inspect-in-chrome.png)
       - Developer tool will now open loaded with the content to debug. ![Debugging in Chrome](debug-image/debug-chrome.png)
    - **Opera**
       - Navigate to _about://extensions_.
