@@ -36,13 +36,13 @@ export function getRequestUrl(
   inputText,
   userSelectedUseCaseList,
   userSelectedLicensesList,
-  userSelectedProvidersList,
+  userSelectedSourcesList,
   page,
 ) {
   if (userSelectedUseCaseList.length > 0) {
-    return `https://api.creativecommons.engineering/image/search?q=${inputText}&page=${page}&pagesize=20&lt=${userSelectedUseCaseList}&provider=${userSelectedProvidersList}`;
+    return `https://api.creativecommons.engineering/v1/images?q=${inputText}&page=${page}&page_size=20&license_type=${userSelectedUseCaseList}&source=${userSelectedSourcesList}`;
   }
-  return `https://api.creativecommons.engineering/image/search?q=${inputText}&page=${page}&pagesize=20&li=${userSelectedLicensesList}&provider=${userSelectedProvidersList}`;
+  return `https://api.creativecommons.engineering/v1/images?q=${inputText}&page=${page}&page_size=20&license=${userSelectedLicensesList}&source=${userSelectedSourcesList}`;
 }
 
 function showNoResultFoundMessage() {

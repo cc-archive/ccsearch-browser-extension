@@ -30,18 +30,18 @@ test('testing getRequestUrl', () => {
   const inputText = 'dogs';
   let userSelectedUseCaseList = ['commercial'];
   const userSelectedLicensesList = ['CC0'];
-  const userSelectedProvidersList = ['sciencemuseum'];
+  const userSelectedSourcesList = ['sciencemuseum'];
   const page = 2;
 
   const test1 = getRequestUrl(
     inputText,
     userSelectedUseCaseList,
     userSelectedLicensesList,
-    userSelectedProvidersList,
+    userSelectedSourcesList,
     page,
   );
-  expect(test1).toMatch(/\?q=dogs&page=2&pagesize=20/);
-  expect(test1).toMatch(/lt=commercial/);
+  expect(test1).toMatch(/\?q=dogs&page=2&page_size=20/);
+  expect(test1).toMatch(/license_type=commercial/);
 
   userSelectedUseCaseList = [];
 
@@ -49,9 +49,9 @@ test('testing getRequestUrl', () => {
     inputText,
     userSelectedUseCaseList,
     userSelectedLicensesList,
-    userSelectedProvidersList,
+    userSelectedSourcesList,
     page,
   );
-  expect(test1).toMatch(/\?q=dogs&page=2&pagesize=20/);
-  expect(test2).toMatch(/li=CC0/);
+  expect(test1).toMatch(/\?q=dogs&page=2&page_size=20/);
+  expect(test2).toMatch(/license=CC0/);
 });
