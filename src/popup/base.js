@@ -2,7 +2,6 @@ export const elements = {
   inputField: document.getElementById('section-search-input'),
   searchIcon: document.getElementById('search-icon'),
   filterIcon: document.getElementById('filter-icon'),
-  errorMessage: document.getElementById('error-message'),
   spinnerPlaceholderGrid: document.getElementById('spinner-placeholder--grid'),
   spinnerPlaceholderPopup: document.getElementById('spinner-placeholder--popup'),
   spinnerPlaceholderBookmarks: document.getElementById('spinner-placeholder--bookmarks'),
@@ -41,8 +40,7 @@ export const elements = {
   bookmarksSection: document.querySelector('.section-bookmarks'),
   deleteAllBookmarksButton: document.querySelector('.delete-all-button'),
   buttonBackToTop: document.getElementsByClassName('button-backToTop')[0],
-  exportBookmarkskButton: document.getElementsByClassName('export-bookmarks-button')[0],
-  getBookmarks: document.getElementsByClassName('grid-item'),
+  exportBookmarksButton: document.getElementsByClassName('export-bookmarks-button')[0],
   selectCheckboxes: document.getElementsByClassName('select-checkbox'),
   buttonSelectAllCheckbox: document.getElementsByClassName('select-all-checkbox-button'),
 };
