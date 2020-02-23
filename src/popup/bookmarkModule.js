@@ -1,7 +1,7 @@
 import { elements } from './base';
 import { activatePopup } from './infoPopupModule';
 import { msnry, removeBookmarkImages } from './bookmarkModule.utils';
-import { providerLogos, unicodeToString, removeLoadMoreButton } from './helper';
+import { sourceLogos, unicodeToString, removeLoadMoreButton } from './helper';
 // eslint-disable-next-line import/no-cycle
 import { removeOldSearchResults, removeLoaderAnimation, checkInternetConnection } from './searchModule';
 import { addSpinner, removeSpinner } from './spinner';
@@ -92,7 +92,7 @@ function loadImages() {
     // get the details of each image
 
     bookmarksArray.forEach((imageId) => {
-      const url = `http://api.creativecommons.engineering/image/${imageId}`;
+      const url = `http://api.creativecommons.engineering/v1/images/${imageId}`;
       fetch(url)
         .then(data => data.json())
         .then((res) => {
@@ -101,7 +101,7 @@ function loadImages() {
           const thumbnail = res.thumbnail ? res.thumbnail : res.url;
           const title = unicodeToString(res.title);
           const { license, id } = res;
-          const provider = res.provider_code.toLowerCase();
+          const source = res.source.toLowerCase();
           const licenseArray = license.split('-'); // split license in individual characteristics
           const foreignLandingUrl = res.foreign_landing_url;
 
@@ -123,18 +123,18 @@ function loadImages() {
           foreignLandingLinkElement.setAttribute('target', '_blank');
           foreignLandingLinkElement.setAttribute('class', 'foreign-landing-url');
 
-          const providerImageElement = document.createElement('img');
-          let providerLogoName;
-          for (let i = 0; i < providerLogos.length; i += 1) {
-            if (providerLogos[i].includes(provider)) {
-              providerLogoName = providerLogos[i];
+          const sourceImageElement = document.createElement('img');
+          let sourceLogoName;
+          for (let i = 0; i < sourceLogos.length; i += 1) {
+            if (sourceLogos[i].includes(source)) {
+              sourceLogoName = sourceLogos[i];
               break;
             }
           }
-          providerImageElement.setAttribute('src', `img/provider_logos/${providerLogoName}`);
-          providerImageElement.setAttribute('class', 'provider-image');
+          sourceImageElement.setAttribute('src', `img/provider_logos/${sourceLogoName}`);
+          sourceImageElement.setAttribute('class', 'provider-image');
 
-          foreignLandingLinkElement.appendChild(providerImageElement);
+          foreignLandingLinkElement.appendChild(sourceImageElement);
           foreignLandingLinkElement.appendChild(imageTitleNode);
 
           spanTitleElement.appendChild(foreignLandingLinkElement);
