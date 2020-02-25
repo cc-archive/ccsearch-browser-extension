@@ -76,7 +76,30 @@ You can install the extension directly from the source. Follow the following ste
       - Navigate to _about://extensions_.
       - Click on "Load Unpacked" button (make sure you have enabled the _Developer mode_).
       - From the file explorer, choose `ccsearch-browser-extension/dist/opera`.
-
+## Debugging in Development Mode
+   - **Mozilla Firefox**
+      - Navigate to _about:debugging_ and from sidebar select _This Firefox_.
+      - Click on "Load Temporary Add-on" button. ![Load Temporary Add-on](debug-image/debuging-in-firefox.png)
+      - From the file explorer, choose `ccsearch-browser-extension/dist/firefox/manifest.json`.
+      - You will be now able to see CC search browser extension. Now click on the Inspect button. ![Inspect](debug-image/inspect-firefox.png)
+      - A new tab will open with firefox debugger. Now first, click on the _three dots_ and select "Disable Popup Auto-Hide". ![Disable Popup Auto-hide Image](debug-image/three-dots-firefox.png)
+      - Now click on the browser extension from top right corner and the DOM will be loaded with the content to debug. ![Firefox debug](debug-image/click-on-extension.png)
+   - **Google Chrome**
+      - Navigate to _chrome://extensions_.
+      - Make sure that Developer mode is toggled on.
+      - Click on "Load Unpacked" button. ![Load Temporary Add-on](debug-image/chrome-load-unpacked.png)
+      - From the file explorer, choose `ccsearch-browser-extension/dist/chrome`.
+      - Now the extension will be loaded. Click on the extension from the top right corner.
+      - Right click in extension area and select "Inspect element". ![Inspect in Chrome](debug-image/inspect-in-chrome.png)
+      - Developer tool will now open loaded with the content to debug. ![Debugging in Chrome](debug-image/debug-chrome.png)
+   - **Opera**
+      - Navigate to _about://extensions_.
+      - Make sure that Developer mode is toggled on.
+      - Click on "Load Unpacked" button. ![Load Temporary Add-on](debug-image/opera-load-unpacked.png)
+      - From the file explorer, choose `ccsearch-browser-extension/dist/opera`.
+      - Now the extension will be loaded. Click on the extension from the top right corner.
+      - Right click in extension area and select "Inspect element". ![Inspect in Opera](debug-image/inspect-in-opera.png)
+      - Dev tool will now open loaded with the content to debug. ![Debugging in Opera](debug-image/debug-opera.png)
 ## Troubleshooting build failures
 1. If you get following error:
 ```shell
