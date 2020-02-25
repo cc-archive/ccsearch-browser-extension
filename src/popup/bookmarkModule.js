@@ -337,7 +337,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  elements.exportBookmarkskButton.addEventListener('click', () => {
+  elements.exportBookmarksButton.addEventListener('click', () => {
     const bookmarks = [];
 
     Object.values(bookmarkDOM).forEach((checkbox) => {
