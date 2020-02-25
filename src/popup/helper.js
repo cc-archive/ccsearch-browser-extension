@@ -7,7 +7,7 @@ export function unicodeToString(string) {
 }
 
 // all the provider logo image file names
-export const providerLogos = [
+export const sourceLogos = [
   '500px_logo.png',
   'animaldiversity_logo.png',
   'brooklynmuseum_logo.png',

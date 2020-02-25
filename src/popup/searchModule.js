@@ -1,5 +1,5 @@
 import { elements } from './base';
-import { unicodeToString, providerLogos, addLoadMoreButton } from './helper';
+import { unicodeToString, sourceLogos, addLoadMoreButton } from './helper';
 import { activatePopup } from './infoPopupModule';
 import { removeSpinner } from './spinner';
 // eslint-disable-next-line import/no-cycle
@@ -153,9 +153,9 @@ export function addThumbnailsToDOM(resultArray) {
 
       const providerImageElement = document.createElement('img');
       let providerLogoName;
-      for (let i = 0; i < providerLogos.length; i += 1) {
-        if (providerLogos[i].includes(provider)) {
-          providerLogoName = providerLogos[i];
+      for (let i = 0; i < sourceLogos.length; i += 1) {
+        if (sourceLogos[i].includes(provider)) {
+          providerLogoName = sourceLogos[i];
           break;
         }
       }

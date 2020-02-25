@@ -161,14 +161,14 @@ function getPopupLicenseChildNode(licenseUrl, license) {
 }
 
 function getImageData(imageId) {
-  const url = `https://api.creativecommons.engineering/image/${imageId}`;
+  const url = `https://api.creativecommons.engineering/v1/images/${imageId}`;
 
   fetch(url)
     .then(data => data.json())
     .then((res) => {
       const {
         title,
-        provider,
+        source,
         foreign_landing_url: foreignLandingUrl,
         license_url: licenseUrl,
         license,
@@ -189,7 +189,7 @@ function getImageData(imageId) {
       elements.downloadImageAttributionButton.title = `${res.title}.${res.url.split('.').pop()}`;
       const popupTitle = document.querySelector('.info__content-title');
       const popupCreator = document.querySelector('.info__content-creator');
-      const popupProvider = document.querySelector('.info__content-provider');
+      const popupSource = document.querySelector('.info__content-provider');
       const popupLicense = document.querySelector('.info__content-license');
       const attributionRichTextPara = document.getElementById('attribution-rich-text');
       const attributionHtmlTextArea = document.getElementById('attribution-html');
@@ -197,8 +197,8 @@ function getImageData(imageId) {
       popupTitle.textContent = `${title}`;
       removeChildNodes(popupCreator);
       popupCreator.appendChild(getPopupCreatorChildNode(creatorUrl, creator));
-      removeChildNodes(popupProvider);
-      popupProvider.appendChild(getPopupProviderChildNode(foreignLandingUrl, provider));
+      removeChildNodes(popupSource);
+      popupSource.appendChild(getPopupProviderChildNode(foreignLandingUrl, source));
       removeChildNodes(popupLicense);
       popupLicense.appendChild(getPopupLicenseChildNode(licenseUrl, license.toUpperCase()));
       // attributionRichTextPara.textContent = getRichTextAttribution(res, attributionRichTextPara);
