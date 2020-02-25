@@ -89,15 +89,16 @@ You can install the extension directly from the source. Follow the following ste
       - Make sure that Developer mode is toggled on.
       - Click on "Load Unpacked" button. ![Load Temporary Add-on](debug-image/chrome-load-unpacked.png)
       - From the file explorer, choose `ccsearch-browser-extension/dist/chrome`.
-      - You will be now able to see CC search browser extension. Right click on the extension area and select "Inspect". ![Inspect in Chrome](debug-image/inspect-in-chrome.png)
+      - Now the extension will be loaded. Click on the extension from the top right corner.
+      - Right click in extension area and select "Inspect element". ![Inspect in Chrome](debug-image/inspect-in-chrome.png)
       - Developer tool will now open loaded with the content to debug. ![Debugging in Chrome](debug-image/debug-chrome.png)
    - **Opera**
       - Navigate to _about://extensions_.
       - Make sure that Developer mode is toggled on.
       - Click on "Load Unpacked" button. ![Load Temporary Add-on](debug-image/opera-load-unpacked.png)
       - From the file explorer, choose `ccsearch-browser-extension/dist/opera`.
-      - Now the extension will be loaded. Click on the extension from the top right corner. ![Inspect in Opera](debug-image/inspect-in-opera.png)
-      - Right click in extension area and select "Inspect element".
+      - Now the extension will be loaded. Click on the extension from the top right corner.
+      - Right click in extension area and select "Inspect element". ![Inspect in Opera](debug-image/inspect-in-opera.png)
       - Dev tool will now open loaded with the content to debug. ![Debugging in Opera](debug-image/debug-opera.png)
 ## Troubleshooting build failures
 1. If you get following error:
