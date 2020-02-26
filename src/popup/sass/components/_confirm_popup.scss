@@ -22,23 +22,6 @@
   height:70%;
 }
 
-/* The Close Button */
-.close {
-  color: #aaaaaa;
-  float: right;
-  font-size: 30px;
-  font-weight: bold;
-  position: relative;
-  top: -100px;
-  left:15px;
-}
-
-.close:hover,
-.close:focus {
-  color: #ee5b32;
-  text-decoration: none;
-  cursor: pointer;
-}
 .popup-header{
     background-image: linear-gradient(to right, #ff4e14, #ff7d31);
     margin-top: 0;
@@ -48,6 +31,22 @@
 {
   padding: 20px 20px 20px 100px;
 }
+.close
+{
+  position: relative;
+  text-align: center;
+  background-image: linear-gradient(to right, #ff4e14, #ff7d31);
+  font-size: 24px;
+  color: white;
+  top:30px;
+  left:110px;
+  margin: 0px 2px;
+  display: inline-block;
+  text-decoration: none;
+  border:1px solid #ee5b32;
+  cursor: pointer;
+  padding:4px;
+}
 .confirm_button
 {
   position: relative;
@@ -55,9 +54,12 @@
   background-image: linear-gradient(to right, #ff4e14, #ff7d31);
   font-size: 24px;
   color: white;
-  top:60px;
-  left:220px;
-  margin: 4px 2px;
+  top:30px;
+  left:230px;
+  margin: 0px 2px;
   display: inline-block;
   text-decoration: none;
+  border:1px solid #ee5b32; 
+  cursor: pointer;
+  padding:4px;
 }
