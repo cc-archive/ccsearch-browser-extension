@@ -30,7 +30,9 @@ import {
 
 let inputText;
 let pageNo;
-
+const modal = document.getElementById('myModal');
+const span = document.getElementsByClassName('close')[0];
+const deletebtn = document.getElementById('delete');
 // List to hold providers selected by the user from the drop down.
 let userSelectedSourcesList = [];
 
@@ -288,6 +290,12 @@ elements.searchIcon.addEventListener('click', () => {
 });
 
 elements.clearSearchButton[0].addEventListener('click', () => {
+  modal.style.display = 'block';
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+          modal.style.display = 'none';
+        };
+        deletebtn.onclick = function () {
   // Restore Initial Content
   elements.clearSearchButton[0].classList.add('display-none');
   elements.inputField.value = '';
@@ -298,6 +306,8 @@ elements.clearSearchButton[0].addEventListener('click', () => {
   restoreInitialContent('primary');
 
   applyFilters();
+modal.style.display = 'none';
+}
 });
 
 // applying comboTree (see https://github.com/kirlisakal/combo-tree)
