@@ -2,7 +2,7 @@
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 10; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
+  padding-top: 140px; /* Location of the box */
   left: 0;
   top: 0;
   width: 100%; /* Full width */
@@ -18,48 +18,58 @@
   margin: auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 80%;
-  height:70%;
+  width: 63%;
+  height:56%;
 }
-
+.modal-close
+{
+  float: right;
+  font-size: 20px;
+  font-weight: bold;
+  position: relative;
+  top: -50px;
+  left:13px;
+  cursor: pointer;
+}
 .popup-header{
     background-image: linear-gradient(to right, #ff4e14, #ff7d31);
     margin-top: 0;
-    padding: 20px 20px 20px 40px;
+    text-align:center;
+    padding: 5px;
 }
 .popup-text
 {
-  padding: 20px 20px 20px 100px;
+  padding: 20px 5px 20px 5px;
 }
 .close
 {
   position: relative;
   text-align: center;
-  background-image: linear-gradient(to right, #ff4e14, #ff7d31);
-  font-size: 24px;
+  background-color:#ee5b32;
+  font-size: 20px;
   color: white;
-  top:30px;
-  left:110px;
+  top:10px;
+  left:60px;
   margin: 0px 2px;
   display: inline-block;
   text-decoration: none;
   border:1px solid #ee5b32;
   cursor: pointer;
-  padding:4px;
+  padding:4px 8px;
 }
 .confirm_button
 {
   position: relative;
   text-align: center;
-  background-image: linear-gradient(to right, #ff4e14, #ff7d31);
-  font-size: 24px;
+  background-color:#ee5b32;
+  font-size: 20px;
   color: white;
-  top:30px;
-  left:230px;
+  top:10px;
+  left:180px;
   margin: 0px 2px;
   display: inline-block;
   text-decoration: none;
   border:1px solid #ee5b32; 
   cursor: pointer;
-  padding:4px;
+  padding:4px 8px;
 }

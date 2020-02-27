@@ -32,6 +32,7 @@ let inputText;
 let pageNo;
 const modal = document.getElementById('myModal');
 const span = document.getElementsByClassName('close')[0];
+const modal_close = document.getElementsByClassName('modal-close')[0];
 const deletebtn = document.getElementById('delete');
 // List to hold providers selected by the user from the drop down.
 let userSelectedSourcesList = [];
@@ -288,10 +289,15 @@ elements.searchIcon.addEventListener('click', () => {
     });
   elements.clearSearchButton[0].classList.remove('display-none');
 });
-
+modal.addEventListener('click',()=>{
+span.click();
+});
 elements.clearSearchButton[0].addEventListener('click', () => {
   modal.style.display = 'block';
   span.onclick = () => {
+    modal.style.display = 'none';
+  };
+  modal_close.onclick = () => {
     modal.style.display = 'none';
   };
   deletebtn.onclick = () => {
