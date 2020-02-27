@@ -291,7 +291,7 @@ elements.searchIcon.addEventListener('click', () => {
 
 elements.clearSearchButton[0].addEventListener('click', () => {
   modal.style.display = 'block';
-  span.onclick =() => {
+  span.onclick = () => {
     modal.style.display = 'none';
   };
   deletebtn.onclick = () => {
