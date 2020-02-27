@@ -291,11 +291,10 @@ elements.searchIcon.addEventListener('click', () => {
 
 elements.clearSearchButton[0].addEventListener('click', () => {
   modal.style.display = 'block';
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function () {
-          modal.style.display = 'none';
-        };
-        deletebtn.onclick = function () {
+  span.onclick = function () {
+  modal.style.display = 'none';
+};
+  deletebtn.onclick = function () {
   // Restore Initial Content
   elements.clearSearchButton[0].classList.add('display-none');
   elements.inputField.value = '';
