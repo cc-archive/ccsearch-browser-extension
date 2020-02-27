@@ -1,9 +1,9 @@
 import { elements } from './base';
-import { 
+import {
   unicodeToString,
-  sourceLogos, 
-  addLoadMoreButton, 
-  removeLoadMoreButton, 
+  sourceLogos,
+  addLoadMoreButton,
+  removeLoadMoreButton,
 } from './helper';
 import { activatePopup } from './infoPopupModule';
 import { removeSpinner } from './spinner';
