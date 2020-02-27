@@ -291,10 +291,10 @@ elements.searchIcon.addEventListener('click', () => {
 
 elements.clearSearchButton[0].addEventListener('click', () => {
   modal.style.display = 'block';
-  span.onclick =()=>{
+  span.onclick =() => {
     modal.style.display = 'none';
   };
-  deletebtn.onclick = ()=> {
+  deletebtn.onclick = () => {
     // Restore Initial Content
     elements.clearSearchButton[0].classList.add('display-none');
     elements.inputField.value = '';
