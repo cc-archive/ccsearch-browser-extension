@@ -269,7 +269,7 @@ elements.searchIcon.addEventListener('click', () => {
     .then((res) => {
       checkValidationError(res);
       const resultArray = res.results;
-      // console.log(resultArray);
+      console.log(resultArray);
 
       checkResultLength(resultArray);
       addThumbnailsToDOM(resultArray);
