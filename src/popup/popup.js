@@ -290,23 +290,23 @@ elements.searchIcon.addEventListener('click', () => {
 });
 
 elements.clearSearchButton[0].addEventListener('click', () => {
-  modal.style.display = 'block';
-  span.onclick = function () {
-  modal.style.display = 'none';
-};
+    modal.style.display = 'block';
+    span.onclick = function () {
+    modal.style.display = 'none';
+  };
   deletebtn.onclick = function () {
-  // Restore Initial Content
-  elements.clearSearchButton[0].classList.add('display-none');
-  elements.inputField.value = '';
-  removeOldSearchResults();
-  removeLoadMoreButton(elements.loadMoreButtonWrapper);
-  elements.gridPrimary.setAttribute('style', 'position: relative; height: 0px;');
-  localStorage.clear();
-  restoreInitialContent('primary');
+    // Restore Initial Content
+    elements.clearSearchButton[0].classList.add('display-none');
+    elements.inputField.value = '';
+    removeOldSearchResults();
+    removeLoadMoreButton(elements.loadMoreButtonWrapper);
+    elements.gridPrimary.setAttribute('style', 'position: relative; height: 0px;');
+    localStorage.clear();
+    restoreInitialContent('primary');
 
-  applyFilters();
-modal.style.display = 'none';
-}
+    applyFilters();
+    modal.style.display = 'none';
+  }
 });
 
 // applying comboTree (see https://github.com/kirlisakal/combo-tree)
