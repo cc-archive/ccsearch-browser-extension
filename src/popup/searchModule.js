@@ -3,7 +3,7 @@ import {
   unicodeToString,
   sourceLogos, 
   addLoadMoreButton, 
-  removeLoadMoreButton 
+  removeLoadMoreButton, 
 } from './helper';
 import { activatePopup } from './infoPopupModule';
 import { removeSpinner } from './spinner';
