@@ -114,6 +114,14 @@ export function checkValidationError(apiResponse) {
     restoreInitialContent('primary');
     throw new Error('Not valid search query');
   }
+  if (apiResponse.error_type == "InputError") {
+    removeLoadMoreButton(elements.loadMoreButtonWrapper);
+    elements.gridPrimary.setAttribute('style', 'position: relative; height: 0px;');
+    showNotification('Not a valid search query', 'negative', 'snackbar-bookmarks');
+    removeLoaderAnimation();
+    restoreInitialContent('primary');
+    throw new Error('Not valid search query');
+  }
 }
 
 // eslint-disable-next-line no-undef
