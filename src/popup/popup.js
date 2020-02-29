@@ -26,7 +26,7 @@ import {
   removeNode,
   getLatestProviders,
   restoreInitialContent,
-  showModal
+  showModal,
 } from '../utils';
 
 let inputText;
@@ -290,10 +290,9 @@ elements.modal.addEventListener('click', () => {
   elements.modalCancel.click();
 });
 elements.clearSearchButton[0].addEventListener('click', () => {
- var modalContent="Do you really want to clear the search?";
- function onModalConfirm()
-  {
-     // Restore Initial Content
+  let modalContent= 'Do you really want to clear the search?';
+  function onModalConfirm() {
+    // Restore Initial Content
     elements.clearSearchButton[0].classList.add('display-none');
     elements.inputField.value = '';
     removeOldSearchResults();
@@ -304,8 +303,7 @@ elements.clearSearchButton[0].addEventListener('click', () => {
     applyFilters();
     elements.modal.style.display = 'none';
   }
- function onModalClose()
-  {
+  function onModalClose() {
     elements.modal.style.display = 'none';
   }
  showModal(modalContent,onModalConfirm,onModalClose,elements);
