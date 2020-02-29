@@ -1,5 +1,18 @@
 import { backupProviderAPIQueryStrings } from './popup/helper';
-
+export function showModal(modalContent,onModalConfirm,onModalClose,elements)
+{
+  elements.modalContent.innerText=modalContent
+  elements.modal.style.display = 'block';
+  elements.modalCancel.onclick = () => {
+    onModalClose();
+  };
+  elements.modalClose.onclick = () => {
+    onModalClose();
+  };
+  elements.modalConfirm.onclick = () => {
+   onModalConfirm();
+  };
+}
 export function showNotification(message, context, snackbarPlaceholderId, timeout) {
   const snackbar = document.getElementById(snackbarPlaceholderId);
   snackbar.innerText = message;

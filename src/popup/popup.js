@@ -26,14 +26,11 @@ import {
   removeNode,
   getLatestProviders,
   restoreInitialContent,
+  showModal
 } from '../utils';
 
 let inputText;
 let pageNo;
-const modal = document.getElementById('myModal');
-const span = document.getElementsByClassName('close')[0];
-const modalClose = document.getElementsByClassName('modal-close')[0];
-const deletebtn = document.getElementById('delete');
 // List to hold providers selected by the user from the drop down.
 let userSelectedSourcesList = [];
 
@@ -289,19 +286,14 @@ elements.searchIcon.addEventListener('click', () => {
     });
   elements.clearSearchButton[0].classList.remove('display-none');
 });
-modal.addEventListener('click', () => {
-  span.click();
+elements.modal.addEventListener('click', () => {
+  elements.modalCancel.click();
 });
 elements.clearSearchButton[0].addEventListener('click', () => {
-  modal.style.display = 'block';
-  span.onclick = () => {
-    modal.style.display = 'none';
-  };
-  modalClose.onclick = () => {
-    modal.style.display = 'none';
-  };
-  deletebtn.onclick = () => {
-    // Restore Initial Content
+ var modalContent="Do you really want to clear the search?";
+ function onModalConfirm()
+  {
+     // Restore Initial Content
     elements.clearSearchButton[0].classList.add('display-none');
     elements.inputField.value = '';
     removeOldSearchResults();
@@ -309,10 +301,14 @@ elements.clearSearchButton[0].addEventListener('click', () => {
     elements.gridPrimary.setAttribute('style', 'position: relative; height: 0px;');
     localStorage.clear();
     restoreInitialContent('primary');
-
     applyFilters();
-    modal.style.display = 'none';
-  };
+    elements.modal.style.display = 'none';
+  }
+ function onModalClose()
+  {
+    elements.modal.style.display = 'none';
+  }
+ showModal(modalContent,onModalConfirm,onModalClose,elements);
 });
 
 // applying comboTree (see https://github.com/kirlisakal/combo-tree)
