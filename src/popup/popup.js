@@ -306,7 +306,7 @@ elements.clearSearchButton[0].addEventListener('click', () => {
   function onModalClose() {
     elements.modal.style.display = 'none';
   }
-  showModal(modalText, onModalConfirm, onModalClose, elements.modalCancelBtn, elements.modalCloseBtn, elements.modalConfirmBtn);
+  showModal(modalText, onModalConfirm, onModalClose, elements);
 });
 
 // applying comboTree (see https://github.com/kirlisakal/combo-tree)
