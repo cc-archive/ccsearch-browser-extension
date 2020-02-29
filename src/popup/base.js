@@ -52,4 +52,3 @@ export const elements = {
   modalContent: document.getElementById('modal-text'),
 };
 export const attributionTabLink = elements.popupTabLinks[0];
-
