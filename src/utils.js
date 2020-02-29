@@ -1,7 +1,6 @@
 import { backupProviderAPIQueryStrings } from './popup/helper';
-export function showModal(modalContent,onModalConfirm,onModalClose,elements)
-{
-  elements.modalContent.innerText=modalContent
+export function showModal(modalContent, onModalConfirm, onModalClose, elements) {
+  elements.modalContent.innerText = modalContent;
   elements.modal.style.display = 'block';
   elements.modalCancel.onclick = () => {
     onModalClose();
@@ -13,6 +12,7 @@ export function showModal(modalContent,onModalConfirm,onModalClose,elements)
    onModalConfirm();
   };
 }
+
 export function showNotification(message, context, snackbarPlaceholderId, timeout) {
   const snackbar = document.getElementById(snackbarPlaceholderId);
   snackbar.innerText = message;
