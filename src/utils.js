@@ -1,20 +1,16 @@
 import { backupProviderAPIQueryStrings } from './popup/helper';
 
 export function showModal(modalText, onModalConfirm, onModalClose, elements) {
-  const modal = elements.modal;
-  const modalContent = elements.modalContent
-  const modalCancelBtn = elements.modalCancel
-  const modalCloseBtn = elements.modalClose
-  const modalConfirmBtn = elements.modalConfirm
+  const {modal, modalContent, modalCancel, modalClose, modalConfirm} = elements
   modalContent.innerText = modalText;
   modal.style.display = 'block';
-  modalCancelBtn.onclick = () => {
+  modalCancel.onclick = () => {
     onModalClose();
   };
-  modalCloseBtn.onclick = () => {
+  modalClose.onclick = () => {
     onModalClose();
   };
-  modalConfirmBtn.onclick = () => {
+  modalConfirm.onclick = () => {
     onModalConfirm();
   };
 }
