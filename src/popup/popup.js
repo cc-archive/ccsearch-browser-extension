@@ -290,7 +290,7 @@ elements.modal.addEventListener('click', () => {
   elements.modalCancel.click();
 });
 elements.clearSearchButton[0].addEventListener('click', () => {
-  const modalContent = 'Do you really want to clear the search?';
+  const modalText = 'Do you really want to clear the search?';
   function onModalConfirm() {
     // Restore Initial Content
     elements.clearSearchButton[0].classList.add('display-none');
@@ -306,7 +306,7 @@ elements.clearSearchButton[0].addEventListener('click', () => {
   function onModalClose() {
     elements.modal.style.display = 'none';
   }
-  showModal(modalContent, onModalConfirm, onModalClose, elements);
+  showModal(modalText, onModalConfirm, onModalClose, elements.modalCancelBtn, elements.modalCloseBtn, elements.modalConfirmBtn);
 });
 
 // applying comboTree (see https://github.com/kirlisakal/combo-tree)
