@@ -6,7 +6,7 @@ export function showModal(modalText, onModalConfirm, onModalClose, elements) {
     modalContent,
     modalCancel,
     modalClose,
-    modalConfirm 
+    modalConfirm,
   } = elements;
   modalContent.innerText = modalText;
   modal.style.display = 'block';
