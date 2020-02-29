@@ -1,8 +1,11 @@
 import { backupProviderAPIQueryStrings } from './popup/helper';
 
-export function showModal(modalText, onModalConfirm, onModalClose, modalCancelBtn, modalCloseBtn, modalConfirmBtn) {
-  const modal = document.getElementById("myModal")
-  const modalContent = document.getElementById("modal-text")
+export function showModal(modalText, onModalConfirm, onModalClose, elements) {
+  const modal = elements.modal;
+  const modalContent = elements.modalContent
+  const modalCancelBtn = elements.modalCancel
+  const modalCloseBtn = elements.modalClose
+  const modalConfirmBtn = elements.modalConfirm
   modalContent.innerText = modalText;
   modal.style.display = 'block';
   modalCancelBtn.onclick = () => {
