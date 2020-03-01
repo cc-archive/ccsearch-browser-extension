@@ -1,5 +1,10 @@
 import { elements } from './base';
-import { unicodeToString, sourceLogos, addLoadMoreButton } from './helper';
+import {
+  unicodeToString,
+  sourceLogos,
+  addLoadMoreButton,
+  removeLoadMoreButton,
+} from './helper';
 import { activatePopup } from './infoPopupModule';
 import { removeSpinner } from './spinner';
 // eslint-disable-next-line import/no-cycle
@@ -102,6 +107,16 @@ function appendToGrid(msnry, fragment, divs, grid) {
 // TODO: be more specific
 export function checkValidationError(apiResponse) {
   if (Object.prototype.hasOwnProperty.call(apiResponse, 'validation_error')) {
+    removeLoadMoreButton(elements.loadMoreButtonWrapper);
+    elements.gridPrimary.setAttribute('style', 'position: relative; height: 0px;');
+    showNotification('Not a valid search query', 'negative', 'snackbar-bookmarks');
+    removeLoaderAnimation();
+    restoreInitialContent('primary');
+    throw new Error('Not valid search query');
+  }
+  if (apiResponse.error_type === 'InputError') {
+    removeLoadMoreButton(elements.loadMoreButtonWrapper);
+    elements.gridPrimary.setAttribute('style', 'position: relative; height: 0px;');
     showNotification('Not a valid search query', 'negative', 'snackbar-bookmarks');
     removeLoaderAnimation();
     restoreInitialContent('primary');
