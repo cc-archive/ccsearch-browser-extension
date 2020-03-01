@@ -326,10 +326,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // When the user clicks the button, open the modal
         modal.style.display = 'block';
         // When the user clicks on <span> (x), close the modal
-        span.onclick = function () {
+        span.onclick = function Bookmarkmodal() {
           modal.style.display = 'none';
         };
-        deletebtn.onclick = function () {
+        deletebtn.onclick = function deleteBookmarks() {
           bookmarksArray.splice(0, bookmarksArray.length); // empty array
           chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
             // restoring initial layout of bookmarks section
