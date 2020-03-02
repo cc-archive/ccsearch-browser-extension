@@ -10,25 +10,4 @@
   &::after {
     @include clearfix;
   }
-
-  .col-1-of-3 {
-    float: left;
-    /* can mix units in calc function */
-    width: calc((100% - 1.25rem) / 3);
-    margin-right: 10px;
-
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-
-  .col-2-of-3 {
-    float: left;
-    width: calc((2 * ((100% - 1.25rem) / 3)) + 10px);
-    margin-right: 10px;
-
-    &:last-child {
-      margin-right: 0;
-    }
-  }
 }
