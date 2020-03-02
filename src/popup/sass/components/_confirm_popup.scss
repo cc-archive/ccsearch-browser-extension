@@ -31,17 +31,17 @@
   left:13px;
   cursor: pointer;
 }
-.popup-header{
+.modal-header{
     background-image: linear-gradient(to right, #ff4e14, #ff7d31);
     margin-top: 0;
     text-align:center;
     padding: 5px;
 }
-.popup-text
+.modal-text
 {
   padding: 20px 5px 20px 5px;
 }
-.modal-cancel
+.modal-button--cancel
 {
   position: relative;
   text-align: center;
@@ -57,7 +57,7 @@
   cursor: pointer;
   padding:4px 8px;
 }
-.modal-confirm
+.modal-button--confirm
 {
   position: relative;
   text-align: center;
