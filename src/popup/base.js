@@ -38,7 +38,7 @@ export const elements = {
   homeIcon: document.getElementById('home-icon'),
   primarySection: document.querySelector('.section-primary'),
   bookmarksSection: document.querySelector('.section-bookmarks'),
-  deleteAllBookmarksButton: document.querySelector('.delete-all-button'),
+  deleteSelectedBookmarksButton: document.querySelector('.delete-all-button'),
   buttonBackToTop: document.getElementsByClassName('button-backToTop')[0],
   exportBookmarksButton: document.getElementsByClassName('export-bookmarks-button')[0],
   selectCheckboxes: document.getElementsByClassName('select-checkbox'),
