@@ -304,16 +304,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   elements.deleteSelectedBookmarksButton.addEventListener('click', () => {
     chrome.storage.sync.get({ bookmarks: [] }, (items) => {
-      let bookmarksArray = items.bookmarks;
-      let bookmarkDOMArray = Object.values(bookmarkDOM);
+      const bookmarksArray = items.bookmarks;
+      const bookmarkDOMArray = Object.values(bookmarkDOM);
       bookmarkDOMArray.forEach((checkbox) => {
         if (checkbox.checked) {
           bookmarksArray[bookmarksArray.indexOf(checkbox.id)] = null;
         }
       });
-      let temp = [];
-      bookmarksArray.forEach((bookmark) =>{
-        if (bookmark != null) { 
+      const temp = [];
+      bookmarksArray.forEach((bookmark) => {
+        if (bookmark != null) {
           temp.push(bookmark);
         }
       });
