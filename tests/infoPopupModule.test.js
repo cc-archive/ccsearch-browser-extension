@@ -13,27 +13,24 @@ const image = {
   tags: [
     {
       name: 'dog',
-      provider: 'flickr',
     },
     {
       name: 'happy',
-      provider: 'flickr',
     },
   ],
   url: 'https://farm5.staticflickr.com/4036/4696290733_5f8794441e_b.jpg',
   thumbnail: 'https://farm5.staticflickr.com/4036/4696290733_5f8794441e_m.jpg',
-  provider: 'Flickr',
   source: 'flickr',
   license: 'by-nc-nd',
   license_version: '2.0',
-  foreign_landing_url: 'https://www.flickr.com/photos/46586088@N05/4696290733',
-  meta_data: null,
-  view_count: 0,
-  provider_url: 'https://www.flickr.com',
   license_url: 'https://creativecommons.org/licenses/by-nc-nd/2.0/',
+  foreign_landing_url: 'https://www.flickr.com/photos/46586088@N05/4696290733',
+  detail_url: 'https://api.creativecommons.engineering/v1/images/bafff537-0c74-4fa6-9867-401e440e97f5',
+  related_url: 'https://api.creativecommons.engineering/v1/recommendations/images/bafff537-0c74-4fa6-9867-401e440e97f5',
+  height: 1000,
+  width: 667,
   attribution:
     '"Megi - Lutka Moja" by cipovic is licensed under CC-BY-NC-ND 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-nd/2.0/.',
-  provider_code: 'flickr',
 };
 
 // test('Testing getRichTextAttribution', () => {
@@ -52,7 +49,7 @@ test('Testing getHtmlAttribution', () => {
   expect(testHtmlAttribution).toBe(correctAttribution);
 });
 
-test('Testing getHtmlAttribution', () => {
+test('Testing getPlainAttribution', () => {
   const testPlainAttribution = getPlainAttribution(image);
 
   const correctAttribution = `"Megi - Lutka Moja" by cipovic is licensed under CC BY-NC-ND 2.0
