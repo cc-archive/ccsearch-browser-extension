@@ -24,7 +24,7 @@ import { addSpinner } from './spinner';
 import {
   showNotification,
   removeNode,
-  getLatestProviders,
+  getLatestSources,
   restoreInitialContent,
 } from '../utils';
 
@@ -100,7 +100,7 @@ elements.inputField.addEventListener('keydown', (event) => {
 });
 
 async function populateProviderList() {
-  providerAPIQueryStrings = await getLatestProviders();
+  providerAPIQueryStrings = await getLatestSources();
 
   let count = 0;
   const providersList = [];

@@ -1,5 +1,5 @@
 import elements from './base';
-import { showNotification, getLatestProviders } from '../utils';
+import { showNotification, getLatestSources } from '../utils';
 
 export function restoreFilters(inputElements) {
   for (let i = 0; i < inputElements.length; i += 1) {
@@ -42,7 +42,7 @@ function addProvidersToDom(providers) {
 export async function init() {
   restoreFilters(elements.useCaseInputs);
   restoreFilters(elements.licenseInputs);
-  const providers = await getLatestProviders();
+  const providers = await getLatestSources();
   addProvidersToDom(providers);
 }
 
