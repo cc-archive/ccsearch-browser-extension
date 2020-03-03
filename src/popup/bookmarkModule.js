@@ -304,15 +304,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
   elements.deleteSelectedBookmarksButton.addEventListener('click', () => {
     chrome.storage.sync.get({ bookmarks: [] }, (items) => {
-      const bookmarksArray = items.bookmarks;
-      const bookmarkDOMArray = Object.values(bookmarkDOM);
+      let bookmarksArray = items.bookmarks;
+      let bookmarkDOMArray = Object.values(bookmarkDOM);
       bookmarkDOMArray.forEach((checkbox) => {
-        if (checkbox.checked) bookmarksArray.splice(bookmarksArray.indexOf(checkbox), 1);
+        if (checkbox.checked) {
+          bookmarksArray[bookmarksArray.indexOf(checkbox.id)] = null;
+        }
       });
-      if (bookmarksArray.length === bookmarkDOMArray.length) {
+      let temp = [];
+      bookmarksArray.forEach((bookmark) =>{
+        if (bookmark != null) { 
+          temp.push(bookmark);
+        }
+      });
+      if (bookmarksArray.length === temp.length) {
         showNotification('No Bookmark Selected for removal', 'negative', 'snackbar-bookmarks');
       } else {
-        chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
+        chrome.storage.sync.set({ bookmarks: temp }, () => {
           // restoring initial layout of bookmarks section
           removeBookmarkImages();
           addSpinner(elements.spinnerPlaceholderBookmarks, 'original');
