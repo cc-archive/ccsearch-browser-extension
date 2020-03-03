@@ -144,7 +144,7 @@ export function addThumbnailsToDOM(resultArray) {
     resultArray.forEach((element) => {
       const thumbnail = element.url; // element.thumbnail giving 403
       const title = unicodeToString(element.title);
-      const { license, provider, id } = element;
+      const { license, source, id } = element;
       const licenseArray = license.split('-'); // split license in individual characteristics
       const foreignLandingUrl = element.foreign_landing_url;
 
@@ -166,18 +166,18 @@ export function addThumbnailsToDOM(resultArray) {
       foreignLandingLinkElement.setAttribute('target', '_blank');
       foreignLandingLinkElement.setAttribute('class', 'foreign-landing-url');
 
-      const providerImageElement = document.createElement('img');
-      let providerLogoName;
+      const sourceImageElement = document.createElement('img');
+      let sourceLogoName;
       for (let i = 0; i < sourceLogos.length; i += 1) {
-        if (sourceLogos[i].includes(provider)) {
-          providerLogoName = sourceLogos[i];
+        if (sourceLogos[i].includes(source)) {
+          sourceLogoName = sourceLogos[i];
           break;
         }
       }
-      providerImageElement.setAttribute('src', `img/provider_logos/${providerLogoName}`);
-      providerImageElement.setAttribute('class', 'provider-image');
+      sourceImageElement.setAttribute('src', `img/provider_logos/${sourceLogoName}`);
+      sourceImageElement.setAttribute('class', 'provider-image');
 
-      foreignLandingLinkElement.appendChild(providerImageElement);
+      foreignLandingLinkElement.appendChild(sourceImageElement);
       foreignLandingLinkElement.appendChild(imageTitleNode);
 
       spanTitleElement.appendChild(foreignLandingLinkElement);
