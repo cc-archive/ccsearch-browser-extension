@@ -22,10 +22,12 @@
   i {
     position: absolute;
     right: 0;
+    padding: 0;
+    margin: 0;
     top: 50%;
     transform: translateY(-50%);
     color: $color-secondary-light;
-    &#search-margin{
+    &#search-margin {
       right : 4%;
     }
     &#filter-icon {
