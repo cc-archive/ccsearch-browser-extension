@@ -55,26 +55,26 @@ export function restoreInitialContent(context) {
   }
 }
 
-export async function fetchProviders() {
-  const getProviderURL = 'https://api.creativecommons.engineering/statistics/image';
-  const data = await fetch(getProviderURL);
+export async function fetchSources() {
+  const getSourceURL = 'https://api.creativecommons.engineering/v1/sources';
+  const data = await fetch(getSourceURL);
   // console.log(data);
 
   return data.json();
 }
 
-export async function getLatestProviders() {
-  let providers = {};
+export async function getLatestSources() {
+  let sources = {};
   try {
-    const result = await fetchProviders();
-    result.forEach((provider) => {
-      providers[provider.display_name] = provider.provider_name;
+    const result = await fetchSources();
+    result.forEach((source) => {
+      sources[source.display_name] = source.source_name;
     });
-    return providers;
+    return sources;
   } catch (error) {
-    showNotification('Unable to fetch providers. Using backup providers', 'negative', 'snackbar-bookmarks', 2500);
-    providers = backupProviderAPIQueryStrings;
-    return providers;
+    showNotification('Unable to fetch sources. Using backup sources', 'negative', 'snackbar-bookmarks', 2500);
+    sources = backupProviderAPIQueryStrings;
+    return sources;
   }
 }
 
