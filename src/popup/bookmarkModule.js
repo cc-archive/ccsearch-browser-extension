@@ -318,7 +318,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
       if (bookmarksArray.length === temp.length) {
-        showNotification('No Bookmark Selected for removal', 'negative', 'snackbar-bookmarks');
+        showNotification('No bookmark selected', 'negative', 'snackbar-bookmarks');
       } else {
         chrome.storage.sync.set({ bookmarks: temp }, () => {
           // restoring initial layout of bookmarks section
