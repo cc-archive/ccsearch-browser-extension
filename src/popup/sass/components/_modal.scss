@@ -1,18 +1,16 @@
 .modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 10; /* Sit on top */
-  padding-top: 140px; /* Location of the box */
+  display: none;
+  position: fixed;
+  z-index: 10;
+  padding-top: 140px;
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
 }
-
-/* Modal Content */
 .modal-content {
   background-color: #fefefe;
   margin: auto;
@@ -32,44 +30,37 @@
   cursor: pointer;
 }
 .modal-header{
-    background-image: linear-gradient(to right, #ff4e14, #ff7d31);
-    margin-top: 0;
-    text-align:center;
-    padding: 5px;
+  background-image: linear-gradient(to right, #ff4e14, #ff7d31);
+  margin-top: 0;
+  text-align:center;
+  padding: 5px;
 }
 .modal-text
 {
   padding: 20px 5px 20px 5px;
 }
-.modal-button--cancel
+.modal-button
 {
   position: relative;
-  text-align: center;
-  background-color:#ee5b32;
-  font-size: 20px;
-  color: white;
-  top:10px;
-  left:60px;
-  margin: 0px 2px;
-  display: inline-block;
-  text-decoration: none;
-  border:1px solid #ee5b32;
-  cursor: pointer;
-  padding:4px 8px;
-}
-.modal-button--confirm
-{
-  position: relative;
-  text-align: center;
-  background-color:#ee5b32;
-  font-size: 20px;
-  color: white;
-  top:10px;
-  left:180px;
-  margin: 0px 2px;
   display: inline-block;
   text-decoration: none;
   border:1px solid #ee5b32; 
   cursor: pointer;
   padding:4px 8px;
+  text-align: center;
+  background-color:#ee5b32;
+  font-size: 20px;
+  color: white;
+  top:10px;
+  margin: 0px 2px;
+  &--cancel
+  {
+  @extend .modal-button;
+  left:60px;
+  }
+  &--confirm
+  {
+  @extend .modal-button;
+  left:180px;
+  }
 }
