@@ -26,15 +26,17 @@
     top: 50%;
     transform: translateY(-50%);
     color: $color-secondary-light;
-    &#search-margin {
-      right : 4%;
+
+    &#search-icon {
+      right: 4%;
     }
+
     &#filter-icon {
-      right: 10%;  
+      right: 10%;
     }
 
     &.clear-search-button {
-      color: #ff4e14;
+      color: #ff5b24;
       right: 16%;
 
       &:hover {
@@ -73,25 +75,25 @@
     padding-top: 6px;
   }
 
-    &__filter-wrapper {
-      display: flex;
-      justify-content: center;
+  &__filter-wrapper {
+    display: flex;
+    justify-content: center;
 
-      &--choose-usecase {
-        width: 10.625rem;
-        margin-right: 1rem;
-      }
-
-      &--choose-license {
-        width: 6.875rem;
-        margin-right: 1rem;
-      }
-
-      &--choose-provider {
-        width: 12.5rem;
-        display: none;
-      }
+    &--choose-usecase {
+      width: 10.625rem;
+      margin-right: 1rem;
     }
+
+    &--choose-license {
+      width: 6.875rem;
+      margin-right: 1rem;
+    }
+
+    &--choose-provider {
+      width: 12.5rem;
+      display: none;
+    }
+  }
 
   &__filter-button {
     display: flex;
