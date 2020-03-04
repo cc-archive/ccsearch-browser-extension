@@ -329,7 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
           restoreInitialContent('primary');
           loadImages();
           // confirm user action
-          showNotification('Bookmark sucessfully removed', 'positive', 'snackbar-bookmarks');
+          showNotification('Bookmarks sucessfully removed', 'positive', 'snackbar-bookmarks');
         });
       }
     });
