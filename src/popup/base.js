@@ -50,5 +50,6 @@ export const elements = {
   modalCancel: document.getElementsByClassName('modal-button--cancel')[0],
   modalConfirm: document.getElementsByClassName('modal-button--confirm')[0],
   modalContent: document.getElementsByClassName('modal-text')[0],
+  modalBody: document.getElementsByClassName('modal-content')[0],
 };
 export const attributionTabLink = elements.popupTabLinks[0];

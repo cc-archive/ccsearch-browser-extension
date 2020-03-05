@@ -1,6 +1,7 @@
 import { backupProviderAPIQueryStrings } from './popup/helper';
+import { elements } from './popup/base';
 
-export function showModal(modalText, onModalConfirm, onModalClose, elements) {
+export function showModal(modalText, onModalConfirm, onModalClose) {
   const {
     modal,
     modalContent,
@@ -9,7 +10,7 @@ export function showModal(modalText, onModalConfirm, onModalClose, elements) {
     modalConfirm,
   } = elements;
   modalContent.innerText = modalText;
-  modal.style.display = 'block';
+  modal.classList.remove('display-none');
   modalCancel.onclick = () => {
     onModalClose();
   };

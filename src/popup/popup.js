@@ -57,6 +57,8 @@ clipboard.on('success', (e) => {
   showNotification('Copied', 'positive', 'snackbar-bookmarks');
 });
 
+elements.modal.classList.add("display-none");
+
 elements.popupCloseButton.addEventListener('click', () => {
   elements.popup.style.opacity = 0;
   elements.popup.style.visibility = 'hidden';
@@ -286,8 +288,13 @@ elements.searchIcon.addEventListener('click', () => {
     });
   elements.clearSearchButton[0].classList.remove('display-none');
 });
-elements.modal.addEventListener('click', () => {
-  elements.modalCancel.click();
+elements.modal.addEventListener('click', (e) => {
+  if(!e.target.classList.contains("modal-content")) {
+    elements.modalCancel.click();
+  }
+});
+elements.modalBody.addEventListener('click', (e) => {
+  e.stopPropagation();
 });
 elements.clearSearchButton[0].addEventListener('click', () => {
   const modalText = 'Do you really want to clear the search?';
@@ -301,12 +308,12 @@ elements.clearSearchButton[0].addEventListener('click', () => {
     localStorage.clear();
     restoreInitialContent('primary');
     applyFilters();
-    elements.modal.style.display = 'none';
+    elements.modal.classList.add('display-none');
   }
   function onModalClose() {
-    elements.modal.style.display = 'none';
+    elements.modal.classList.add('display-none');
   }
-  showModal(modalText, onModalConfirm, onModalClose, elements);
+  showModal(modalText, onModalConfirm, onModalClose);
 });
 
 // applying comboTree (see https://github.com/kirlisakal/combo-tree)
