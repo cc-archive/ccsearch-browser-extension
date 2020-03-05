@@ -288,7 +288,7 @@ elements.searchIcon.addEventListener('click', () => {
     });
   elements.clearSearchButton[0].classList.remove('display-none');
 });
-elements.modal.addEventListener('click', (e) => {
+elements.modal.addEventListener('click', () => {
   elements.modalCancel.click();
 });
 elements.modalBody.addEventListener('click', (e) => {
