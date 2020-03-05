@@ -311,7 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
           bookmarksArray[bookmarksArray.indexOf(checkbox.id)] = null;
         }
       });
-      const temp = [];
+      const updatedBookmarksArray = [];
       bookmarksArray.forEach((bookmark) => {
         if (bookmark != null) {
           temp.push(bookmark);
