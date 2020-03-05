@@ -57,7 +57,7 @@ clipboard.on('success', (e) => {
   showNotification('Copied', 'positive', 'snackbar-bookmarks');
 });
 
-elements.modal.classList.add("display-none");
+elements.modal.classList.add('display-none');
 
 elements.popupCloseButton.addEventListener('click', () => {
   elements.popup.style.opacity = 0;
@@ -289,9 +289,7 @@ elements.searchIcon.addEventListener('click', () => {
   elements.clearSearchButton[0].classList.remove('display-none');
 });
 elements.modal.addEventListener('click', (e) => {
-  if(!e.target.classList.contains("modal-content")) {
-    elements.modalCancel.click();
-  }
+  elements.modalCancel.click();
 });
 elements.modalBody.addEventListener('click', (e) => {
   e.stopPropagation();
