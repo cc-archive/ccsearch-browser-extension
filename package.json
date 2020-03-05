@@ -37,18 +37,18 @@
   },
   "homepage": "https://github.com/creativecommons/ccsearch-browser-extension#readme",
   "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
-    "@types/jest": "^24.0.17",
+    "@babel/core": "^7.8.7",
+    "@babel/preset-env": "^7.8.7",
+    "@types/jest": "^24.9.1",
     "copy-webpack-plugin": "^5.1.1",
     "eslint": "^5.16.0",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.17.3",
-    "jest": "^24.8.0",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-plugin-import": "^2.20.1",
+    "jest": "^24.9.0",
     "node-sass": "^4.13.1",
-    "webpack": "^4.35.2",
+    "webpack": "^4.42.0",
     "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.7.2"
+    "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
     "downloadjs": "^1.4.7",

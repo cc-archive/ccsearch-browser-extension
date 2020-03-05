@@ -302,7 +302,7 @@ document.addEventListener('DOMContentLoaded', () => {
     removeBookmarkImages();
   });
 
-  elements.deleteSelectedBookmarksButton.addEventListener('click', () => {
+  elements.deleteBookmarksButton.addEventListener('click', () => {
     chrome.storage.sync.get({ bookmarks: [] }, (items) => {
       const bookmarksArray = items.bookmarks;
       const bookmarkDOMArray = Object.values(bookmarkDOM);
@@ -314,13 +314,13 @@ document.addEventListener('DOMContentLoaded', () => {
       const updatedBookmarksArray = [];
       bookmarksArray.forEach((bookmark) => {
         if (bookmark != null) {
-          temp.push(bookmark);
+          updatedBookmarksArray.push(bookmark);
         }
       });
-      if (bookmarksArray.length === temp.length) {
+      if (bookmarksArray.length === updatedBookmarksArray.length) {
         showNotification('No bookmark selected', 'negative', 'snackbar-bookmarks');
       } else {
-        chrome.storage.sync.set({ bookmarks: temp }, () => {
+        chrome.storage.sync.set({ bookmarks: updatedBookmarksArray }, () => {
           // restoring initial layout of bookmarks section
           removeBookmarkImages();
           addSpinner(elements.spinnerPlaceholderBookmarks, 'original');
