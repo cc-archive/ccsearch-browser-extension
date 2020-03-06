@@ -302,18 +302,32 @@ document.addEventListener('DOMContentLoaded', () => {
     removeBookmarkImages();
   });
 
-  elements.deleteAllBookmarksButton.addEventListener('click', () => {
+  elements.deleteBookmarksButton.addEventListener('click', () => {
     chrome.storage.sync.get({ bookmarks: [] }, (items) => {
       const bookmarksArray = items.bookmarks;
-      if (bookmarksArray.length === 0) {
-        showNotification('No Bookmarks Available', 'negative', 'snackbar-bookmarks');
+      const bookmarkDOMArray = Object.values(bookmarkDOM);
+      bookmarkDOMArray.forEach((checkbox) => {
+        if (checkbox.checked){
+          bookmarksArray[bookmarksArray.indexOf(checkbox.id)] = null;
+        }
+      });
+      const updatedBookmarksArray = [];
+      bookmarksArray.forEach((bookmark) => {
+        if (bookmark != null){
+          updatedBookmarksArray.push(bookmark);
+        }
+      });
+      if (bookmarksArray.length === updatedBookmarksArray.length) {
+        showNotification('No bookmark selected', 'negative', 'snackbar-bookmarks');
       } else {
-        bookmarksArray.splice(0, bookmarksArray.length); // empty array
-        chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
-          // restoring initial layout of bookmarks section
+        chrome.storage.sync.set({ bookmarks: updatedBookmarksArray }, () => {
+          //restoring initial layout of bookmarks section
           removeBookmarkImages();
-          msnry.layout();
-          restoreInitialContent('bookmarks');
+          addSpinner(elements.spinnerPlaceholderBookmarks, 'original');
+          removeOldSearchResults();
+          removeLoaderAnimation();
+          restoreInitialContent('primary');
+          loadImages();
           // confirm user action
           showNotification('Bookmarks successfully removed', 'positive', 'snackbar-bookmarks');
         });
