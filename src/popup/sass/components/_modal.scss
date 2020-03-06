@@ -24,6 +24,7 @@
     top: -50px;
     left: 13px;
     cursor: pointer;
+    color: $color-black;
   }
   &-text {
     padding: 20px 5px 20px 5px;
@@ -33,6 +34,7 @@
     margin-top: 0;
     text-align: center;
     padding: 5px;
+    color: $color-black;
   }
   &-button {
     position: relative;
