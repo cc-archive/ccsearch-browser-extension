@@ -19,7 +19,7 @@ you'd like to see documented.
 
 ## How to Contribute
 
-Please follow the processes in our general [Contributing Code][contributing]
+Please follow the processes in our general [Contributing Code][contributing] and [Pull Request][pr]
 guidelines on the Creative Common Open Source website.
 
 For contribution guidelines specific to this particular project, please checkout [INSTRUCTIONS.md](https://github.com/creativecommons/ccsearch-browser-extension/blob/master/INSTRUCTIONS.md).
@@ -31,3 +31,4 @@ For contribution guidelines specific to this particular project, please checkout
 Talk to us on [one of our community forums][community].
 
 [community]:https://creativecommons.github.io/community/
+[pr]:https://opensource.creativecommons.org/contributing-code/pr-guidelines/
