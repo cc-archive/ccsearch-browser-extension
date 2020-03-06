@@ -307,13 +307,13 @@ document.addEventListener('DOMContentLoaded', () => {
       const bookmarksArray = items.bookmarks;
       const bookmarkDOMArray = Object.values(bookmarkDOM);
       bookmarkDOMArray.forEach((checkbox) => {
-        if (checkbox.checked){
+        if (checkbox.checked) {
           bookmarksArray[bookmarksArray.indexOf(checkbox.id)] = null;
         }
       });
       const updatedBookmarksArray = [];
       bookmarksArray.forEach((bookmark) => {
-        if (bookmark != null){
+        if (bookmark != null) {
           updatedBookmarksArray.push(bookmark);
         }
       });
@@ -321,7 +321,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showNotification('No bookmark selected', 'negative', 'snackbar-bookmarks');
       } else {
         chrome.storage.sync.set({ bookmarks: updatedBookmarksArray }, () => {
-          //restoring initial layout of bookmarks section
+          // restoring initial layout of bookmarks section
           removeBookmarkImages();
           addSpinner(elements.spinnerPlaceholderBookmarks, 'original');
           removeOldSearchResults();
