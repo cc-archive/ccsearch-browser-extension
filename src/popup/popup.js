@@ -26,11 +26,11 @@ import {
   removeNode,
   getLatestSources,
   restoreInitialContent,
+  showModal,
 } from '../utils';
 
 let inputText;
 let pageNo;
-
 // List to hold providers selected by the user from the drop down.
 let userSelectedSourcesList = [];
 
@@ -56,6 +56,8 @@ clipboard.on('success', (e) => {
   e.clearSelection();
   showNotification('Copied', 'positive', 'snackbar-bookmarks');
 });
+
+elements.modal.classList.add('display-none');
 
 elements.popupCloseButton.addEventListener('click', () => {
   elements.popup.style.opacity = 0;
@@ -286,18 +288,30 @@ elements.searchIcon.addEventListener('click', () => {
     });
   elements.clearSearchButton[0].classList.remove('display-none');
 });
-
+elements.modal.addEventListener('click', () => {
+  elements.modalCancel.click();
+});
+elements.modalBody.addEventListener('click', (e) => {
+  e.stopPropagation();
+});
 elements.clearSearchButton[0].addEventListener('click', () => {
-  // Restore Initial Content
-  elements.clearSearchButton[0].classList.add('display-none');
-  elements.inputField.value = '';
-  removeOldSearchResults();
-  removeLoadMoreButton(elements.loadMoreButtonWrapper);
-  elements.gridPrimary.setAttribute('style', 'position: relative; height: 0px;');
-  localStorage.clear();
-  restoreInitialContent('primary');
-
-  applyFilters();
+  const modalText = 'Do you really want to clear the search?';
+  function onModalConfirm() {
+    // Restore Initial Content
+    elements.clearSearchButton[0].classList.add('display-none');
+    elements.inputField.value = '';
+    removeOldSearchResults();
+    removeLoadMoreButton(elements.loadMoreButtonWrapper);
+    elements.gridPrimary.setAttribute('style', 'position: relative; height: 0px;');
+    localStorage.clear();
+    restoreInitialContent('primary');
+    applyFilters();
+    elements.modal.classList.add('display-none');
+  }
+  function onModalClose() {
+    elements.modal.classList.add('display-none');
+  }
+  showModal(modalText, onModalConfirm, onModalClose);
 });
 
 // applying comboTree (see https://github.com/kirlisakal/combo-tree)
