@@ -323,10 +323,7 @@ document.addEventListener('DOMContentLoaded', () => {
         chrome.storage.sync.set({ bookmarks: updatedBookmarksArray }, () => {
           // restoring initial layout of bookmarks section
           removeBookmarkImages();
-          addSpinner(elements.spinnerPlaceholderBookmarks, 'original');
-          removeOldSearchResults();
-          removeLoaderAnimation();
-          restoreInitialContent('primary');
+          msnry.layout()
           loadImages();
           // confirm user action
           showNotification('Bookmarks successfully removed', 'positive', 'snackbar-bookmarks');
