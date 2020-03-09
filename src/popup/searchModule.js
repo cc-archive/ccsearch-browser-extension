@@ -107,7 +107,7 @@ function appendToGrid(msnry, fragment, divs, grid) {
 // TODO: be more specific
 // Object.prototype.hasOwnProperty.call(apiResponse, 'validation_error'
 export function checkValidationError(apiResponse) {
-  if (apiResponse.result_count == 0) {
+  if (apiResponse.result_count === 0) {
     removeLoadMoreButton(elements.loadMoreButtonWrapper);
     elements.gridPrimary.setAttribute('style', 'position: relative; height: 0px;');
     showNotification('Not a valid search query', 'negative', 'snackbar-bookmarks');
