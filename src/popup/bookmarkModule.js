@@ -306,25 +306,33 @@ document.addEventListener('DOMContentLoaded', () => {
     chrome.storage.sync.get({ bookmarks: [] }, (items) => {
       const bookmarksArray = items.bookmarks;
       const bookmarkDOMArray = Object.values(bookmarkDOM);
+
+      // to store the id's of deleted bookmarks
+      const deletedBookmarks = [];
+      // to store the id's of non-deleted bookmarks
+      const nonDeletedBookmarks = [];
+
       bookmarkDOMArray.forEach((checkbox) => {
         if (checkbox.checked) {
-          bookmarksArray[bookmarksArray.indexOf(checkbox.id)] = null;
+          delete bookmarkDOM[checkbox.id]; // remove the selected bookmark from bookmarkDOM object
+          deletedBookmarks.push(checkbox.id);
+        } else {
+          nonDeletedBookmarks.push(checkbox.id);
         }
       });
-      const updatedBookmarksArray = [];
-      bookmarksArray.forEach((bookmark) => {
-        if (bookmark != null) {
-          updatedBookmarksArray.push(bookmark);
-        }
-      });
-      if (bookmarksArray.length === updatedBookmarksArray.length) {
+
+      if (bookmarksArray.length === nonDeletedBookmarks.length) {
         showNotification('No bookmark selected', 'negative', 'snackbar-bookmarks');
       } else {
-        chrome.storage.sync.set({ bookmarks: updatedBookmarksArray }, () => {
-          // restoring initial layout of bookmarks section
-          removeBookmarkImages();
+        chrome.storage.sync.set({ bookmarks: nonDeletedBookmarks }, () => {
+          // removing the selected bookmarks from the grid
+          deletedBookmarks.forEach((bookmarkdId) => {
+            const imageDiv = document.getElementById(`id_${bookmarkdId}`);
+            imageDiv.parentElement.removeChild(imageDiv);
+          });
+
+          // reorganizing the layout using masonry
           msnry.layout();
-          loadImages();
           // confirm user action
           showNotification('Bookmarks successfully removed', 'positive', 'snackbar-bookmarks');
         });
