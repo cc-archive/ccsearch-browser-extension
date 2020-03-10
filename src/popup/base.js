@@ -45,6 +45,11 @@ export const elements = {
   getBookmarks: document.getElementsByClassName('grid-item'),
   selectCheckboxes: document.getElementsByClassName('select-checkbox'),
   buttonSelectAllCheckbox: document.getElementsByClassName('select-all-checkbox-button'),
+  modal: document.getElementsByClassName('modal')[0],
+  modalClose: document.getElementsByClassName('modal-close')[0],
+  modalCancel: document.getElementsByClassName('modal-button--cancel')[0],
+  modalConfirm: document.getElementsByClassName('modal-button--confirm')[0],
+  modalContent: document.getElementsByClassName('modal-text')[0],
+  modalBody: document.getElementsByClassName('modal-content')[0],
 };
-
 export const attributionTabLink = elements.popupTabLinks[0];

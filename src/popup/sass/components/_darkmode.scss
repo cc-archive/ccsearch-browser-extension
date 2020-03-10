@@ -63,4 +63,16 @@ body.dark {
   .section-filter__provider-loading-mes {
     color: $color-white;
   }
+
+  .modal-content {
+    background-color: $color-darkmode-1 !important ;
+  }
+
+  .modal-close {
+    color: $color-white;
+  }
+
+  .modal-header {
+    color: $color-white;
+  }
 }
