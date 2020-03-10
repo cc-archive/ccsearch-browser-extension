@@ -105,23 +105,14 @@ function appendToGrid(msnry, fragment, divs, grid) {
 }
 
 // TODO: be more specific
-// Object.prototype.hasOwnProperty.call(apiResponse, 'validation_error'
 export function checkValidationError(apiResponse) {
-  if (apiResponse.result_count === 0) {
+  if (Object.prototype.hasOwnProperty.call(apiResponse, 'error_type')) {
     removeLoadMoreButton(elements.loadMoreButtonWrapper);
     elements.gridPrimary.setAttribute('style', 'position: relative; height: 0px;');
     showNotification('Not a valid search query', 'negative', 'snackbar-bookmarks');
     removeLoaderAnimation();
     restoreInitialContent('primary');
     throw new Error('Not valid search query');
-  }
-  if (apiResponse.error_type === 'InputError') {
-    removeLoadMoreButton(elements.loadMoreButtonWrapper);
-    elements.gridPrimary.setAttribute('style', 'position: relative; height: 0px;');
-    showNotification('Input Error', 'negative', 'snackbar-bookmarks');
-    removeLoaderAnimation();
-    restoreInitialContent('primary');
-    throw new Error('Input Error');
   }
 }
 
