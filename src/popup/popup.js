@@ -1,5 +1,6 @@
 import { elements } from './base';
 import {
+  checkInputError,
   removeOldSearchResults,
   getRequestUrl,
   checkResultLength,
@@ -238,6 +239,8 @@ elements.filterApplyButton.addEventListener('click', () => {
 elements.searchIcon.addEventListener('click', () => {
   inputText = elements.inputField.value.trim().replace('/[ ]+/g', ' ');
   pageNo = 1;
+
+  checkInputError(inputText);
   checkInternetConnection();
   removeNode('primary__initial-info');
   removeNode('no-image-found');
