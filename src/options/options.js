@@ -5,6 +5,7 @@ import {
 import { showNotification } from '../utils';
 
 let enableSearchStorageOption = true;
+let enableSearchClearConfirmOption = false;
 
 document.addEventListener('DOMContentLoaded', init);
 
@@ -54,13 +55,13 @@ elements.enableSearchStorageCheckbox.addEventListener(('click'), () => {
 function initEnableSearchClearConfirmButton() {
   chrome.storage.sync.get(['enableSearchClearConfirm'], (res) => {
     enableSearchClearConfirmOption = res.enableSearchClearConfirm;
-    elements.enableSearchClearConfirmCheckbox.checked = enableSearchClearConfirmOption;
+    elements.enableSearchClearConfirm.checked = enableSearchClearConfirmOption;
   });
 }
 initEnableSearchClearConfirmButton();
 
-elements.enableSearchClearConfirmCheckbox.addEventListener(('click'), () => {
-  chrome.storage.sync.set({ enableSearchClearConfirm: elements.enableSearchClearConfirmCheckbox.checked },
+elements.enableSearchClearConfirm.addEventListener(('click'), () => {
+  chrome.storage.sync.set({ enableSearchClearConfirm: elements.enableSearchClearConfirm.checked },
     () => {
       showNotification('Settings Saved', 'positive', 'snackbar-options');
     });

@@ -314,8 +314,7 @@ elements.clearSearchButton[0].addEventListener('click', () => {
   chrome.storage.sync.get('enableSearchClearConfirm', (items) => {
     if (items.enableSearchClearConfirm) {
       showModal(modalText, onModalConfirm, onModalClose);
-    }
-    else{
+    } else {
       onModalConfirm();
     }
   });
