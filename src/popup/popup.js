@@ -242,7 +242,7 @@ elements.searchIcon.addEventListener('click', () => {
   inputText = elements.inputField.value.trim().replace('/[ ]+/g', ' ');
   pageNo = 1;
 
-  checkInputError(inputText, 'error-message');
+  checkInputError(inputText);
   checkInternetConnection();
   removeNode('primary__initial-info');
   removeNode('no-image-found');
