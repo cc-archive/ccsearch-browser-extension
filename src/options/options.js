@@ -51,6 +51,21 @@ elements.enableSearchStorageCheckbox.addEventListener(('click'), () => {
   if (!elements.enableSearchStorageCheckbox.checked) localStorage.clear();
 });
 
+function initEnableSearchClearConfirmButton() {
+  chrome.storage.sync.get(['enableSearchClearConfirm'], (res) => {
+    enableSearchClearConfirmOption = res.enableSearchClearConfirm;
+    elements.enableSearchClearConfirmCheckbox.checked = enableSearchClearConfirmOption;
+  });
+}
+initEnableSearchClearConfirmButton();
+
+elements.enableSearchClearConfirmCheckbox.addEventListener(('click'), () => {
+  chrome.storage.sync.set({ enableSearchClearConfirm: elements.enableSearchClearConfirmCheckbox.checked },
+    () => {
+      showNotification('Settings Saved', 'positive', 'snackbar-options');
+    });
+});
+
 elements.importBookmarksButton.addEventListener('click', () => {
   const file = elements.importBookmarksInput.files[0];
   if (!file) {
