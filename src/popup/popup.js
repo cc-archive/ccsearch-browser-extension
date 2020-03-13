@@ -311,7 +311,13 @@ elements.clearSearchButton[0].addEventListener('click', () => {
   function onModalClose() {
     elements.modal.classList.add('display-none');
   }
-  showModal(modalText, onModalConfirm, onModalClose);
+  chrome.storage.sync.get('enableSearchClearConfirm', (items) => {
+    if (items.enableSearchClearConfirm) {
+      showModal(modalText, onModalConfirm, onModalClose);
+    } else {
+      onModalConfirm();
+    }
+  });
 });
 
 // applying comboTree (see https://github.com/kirlisakal/combo-tree)

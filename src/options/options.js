@@ -5,6 +5,7 @@ import {
 import { showNotification } from '../utils';
 
 let enableSearchStorageOption = true;
+let enableSearchClearConfirmOption = false;
 
 document.addEventListener('DOMContentLoaded', init);
 
@@ -49,6 +50,22 @@ elements.enableSearchStorageCheckbox.addEventListener(('click'), () => {
 
   // Clear Saved Search If user selects the option to not save their search.
   if (!elements.enableSearchStorageCheckbox.checked) localStorage.clear();
+});
+
+function initEnableSearchClearConfirmButton() {
+  chrome.storage.sync.get(['enableSearchClearConfirm'], (res) => {
+    enableSearchClearConfirmOption = res.enableSearchClearConfirm;
+    elements.enableSearchClearConfirmCheckbox.checked = enableSearchClearConfirmOption;
+  });
+}
+initEnableSearchClearConfirmButton();
+
+elements.enableSearchClearConfirmCheckbox.addEventListener(('click'), () => {
+  chrome.storage.sync.set({
+    enableSearchClearConfirm: elements.enableSearchClearConfirmCheckbox.checked,
+  }, () => {
+    showNotification('Settings Saved', 'positive', 'snackbar-options');
+  });
 });
 
 elements.importBookmarksButton.addEventListener('click', () => {
