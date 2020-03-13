@@ -8,7 +8,7 @@ const elements = {
   saveFiltersButton: document.getElementById('save-filters'),
   accordionItems: document.querySelectorAll('.accordion .accordion-link'),
   enableSearchStorageCheckbox: document.getElementById('enable-search-storage-checkbox'),
-  enableSearchClearConfirm: document.getElementById('enable-search-clear-confirmation'),
+  enableSearchClearConfirmCheckbox: document.getElementById('enable-search-clear-confirm-checkbox'),
 };
 
 export default elements;
