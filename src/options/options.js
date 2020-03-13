@@ -61,9 +61,9 @@ function initEnableSearchClearConfirmButton() {
 initEnableSearchClearConfirmButton();
 
 elements.enableSearchClearConfirmCheckbox.addEventListener(('click'), () => {
-  chrome.storage.sync.set({ enableSearchClearConfirm: 
-    elements.enableSearchClearConfirmCheckbox.checked },
-    () => {
+  chrome.storage.sync.set({ 
+    enableSearchClearConfirm: elements.enableSearchClearConfirmCheckbox.checked 
+  }, () => {
       showNotification('Settings Saved', 'positive', 'snackbar-options');
     });
 });
