@@ -21,13 +21,7 @@ import {
 import { loadProvidersToDom, resetLicenseDropDown, loadUserDefaults } from './filterModule';
 import { handleImageAttributionDownload, handleImageDownload } from './infoPopupModule';
 import { addSpinner } from './spinner';
-import {
-  showNotification,
-  removeNode,
-  getLatestSources,
-  restoreInitialContent,
-  showModal,
-} from '../utils';
+import { showNotification, removeNode, getLatestSources, restoreInitialContent, showModal } from '../utils';
 
 let inputText;
 let pageNo;
@@ -52,7 +46,7 @@ const storeSearch = {};
 // eslint-disable-next-line no-undef
 const clipboard = new ClipboardJS('.btn-copy');
 
-clipboard.on('success', (e) => {
+clipboard.on('success', e => {
   e.clearSelection();
   showNotification('Copied', 'positive', 'snackbar-bookmarks');
 });
@@ -67,13 +61,10 @@ elements.popupCloseButton.addEventListener('click', () => {
 
   // remove eventlisteners from download buttons to avoid multiple downloads.
   elements.downloadImageButton.removeEventListener('click', handleImageDownload);
-  elements.downloadImageAttributionButton.removeEventListener(
-    'click',
-    handleImageAttributionDownload,
-  );
+  elements.downloadImageAttributionButton.removeEventListener('click', handleImageAttributionDownload);
 });
 
-elements.popup.addEventListener('click', (e) => {
+elements.popup.addEventListener('click', e => {
   if (e.target.classList.contains('popup')) {
     // popup.style.opacity = 0;
     // popup.style.visibility = 'hidden';
@@ -81,8 +72,8 @@ elements.popup.addEventListener('click', (e) => {
   }
 });
 
-Array.prototype.forEach.call(elements.popupTabLinks, (element) => {
-  element.addEventListener('click', (e) => {
+Array.prototype.forEach.call(elements.popupTabLinks, element => {
+  element.addEventListener('click', e => {
     const targetElement = e.target;
     const targetElementText = e.target.textContent;
 
@@ -95,7 +86,7 @@ Array.prototype.forEach.call(elements.popupTabLinks, (element) => {
 });
 
 // Activate the click event on pressing enter.
-elements.inputField.addEventListener('keydown', (event) => {
+elements.inputField.addEventListener('keydown', event => {
   if (event.keyCode === 13) {
     elements.searchIcon.click();
   }
@@ -108,7 +99,7 @@ async function populateProviderList() {
   const providersList = [];
 
   // iterating over provider object
-  Object.keys(providerAPIQueryStrings).forEach((key) => {
+  Object.keys(providerAPIQueryStrings).forEach(key => {
     providersList[count] = {
       id: providerAPIQueryStrings[key],
       title: key,
@@ -118,7 +109,6 @@ async function populateProviderList() {
 
   loadProvidersToDom(providersList);
 }
-
 
 populateProviderList();
 
@@ -140,7 +130,7 @@ elements.filterResetButton.addEventListener('click', () => {
     elements.useCaseChooserWrapper,
   ];
 
-  dropdownElementsList.forEach((dropdown) => {
+  dropdownElementsList.forEach(dropdown => {
     const dropdownContainer = dropdown.querySelector('.comboTreeDropDownContainer');
     const inputCheckboxes = dropdownContainer.getElementsByTagName('input');
     // unchecking all the options
@@ -162,10 +152,8 @@ elements.filterResetButton.addEventListener('click', () => {
 // block to disable license dropdown, when atleast one of use-case checkboxes are checked
 elements.useCaseChooserWrapper.addEventListener(
   'click',
-  (event) => {
-    const useCaseDropDownContainer = elements.useCaseChooserWrapper.querySelector(
-      '.comboTreeDropDownContainer',
-    );
+  event => {
+    const useCaseDropDownContainer = elements.useCaseChooserWrapper.querySelector('.comboTreeDropDownContainer');
     const inputCheckboxes = useCaseDropDownContainer.getElementsByTagName('input');
 
     let flag = 0;
@@ -213,21 +201,21 @@ function applyFilters() {
 
   if (elements.providerChooser.value) {
     const userInputProvidersList = elements.providerChooser.value.split(', ');
-    userInputProvidersList.forEach((element) => {
+    userInputProvidersList.forEach(element => {
       userSelectedSourcesList.push(providerAPIQueryStrings[element]);
     });
   }
 
   if (elements.licenseChooser.value) {
     const userInputLicensesList = elements.licenseChooser.value.split(', ');
-    userInputLicensesList.forEach((element) => {
+    userInputLicensesList.forEach(element => {
       userSelectedLicensesList.push(licenseAPIQueryStrings[element]);
     });
   }
 
   if (elements.useCaseChooser.value) {
     const userInputUseCaseList = elements.useCaseChooser.value.split(', ');
-    userInputUseCaseList.forEach((element) => {
+    userInputUseCaseList.forEach(element => {
       userSelectedUseCaseList.push(useCaseAPIQueryStrings[element]);
     });
   }
@@ -268,7 +256,7 @@ elements.searchIcon.addEventListener('click', () => {
 
   fetch(url)
     .then(data => data.json())
-    .then((res) => {
+    .then(res => {
       checkValidationError(res);
       const resultArray = res.results;
       // console.log(resultArray);
@@ -291,7 +279,7 @@ elements.searchIcon.addEventListener('click', () => {
 elements.modal.addEventListener('click', () => {
   elements.modalCancel.click();
 });
-elements.modalBody.addEventListener('click', (e) => {
+elements.modalBody.addEventListener('click', e => {
   e.stopPropagation();
 });
 elements.clearSearchButton[0].addEventListener('click', () => {
@@ -311,7 +299,7 @@ elements.clearSearchButton[0].addEventListener('click', () => {
   function onModalClose() {
     elements.modal.classList.add('display-none');
   }
-  chrome.storage.sync.get('enableSearchClearConfirm', (items) => {
+  chrome.storage.sync.get('enableSearchClearConfirm', items => {
     if (items.enableSearchClearConfirm) {
       showModal(modalText, onModalConfirm, onModalClose);
     } else {
@@ -340,7 +328,7 @@ function setEnableSearchStorageOptionVariable(enableSearchStorage) {
 }
 
 async function loadStoredSearch() {
-  await chrome.storage.sync.get(['enableSearchStorage'], (res) => {
+  await chrome.storage.sync.get(['enableSearchStorage'], res => {
     setEnableSearchStorageOptionVariable(res.enableSearchStorage);
 
     if (enableSearchStorageOption) {
@@ -412,17 +400,15 @@ document.getElementById('settings-icon').addEventListener('click', () => {
 
 document.getElementById('invert_colors-icon').addEventListener('click', () => {
   document.body.classList.toggle('dark');
-  chrome.storage.sync.get('darkmode', (items) => {
+  chrome.storage.sync.get('darkmode', items => {
     const value = !items.darkmode;
-    chrome.storage.sync.set(
-      {
-        darkmode: value, // using ES6 to use variable as key of object
-      },
-    );
+    chrome.storage.sync.set({
+      darkmode: value, // using ES6 to use variable as key of object
+    });
   });
 });
 
-chrome.storage.sync.get('darkmode', (items) => {
+chrome.storage.sync.get('darkmode', items => {
   if (items.darkmode) {
     document.body.classList.add('dark');
   }

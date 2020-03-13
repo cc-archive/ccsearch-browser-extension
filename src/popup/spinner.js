@@ -18,7 +18,6 @@ export function getSpinnerDiv(context) {
   return divWrapper;
 }
 
-
 export function addSpinner(spinnerPlaceholder, context) {
   spinnerPlaceholder.appendChild(getSpinnerDiv(context));
 }

@@ -132,13 +132,13 @@ export const backupProviderAPIQueryStrings = {
 };
 
 export function removeClassFromElements(elemArray, className) {
-  Array.prototype.forEach.call(elemArray, (e) => {
+  Array.prototype.forEach.call(elemArray, e => {
     e.classList.remove(className);
   });
 }
 
 export function makeElementsDisplayNone(elemArray) {
-  Array.prototype.forEach.call(elemArray, (e) => {
+  Array.prototype.forEach.call(elemArray, e => {
     e.style.display = 'none';
   });
 }

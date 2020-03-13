@@ -5,9 +5,7 @@ import { sourceLogos, unicodeToString, removeLoadMoreButton } from './helper';
 // eslint-disable-next-line import/no-cycle
 import { removeOldSearchResults, removeLoaderAnimation, checkInternetConnection } from './searchModule';
 import { addSpinner, removeSpinner } from './spinner';
-import {
-  showNotification, removeNode, restoreInitialContent,
-} from '../utils';
+import { showNotification, removeNode, restoreInitialContent } from '../utils';
 
 const download = require('downloadjs');
 
@@ -18,7 +16,7 @@ const bookmarkDOM = {};
 let selectedBookmarks = 0;
 
 export default function toggleBookmark(e) {
-  chrome.storage.sync.get({ bookmarks: [] }, (items) => {
+  chrome.storage.sync.get({ bookmarks: [] }, items => {
     const bookmarksArray = items.bookmarks;
     const imageId = e.target.dataset.imageid;
     if (bookmarksArray.indexOf(imageId) === -1) {
@@ -44,7 +42,7 @@ export default function toggleBookmark(e) {
 
 function removeBookmark(e) {
   const imageId = e.target.dataset.imageid;
-  chrome.storage.sync.get({ bookmarks: [] }, (items) => {
+  chrome.storage.sync.get({ bookmarks: [] }, items => {
     const bookmarksArray = items.bookmarks;
 
     const bookmarkIndex = bookmarksArray.indexOf(imageId);
@@ -80,7 +78,7 @@ function appendToGrid(msnryObject, fragment, e, grid) {
 }
 
 function loadImages() {
-  chrome.storage.sync.get({ bookmarks: [] }, (items) => {
+  chrome.storage.sync.get({ bookmarks: [] }, items => {
     const bookmarksArray = items.bookmarks;
     if (bookmarksArray.length > 0) {
       removeNode('bookmarks__initial-info');
@@ -91,11 +89,11 @@ function loadImages() {
 
     // get the details of each image
 
-    bookmarksArray.forEach((imageId) => {
+    bookmarksArray.forEach(imageId => {
       const url = `http://api.creativecommons.engineering/v1/images/${imageId}`;
       fetch(url)
         .then(data => data.json())
-        .then((res) => {
+        .then(res => {
           const fragment = document.createDocumentFragment();
 
           const thumbnail = res.thumbnail ? res.thumbnail : res.url;
@@ -146,7 +144,10 @@ function loadImages() {
           selectCheckbox.setAttribute('type', 'checkbox');
           selectCheckbox.setAttribute('id', id);
           selectCheckbox.setAttribute('title', 'Select Image');
-          selectCheckbox.setAttribute('class', 'select-checkbox vocab choice-field green-colored dark-shaded small-sized');
+          selectCheckbox.setAttribute(
+            'class',
+            'select-checkbox vocab choice-field green-colored dark-shaded small-sized',
+          );
           selectCheckboxElement.appendChild(selectCheckbox);
 
           // make a span to hold the license icons
@@ -155,10 +156,7 @@ function loadImages() {
 
           // make a link to license description
           const licenseLinkElement = document.createElement('a');
-          licenseLinkElement.setAttribute(
-            'href',
-            `https://creativecommons.org/licenses/${license}/2.0/`,
-          );
+          licenseLinkElement.setAttribute('href', `https://creativecommons.org/licenses/${license}/2.0/`);
           licenseLinkElement.setAttribute('target', '_blank'); // open link in new tab
           licenseLinkElement.setAttribute('title', license); // open link in new tab
 
@@ -172,7 +170,7 @@ function loadImages() {
           licenseIconElementsArray.push(licenseIconElement);
 
           // make and push license image elements
-          licenseArray.forEach((name) => {
+          licenseArray.forEach(name => {
             const lowerCaseName = `${name}`.toLowerCase();
             licenseIconElement = document.createElement('img');
             licenseIconElement.setAttribute('src', `img/license_logos/cc-${lowerCaseName}_icon.svg`);
@@ -180,7 +178,7 @@ function loadImages() {
             licenseIconElementsArray.push(licenseIconElement);
           });
 
-          licenseIconElementsArray.forEach((licenseIcon) => {
+          licenseIconElementsArray.forEach(licenseIcon => {
             licenseLinkElement.appendChild(licenseIcon);
           });
 
@@ -202,7 +200,7 @@ function loadImages() {
           divElement.id = `id_${imageId}`; // used for searching image div element
 
           // adding event listener to open popup.
-          divElement.addEventListener('click', (e) => {
+          divElement.addEventListener('click', e => {
             if (e.target.classList.contains('image')) {
               checkInternetConnection();
               const imageThumbnail = e.target.querySelector('.image-thumbnails');
@@ -286,7 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadImages();
   });
 
-  elements.homeIcon.addEventListener('click', (e) => {
+  elements.homeIcon.addEventListener('click', e => {
     window.isBookmarksActive = false;
 
     elements.showBookmarksIcon.style.pointerEvents = 'none';
@@ -303,7 +301,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   elements.deleteBookmarksButton.addEventListener('click', () => {
-    chrome.storage.sync.get({ bookmarks: [] }, (items) => {
+    chrome.storage.sync.get({ bookmarks: [] }, items => {
       const bookmarksArray = items.bookmarks;
       const bookmarkDOMArray = Object.values(bookmarkDOM);
 
@@ -312,7 +310,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // to store the id's of non-deleted bookmarks
       const nonDeletedBookmarks = [];
 
-      bookmarkDOMArray.forEach((checkbox) => {
+      bookmarkDOMArray.forEach(checkbox => {
         if (checkbox.checked) {
           delete bookmarkDOM[checkbox.id]; // remove the selected bookmark from bookmarkDOM object
           deletedBookmarks.push(checkbox.id);
@@ -326,7 +324,7 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         chrome.storage.sync.set({ bookmarks: nonDeletedBookmarks }, () => {
           // removing the selected bookmarks from the grid
-          deletedBookmarks.forEach((bookmarkdId) => {
+          deletedBookmarks.forEach(bookmarkdId => {
             const imageDiv = document.getElementById(`id_${bookmarkdId}`);
             imageDiv.parentElement.removeChild(imageDiv);
           });
@@ -345,12 +343,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const bookmarkDOMArray = Object.values(bookmarkDOM);
 
     if (selectedBookmarks > 0) {
-      bookmarkDOMArray.forEach((checkbox) => {
+      bookmarkDOMArray.forEach(checkbox => {
         if (checkbox.checked) checkbox.click();
       });
       selectedBookmarks = 0;
     } else if (selectedBookmarks === 0) {
-      bookmarkDOMArray.forEach((checkbox) => {
+      bookmarkDOMArray.forEach(checkbox => {
         if (!checkbox.checked) checkbox.click();
       });
     }
@@ -359,7 +357,7 @@ document.addEventListener('DOMContentLoaded', () => {
   elements.exportBookmarksButton.addEventListener('click', () => {
     const bookmarks = [];
 
-    Object.values(bookmarkDOM).forEach((checkbox) => {
+    Object.values(bookmarkDOM).forEach(checkbox => {
       if (checkbox.checked) bookmarks.push(checkbox.id);
     });
 

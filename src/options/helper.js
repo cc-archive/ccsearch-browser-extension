@@ -4,7 +4,7 @@ import { showNotification, getLatestSources } from '../utils';
 export function restoreFilters(inputElements) {
   for (let i = 0; i < inputElements.length; i += 1) {
     const { id } = inputElements[i];
-    chrome.storage.sync.get({ [id]: false }, (items) => {
+    chrome.storage.sync.get({ [id]: false }, items => {
       // default value is false
       document.getElementById(id).checked = items[id];
     });
@@ -19,7 +19,7 @@ function addProvidersToDom(providers) {
   const { providerWrapper } = elements;
   providerWrapper.innerText = '';
 
-  Object.keys(providers).forEach((key) => {
+  Object.keys(providers).forEach(key => {
     const input = document.createElement('input');
     input.type = 'checkbox';
     input.id = providers[key];
@@ -69,9 +69,9 @@ export function saveFiltersOptions() {
 }
 
 export function updateBookmarks(newBookmarksids) {
-  chrome.storage.sync.get({ bookmarks: [] }, (items) => {
+  chrome.storage.sync.get({ bookmarks: [] }, items => {
     const bookmarksArray = items.bookmarks;
-    newBookmarksids.forEach((bookmarkId) => {
+    newBookmarksids.forEach(bookmarkId => {
       if (bookmarksArray.indexOf(bookmarkId) === -1) {
         bookmarksArray.push(bookmarkId);
         chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {

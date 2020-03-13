@@ -12,9 +12,7 @@ export function getRichTextAttribution(image, targetNode) {
   const imgLink = `<a href="${image.foreign_landing_url}" target="_blank">"${image.title}"</a>`;
   let creator = '';
   if (image.creator && image.creator_url) {
-    creator = `<span> by <a href="${image.creator_url}" target="_blank">${
-      image.creator
-    }</a></span>`;
+    creator = `<span> by <a href="${image.creator_url}" target="_blank">${image.creator}</a></span>`;
   } else if (image.creator && !image.creator_url) {
     creator = `<span> by <span>${image.creator}</span></span>`;
   }
@@ -51,14 +49,13 @@ export function getHtmlAttribution(image) {
     licenseIcons += image.license
       .split('-')
       .map(
-        license => `<img style="height: inherit;margin-right: 3px;display: inline-block;" src="${baseAssetsPath}/cc-${license.toLowerCase()}_icon.svg" />`,
+        license =>
+          `<img style="height: inherit;margin-right: 3px;display: inline-block;" src="${baseAssetsPath}/cc-${license.toLowerCase()}_icon.svg" />`,
       )
       .join('');
   }
 
-  const licenseImgLink = `<a href="${
-    image.license_url
-  }" target="_blank" rel="noopener noreferrer" style="display: inline-block;white-space: none;margin-top: 2px;margin-left: 3px;height: 22px !important;">${licenseIcons}</a>`;
+  const licenseImgLink = `<a href="${image.license_url}" target="_blank" rel="noopener noreferrer" style="display: inline-block;white-space: none;margin-top: 2px;margin-left: 3px;height: 22px !important;">${licenseIcons}</a>`;
   return `<p style="font-size: 0.9rem;font-style: italic;">${imgLink}${creator}${licenseLink}${licenseImgLink}</p>`;
 }
 
@@ -72,18 +69,16 @@ export function getPlainAttribution(image) {
     creatorUrl = image.creator_url;
   }
   if (image.creator) {
-    return `"${image.title}" by ${
-      image.creator
-    } is licensed under CC ${image.license.toUpperCase()} ${image.license_version}\n\n
+    return `"${image.title}" by ${image.creator} is licensed under CC ${image.license.toUpperCase()} ${
+      image.license_version
+    }\n\n
 Image Link: ${image.foreign_landing_url}\n
 Creator Link: ${creatorUrl}\n
 License Link: ${image.license_url}\n\n
 **********************HTML Attribution**********************
 ${HtmlAttribution}`;
   }
-  return `${image.title} is licensed under CC ${image.license.toUpperCase()} ${
-    image.license_version
-  }\n\n
+  return `${image.title} is licensed under CC ${image.license.toUpperCase()} ${image.license_version}\n\n
 Image Link: ${image.foreign_landing_url}\n
 Creator Link: ${creatorUrl}\n\n
 **********************HTML Attribution**********************
@@ -165,7 +160,7 @@ function getImageData(imageId) {
 
   fetch(url)
     .then(data => data.json())
-    .then((res) => {
+    .then(res => {
       const {
         title,
         source,
@@ -206,10 +201,7 @@ function getImageData(imageId) {
       getRichTextAttribution(res, attributionRichTextPara);
       attributionHtmlTextArea.value = getHtmlAttribution(res);
       elements.downloadImageButton.addEventListener('click', handleImageDownload);
-      elements.downloadImageAttributionButton.addEventListener(
-        'click',
-        handleImageAttributionDownload,
-      );
+      elements.downloadImageAttributionButton.addEventListener('click', handleImageAttributionDownload);
       // share tab
       elements.facebookShareButton.href = getFacebookShareLink(id);
       elements.twitterShareButton.href = getTwitterShareLink(foreignLandingUrl);

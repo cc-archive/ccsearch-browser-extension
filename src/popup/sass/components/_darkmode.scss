@@ -4,7 +4,8 @@ body.dark {
   background-color: $color-darkmode-1;
   color: $color-white;
 
-  input, .section-search {
+  input,
+  .section-search {
     background-color: $color-darkmode-2 !important;
     color: $color-white !important;
   }

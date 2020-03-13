@@ -8,14 +8,13 @@
   position: fixed;
   bottom: 60px;
   right: 20px;
-  transition: background-color .3s, 
-  opacity .5s, visibility .5s;
+  transition: background-color 0.3s, opacity 0.5s, visibility 0.5s;
   opacity: 0;
   visibility: hidden;
   z-index: 1000;
 }
 .button-backToTop::after {
-  content: "\f077";
+  content: '\f077';
   font-family: FontAwesome;
   font-weight: normal;
   font-style: normal;
@@ -27,7 +26,7 @@
   cursor: pointer;
   background-color: #ff4e14;
 }
-.button-backToTop.show{
+.button-backToTop.show {
   opacity: 1;
   visibility: visible;
 }

@@ -1,10 +1,5 @@
 import { elements } from './base';
-import {
-  unicodeToString,
-  sourceLogos,
-  addLoadMoreButton,
-  removeLoadMoreButton,
-} from './helper';
+import { unicodeToString, sourceLogos, addLoadMoreButton, removeLoadMoreButton } from './helper';
 import { activatePopup } from './infoPopupModule';
 import { removeSpinner } from './spinner';
 // eslint-disable-next-line import/no-cycle
@@ -53,9 +48,7 @@ export function getRequestUrl(
 function showNoResultFoundMessage() {
   const sectionContentPrimary = document.querySelector('.section-content--primary');
 
-  const sectionContentInitialInfo = document.querySelector(
-    '.section-content--primary .initial-info',
-  );
+  const sectionContentInitialInfo = document.querySelector('.section-content--primary .initial-info');
 
   if (!sectionContentInitialInfo) {
     // const initialInfoElement = `<p class="no-image-found initial-info">
@@ -136,10 +129,10 @@ export function addThumbnailsToDOM(resultArray) {
   const divs = [];
   const fragment = document.createDocumentFragment();
 
-  chrome.storage.sync.get({ bookmarks: [] }, (items) => {
+  chrome.storage.sync.get({ bookmarks: [] }, items => {
     const bookmarksArray = items.bookmarks;
 
-    resultArray.forEach((element) => {
+    resultArray.forEach(element => {
       const thumbnail = element.url; // element.thumbnail giving 403
       const title = unicodeToString(element.title);
       const { license, source, id } = element;
@@ -200,14 +193,14 @@ export function addThumbnailsToDOM(resultArray) {
       licenseIconElementsArray.push(licenseIconElement);
 
       // make and push license image elements
-      licenseArray.forEach((name) => {
+      licenseArray.forEach(name => {
         licenseIconElement = document.createElement('img');
         licenseIconElement.setAttribute('src', `img/license_logos/cc-${name}_icon.svg`);
         licenseIconElement.setAttribute('alt', `cc-${name}_icon`);
         licenseIconElementsArray.push(licenseIconElement);
       });
 
-      licenseIconElementsArray.forEach((licenseIcon) => {
+      licenseIconElementsArray.forEach(licenseIcon => {
         licenseLinkElement.appendChild(licenseIcon);
       });
 
@@ -234,7 +227,7 @@ export function addThumbnailsToDOM(resultArray) {
       divElement.setAttribute('class', 'image');
 
       // adding event listener to open popup.
-      divElement.addEventListener('click', (e) => {
+      divElement.addEventListener('click', e => {
         if (e.target.classList.contains('image')) {
           checkInternetConnection();
           const imageThumbnail = e.target.querySelector('.image-thumbnails');
