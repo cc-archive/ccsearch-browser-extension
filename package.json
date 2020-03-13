@@ -43,9 +43,12 @@
     "copy-webpack-plugin": "^5.1.1",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-import": "^2.17.3",
+    "eslint-plugin-prettier": "^3.1.2",
     "jest": "^24.8.0",
     "node-sass": "^4.13.1",
+    "prettier": "^1.19.1",
     "webpack": "^4.35.2",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.7.2"
