@@ -10,9 +10,7 @@ export const elements = {
   providerChooser: document.querySelector('#choose-provider'),
   licenseChooserWrapper: document.querySelector('.section-filter__filter-wrapper--choose-license'),
   useCaseChooserWrapper: document.querySelector('.section-filter__filter-wrapper--choose-usecase'),
-  providerChooserWrapper: document.querySelector(
-    '.section-filter__filter-wrapper--choose-provider',
-  ),
+  providerChooserWrapper: document.querySelector('.section-filter__filter-wrapper--choose-provider'),
   providerChooserLoadingMessage: document.querySelector('.section-filter__provider-loading-mes'),
   filterResetButton: document.querySelector('.section-filter--reset-button'),
   filterApplyButton: document.querySelector('.section-filter--apply-button'),

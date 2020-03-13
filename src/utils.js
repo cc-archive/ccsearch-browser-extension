@@ -2,13 +2,7 @@ import { backupProviderAPIQueryStrings } from './popup/helper';
 import { elements } from './popup/base';
 
 export function showModal(modalText, onModalConfirm, onModalClose) {
-  const {
-    modal,
-    modalContent,
-    modalCancel,
-    modalClose,
-    modalConfirm,
-  } = elements;
+  const { modal, modalContent, modalCancel, modalClose, modalConfirm } = elements;
   modalContent.innerText = modalText;
   modal.classList.remove('display-none');
   modalCancel.onclick = () => {
@@ -46,9 +40,7 @@ export function removeNode(className) {
 export function restoreInitialContent(context) {
   const sectionContent = document.querySelector(`.section-content--${context}`);
 
-  const sectionContentInitialInfo = document.querySelector(
-    `.section-content--${context} .initial-info`,
-  );
+  const sectionContentInitialInfo = document.querySelector(`.section-content--${context} .initial-info`);
 
   if (!sectionContentInitialInfo) {
     let initialInfoElement;
@@ -89,7 +81,7 @@ export async function getLatestSources() {
   let sources = {};
   try {
     const result = await fetchSources();
-    result.forEach((source) => {
+    result.forEach(source => {
       sources[source.display_name] = source.source_name;
     });
     return sources;

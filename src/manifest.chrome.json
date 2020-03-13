@@ -20,11 +20,7 @@
     },
     "default_popup": "popup/popup.html"
   },
-  "permissions": [
-    "storage",
-    "https://api.creativecommons.engineering/*",
-    "https://*.behance.net/*"
-  ],
+  "permissions": ["storage", "https://api.creativecommons.engineering/*", "https://*.behance.net/*"],
   "options_ui": {
     "page": "options/options.html",
     "open_in_tab": true
