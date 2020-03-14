@@ -4,13 +4,7 @@ const webpack = require('webpack');
 
 if (!process.env.TARGET) {
   throw Error("Please specify env var TARGET, 'chrome', 'firefox' or 'opera'.");
-} else if (
-  !(
-    process.env.TARGET === 'chrome'
-    || process.env.TARGET === 'firefox'
-    || process.env.TARGET === 'opera'
-  )
-) {
+} else if (!(process.env.TARGET === 'chrome' || process.env.TARGET === 'firefox' || process.env.TARGET === 'opera')) {
   throw Error("TARGET can only be 'chrome', 'firefox' or 'opera'.");
 } else {
   console.info(`\x1b[1;32mBuilding for ${process.env.TARGET}...\x1b[m`);
