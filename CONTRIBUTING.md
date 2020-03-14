@@ -8,7 +8,7 @@ a set of guidelines to help you contribute to this project.
 By participating in this project, you are expected to uphold our [Code of
 Conduct][code_of_conduct].
 
-[code_of_conduct]:https://creativecommons.github.io/community/code-of-conduct/
+[code_of_conduct]: https://creativecommons.github.io/community/code-of-conduct/
 
 ## Project Documentation
 
@@ -24,11 +24,11 @@ guidelines on the Creative Common Open Source website.
 
 For contribution guidelines specific to this particular project, please checkout [INSTRUCTIONS.md](https://github.com/creativecommons/ccsearch-browser-extension/blob/master/INSTRUCTIONS.md).
 
-[contributing]:https://creativecommons.github.io/contributing-code/
+[contributing]: https://creativecommons.github.io/contributing-code/
 
 ## Questions or Thoughts?
 
 Talk to us on [one of our community forums][community].
 
-[community]:https://creativecommons.github.io/community/
-[pr]:https://opensource.creativecommons.org/contributing-code/pr-guidelines/
+[community]: https://creativecommons.github.io/community/
+[pr]: https://opensource.creativecommons.org/contributing-code/pr-guidelines/
