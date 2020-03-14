@@ -25,6 +25,8 @@
     "webpack-watch:firefox": "TARGET=chrome webpack --watch --mode development",
     "webpack-watch:chrome": "TARGET=chrome webpack --watch --mode development",
     "webpack-watch:opera": "TARGET=opera webpack --watch --mode development",
+    "prettier:format": "./node_modules/.bin/prettier --write 'src/**/*.js' 'src/**/*.html' 'src/**/*.scss' 'tests/**/*.js'",
+    "prettier:check": "./node_modules/.bin/prettier --check 'src/**/*.js' 'src/**/*.html' 'src/**/*.scss' 'tests/**/*.js'",
     "test": "jest"
   },
   "repository": {
