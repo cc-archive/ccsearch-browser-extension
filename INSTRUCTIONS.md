@@ -58,8 +58,22 @@ The following are some general steps that you can take to make your development 
 
 - The project uses eslint. Running `npm run lint` will show linter errors in the code, if any.
 - If you are using vscode, installing [eslint extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) will show linter errors and warnings in real time.
-- You can go one step ahead and install [prettier extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) for vscode. After [enabling eslint integration](https://github.com/prettier/prettier-vscode#vscode-eslint-and-tslint-integration), prettier will format the code according to the linter rules.
 
-#### Misc
+#### Code Formatting
 
-- Column width: 120 charachters.
+- The project uses [prettier](https://prettier.io/) as the code-formatter. You can format the code in two ways.
+
+  ##### Using command line
+
+  - Running `npm run prettier:check` will check if files in `src` and `tests` directories follow the prettier formatting.
+  - Running `npm run prettier:format` will format files in `src` and `tests` directories.
+  - _Note_: It may happen that the above commands gives an error and terminate. Most often than not it is due to incorrect code that prettier cannot format. In this case, you can use the warning message to debug the issue.
+
+  ##### Using Editor plugin (convenient)
+
+  - You can install the prettier plugin for your faviourite editor (eg: [prettier for vscode](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)). It should automatically read the config file and work. You can also go ahead and enable formatting on save.
+  - _Note_: Make sure that you configure your editor to use prettier for formatting (atleast for this project).
+
+#### Recommendation
+
+- It is recommended that you install the [eslint plugin](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) as well as [prettier plugin](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) in your editor and let them do the heavy lifting, while you focus on writting good code.
