@@ -34,22 +34,25 @@
 
 ## Install
 
+<!-- prettier-ignore-start -->
 | [Firefox addon store](https://addons.mozilla.org/en-US/firefox/addon/cc-search-extension/) | [Chrome web store](https://chrome.google.com/webstore/detail/cc-search/agohkbfananbebiaphblgcfhcclklfnh) | [Opera addon store](https://addons.opera.com/en/extensions/details/cc-search/) |
-| ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
-
+|---------|--------|-------|
+<!-- prettier-ignore-end -->
 
 ## Features
 
-| Feature                                                | <img src="https://i.imgur.com/tVOpDmP.png" width="16" height="16"> Firefox | <img src="https://i.imgur.com/r33ZXs4.png" height="16" width="16"> Chrome | <img src="https://i.imgur.com/CBgAqSl.png" heigth="16" width="16"> Opera |
-| ------------------------------------------------------ | -------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| Search and filter CC Licensed content.                 | Yes                                                                        | Yes                                                                       | Yes                                                                      |
-| One click attribution.                                 | Yes                                                                        | Yes                                                                       | Yes                                                                      |
-| Download images (and attribution).                     | Yes                                                                        | Yes                                                                       | Yes                                                                      |
-| Bookmark images.                                       | Yes                                                                        | Yes                                                                       | Yes                                                                      |
-| Export and import bookmarks.                           | Yes                                                                        | Yes                                                                       | Yes                                                                      |
-| Sync your custom setting and bookmarks across devices. | Yes                                                                        | Yes                                                                       | No                                                                       |
-| Options-UI for custom settings.                        | Yes                                                                        | Yes                                                                       | Yes                                                                      |
-| Dark Mode.                                             | Yes                                                                        | Yes                                                                       | Yes                                                                      |
+<!-- prettier-ignore-start -->
+| Feature | <img src="https://i.imgur.com/tVOpDmP.png" width="16" height="16"> Firefox | <img src="https://i.imgur.com/r33ZXs4.png" height="16" width="16"> Chrome | <img src="https://i.imgur.com/CBgAqSl.png" heigth="16" width="16"> Opera |
+|--------------------------------------------------------|---------|--------|-------|
+| Search and filter CC Licensed content. | Yes | Yes | Yes  |
+| One click attribution. | Yes | Yes | Yes |
+| Download images (and attribution). | Yes | Yes | Yes |
+| Bookmark images. | Yes | Yes | Yes |
+| Export and import bookmarks. | Yes | Yes | Yes |
+| Sync your custom setting and bookmarks across devices. | Yes | Yes | No |
+| Options-UI for custom settings. | Yes | Yes | Yes |
+| Dark Mode. | Yes | Yes | Yes |
+<!-- prettier-ignore-end -->
 
 <p align="center">
   <img src="https://i.imgur.com/Dh7wczv.png">
