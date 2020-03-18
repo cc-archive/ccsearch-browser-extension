@@ -333,10 +333,9 @@ document.addEventListener('DOMContentLoaded', () => {
           msnry.layout();
           // confirm user action
           showNotification('Bookmarks successfully removed', 'positive', 'snackbar-bookmarks');
-          // Read default "Select all" when no bookmarks to select
-          if (nonDeletedBookmarks.length === 0) {
-            elements.buttonSelectAllCheckbox[0].children[0].innerText = 'Select All';
-          }
+          // Read default "Select all"
+          elements.buttonSelectAllCheckbox[0].children[0].innerText = 'Select All';
+          selectedBookmarks = 0;
         });
       }
     });
