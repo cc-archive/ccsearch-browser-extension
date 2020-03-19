@@ -333,6 +333,9 @@ document.addEventListener('DOMContentLoaded', () => {
           msnry.layout();
           // confirm user action
           showNotification('Bookmarks successfully removed', 'positive', 'snackbar-bookmarks');
+          // Read default "Select all"
+          elements.buttonSelectAllCheckbox[0].children[0].innerText = 'Select All';
+          selectedBookmarks = 0;
         });
       }
     });
