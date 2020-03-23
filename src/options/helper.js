@@ -15,14 +15,14 @@ export function restoreFilters(inputElements) {
   }
 }
 
-function addProvidersToDom(providers) {
-  const { providerWrapper } = elements;
-  providerWrapper.innerText = '';
+function addSourcesToDom(sources) {
+  const { sourceWrapper } = elements;
+  sourceWrapper.innerText = '';
 
-  Object.keys(providers).forEach(key => {
+  Object.keys(sources).forEach(key => {
     const input = document.createElement('input');
     input.type = 'checkbox';
-    input.id = providers[key];
+    input.id = sources[key];
     input.classList = 'vocab choice-field magenta-colored small-sized';
 
     const label = document.createElement('label');
@@ -32,18 +32,18 @@ function addProvidersToDom(providers) {
 
     const breakLine = document.createElement('br');
 
-    providerWrapper.appendChild(input);
-    providerWrapper.appendChild(label);
-    providerWrapper.appendChild(breakLine);
+    sourceWrapper.appendChild(input);
+    sourceWrapper.appendChild(label);
+    sourceWrapper.appendChild(breakLine);
   });
-  restoreFilters(elements.providerInputs);
+  restoreFilters(elements.sourceInputs);
 }
 
 export async function init() {
   restoreFilters(elements.useCaseInputs);
   restoreFilters(elements.licenseInputs);
-  const providers = await getLatestSources();
-  addProvidersToDom(providers);
+  const sources = await getLatestSources();
+  addSourcesToDom(sources);
 }
 
 export function saveSingleFilter(inputElements) {
@@ -65,7 +65,7 @@ export function saveSingleFilter(inputElements) {
 export function saveFiltersOptions() {
   saveSingleFilter(elements.useCaseInputs);
   saveSingleFilter(elements.licenseInputs);
-  saveSingleFilter(elements.providerInputs);
+  saveSingleFilter(elements.sourceInputs);
 }
 
 export function updateBookmarks(newBookmarksids) {

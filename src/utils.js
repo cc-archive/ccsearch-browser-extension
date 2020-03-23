@@ -1,4 +1,4 @@
-import { backupProviderAPIQueryStrings } from './popup/helper';
+import { backupSourceAPIQueryStrings } from './popup/helper';
 import { elements } from './popup/base';
 
 export function showModal(modalText, onModalConfirm, onModalClose) {
@@ -87,7 +87,7 @@ export async function getLatestSources() {
     return sources;
   } catch (error) {
     showNotification('Unable to fetch sources. Using backup sources', 'negative', 'snackbar-bookmarks', 2500);
-    sources = backupProviderAPIQueryStrings;
+    sources = backupSourceAPIQueryStrings;
     return sources;
   }
 }

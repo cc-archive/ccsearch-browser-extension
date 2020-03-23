@@ -139,11 +139,11 @@ function getPopupCreatorChildNode(creatorUrl, creator) {
   return link;
 }
 
-function getPopupProviderChildNode(foreignLandingUrl, provider) {
+function getPopupSourceChildNode(foreignLandingUrl, source) {
   const link = document.createElement('a');
   link.href = foreignLandingUrl;
   link.target = '_blank';
-  link.textContent = provider;
+  link.textContent = source;
   return link;
 }
 
@@ -184,7 +184,7 @@ function getImageData(imageId) {
       elements.downloadImageAttributionButton.title = `${res.title}.${res.url.split('.').pop()}`;
       const popupTitle = document.querySelector('.info__content-title');
       const popupCreator = document.querySelector('.info__content-creator');
-      const popupSource = document.querySelector('.info__content-provider');
+      const popupSource = document.querySelector('.info__content-source');
       const popupLicense = document.querySelector('.info__content-license');
       const attributionRichTextPara = document.getElementById('attribution-rich-text');
       const attributionHtmlTextArea = document.getElementById('attribution-html');
@@ -193,7 +193,7 @@ function getImageData(imageId) {
       removeChildNodes(popupCreator);
       popupCreator.appendChild(getPopupCreatorChildNode(creatorUrl, creator));
       removeChildNodes(popupSource);
-      popupSource.appendChild(getPopupProviderChildNode(foreignLandingUrl, source));
+      popupSource.appendChild(getPopupSourceChildNode(foreignLandingUrl, source));
       removeChildNodes(popupLicense);
       popupLicense.appendChild(getPopupLicenseChildNode(licenseUrl, license.toUpperCase()));
       // attributionRichTextPara.textContent = getRichTextAttribution(res, attributionRichTextPara);

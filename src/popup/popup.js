@@ -18,14 +18,14 @@ import {
   removeClassFromElements,
   removeLoadMoreButton,
 } from './helper';
-import { loadProvidersToDom, resetLicenseDropDown, loadUserDefaults } from './filterModule';
+import { loadSourcesToDom, resetLicenseDropDown, loadUserDefaults } from './filterModule';
 import { handleImageAttributionDownload, handleImageDownload } from './infoPopupModule';
 import { addSpinner } from './spinner';
 import { showNotification, removeNode, getLatestSources, restoreInitialContent, showModal } from '../utils';
 
 let inputText;
 let pageNo;
-// List to hold providers selected by the user from the drop down.
+// List to hold  selected by the user from the drop down.
 let userSelectedSourcesList = [];
 
 // List to hold user selected licenses
@@ -34,8 +34,8 @@ let userSelectedLicensesList = [];
 // List to hold user selected use case
 let userSelectedUseCaseList = [];
 
-// object to map Provider display names to valid query names.
-let providerAPIQueryStrings = {};
+// object to map source display names to valid query names.
+let sourceAPIQueryStrings = {};
 
 // Store Wheather Search Storage is enabled or not
 let enableSearchStorageOption = true;
@@ -92,25 +92,25 @@ elements.inputField.addEventListener('keydown', event => {
   }
 });
 
-async function populateProviderList() {
-  providerAPIQueryStrings = await getLatestSources();
+async function populateSourceList() {
+  sourceAPIQueryStrings = await getLatestSources();
 
   let count = 0;
-  const providersList = [];
+  const sourcesList = [];
 
-  // iterating over provider object
-  Object.keys(providerAPIQueryStrings).forEach(key => {
-    providersList[count] = {
-      id: providerAPIQueryStrings[key],
+  // iterating over source object
+  Object.keys(sourceAPIQueryStrings).forEach(key => {
+    sourcesList[count] = {
+      id: sourceAPIQueryStrings[key],
       title: key,
     };
     count += 1;
   });
 
-  loadProvidersToDom(providersList);
+  loadSourcesToDom(sourcesList);
 }
 
-populateProviderList();
+populateSourceList();
 
 elements.filterIcon.addEventListener('click', () => {
   elements.filterSection.classList.toggle('section-filter--active');
@@ -121,11 +121,11 @@ elements.filterResetButton.addEventListener('click', () => {
   // reset values
   elements.useCaseChooser.value = '';
   elements.licenseChooser.value = '';
-  elements.providerChooser.value = '';
+  elements.sourceChooser.value = '';
 
   // array of dropdown container elements
   const dropdownElementsList = [
-    elements.providerChooserWrapper,
+    elements.sourceChooserWrapper,
     elements.licenseChooserWrapper,
     elements.useCaseChooserWrapper,
   ];
@@ -199,10 +199,10 @@ function applyFilters() {
   userSelectedLicensesList = [];
   userSelectedUseCaseList = [];
 
-  if (elements.providerChooser.value) {
-    const userInputProvidersList = elements.providerChooser.value.split(', ');
-    userInputProvidersList.forEach(element => {
-      userSelectedSourcesList.push(providerAPIQueryStrings[element]);
+  if (elements.sourceChooser.value) {
+    const userInputSourcesList = elements.sourceChooser.value.split(', ');
+    userInputSourcesList.forEach(element => {
+      userSelectedSourcesList.push(sourceAPIQueryStrings[element]);
     });
   }
 

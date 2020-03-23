@@ -1,6 +1,6 @@
 import { elements } from './base';
 
-// list to hold Providers to show to the user in dropdown
+// list to hold Sources to show to the user in dropdown
 // the list must have objects with id and title as properties.
 // see https://github.com/kirlisakal/combo-tree#sample-json-data
 function loadFilterSection(wrapperElement) {
@@ -18,15 +18,15 @@ function loadFilterSection(wrapperElement) {
   }
 }
 
-export function loadProvidersToDom(providersList) {
-  $('#choose-provider').comboTree({
-    source: providersList,
+export function loadSourcesToDom(SourcesList) {
+  $('#choose-source').comboTree({
+    source: SourcesList,
     isMultiple: true,
   });
 
-  elements.providerChooserLoadingMessage.style.display = 'none';
-  elements.providerChooserWrapper.style.display = 'inline-block';
-  loadFilterSection(elements.providerChooserWrapper);
+  elements.sourceChooserLoadingMessage.style.display = 'none';
+  elements.sourceChooserWrapper.style.display = 'inline-block';
+  loadFilterSection(elements.sourceChooserWrapper);
 }
 
 export function resetLicenseDropDown() {
