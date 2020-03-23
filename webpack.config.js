@@ -68,8 +68,8 @@ module.exports = {
         flatten: true,
       },
       {
-        from: './popup/img/provider_logos/*',
-        to: './popup/img/provider_logos/',
+        from: './popup/img/source_logos/*',
+        to: './popup/img/source_logos/',
         flatten: true,
       },
     ]),

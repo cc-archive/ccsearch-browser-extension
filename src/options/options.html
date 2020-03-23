@@ -72,9 +72,9 @@
             <label for="BY-NC-ND" class="padding-left-smaller">BY-NC-ND</label><br />
           </div>
 
-          <h6 class="margin-top-medium vocab heading">All Providers</h6>
-          <div class="provider filter-checkboxes">
-            Fetching Latest Providers ...
+          <h6 class="margin-top-medium vocab heading">All Sources</h6>
+          <div class="source filter-checkboxes">
+            Fetching Latest Sources ...
           </div>
           <div class="margin-top-medium">
             <button id="save-filters" class="vocab button green-colored dark-shaded">
@@ -118,7 +118,7 @@
         <div class="content" data-content-no="4">
           <h6 class="vocab heading">CC Search Browser Extension</h6>
           <p class="vocab paragraph">
-            This extension providers a new interface to
+            This extension provides a new interface to
             <a href="https://search.creativecommons.org/">CC Search</a> to help you search for free
             content in the public domain and under Creative Commons licenses.
           </p>
@@ -258,20 +258,20 @@
           <p class="vocab paragraph">The results will be images licensed under the CC-BY license. You can use any of the other CC licenses: "by", "by-sa", "by-nc", "by-nd", "by-nc-sa", "by-nc-nd", "cc0", "pdm".</p>
 
           
-          <h5 class="vocab heading">Search by provider  </h6>
-          <p class="vocab paragraph">Put <strong>provider:</strong> in front of your search term to see only results from the specified source. For example, <u><strong>provider:"met"</strong></u>.</p>
-          <p class="vocab paragraph">Note that you must use one of the provider codes specified below, searching for something like <em>provider:"Metropolitan Museum of Art"</em> will not return any results.</p>
-          <p class="vocab paragraph">Use the following table with the provider code of every provider in our collection.</p>
+          <h5 class="vocab heading">Search by source  </h6>
+          <p class="vocab paragraph">Put <strong>source:</strong> in front of your search term to see only results from the specified source. For example, <u><strong>source:"met"</strong></u>.</p>
+          <p class="vocab paragraph">Note that you must use one of the source codes specified below, searching for something like <em>source:"Metropolitan Museum of Art"</em> will not return any results.</p>
+          <p class="vocab paragraph">Use the following table with the source code of every source in our collection.</p>
           <br />
           <table class="vocab table orange-colored s9-shaded slightly-simple striped fixed">
-            <caption class="caption"> Valid provider codes </caption>
+            <caption class="caption"> Valid source codes </caption>
               <thead class="head">
                 <tr>
                   <th class="cell">
-                    Provider Name
+                    Source Name
                   </th>
                   <th class="cell">
-                    Provider Code 
+                    Source Code 
                   </th>
                 </tr>
               </thead>
@@ -453,7 +453,7 @@
           <p class="vocab paragraph">Put <strong>AND</strong> in between two queries to see only results that match both queries. For example:</p>
           <p class="vocab paragraph">
             <ul>
-              <li><u><strong>title:"nature" AND provider:"met"</strong></u> will return images from the MET and whose title contains nature.</li>
+              <li><u><strong>title:"nature" AND source:"met"</strong></u> will return images from the MET and whose title contains nature.</li>
             </ul>
             <ul>
               <li class="margin-top-small"><u><strong>tags.name:"sky" AND tags.name:"airplane"</strong></u> will return images tagged both sky and airplane.</li class="margin-top-medium">
@@ -462,7 +462,7 @@
           <p class="vocab paragraph margin-top-medium">Put <strong>OR</strong> in between two queries to see only results that match either query. For example:</p>
           <p class="vocab paragraph">
             <ul>
-              <li><u><strong>provider:"met" OR provider:"flickr"</strong></u> will return images which are either from MET or from Flickr.</li>
+              <li><u><strong>source:"met" OR source:"flickr"</strong></u> will return images which are either from MET or from Flickr.</li>
             </ul>
             <ul>
               <li class="margin-top-small"><u><strong>tags.name:"phone" OR tags.name:"tablet"</strong></u> will return images tagged either phone or tablet.</li class="margin-top-medium">
@@ -471,7 +471,7 @@
           <p class="vocab paragraph margin-top-medium">Put <strong>NOT</strong> in between two queries to see only results that match the first query and do not match the second query. You can also use parentheses to combine more than one of these operations For example:</p>
           <p class="vocab paragraph">
             <ul>
-              <li><u><strong>license:"by" AND (NOT provider:"flickr")</strong></u> will return images licensed under CC BY from all providers except from Flickr.</li>
+              <li><u><strong>license:"by" AND (NOT source:"flickr")</strong></u> will return images licensed under CC BY from all sources except from Flickr.</li>
             </ul>
             <ul>
               <li class="margin-top-small"><u><strong>tags.name:"bird" AND (NOT tags.name:"flamingo")</strong></u> will return all images tagged bird except images also tagged flamingo.</li class="margin-top-medium">

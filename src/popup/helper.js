@@ -6,7 +6,7 @@ export function unicodeToString(string) {
   return '';
 }
 
-// all the provider logo image file names
+// all the source logo image file names
 export const sourceLogos = [
   '500px_logo.png',
   'animaldiversity_logo.png',
@@ -105,8 +105,8 @@ export const useCaseAPIQueryStrings = {
   'I can modify or adapt': 'modification',
 };
 
-// backup object in case we cannot fetch provider names from the API.
-export const backupProviderAPIQueryStrings = {
+// backup object in case we cannot fetch source names from the API.
+export const backupSourceAPIQueryStrings = {
   'Animal Diversity Web': 'animaldiversity',
   'Brooklyn Museum': 'brooklynmuseum',
   Behance: 'behance',

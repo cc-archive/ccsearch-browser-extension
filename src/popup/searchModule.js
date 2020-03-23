@@ -165,8 +165,8 @@ export function addThumbnailsToDOM(resultArray) {
           break;
         }
       }
-      sourceImageElement.setAttribute('src', `img/provider_logos/${sourceLogoName}`);
-      sourceImageElement.setAttribute('class', 'provider-image');
+      sourceImageElement.setAttribute('src', `img/source_logos/${sourceLogoName}`);
+      sourceImageElement.setAttribute('class', 'source-image');
 
       foreignLandingLinkElement.appendChild(sourceImageElement);
       foreignLandingLinkElement.appendChild(imageTitleNode);
