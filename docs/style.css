@@ -1,0 +1,88 @@
+.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}
+nav
+{
+background:rgb(237, 89, 47)!important;
+}
+.browser-info
+{
+text-transform: capitalize;
+}
+/* .feature-content
+{
+margin-top:70px !important;
+} */
+.feature-heading
+{
+padding-left:2em;
+}
+.navbar
+{
+padding-bottom: 15px;
+padding-top: 20px;
+}
+.navbar-brand
+{
+display:block;
+}
+.navbar-brand img
+{
+
+}
+.brand-title
+{
+padding-left: 120px;
+}
+
+.responsive-img {
+    height: auto;
+    width: 100%;
+    max-width: 500px;
+    min-width: 150px;
+}
+.grid {
+    padding-left: 4em;
+    padding-right: 4em;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    justify-items: start;
+}
+.grid > div {
+    padding: 2em;
+    margin: 0.5em;
+}
+.grid2 {
+    padding-left: 4em;
+    padding-right: 4em;
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    justify-items: end;
+}
+.grid2 > div {
+    padding: 2em;
+    margin: 0.5em;
+}
+
+.button {
+    font-size: large;
+}
+
+hr {
+    width: 50%;
+    margin: auto;
+}
+
+table {
+    margin: auto;
+}
+.table {
+    padding-left: 4em;
+    padding-right: 4em;
+}
+/* @media all and (max-width:700px) {
+    .grid > div {
+        display: grid;
+        
+    }
+} */
