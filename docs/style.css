@@ -49,6 +49,12 @@ h3 {
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   justify-items: end;
 }
+.grid2 p:nth-child(odd) {
+text-align: right !important;
+}
+.grid2 p:nth-child(even) {
+text-align: left !important;
+}
 .grid2 > div {
   padding: 2em;
   margin: 0.5em;
