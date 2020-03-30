@@ -1,3 +1,6 @@
+h3 {
+  text-align: center;
+}
 .bg-color-orange {
   background: rgb(237, 89, 47) !important;
 }
@@ -32,6 +35,7 @@
   grid-template-columns: 2fr 1fr;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   justify-items: start;
+  background: rgb(245, 245, 245);
 }
 .grid > div {
   padding: 2em;
