@@ -17,9 +17,6 @@
   padding-left: 6em !important;
   padding-right: 6em !important;
 }
-.feature-heading {
-  padding-left: 2em;
-}
 
 .responsive-img {
   height: auto;
@@ -41,8 +38,8 @@
   margin: 0.5em;
 }
 .grid2 {
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 2em;
+  padding-right: 2em;
   display: grid;
   grid-template-columns: 2fr 3fr;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -62,10 +59,6 @@ hr {
   margin: auto;
 }
 
-table {
-  margin: auto;
-}
-.table {
-  padding-left: 4em;
-  padding-right: 4em;
+.feature-table {
+  margin:auto;
 }
