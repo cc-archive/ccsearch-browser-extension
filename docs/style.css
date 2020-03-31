@@ -1,3 +1,6 @@
+body {
+  overflow-y: hidden;
+}
 .feature-title {
   text-align: center;
 }
@@ -61,4 +64,28 @@ hr {
 
 .feature-table {
   margin: auto;
+}
+@media all and (max-width: 600px) {
+  .logo {
+    margin-left: 3em !important;
+  }
+  .grid {
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+    text-align: justify;
+  }
+  .responsive-img {
+    height: auto;
+    width: 100%;
+    max-width: 300px;
+    min-width: 150px;
+  }
+  .feature-content {
+    padding-left: 0em !important;
+    padding-right: 0em !important;
+  }
+  .grid2 > div {
+    padding: 0em;
+    margin: 0.2 em;
+  }
 }
