@@ -1,5 +1,11 @@
-h3 {
+.feature-title {
   text-align: center;
+}
+.left-align {
+  text-align:left;
+}
+.right-align {
+  text-align:right;
 }
 .bg-color-orange {
   background: rgb(237, 89, 47) !important;
@@ -13,13 +19,6 @@ h3 {
 }
 .feature-heading {
   padding-left: 2em;
-}
-.navbar {
-  padding-bottom: 15px;
-  padding-top: 20px;
-}
-.navbar-brand {
-  display: block;
 }
 
 .responsive-img {
@@ -48,12 +47,6 @@ h3 {
   grid-template-columns: 2fr 3fr;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   justify-items: end;
-}
-.grid2 p:nth-child(odd) {
-text-align: right !important;
-}
-.grid2 p:nth-child(even) {
-text-align: left !important;
 }
 .grid2 > div {
   padding: 2em;
