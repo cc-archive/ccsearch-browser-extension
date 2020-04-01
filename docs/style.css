@@ -1,6 +1,3 @@
-body {
-  overflow-x: hidden;
-}
 .feature-title {
   text-align: center;
 }
@@ -16,10 +13,6 @@ body {
 .browser-info {
   text-transform: capitalize;
 }
-.feature-content {
-  padding-left: 6em !important;
-  padding-right: 6em !important;
-}
 
 .responsive-img {
   height: auto;
@@ -28,8 +21,6 @@ body {
   min-width: 150px;
 }
 .grid {
-  padding-left: 4em;
-  padding-right: 4em;
   display: grid;
   grid-template-columns: 2fr 1fr;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
