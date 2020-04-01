@@ -83,7 +83,7 @@ hr {
     padding-right: 0em !important;
   }
   .grid2 {
-    padding-left: 0em !important; 
+    padding-left: 0em !important;
     padding-right: 0em !important;
   }
   .grid2 > div {
@@ -99,9 +99,9 @@ hr {
     padding-left: 0.2em !important;
   }
   .extension-detail {
-   width:60%;
-   text-align: justify !important;
-   padding-left: 1em !important;
+    width: 60%;
+    text-align: justify !important;
+    padding-left: 1em !important;
   }
   .download-extension {
     width: 90%;
