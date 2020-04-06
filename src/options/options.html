@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>CC Search Extension Options</title>
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,300i,400&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
@@ -37,11 +37,10 @@
       <div id="vocab-tabbed-contents" class="vocab section contents magenta-colored raised bottom-accented clingy">
         <div class="content active" data-content-no="1">
           <div class="note">
-            <p class="vocab paragraph"><strong>Note:</strong>
-              <ul class="margin-bottom-medium">
-                <li>Changes will take effect after you click the save button at the bottom.</li>
-              </ul>
-            </p>
+            <p class="vocab paragraph"><strong>Note:</strong></p>
+            <ul class="margin-bottom-medium">
+              <li>Changes will take effect after you click the save button at the bottom.</li>
+            </ul>
           </div>
 
           <h6 class="vocab heading">I want something that (use-case)</h6>
@@ -87,12 +86,22 @@
         <div class="content" data-content-no="2">
           <h6 class="vocab heading">Store and load the last search results when you open the extension?</h6>
           <div class="margin-left-medium">
-            <input type="checkbox" class="vocab choice-field magenta-colored small-sized" id="enable-search-storage-checkbox" />
+            <input
+              type="checkbox"
+              class="vocab choice-field magenta-colored small-sized"
+              id="enable-search-storage-checkbox"
+            />
             <label for="enable-search-storage-checkbox" class="padding-left-smaller">Yes</label><br />
           </div>
-          <h6 class="vocab heading margin-top-medium">Ask for confirmation everytime before clearing search results?</h6>
+          <h6 class="vocab heading margin-top-medium">
+            Ask for confirmation everytime before clearing search results?
+          </h6>
           <div class="margin-left-medium">
-            <input type="checkbox" class="vocab choice-field magenta-colored small-sized" id="enable-search-clear-confirm-checkbox" />
+            <input
+              type="checkbox"
+              class="vocab choice-field magenta-colored small-sized"
+              id="enable-search-clear-confirm-checkbox"
+            />
             <label for="enable-search-clear-confirm-checkbox" class="padding-left-smaller">Yes</label><br />
           </div>
         </div>
@@ -112,15 +121,16 @@
           </div>
           <div class="margin-top-medium">
             <p class="vocab paragraph">
-              <strong>Note</strong>: To know more about how you can sync your settings and bookmarks, read the FAQ.</p>
+              <strong>Note</strong>: To know more about how you can sync your settings and bookmarks, read the FAQ.
+            </p>
           </div>
         </div>
         <div class="content" data-content-no="4">
           <h6 class="vocab heading">CC Search Browser Extension</h6>
           <p class="vocab paragraph">
             This extension provides a new interface to
-            <a href="https://search.creativecommons.org/">CC Search</a> to help you search for free
-            content in the public domain and under Creative Commons licenses.
+            <a href="https://search.creativecommons.org/">CC Search</a> to help you search for free content in the
+            public domain and under Creative Commons licenses.
           </p>
           <p class="vocab paragraph">
             This project is Open-Source. Your participation in the form of bug reports, feature requests or code
@@ -151,338 +161,452 @@
             channel on <a href="https://opensource.creativecommons.org/community/#slack">CC Slack</a>.
           </p>
           <p class="vocab paragraph margin-bottom-medium">
-            If you would like to report a bug you are encountering when using the tool, <a href="https://github.com/creativecommons/ccsearch-browser-extension/issues/new?template=bug_report.md">log the issue at Github</a> .
+            If you would like to report a bug you are encountering when using the tool,
+            <a href="https://github.com/creativecommons/ccsearch-browser-extension/issues/new?template=bug_report.md"
+              >log the issue at Github</a
+            >
+            .
           </p>
-          <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSftU03z5XItJGYi-UZlSqvIB2BV-IoDIOIZEvgTBH2nwwMkbQ/viewform?embedded=true" width="640" height="913" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+          <iframe
+            src="https://docs.google.com/forms/d/e/1FAIpQLSftU03z5XItJGYi-UZlSqvIB2BV-IoDIOIZEvgTBH2nwwMkbQ/viewform?embedded=true"
+            width="640"
+            height="913"
+            frameborder="0"
+            marginheight="0"
+            marginwidth="0"
+            >Loading…</iframe
+          >
         </div>
 
         <div class="content" data-content-no="6">
           <div class="margin-top-medium">
-              <div class="accordion">
-                <div class="accordion-item">
-                  <a class="accordion-link"> What is the sync feature of the extension?</a>
-                  <div class="content">
-                    <p> Chrome and Firefox have a built-in feature that syncs browser settings and preferences across your logged-in devices. The extension leverages this feature to sync your custom settings and bookmarks. This guarantees that the content you have bookmarked on your work computer will be present on your personal computer.</p>
-                  </div>
+            <div class="accordion">
+              <div class="accordion-item">
+                <a class="accordion-link"> What is the sync feature of the extension?</a>
+                <div class="content">
+                  <p>
+                    Chrome and Firefox have a built-in feature that syncs browser settings and preferences across your
+                    logged-in devices. The extension leverages this feature to sync your custom settings and bookmarks.
+                    This guarantees that the content you have bookmarked on your work computer will be present on your
+                    personal computer.
+                  </p>
                 </div>
-                <div class="accordion-item">
-                  <a class="accordion-link">How do I activate the sync feature in Google Chrome?</a>
-                  <div class="content">
-                    <ul>
-                      <li>Open the Chrome browser.</li>
-                      <li>Paste &quot;<em>chrome://settings/syncSetup</em>&quot; in the address bar and press enter.</li>
-                      <li>Turn on sync by pressing the &quot;<em>Turn on</em>&quot; button.</li>
-                      <li>Click on &quot;<em>Manage sync</em>&quot;.</li>
-                      <li>Toggle on the &quot;<em>Extensions</em>&quot; option if not already turned on.</li>
-                    </ul>
-                  </div>
+              </div>
+              <div class="accordion-item">
+                <a class="accordion-link">How do I activate the sync feature in Google Chrome?</a>
+                <div class="content">
+                  <ul>
+                    <li>Open the Chrome browser.</li>
+                    <li>Paste &quot;<em>chrome://settings/syncSetup</em>&quot; in the address bar and press enter.</li>
+                    <li>Turn on sync by pressing the &quot;<em>Turn on</em>&quot; button.</li>
+                    <li>Click on &quot;<em>Manage sync</em>&quot;.</li>
+                    <li>Toggle on the &quot;<em>Extensions</em>&quot; option if not already turned on.</li>
+                  </ul>
                 </div>
-                <div class="accordion-item">
-                  <a class="accordion-link">How do I activate the sync feature in Mozilla Firefox?</a>
-                  <div class="content">
-                    <ul>
-                      <li>Open the Firefox browser.</li>
-                      <li>Click the Firefox Account icon in the toolbar.</li>
-                      <li>Click &quot;<em>Sign in to Firefox</em>&quot;.</li>
-                      <li>After signing in, click on the Firefox Account icon again and click on &quot;<em>Sync Settings&quot;</em>.</li>
-                      <li>You will see the items you are syncing. If &quot;<em>Add-ons</em>&quot; is not present in the list, click on the &quot;<em>Change</em>&quot; button and select it.</li>
-                    </ul>
-                  </div>
+              </div>
+              <div class="accordion-item">
+                <a class="accordion-link">How do I activate the sync feature in Mozilla Firefox?</a>
+                <div class="content">
+                  <ul>
+                    <li>Open the Firefox browser.</li>
+                    <li>Click the Firefox Account icon in the toolbar.</li>
+                    <li>Click &quot;<em>Sign in to Firefox</em>&quot;.</li>
+                    <li>
+                      After signing in, click on the Firefox Account icon again and click on &quot;<em
+                        >Sync Settings&quot;</em
+                      >.
+                    </li>
+                    <li>
+                      You will see the items you are syncing. If &quot;<em>Add-ons</em>&quot; is not present in the
+                      list, click on the &quot;<em>Change</em>&quot; button and select it.
+                    </li>
+                  </ul>
                 </div>
-                <div class="accordion-item">
-                  <a class="accordion-link">How do I update the extension?</a>
-                  <div class="content">
-                    <p>We constantly push new versions of the extension with bug fixes and new features. By default, the extension is updated to the new version automatically by your browser, but this may not happen immediately. To update the extension manually you can perform the following steps:</p>
-                    <h4 class="margin-top-medium margin-bottom-small">Google Chrome</h4>
-                    <ul>
-                      <li>Open the Chrome browser.</li>
-                      <li>In the address bar, type &quot;<em>chrome://extensions</em>&quot; and press enter.</li>
-                      <li>At the top of the extensions page, toggle on the &quot;<em>Developer mode</em>&quot; option.</li>
-                      <li>Press the &quot;<em>Update&quot;</em> button</li>
-                    </ul>
-                    <h4 class="margin-top-medium margin-bottom-small">Mozilla Firefox</h4>
-                    <ul>
-                      <li>Open the Firefox browser.</li>
-                      <li>In the address bar, type &quot;<em>about:addons</em>&quot; and press enter.</li>
-                      <li>Click the gear icon in the upper-right area of the Extensions panel.</li>
-                      <li>Click the &quot;<em>Check for updates</em>&quot; option.</li>
-                    </ul>
-                    <h4 class="margin-top-medium margin-bottom-small">Opera</h4>
-                    <ul>
-                      <li>Open the Opera browser.</li>
-                      <li>Click on menu > Extensions > Extensions (or press Ctrl + Shift + E)</li>
-                      <li>At the top of the extensions page, toggle on the &quot;<em>Developers mode</em>&quot; option.</li>
-                      <li>Press the &quot;<em>Update</em>&quot; button.</li>
-                    </ul>
-                  </div>
+              </div>
+              <div class="accordion-item">
+                <a class="accordion-link">How do I update the extension?</a>
+                <div class="content">
+                  <p>
+                    We constantly push new versions of the extension with bug fixes and new features. By default, the
+                    extension is updated to the new version automatically by your browser, but this may not happen
+                    immediately. To update the extension manually you can perform the following steps:
+                  </p>
+                  <h4 class="margin-top-medium margin-bottom-small">Google Chrome</h4>
+                  <ul>
+                    <li>Open the Chrome browser.</li>
+                    <li>In the address bar, type &quot;<em>chrome://extensions</em>&quot; and press enter.</li>
+                    <li>
+                      At the top of the extensions page, toggle on the &quot;<em>Developer mode</em>&quot; option.
+                    </li>
+                    <li>Press the &quot;<em>Update&quot;</em> button</li>
+                  </ul>
+                  <h4 class="margin-top-medium margin-bottom-small">Mozilla Firefox</h4>
+                  <ul>
+                    <li>Open the Firefox browser.</li>
+                    <li>In the address bar, type &quot;<em>about:addons</em>&quot; and press enter.</li>
+                    <li>Click the gear icon in the upper-right area of the Extensions panel.</li>
+                    <li>Click the &quot;<em>Check for updates</em>&quot; option.</li>
+                  </ul>
+                  <h4 class="margin-top-medium margin-bottom-small">Opera</h4>
+                  <ul>
+                    <li>Open the Opera browser.</li>
+                    <li>Click on menu > Extensions > Extensions (or press Ctrl + Shift + E)</li>
+                    <li>
+                      At the top of the extensions page, toggle on the &quot;<em>Developers mode</em>&quot; option.
+                    </li>
+                    <li>Press the &quot;<em>Update</em>&quot; button.</li>
+                  </ul>
                 </div>
-                <div class="accordion-item">
-                  <a class="accordion-link">How can I contribute to this project?</a>
-                  <div class="content">
-                    <p>Community contribution and feedback is an essential part of the development process, so we encourage 
-                      you to contact us if you have feedback or a specific suggestion. This is an
-                       <a href="https://github.com/creativecommons/ccsearch-browser-extension">open source project</a>, you 
-                      can contribute in the form of
-                       <a href="https://github.com/creativecommons/ccsearch-browser-extension/blob/master/INSTRUCTIONS.md#reporting-bugs">bug reports</a>, <a href="https://github.com/creativecommons/ccsearch-browser-extension/blob/master/INSTRUCTIONS.md#feature-requests">feature requests</a>, or <a href="https://github.com/creativecommons/ccsearch-browser-extension/blob/master/INSTRUCTIONS.md#contributing-code">code contributions</a>. To install the development version of the extension, read the <a href="https://github.com/creativecommons/ccsearch-browser-extension#installation-from-source">installation guide on GitHub</a>.
-                      </p>
-                  </div>
+              </div>
+              <div class="accordion-item">
+                <a class="accordion-link">How can I contribute to this project?</a>
+                <div class="content">
+                  <p>
+                    Community contribution and feedback is an essential part of the development process, so we encourage
+                    you to contact us if you have feedback or a specific suggestion. This is an
+                    <a href="https://github.com/creativecommons/ccsearch-browser-extension">open source project</a>, you
+                    can contribute in the form of
+                    <a
+                      href="https://github.com/creativecommons/ccsearch-browser-extension/blob/master/INSTRUCTIONS.md#reporting-bugs"
+                      >bug reports</a
+                    >,
+                    <a
+                      href="https://github.com/creativecommons/ccsearch-browser-extension/blob/master/INSTRUCTIONS.md#feature-requests"
+                      >feature requests</a
+                    >, or
+                    <a
+                      href="https://github.com/creativecommons/ccsearch-browser-extension/blob/master/INSTRUCTIONS.md#contributing-code"
+                      >code contributions</a
+                    >. To install the development version of the extension, read the
+                    <a href="https://github.com/creativecommons/ccsearch-browser-extension#installation-from-source"
+                      >installation guide on GitHub</a
+                    >.
+                  </p>
                 </div>
+              </div>
             </div>
           </div>
         </div>
         <div class="content" data-content-no="7">
-          
-          <p class="vocab paragraph">When you search, you can enter special symbols or words to your search term to make your search results more precise.</p>
-          
+          <p class="vocab paragraph">
+            When you search, you can enter special symbols or words to your search term to make your search results more
+            precise.
+          </p>
+
           <h5 class="vocab heading">Search for an exact match</h5>
-          <p class="vocab paragraph">Put a word or phrase inside quotes. For example, <u><strong>"Claude Monet"</strong></u>.</p>
-          
+          <p class="vocab paragraph">
+            Put a word or phrase inside quotes. For example, <u><strong>"Claude Monet"</strong></u
+            >.
+          </p>
+
           <h5 class="vocab heading">Search for multiple terms</h5>
-          <p class="vocab paragraph">Put <strong>'+'</strong> between the terms that you want to search for.
-          For example, <u><strong>india +"taj mahal"</strong></u> will return results that contain both "taj mahal" and "india".</p>
-          
+          <p class="vocab paragraph">
+            Put <strong>'+'</strong> between the terms that you want to search for. For example,
+            <u><strong>india +"taj mahal"</strong></u> will return results that contain both "taj mahal" and "india".
+          </p>
+
           <h5 class="vocab heading">Exclude terms</h5>
-          <p class="vocab paragraph">Put <strong>'-'</strong> before the term that you'd like excluded from the results.
-          For example, <u><strong>india -"taj mahal"</strong></u> will return results that contain "india" and not "taj mahal".</p>
-          
-          <h5 class="vocab heading">Search by title</h6>
-          <p class="vocab paragraph">Put <strong>title:</strong> in front of your search term to see only results whose title contains the specified.
-          For example, <u><strong>title:"cats"</strong></u>.</p>
+          <p class="vocab paragraph">
+            Put <strong>'-'</strong> before the term that you'd like excluded from the results. For example,
+            <u><strong>india -"taj mahal"</strong></u> will return results that contain "india" and not "taj mahal".
+          </p>
+
+          <h5 class="vocab heading">Search by title</h5>
+          <p class="vocab paragraph">
+            Put <strong>title:</strong> in front of your search term to see only results whose title contains the
+            specified. For example, <u><strong>title:"cats"</strong></u
+            >.
+          </p>
 
           <h5 class="vocab heading">Search by creator</h5>
-          <p class="vocab paragraph">Put <strong>creator:</strong> in front of your search term to see only results from that creator.
-          For example, <u><strong>creator:"Bernard van Orley"</strong></u>.</p>
+          <p class="vocab paragraph">
+            Put <strong>creator:</strong> in front of your search term to see only results from that creator. For
+            example, <u><strong>creator:"Bernard van Orley"</strong></u
+            >.
+          </p>
 
           <h5 class="vocab heading">Search by license</h5>
-          <p class="vocab paragraph">Put <strong>license:</strong> in front of your search term to see only results from the specified license. For example, <u><strong> license:"by"</strong></u>.</p>
-          <p class="vocab paragraph">The results will be images licensed under the CC-BY license. You can use any of the other CC licenses: "by", "by-sa", "by-nc", "by-nd", "by-nc-sa", "by-nc-nd", "cc0", "pdm".</p>
+          <p class="vocab paragraph">
+            Put <strong>license:</strong> in front of your search term to see only results from the specified license.
+            For example, <u><strong> license:"by"</strong></u
+            >.
+          </p>
+          <p class="vocab paragraph">
+            The results will be images licensed under the CC-BY license. You can use any of the other CC licenses: "by",
+            "by-sa", "by-nc", "by-nd", "by-nc-sa", "by-nc-nd", "cc0", "pdm".
+          </p>
 
-          
-          <h5 class="vocab heading">Search by source  </h6>
-          <p class="vocab paragraph">Put <strong>source:</strong> in front of your search term to see only results from the specified source. For example, <u><strong>source:"met"</strong></u>.</p>
-          <p class="vocab paragraph">Note that you must use one of the source codes specified below, searching for something like <em>source:"Metropolitan Museum of Art"</em> will not return any results.</p>
+          <h5 class="vocab heading">Search by source</h5>
+          <p class="vocab paragraph">
+            Put <strong>source:</strong> in front of your search term to see only results from the specified source. For
+            example, <u><strong>source:"met"</strong></u
+            >.
+          </p>
+          <p class="vocab paragraph">
+            Note that you must use one of the source codes specified below, searching for something like
+            <em>source:"Metropolitan Museum of Art"</em> will not return any results.
+          </p>
           <p class="vocab paragraph">Use the following table with the source code of every source in our collection.</p>
           <br />
           <table class="vocab table orange-colored s9-shaded slightly-simple striped fixed">
-            <caption class="caption"> Valid source codes </caption>
-              <thead class="head">
-                <tr>
-                  <th class="cell">
-                    Source Name
-                  </th>
-                  <th class="cell">
-                    Source Code 
-                  </th>
-                </tr>
-              </thead>
-              <tbody class="body">
-                <tr>
-                  <th class="cell">
-                    Animal Diversity Web
-                  </th>
-                  <td class="cell">
-                    animaldiversity 
-                  </td>
-                </tr>
-                <tr>
-                  <th class="cell">
-                    Bēhance
-                  </th>
-                  <td class="cell">
-                    bēhance 
-                  </td>
-                </tr>
-                <tr>
-                  <th class="cell">
-                    Brooklyn Museum
-                  </th>
-                  <td class="cell">
-                    brooklynmuseum 
-                  </td>
-                </tr>
-                <tr>
-                  <th class="cell">
-                    Culturally Authentic Pictorial Lexicon
-                  </th>
-                  <td class="cell">
-                    CAPL 
-                  </td>
-                </tr>
-                <tr>
-                  <th class="cell">
-                    Cleveland Museum of Art
-                  </th>
-                  <td class="cell">
-                    clevelandmuseum 
-                  </td>
-                </tr>
-                <tr>
-                  <th class="cell">
-                    DeviantArt
-                  </th>
-                  <td class="cell">
-                    deviantart 
-                  </td>
-                </tr>
-                <tr>
-                  <th class="cell">
-                    Digitalt Museum
-                  </th>
-                  <td class="cell">
-                    digitaltmuseum 
-                  </td>
-                </tr>
-                <tr>
-                  <th class="cell">
-                    Flickr
-                  </th>
-                  <td class="cell">
-                    flickr 
-                  </td>
-                </tr>
-                <tr>
-                  <th class="cell">
-                    Flora-On
-                  </th>
-                  <td class="cell">
-                    floraon 
-                  </td>
-                </tr>
-                <tr>
-                  <th class="cell">
-                    Geograph Britain and Ireland
-                  </th>
-                  <td class="cell">
-                    geographorguk 
-                  </td>
-                </tr>
-                <tr>
-                  <th class="cell">
-                    McCord Museum
-                  </th>
-                  <td class="cell">
-                    mccordmuseum 
-                  </td>
-                </tr>
-                <tr>
-                  <th class="cell">
-                    Metropolitan Museum of Art
-                  </th>
-                  <td class="cell">
-                    met 
-                  </td>
-                </tr>
-                <tr>
-                  <th class="cell">
-                    Museums Victoria
-                  </th>
-                  <td class="cell">
-                    museumsvictoria 
-                  </td>
-                </tr>
-                <tr>
-                  <th class="cell">
-                    PhyloPic
-                  </th>
-                  <td class="cell">
-                    phylopic 
-                  </td>
-                </tr>
-                <tr>
-                  <th class="cell">
-                    Rawpixel
-                  </th>
-                  <td class="cell">
-                    rawpixel 
-                  </td>
-                </tr>
-                <tr>
-                  <th class="cell">
-                    Rijksmuseum
-                  </th>
-                  <td class="cell">
-                    rijksmuseum 
-                  </td>
-                </tr>
-                <tr>
-                  <th class="cell">
-                    SVG Silh
-                  </th>
-                  <td class="cell">
-                    svgsilh 
-                  </td>
-                </tr>
-                <tr>
-                  <th class="cell">
-                    Thingiverse
-                  </th>
-                  <td class="cell">
-                    thingiverse 
-                  </td>
-                </tr>
-                <tr>
-                  <th class="cell">
-                    Thorvaldsens Museum
-                  </th>
-                  <td class="cell">
-                    thorvaldsensmuseum 
-                  </td>
-                </tr>
-                <tr>
-                  <th class="cell">
-                    World Register of Marine Species
-                  </th>
-                  <td class="cell">
-                    WoRMS 
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          
-          <h5 class="vocab heading">Search by tags</h6>
-          <p class="vocab paragraph">Put <strong>tags.name:</strong> in front of your search term to see only results that are tagged with the specified tag. For example, <u><strong>tags.name:"sky"</strong></u>.</p>
-          <p class="vocab paragraph">If you want to combine tags, you can use the AND operator, or the OR operator, depending on your search preference. For example:</p>
+            <caption class="caption">
+              Valid source codes
+            </caption>
+            <thead class="head">
+              <tr>
+                <th class="cell">
+                  Source Name
+                </th>
+                <th class="cell">
+                  Source Code
+                </th>
+              </tr>
+            </thead>
+            <tbody class="body">
+              <tr>
+                <th class="cell">
+                  Animal Diversity Web
+                </th>
+                <td class="cell">
+                  animaldiversity
+                </td>
+              </tr>
+              <tr>
+                <th class="cell">
+                  Bēhance
+                </th>
+                <td class="cell">
+                  bēhance
+                </td>
+              </tr>
+              <tr>
+                <th class="cell">
+                  Brooklyn Museum
+                </th>
+                <td class="cell">
+                  brooklynmuseum
+                </td>
+              </tr>
+              <tr>
+                <th class="cell">
+                  Culturally Authentic Pictorial Lexicon
+                </th>
+                <td class="cell">
+                  CAPL
+                </td>
+              </tr>
+              <tr>
+                <th class="cell">
+                  Cleveland Museum of Art
+                </th>
+                <td class="cell">
+                  clevelandmuseum
+                </td>
+              </tr>
+              <tr>
+                <th class="cell">
+                  DeviantArt
+                </th>
+                <td class="cell">
+                  deviantart
+                </td>
+              </tr>
+              <tr>
+                <th class="cell">
+                  Digitalt Museum
+                </th>
+                <td class="cell">
+                  digitaltmuseum
+                </td>
+              </tr>
+              <tr>
+                <th class="cell">
+                  Flickr
+                </th>
+                <td class="cell">
+                  flickr
+                </td>
+              </tr>
+              <tr>
+                <th class="cell">
+                  Flora-On
+                </th>
+                <td class="cell">
+                  floraon
+                </td>
+              </tr>
+              <tr>
+                <th class="cell">
+                  Geograph Britain and Ireland
+                </th>
+                <td class="cell">
+                  geographorguk
+                </td>
+              </tr>
+              <tr>
+                <th class="cell">
+                  McCord Museum
+                </th>
+                <td class="cell">
+                  mccordmuseum
+                </td>
+              </tr>
+              <tr>
+                <th class="cell">
+                  Metropolitan Museum of Art
+                </th>
+                <td class="cell">
+                  met
+                </td>
+              </tr>
+              <tr>
+                <th class="cell">
+                  Museums Victoria
+                </th>
+                <td class="cell">
+                  museumsvictoria
+                </td>
+              </tr>
+              <tr>
+                <th class="cell">
+                  PhyloPic
+                </th>
+                <td class="cell">
+                  phylopic
+                </td>
+              </tr>
+              <tr>
+                <th class="cell">
+                  Rawpixel
+                </th>
+                <td class="cell">
+                  rawpixel
+                </td>
+              </tr>
+              <tr>
+                <th class="cell">
+                  Rijksmuseum
+                </th>
+                <td class="cell">
+                  rijksmuseum
+                </td>
+              </tr>
+              <tr>
+                <th class="cell">
+                  SVG Silh
+                </th>
+                <td class="cell">
+                  svgsilh
+                </td>
+              </tr>
+              <tr>
+                <th class="cell">
+                  Thingiverse
+                </th>
+                <td class="cell">
+                  thingiverse
+                </td>
+              </tr>
+              <tr>
+                <th class="cell">
+                  Thorvaldsens Museum
+                </th>
+                <td class="cell">
+                  thorvaldsensmuseum
+                </td>
+              </tr>
+              <tr>
+                <th class="cell">
+                  World Register of Marine Species
+                </th>
+                <td class="cell">
+                  WoRMS
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h5 class="vocab heading">Search by tags</h5>
+          <p class="vocab paragraph">
+            Put <strong>tags.name:</strong> in front of your search term to see only results that are tagged with the
+            specified tag. For example, <u><strong>tags.name:"sky"</strong></u
+            >.
+          </p>
+          <p class="vocab paragraph">
+            If you want to combine tags, you can use the AND operator, or the OR operator, depending on your search
+            preference. For example:
+          </p>
           <ul>
-            <li><u><strong>tags.name:"sky" AND tags.name:"airplane"</strong></u>. This will search for images with both tags, sky and airplane.</li>
-            <li class="margin-top-small"><u><strong>tags.name:"phone" OR tags.name:"sky"</strong></u>. This will search for images tagged with sky or with phone, but not necessarily both.</li>
+            <li>
+              <u><strong>tags.name:"sky" AND tags.name:"airplane"</strong></u
+              >. This will search for images with both tags, sky and airplane.
+            </li>
+            <li class="margin-top-small">
+              <u><strong>tags.name:"phone" OR tags.name:"sky"</strong></u
+              >. This will search for images tagged with sky or with phone, but not necessarily both.
+            </li>
           </ul>
           <p class="vocab paragraph"></p>
           <p class="vocab paragraph"></p>
-          
+
           <h5 class="vocab heading">Combining keywords</h5>
-          <p class="vocab paragraph">Put <strong>AND</strong> in between two queries to see only results that match both queries. For example:</p>
           <p class="vocab paragraph">
-            <ul>
-              <li><u><strong>title:"nature" AND source:"met"</strong></u> will return images from the MET and whose title contains nature.</li>
-            </ul>
-            <ul>
-              <li class="margin-top-small"><u><strong>tags.name:"sky" AND tags.name:"airplane"</strong></u> will return images tagged both sky and airplane.</li class="margin-top-medium">
-            </ul>
+            Put <strong>AND</strong> in between two queries to see only results that match both queries. For example:
           </p>
-          <p class="vocab paragraph margin-top-medium">Put <strong>OR</strong> in between two queries to see only results that match either query. For example:</p>
-          <p class="vocab paragraph">
-            <ul>
-              <li><u><strong>source:"met" OR source:"flickr"</strong></u> will return images which are either from MET or from Flickr.</li>
-            </ul>
-            <ul>
-              <li class="margin-top-small"><u><strong>tags.name:"phone" OR tags.name:"tablet"</strong></u> will return images tagged either phone or tablet.</li class="margin-top-medium">
-            </ul>
+          <ul>
+            <li>
+              <u><strong>title:"nature" AND source:"met"</strong></u> will return images from the MET and whose title
+              contains nature.
+            </li>
+          </ul>
+          <ul>
+            <li class="margin-top-small">
+              <u><strong>tags.name:"sky" AND tags.name:"airplane"</strong></u> will return images tagged both sky and
+              airplane.
+            </li>
+          </ul>
+          <p class="vocab paragraph margin-top-medium">
+            Put <strong>OR</strong> in between two queries to see only results that match either query. For example:
           </p>
-          <p class="vocab paragraph margin-top-medium">Put <strong>NOT</strong> in between two queries to see only results that match the first query and do not match the second query. You can also use parentheses to combine more than one of these operations For example:</p>
-          <p class="vocab paragraph">
-            <ul>
-              <li><u><strong>license:"by" AND (NOT source:"flickr")</strong></u> will return images licensed under CC BY from all sources except from Flickr.</li>
-            </ul>
-            <ul>
-              <li class="margin-top-small"><u><strong>tags.name:"bird" AND (NOT tags.name:"flamingo")</strong></u> will return all images tagged bird except images also tagged flamingo.</li class="margin-top-medium">
-            </ul>
+          <ul>
+            <li>
+              <u><strong>source:"met" OR source:"flickr"</strong></u> will return images which are either from MET or
+              from Flickr.
+            </li>
+          </ul>
+          <ul>
+            <li class="margin-top-small">
+              <u><strong>tags.name:"phone" OR tags.name:"tablet"</strong></u> will return images tagged either phone or
+              tablet.
+            </li>
+          </ul>
+          <p class="vocab paragraph margin-top-medium">
+            Put <strong>NOT</strong> in between two queries to see only results that match the first query and do not
+            match the second query. You can also use parentheses to combine more than one of these operations For
+            example:
           </p>
+          <ul>
+            <li>
+              <u><strong>license:"by" AND (NOT source:"flickr")</strong></u> will return images licensed under CC BY
+              from all sources except from Flickr.
+            </li>
+          </ul>
+          <ul>
+            <li class="margin-top-small">
+              <u><strong>tags.name:"bird" AND (NOT tags.name:"flamingo")</strong></u> will return all images tagged bird
+              except images also tagged flamingo.
+            </li>
+          </ul>
 
           <h5 class="vocab heading margin-top-medium">Boosting a term</h5>
-          <p class="vocab paragraph">To boost a term use the caret, <strong>"^"</strong>, symbol with a numberat the end of the term. The higher the number, the higher priority the term will be given in the search.</p>
-          <p class="vocab paragraph">For example, <u><strong>dogs huskies^4</strong></u>, will make results containing "huskies" appear higher in the search results.</p>
-
-
+          <p class="vocab paragraph">
+            To boost a term use the caret, <strong>"^"</strong>, symbol with a numberat the end of the term. The higher
+            the number, the higher priority the term will be given in the search.
+          </p>
+          <p class="vocab paragraph">
+            For example, <u><strong>dogs huskies^4</strong></u
+            >, will make results containing "huskies" appear higher in the search results.
+          </p>
         </div>
       </div>
     </div>
