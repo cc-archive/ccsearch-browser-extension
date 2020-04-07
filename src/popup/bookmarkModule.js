@@ -1,6 +1,6 @@
 import { elements } from './base';
 import { activatePopup } from './infoPopupModule';
-import { msnry, removeBookmarkImages } from './bookmarkModule.utils';
+import { msnry, removeBookmarkImages, removeBookmark } from './bookmarkModule.utils';
 import { sourceLogos, unicodeToString, removeLoadMoreButton } from './helper';
 // eslint-disable-next-line import/no-cycle
 import { removeOldSearchResults, removeLoaderAnimation, checkInternetConnection } from './searchModule';
@@ -14,58 +14,6 @@ const bookmarkDOM = {};
 
 // Store number of selected bookmarks for export
 let selectedBookmarks = 0;
-
-export default function toggleBookmark(e) {
-  chrome.storage.sync.get({ bookmarks: [] }, items => {
-    const bookmarksArray = items.bookmarks;
-    const imageId = e.target.dataset.imageid;
-    if (bookmarksArray.indexOf(imageId) === -1) {
-      bookmarksArray.push(imageId);
-      chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
-        e.target.classList.remove('fa-bookmark-o');
-        e.target.classList.add('fa-bookmark');
-        e.target.title = 'Remove Bookmark';
-        showNotification('Image Bookmarked', 'positive', 'snackbar-bookmarks');
-      });
-    } else {
-      const bookmarkIndex = bookmarksArray.indexOf(imageId);
-      bookmarksArray.splice(bookmarkIndex, 1);
-      chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
-        e.target.classList.remove('fa-bookmark');
-        e.target.classList.add('fa-bookmark-o');
-        e.target.title = 'Bookmark Image';
-        showNotification('Bookmark removed', 'negative', 'snackbar-bookmarks');
-      });
-    }
-  });
-}
-
-function removeBookmark(e) {
-  const imageId = e.target.dataset.imageid;
-  chrome.storage.sync.get({ bookmarks: [] }, items => {
-    const bookmarksArray = items.bookmarks;
-
-    const bookmarkIndex = bookmarksArray.indexOf(imageId);
-    bookmarksArray.splice(bookmarkIndex, 1);
-
-    let isLastImage = false;
-    if (bookmarksArray.length === 0) {
-      isLastImage = true;
-    }
-
-    chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
-      const imageDiv = document.getElementById(`id_${imageId}`);
-      imageDiv.parentElement.removeChild(imageDiv);
-      // eslint-disable-next-line no-use-before-define
-      msnry.layout(); // layout grid again
-      showNotification('Bookmark removed', 'positive', 'snackbar-bookmarks');
-
-      if (isLastImage) {
-        restoreInitialContent('bookmarks');
-      }
-    });
-  });
-}
 
 function appendToGrid(msnryObject, fragment, e, grid) {
   grid.appendChild(fragment);
@@ -261,8 +209,7 @@ function loadImages() {
   });
 }
 
-// TODO: use a general function
-
+// EventListeners
 document.addEventListener('DOMContentLoaded', () => {
   elements.showBookmarksIcon.addEventListener('click', () => {
     window.isBookmarksActive = true;

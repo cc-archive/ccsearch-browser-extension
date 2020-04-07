@@ -3,7 +3,7 @@ import { unicodeToString, sourceLogos, addLoadMoreButton, removeLoadMoreButton }
 import { activatePopup } from './infoPopupModule';
 import { removeSpinner } from './spinner';
 // eslint-disable-next-line import/no-cycle
-import toggleBookmark from './bookmarkModule';
+import toggleBookmark from './bookmarkModule.utils';
 import { showNotification, removeChildNodes, restoreInitialContent } from '../utils';
 
 const Masonry = require('masonry-layout');
