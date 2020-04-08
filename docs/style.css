@@ -97,4 +97,7 @@ hr {
   .download-extension {
     width: 90%;
   }
+  .extension-summary {
+    width: 78%;
+  }
 }
