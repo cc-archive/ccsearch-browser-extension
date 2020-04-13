@@ -322,6 +322,7 @@ loadUserDefaults();
 
 function setEnableSearchStorageOptionVariable(enableSearchStorage) {
   if (enableSearchStorage === undefined) {
+    // enable the feature by default (on startup, enableSearchStorage key will by undefined)
     enableSearchStorageOption = true;
     chrome.storage.sync.set({ enableSearchStorage: enableSearchStorageOption });
   } else enableSearchStorageOption = enableSearchStorage;

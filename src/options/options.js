@@ -2,9 +2,6 @@ import elements from './base';
 import { init, saveFiltersOptions, updateBookmarks, toggleAccordion } from './helper';
 import { showNotification } from '../utils';
 
-let enableSearchStorageOption = true;
-let enableSearchClearConfirmOption = false;
-
 document.addEventListener('DOMContentLoaded', init);
 
 elements.saveFiltersButton.addEventListener('click', saveFiltersOptions);
@@ -32,14 +29,6 @@ Array.prototype.forEach.call(elements.licenseInputs, element => {
   });
 });
 
-function initEnableSearchStorageButton() {
-  chrome.storage.sync.get(['enableSearchStorage'], res => {
-    enableSearchStorageOption = res.enableSearchStorage;
-    elements.enableSearchStorageCheckbox.checked = enableSearchStorageOption;
-  });
-}
-initEnableSearchStorageButton();
-
 elements.enableSearchStorageCheckbox.addEventListener('click', () => {
   chrome.storage.sync.set({ enableSearchStorage: elements.enableSearchStorageCheckbox.checked }, () => {
     showNotification('Settings Saved', 'positive', 'snackbar-options');
@@ -49,13 +38,17 @@ elements.enableSearchStorageCheckbox.addEventListener('click', () => {
   if (!elements.enableSearchStorageCheckbox.checked) localStorage.clear();
 });
 
-function initEnableSearchClearConfirmButton() {
+// Mark the checkboxes in the "Other Settings" tab according to the local storage values
+function initOtherSettingsCheckboxes() {
+  chrome.storage.sync.get(['enableSearchStorage'], res => {
+    elements.enableSearchStorageCheckbox.checked = res.enableSearchStorage;
+  });
   chrome.storage.sync.get(['enableSearchClearConfirm'], res => {
-    enableSearchClearConfirmOption = res.enableSearchClearConfirm;
-    elements.enableSearchClearConfirmCheckbox.checked = enableSearchClearConfirmOption;
+    elements.enableSearchClearConfirmCheckbox.checked = res.enableSearchClearConfirm;
   });
 }
-initEnableSearchClearConfirmButton();
+
+initOtherSettingsCheckboxes();
 
 elements.enableSearchClearConfirmCheckbox.addEventListener('click', () => {
   chrome.storage.sync.set(
