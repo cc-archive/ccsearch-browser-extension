@@ -4,8 +4,7 @@ import { removeChildNodes } from '../utils';
 
 const download = require('downloadjs');
 
-// eslint-disable-next-line consistent-return
-export function getRichTextAttribution(image, targetNode) {
+export function getRichTextAttribution(image) {
   if (!image) {
     return '';
   }
@@ -20,10 +19,13 @@ export function getRichTextAttribution(image, targetNode) {
     image.license_url
   }" target="_blank">CC ${image.license.toUpperCase()} ${image.license_version}</a>`;
 
-  // return `${imgLink}${creator}${licenseLink}`;
-  const final = `<div>${imgLink}${creator}${licenseLink}</div>`;
+  return `${imgLink}${creator}${licenseLink}`;
+}
+
+function embedRichTextAttribution(image, targetNode) {
+  const richTextAttribution = `<div>${getRichTextAttribution(image)}</div>`;
   const parser = new DOMParser();
-  const parsed = parser.parseFromString(final, 'text/html');
+  const parsed = parser.parseFromString(richTextAttribution, 'text/html');
   const tags = parsed.getElementsByTagName('div');
   targetNode.appendChild(tags[0]);
 }
@@ -196,9 +198,8 @@ function getImageData(imageId) {
       popupSource.appendChild(getPopupSourceChildNode(foreignLandingUrl, source));
       removeChildNodes(popupLicense);
       popupLicense.appendChild(getPopupLicenseChildNode(licenseUrl, license.toUpperCase()));
-      // attributionRichTextPara.textContent = getRichTextAttribution(res, attributionRichTextPara);
       removeChildNodes(attributionRichTextPara);
-      getRichTextAttribution(res, attributionRichTextPara);
+      embedRichTextAttribution(res, attributionRichTextPara);
       attributionHtmlTextArea.value = getHtmlAttribution(res);
       elements.downloadImageButton.addEventListener('click', handleImageDownload);
       elements.downloadImageAttributionButton.addEventListener('click', handleImageAttributionDownload);
