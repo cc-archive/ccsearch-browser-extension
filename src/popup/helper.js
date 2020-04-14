@@ -34,6 +34,7 @@ export const sourceLogos = [
   'thorvaldsensmuseum_logo.png',
   'WoRMS_logo.png',
   'wikimedia_logo.png',
+  'sketchfab_logo.png',
 ];
 
 export function isObjectEmpty(obj) {
@@ -129,6 +130,7 @@ export const backupSourceAPIQueryStrings = {
   'Thorvaldsens Museum': 'thorvaldsensmuseum',
   'World Register of Marine Species': 'WoRMS',
   'Wikimedia Commons': 'wikimedia',
+  Sketchfab: 'sketchfab',
 };
 
 export function removeClassFromElements(elemArray, className) {
