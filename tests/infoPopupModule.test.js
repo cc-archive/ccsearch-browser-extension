@@ -1,8 +1,4 @@
-import {
-  // getRichTextAttribution,
-  getHtmlAttribution,
-  getPlainAttribution,
-} from '../src/popup/infoPopupModule';
+import { getRichTextAttribution, getHtmlAttribution, getPlainAttribution } from '../src/popup/infoPopupModule';
 
 // sample image response used for testing
 const image = {
@@ -33,13 +29,14 @@ const image = {
     '"Megi - Lutka Moja" by cipovic is licensed under CC-BY-NC-ND 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-nd/2.0/.',
 };
 
-// test('Testing getRichTextAttribution', () => {
-//   const testRichTextAttribution = getRichTextAttribution(image);
+test('Testing getRichTextAttribution', () => {
+  const testRichTextAttribution = getRichTextAttribution(image);
 
-//   const correctAttribution = '<a href="https://www.flickr.com/photos/46586088@N05/4696290733" target="_blank">"Megi - Lutka Moja"</a><span> by <a href="https://www.flickr.com/photos/46586088@N05" target="_blank">cipovic</a></span> is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/2.0/" target="_blank">CC BY-NC-ND 2.0</a>';
+  const correctAttribution =
+    '<a href="https://www.flickr.com/photos/46586088@N05/4696290733" target="_blank">"Megi - Lutka Moja"</a><span> by <a href="https://www.flickr.com/photos/46586088@N05" target="_blank">cipovic</a></span> is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/2.0/" target="_blank">CC BY-NC-ND 2.0</a>';
 
-//   expect(testRichTextAttribution).toBe(correctAttribution);
-// });
+  expect(testRichTextAttribution).toBe(correctAttribution);
+});
 
 test('Testing getHtmlAttribution', () => {
   const testHtmlAttribution = getHtmlAttribution(image);
