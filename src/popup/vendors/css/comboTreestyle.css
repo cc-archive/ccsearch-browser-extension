@@ -6,14 +6,12 @@
   position: relative;
 }
 .comboTreeArrowBtn {
-  position: absolute;
-  right: 4px;
-  bottom: 1px;
-  top: 1px;
   cursor: pointer;
   background-color: transparent;
   box-sizing: border-box;
   border: none;
+  height: 0;
+  width: 0;
 }
 .comboTreeDropDownContainer {
   display: none;
@@ -67,7 +65,7 @@ span.comboTreeItemTitle {
   float: left;
 }
 .comboTreeInputBox {
-  padding: 6px;
+  padding: 0.25rem;
   width: 100%;
   border: 1px solid black;
   box-sizing: border-box;
@@ -78,10 +76,17 @@ span.comboTreeItemTitle {
   cursor: pointer;
   color: transparent;
   text-shadow: 0 0 0 #2196f3;
+  font-size: 0.9rem;
 }
 .comboTreeInputBox::placeholder {
   color: black;
+  font-size: 0.9rem;
+  opacity: 1;
 }
 .comboTreeArrowBtnImg {
+  position: absolute;
   font-size: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 0.4rem;
 }
