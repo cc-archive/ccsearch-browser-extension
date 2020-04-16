@@ -237,7 +237,6 @@ elements.searchIcon.addEventListener('click', () => {
   removeOldSearchResults();
   removeLoaderAnimation();
   applyFilters();
-  localStorage.clear();
 
   // enable spinner
   addSpinner(elements.spinnerPlaceholderGrid, 'original');
@@ -259,13 +258,13 @@ elements.searchIcon.addEventListener('click', () => {
     .then(res => {
       checkValidationError(res);
       const resultArray = res.results;
-      // console.log(resultArray);
 
       checkResultLength(resultArray);
       addThumbnailsToDOM(resultArray);
 
-      if (enableSearchStorageOption) {
-        // Store Data to local storage
+      // Store Data to local storage
+      if (enableSearchStorageOption && resultArray.length !== 0) {
+        localStorage.clear(); // clear the old results
         storeSearch.title = inputText;
         storeSearch.page = { ...resultArray };
         localStorage.setItem('title', storeSearch.title);
@@ -276,12 +275,15 @@ elements.searchIcon.addEventListener('click', () => {
     });
   elements.clearSearchButton[0].classList.remove('display-none');
 });
+
 elements.modal.addEventListener('click', () => {
   elements.modalCancel.click();
 });
+
 elements.modalBody.addEventListener('click', e => {
   e.stopPropagation();
 });
+
 elements.clearSearchButton[0].addEventListener('click', () => {
   const modalText = 'Do you really want to clear the search?';
   function onModalConfirm() {
