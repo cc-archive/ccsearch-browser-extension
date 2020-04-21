@@ -238,6 +238,8 @@ elements.searchIcon.addEventListener('click', () => {
   removeLoaderAnimation();
   applyFilters();
 
+  localStorage.clear(); // clear the old results
+
   // enable spinner
   addSpinner(elements.spinnerPlaceholderGrid, 'original');
   // elements.spinner.classList.add('spinner');
@@ -264,7 +266,6 @@ elements.searchIcon.addEventListener('click', () => {
 
       // Store Data to local storage
       if (resultArray.length !== 0) {
-        localStorage.clear(); // clear the old results
         storeSearch.title = inputText;
         storeSearch.page = { ...resultArray };
         localStorage.setItem('title', storeSearch.title);
@@ -348,7 +349,7 @@ async function loadStoredSearch() {
   }
 }
 
-async function loadStoredSearchOnLoad() {
+async function loadStoredSearchOnInit() {
   await chrome.storage.sync.get(['enableSearchStorage'], res => {
     setEnableSearchStorageOptionVariable(res.enableSearchStorage);
 
@@ -373,7 +374,7 @@ async function loadStoredSearchOnLoad() {
     }
   });
 }
-loadStoredSearchOnLoad();
+loadStoredSearchOnInit();
 
 async function nextRequest(page) {
   let result = [];
