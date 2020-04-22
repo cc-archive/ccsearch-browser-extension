@@ -34,7 +34,7 @@ export default function toggleBookmark(e) {
         e.target.classList.remove('fa-bookmark');
         e.target.classList.add('fa-bookmark-o');
         e.target.title = 'Bookmark Image';
-        showNotification('Bookmark removed', 'negative', 'snackbar-bookmarks');
+        showNotification('Bookmark removed', 'positive', 'snackbar-bookmarks');
       });
     }
   });
