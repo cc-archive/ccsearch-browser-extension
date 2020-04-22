@@ -22,4 +22,5 @@ const patchAssetIntoDom = (asset, version = null) => {
 
 patchAssetIntoDom('/assets/github_corner.svg');
 patchAssetIntoDom('/assets/logos/cc/logomark.svg');
+patchAssetIntoDom('/assets/logos/products/search.svg');
 patchAssetIntoDom('/assets/logos/cc/letterheart.svg');
