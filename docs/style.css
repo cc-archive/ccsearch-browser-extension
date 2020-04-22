@@ -52,6 +52,9 @@ hr {
 .feature-table {
   margin: auto;
 }
+.extension-intro {
+  font-size: 3em;
+}
 @media all and (max-width: 600px) {
   .logo {
     margin-left: 3em !important;
@@ -86,6 +89,7 @@ hr {
     padding-left: 0.2em !important;
   }
   .extension-intro {
+    font-size: 3em;
     text-align: left;
     padding-left: 0.2em !important;
   }
