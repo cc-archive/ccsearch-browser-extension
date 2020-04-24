@@ -345,6 +345,8 @@ async function loadStoredSearch() {
     }
     elements.clearSearchButton[0].classList.remove('display-none');
   } else {
+    removeNode('no-image-found');
+    restoreInitialContent('primary');
     elements.clearSearchButton[0].classList.add('display-none');
   }
 }
