@@ -238,6 +238,8 @@ elements.searchIcon.addEventListener('click', () => {
   removeLoaderAnimation();
   applyFilters();
 
+  localStorage.clear(); // clear the old results
+
   // enable spinner
   addSpinner(elements.spinnerPlaceholderGrid, 'original');
   // elements.spinner.classList.add('spinner');
@@ -263,8 +265,7 @@ elements.searchIcon.addEventListener('click', () => {
       addThumbnailsToDOM(resultArray);
 
       // Store Data to local storage
-      if (enableSearchStorageOption && resultArray.length !== 0) {
-        localStorage.clear(); // clear the old results
+      if (resultArray.length !== 0) {
         storeSearch.title = inputText;
         storeSearch.page = { ...resultArray };
         localStorage.setItem('title', storeSearch.title);
@@ -331,6 +332,26 @@ function setEnableSearchStorageOptionVariable(enableSearchStorage) {
 }
 
 async function loadStoredSearch() {
+  if (localStorage.length !== 0) {
+    inputText = localStorage.getItem('title');
+    elements.inputField.value = inputText;
+
+    pageNo = 1;
+    if (localStorage.getItem(pageNo)) {
+      removeNode('primary__initial-info');
+      const pageData = Object.values(JSON.parse(localStorage.getItem(pageNo)));
+      addThumbnailsToDOM(pageData);
+      pageNo = Number(pageNo) + 1;
+    }
+    elements.clearSearchButton[0].classList.remove('display-none');
+  } else {
+    removeNode('no-image-found');
+    restoreInitialContent('primary');
+    elements.clearSearchButton[0].classList.add('display-none');
+  }
+}
+
+async function loadStoredSearchOnInit() {
   await chrome.storage.sync.get(['enableSearchStorage'], res => {
     setEnableSearchStorageOptionVariable(res.enableSearchStorage);
 
@@ -355,7 +376,7 @@ async function loadStoredSearch() {
     }
   });
 }
-loadStoredSearch();
+loadStoredSearchOnInit();
 
 async function nextRequest(page) {
   let result = [];
