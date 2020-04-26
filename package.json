@@ -29,6 +29,11 @@
     "prettier:check": "./node_modules/.bin/prettier --check 'src/**/*.js' 'src/**/*.html' 'src/**/*.scss' 'tests/**/*.js'",
     "test": "jest"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/creativecommons/ccsearch-browser-extension.git"
@@ -48,6 +53,7 @@
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-import": "^2.17.3",
     "eslint-plugin-prettier": "^3.1.2",
+    "husky": "^4.2.5",
     "jest": "^24.8.0",
     "node-sass": "^4.13.1",
     "prettier": "^1.19.1",
