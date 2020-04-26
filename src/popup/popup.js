@@ -269,8 +269,6 @@ elements.searchIcon.addEventListener('click', () => {
 
       // Store Data to local storage
       if (resultArray.length !== 0) {
-        let filtercheck = true;
-
         localStorage.clear(); // clear the old results
         storeSearch.title = inputText;
         localStorage.setItem('usecaseDropdownValues', elements.useCaseChooser.value);
