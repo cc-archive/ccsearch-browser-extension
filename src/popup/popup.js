@@ -206,6 +206,9 @@ function applyFilters() {
     });
   }
 
+  // console.log(elements.sourceChooser.value);
+  // console.log(userSelectedSourcesList);
+
   if (elements.licenseChooser.value) {
     const userInputLicensesList = elements.licenseChooser.value.split(', ');
     userInputLicensesList.forEach(element => {
@@ -266,10 +269,16 @@ elements.searchIcon.addEventListener('click', () => {
 
       // Store Data to local storage
       if (resultArray.length !== 0) {
+        localStorage.clear(); // clear the old results
         storeSearch.title = inputText;
+        localStorage.setItem('usecaseDropdownValues', elements.useCaseChooser.value);
+        localStorage.setItem('sourceDropdownValues', elements.sourceChooser.value);
+        localStorage.setItem('licenseDropdownValues', elements.licenseChooser.value);
         storeSearch.page = { ...resultArray };
         localStorage.setItem('title', storeSearch.title);
         localStorage.setItem(pageNo, JSON.stringify(storeSearch.page));
+
+        console.log(localStorage);
       }
 
       pageNo += 1;
@@ -335,6 +344,9 @@ async function loadStoredSearch() {
   if (localStorage.length !== 0) {
     inputText = localStorage.getItem('title');
     elements.inputField.value = inputText;
+    elements.sourceChooser.value = localStorage.getItem('sourceDropdownValues');
+    elements.useCaseChooser.value = localStorage.getItem('usecaseDropdownValues');
+    elements.licenseChooser.value = localStorage.getItem('licenseDropdownValues');
 
     pageNo = 1;
     if (localStorage.getItem(pageNo)) {
@@ -359,6 +371,10 @@ async function loadStoredSearchOnInit() {
       if (localStorage.length !== 0) {
         inputText = localStorage.getItem('title');
         elements.inputField.value = inputText;
+        // filling the dropdown values
+        elements.sourceChooser.value = localStorage.getItem('sourceDropdownValues');
+        elements.useCaseChooser.value = localStorage.getItem('usecaseDropdownValues');
+        elements.licenseChooser.value = localStorage.getItem('licenseDropdownValues');
 
         pageNo = 1;
         if (localStorage.getItem(pageNo)) {
