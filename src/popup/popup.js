@@ -107,8 +107,6 @@ async function populateSourceList() {
     count += 1;
   });
 
-  console.log(enableSearchStorageOption);
-  console.log(localStorage.length !== 0);
   loadSourcesToDom(sourcesList, enableSearchStorageOption && localStorage.length !== 0);
 }
 
