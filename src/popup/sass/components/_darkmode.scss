@@ -44,6 +44,14 @@ body.dark {
     color: $color-white;
   }
 
+  #filter-icon.activate-filter {
+    color: $color-primary-light;
+
+    &:hover {
+      color: $color-primary-dark;
+    }
+  }
+
   .popup__tab-links {
     background-color: $color-darkmode-2;
     color: $color-white;

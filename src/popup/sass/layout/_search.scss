@@ -35,12 +35,20 @@
       right: 10%;
     }
 
+    &.activate-filter {
+      color: $color-primary-light;
+
+      &:hover {
+        color: $color-primary-dark;
+      }
+    }
+
     &.clear-search-button {
-      color: #ff5b24;
+      color: $color-primary-light;
       right: 16%;
 
       &:hover {
-        color: #fb4102;
+        color: $color-primary-dark;
       }
     }
     &:hover {
