@@ -3,7 +3,7 @@ import { elements } from './base';
 // list to hold Sources to show to the user in dropdown
 // the list must have objects with id and title as properties.
 // see https://github.com/kirlisakal/combo-tree#sample-json-data
-function loadFilterSection(wrapperElement) {
+function loadFilterPreferences(wrapperElement) {
   const dropdownContainer = wrapperElement.querySelector('.comboTreeDropDownContainer');
   const inputCheckboxes = dropdownContainer.getElementsByTagName('input');
   // unchecking all the options
@@ -13,12 +13,13 @@ function loadFilterSection(wrapperElement) {
     chrome.storage.sync.get({ [id]: false }, items => {
       if (items[id]) {
         inputCheckboxes[i].click();
+        elements.filterIcon.classList.add('activate-filter');
       }
     });
   }
 }
 
-export function loadSourcesToDom(SourcesList) {
+export function loadSourcesToDom(SourcesList, loadingStoredSearch = false) {
   $('#choose-source').comboTree({
     source: SourcesList,
     isMultiple: true,
@@ -26,7 +27,10 @@ export function loadSourcesToDom(SourcesList) {
 
   elements.sourceChooserLoadingMessage.style.display = 'none';
   elements.sourceChooserWrapper.style.display = 'inline-block';
-  loadFilterSection(elements.sourceChooserWrapper);
+
+  if (!loadingStoredSearch) {
+    loadFilterPreferences(elements.sourceChooserWrapper);
+  }
 }
 
 export function resetLicenseDropDown() {
@@ -44,6 +48,6 @@ export function resetLicenseDropDown() {
 }
 
 export function loadUserDefaults() {
-  loadFilterSection(elements.useCaseChooserWrapper);
-  loadFilterSection(elements.licenseChooserWrapper);
+  loadFilterPreferences(elements.useCaseChooserWrapper);
+  loadFilterPreferences(elements.licenseChooserWrapper);
 }
