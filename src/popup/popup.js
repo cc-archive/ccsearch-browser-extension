@@ -107,13 +107,14 @@ async function populateSourceList() {
     count += 1;
   });
 
-  loadSourcesToDom(sourcesList);
+  console.log(enableSearchStorageOption);
+  console.log(localStorage.length !== 0);
+  loadSourcesToDom(sourcesList, enableSearchStorageOption && localStorage.length !== 0);
 }
-
-populateSourceList();
 
 elements.filterIcon.addEventListener('click', () => {
   elements.filterSection.classList.toggle('section-filter--active');
+  populateSourceList();
 });
 
 // TODO: divide the steps into functions
@@ -337,7 +338,6 @@ $('#choose-license').comboTree({
   source: licensesList,
   isMultiple: true,
 });
-loadUserDefaults();
 
 function setEnableSearchStorageOptionVariable(enableSearchStorage) {
   if (enableSearchStorage === undefined) {
@@ -386,9 +386,11 @@ async function loadStoredSearchOnInit() {
       }
     } else {
       elements.clearSearchButton[0].classList.add('display-none');
+      loadUserDefaults();
     }
   });
 }
+
 loadStoredSearchOnInit();
 
 async function nextRequest(page) {
