@@ -142,6 +142,9 @@ elements.filterResetButton.addEventListener('click', () => {
     }
   });
 
+  // the filter is not activated anymore
+  elements.filterIcon.classList.remove('activate-filter');
+
   // clear the datastructures and make a fresh search
   userSelectedLicensesList = [];
   userSelectedSourcesList = [];
@@ -206,9 +209,6 @@ function applyFilters() {
     });
   }
 
-  // console.log(elements.sourceChooser.value);
-  // console.log(userSelectedSourcesList);
-
   if (elements.licenseChooser.value) {
     const userInputLicensesList = elements.licenseChooser.value.split(', ');
     userInputLicensesList.forEach(element => {
@@ -221,6 +221,13 @@ function applyFilters() {
     userInputUseCaseList.forEach(element => {
       userSelectedUseCaseList.push(useCaseAPIQueryStrings[element]);
     });
+  }
+
+  // "activate" filter icon if some filters are applied
+  if (userSelectedSourcesList.length > 0 || userSelectedLicensesList.length > 0 || userSelectedUseCaseList.length > 0) {
+    elements.filterIcon.classList.add('activate-filter');
+  } else {
+    elements.filterIcon.classList.remove('activate-filter');
   }
 }
 
@@ -340,22 +347,26 @@ function setEnableSearchStorageOptionVariable(enableSearchStorage) {
   } else enableSearchStorageOption = enableSearchStorage;
 }
 
+function loadStoredContentToUI() {
+  inputText = localStorage.getItem('title');
+  elements.inputField.value = inputText;
+  elements.sourceChooser.value = localStorage.getItem('sourceDropdownValues');
+  elements.useCaseChooser.value = localStorage.getItem('usecaseDropdownValues');
+  elements.licenseChooser.value = localStorage.getItem('licenseDropdownValues');
+
+  pageNo = 1;
+  if (localStorage.getItem(pageNo)) {
+    removeNode('primary__initial-info');
+    const pageData = Object.values(JSON.parse(localStorage.getItem(pageNo)));
+    addThumbnailsToDOM(pageData);
+    pageNo = Number(pageNo) + 1;
+  }
+  elements.clearSearchButton[0].classList.remove('display-none');
+}
+
 async function loadStoredSearch() {
   if (localStorage.length !== 0) {
-    inputText = localStorage.getItem('title');
-    elements.inputField.value = inputText;
-    elements.sourceChooser.value = localStorage.getItem('sourceDropdownValues');
-    elements.useCaseChooser.value = localStorage.getItem('usecaseDropdownValues');
-    elements.licenseChooser.value = localStorage.getItem('licenseDropdownValues');
-
-    pageNo = 1;
-    if (localStorage.getItem(pageNo)) {
-      removeNode('primary__initial-info');
-      const pageData = Object.values(JSON.parse(localStorage.getItem(pageNo)));
-      addThumbnailsToDOM(pageData);
-      pageNo = Number(pageNo) + 1;
-    }
-    elements.clearSearchButton[0].classList.remove('display-none');
+    loadStoredContentToUI();
   } else {
     removeNode('no-image-found');
     restoreInitialContent('primary');
@@ -367,25 +378,11 @@ async function loadStoredSearchOnInit() {
   await chrome.storage.sync.get(['enableSearchStorage'], res => {
     setEnableSearchStorageOptionVariable(res.enableSearchStorage);
 
-    if (enableSearchStorageOption) {
-      if (localStorage.length !== 0) {
-        inputText = localStorage.getItem('title');
-        elements.inputField.value = inputText;
-        // filling the dropdown values
-        elements.sourceChooser.value = localStorage.getItem('sourceDropdownValues');
-        elements.useCaseChooser.value = localStorage.getItem('usecaseDropdownValues');
-        elements.licenseChooser.value = localStorage.getItem('licenseDropdownValues');
+    if (localStorage.length !== 0 && enableSearchStorageOption) {
+      loadStoredContentToUI();
 
-        pageNo = 1;
-        if (localStorage.getItem(pageNo)) {
-          removeNode('primary__initial-info');
-          const pageData = Object.values(JSON.parse(localStorage.getItem(pageNo)));
-          addThumbnailsToDOM(pageData);
-          pageNo = Number(pageNo) + 1;
-        }
-        elements.clearSearchButton[0].classList.remove('display-none');
-      } else {
-        elements.clearSearchButton[0].classList.add('display-none');
+      if (elements.sourceChooser.value || elements.useCaseChooser.value || elements.licenseChooser.value) {
+        elements.filterIcon.classList.add('activate-filter');
       }
     } else {
       elements.clearSearchButton[0].classList.add('display-none');
