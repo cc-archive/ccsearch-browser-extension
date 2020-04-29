@@ -39,6 +39,7 @@ export function getRequestUrl(
   userSelectedSourcesList,
   page,
 ) {
+  //console.log(userSelectedSourcesList);
   if (userSelectedUseCaseList.length > 0) {
     return `https://api.creativecommons.engineering/v1/images?q=${inputText}&page=${page}&page_size=20&license_type=${userSelectedUseCaseList}&source=${userSelectedSourcesList}`;
   }
@@ -156,15 +157,17 @@ export function addThumbnailsToDOM(resultArray) {
       foreignLandingLinkElement.setAttribute('href', foreignLandingUrl);
       foreignLandingLinkElement.setAttribute('target', '_blank');
       foreignLandingLinkElement.setAttribute('class', 'foreign-landing-url');
+     
+      //const sourceImageElement = document.createElement('img');
+      //let sourceLogoName;
+      //for (let i = 0; i < sourceLogos.length; i += 1) {
+      //  if (sourceLogos[i].includes(source)) {
+      //    sourceLogoName = sourceLogos[i];
+      //    break;
+      //  }
+      //}
 
-      const sourceImageElement = document.createElement('img');
-      let sourceLogoName;
-      for (let i = 0; i < sourceLogos.length; i += 1) {
-        if (sourceLogos[i].includes(source)) {
-          sourceLogoName = sourceLogos[i];
-          break;
-        }
-      }
+      foreignLandingLinkElement.setAttribute("title",source); 
       //sourceImageElement.setAttribute('src', `img/source_logos/${sourceLogoName}`);
       //sourceImageElement.setAttribute('class', 'source-image');
 
