@@ -1,5 +1,5 @@
 import { elements } from './base';
-import { unicodeToString, sourceLogos, addLoadMoreButton, removeLoadMoreButton } from './helper';
+import { unicodeToString, addLoadMoreButton, removeLoadMoreButton } from './helper';
 import { activatePopup } from './infoPopupModule';
 import { removeSpinner } from './spinner';
 // eslint-disable-next-line import/no-cycle
@@ -39,7 +39,6 @@ export function getRequestUrl(
   userSelectedSourcesList,
   page,
 ) {
-  //console.log(userSelectedSourcesList);
   if (userSelectedUseCaseList.length > 0) {
     return `https://api.creativecommons.engineering/v1/images?q=${inputText}&page=${page}&page_size=20&license_type=${userSelectedUseCaseList}&source=${userSelectedSourcesList}`;
   }
