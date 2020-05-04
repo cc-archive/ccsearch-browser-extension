@@ -77,18 +77,25 @@
   .image-title {
     backface-visibility: hidden;
     position: absolute;
-    bottom: -2.5px;
-    left: 5px;
+    bottom: 1px;
+    left: 0px;
     color: $color-white;
     font-size: $size-small;
     font-weight: 700;
-    width: 90%;
+    min-width: 10%;
+    max-width: 90%;
     opacity: 0;
     z-index: 3;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     vertical-align: middle;
+    padding-right: 1rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    padding-left: 1rem;
+    background: $color-black;
+    transition: all 0.4s ease;
 
     .foreign-landing-url {
       text-decoration: none;
@@ -96,14 +103,6 @@
 
       &:hover {
         text-decoration: underline;
-      }
-
-      .source-image {
-        vertical-align: middle;
-        max-height: 1.875rem;
-        max-width: 2.5rem;
-        margin-right: 5px;
-        padding-bottom: 3px;
       }
     }
   }

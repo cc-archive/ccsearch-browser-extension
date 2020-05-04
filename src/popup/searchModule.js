@@ -1,5 +1,5 @@
 import { elements } from './base';
-import { unicodeToString, sourceLogos, addLoadMoreButton, removeLoadMoreButton } from './helper';
+import { unicodeToString, addLoadMoreButton, removeLoadMoreButton } from './helper';
 import { activatePopup } from './infoPopupModule';
 import { removeSpinner } from './spinner';
 // eslint-disable-next-line import/no-cycle
@@ -156,19 +156,7 @@ export function addThumbnailsToDOM(resultArray) {
       foreignLandingLinkElement.setAttribute('href', foreignLandingUrl);
       foreignLandingLinkElement.setAttribute('target', '_blank');
       foreignLandingLinkElement.setAttribute('class', 'foreign-landing-url');
-
-      const sourceImageElement = document.createElement('img');
-      let sourceLogoName;
-      for (let i = 0; i < sourceLogos.length; i += 1) {
-        if (sourceLogos[i].includes(source)) {
-          sourceLogoName = sourceLogos[i];
-          break;
-        }
-      }
-      sourceImageElement.setAttribute('src', `img/source_logos/${sourceLogoName}`);
-      sourceImageElement.setAttribute('class', 'source-image');
-
-      foreignLandingLinkElement.appendChild(sourceImageElement);
+      foreignLandingLinkElement.setAttribute('title', source);
       foreignLandingLinkElement.appendChild(imageTitleNode);
 
       spanTitleElement.appendChild(foreignLandingLinkElement);

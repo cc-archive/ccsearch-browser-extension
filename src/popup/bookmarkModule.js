@@ -1,7 +1,7 @@
 import { elements } from './base';
 import { activatePopup } from './infoPopupModule';
 import { msnry, removeBookmarkImages, removeBookmark } from './bookmarkModule.utils';
-import { sourceLogos, unicodeToString, removeLoadMoreButton } from './helper';
+import { unicodeToString, removeLoadMoreButton } from './helper';
 // eslint-disable-next-line import/no-cycle
 import { removeOldSearchResults, removeLoaderAnimation, checkInternetConnection } from './searchModule';
 import { addSpinner, removeSpinner } from './spinner';
@@ -93,19 +93,7 @@ function loadImages() {
           foreignLandingLinkElement.setAttribute('href', foreignLandingUrl);
           foreignLandingLinkElement.setAttribute('target', '_blank');
           foreignLandingLinkElement.setAttribute('class', 'foreign-landing-url');
-
-          const sourceImageElement = document.createElement('img');
-          let sourceLogoName;
-          for (let i = 0; i < sourceLogos.length; i += 1) {
-            if (sourceLogos[i].includes(source)) {
-              sourceLogoName = sourceLogos[i];
-              break;
-            }
-          }
-          sourceImageElement.setAttribute('src', `img/source_logos/${sourceLogoName}`);
-          sourceImageElement.setAttribute('class', 'source-image');
-
-          foreignLandingLinkElement.appendChild(sourceImageElement);
+          foreignLandingLinkElement.setAttribute('title', source);
           foreignLandingLinkElement.appendChild(imageTitleNode);
 
           spanTitleElement.appendChild(foreignLandingLinkElement);
