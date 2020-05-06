@@ -93,7 +93,7 @@ function loadImages() {
           foreignLandingLinkElement.setAttribute('href', foreignLandingUrl);
           foreignLandingLinkElement.setAttribute('target', '_blank');
           foreignLandingLinkElement.setAttribute('class', 'foreign-landing-url');
-          foreignLandingLinkElement.setAttribute('title', source);
+          foreignLandingLinkElement.setAttribute('title', `Source: ${source}`);
           foreignLandingLinkElement.appendChild(imageTitleNode);
 
           spanTitleElement.appendChild(foreignLandingLinkElement);
