@@ -1,5 +1,5 @@
 import { elements } from './base';
-import { unicodeToString, addLoadMoreButton, removeLoadMoreButton } from './helper';
+import { unicodeToString, addLoadMoreButton, removeLoadMoreButton, getSourceDisplayName } from './helper';
 import { activatePopup } from './infoPopupModule';
 import { removeSpinner } from './spinner';
 // eslint-disable-next-line import/no-cycle
@@ -135,7 +135,8 @@ export function addThumbnailsToDOM(resultArray) {
     resultArray.forEach(element => {
       const thumbnail = element.url; // element.thumbnail giving 403
       const title = unicodeToString(element.title);
-      const { license, source, id } = element;
+      const { license, id } = element;
+      const source = getSourceDisplayName(element.source);
       const licenseArray = license.split('-'); // split license in individual characteristics
       const foreignLandingUrl = element.foreign_landing_url;
 

@@ -1,7 +1,7 @@
 import { elements } from './base';
 import { activatePopup } from './infoPopupModule';
 import { msnry, removeBookmarkImages, removeBookmark } from './bookmarkModule.utils';
-import { unicodeToString, removeLoadMoreButton } from './helper';
+import { unicodeToString, removeLoadMoreButton, getSourceDisplayName } from './helper';
 // eslint-disable-next-line import/no-cycle
 import { removeOldSearchResults, removeLoaderAnimation, checkInternetConnection } from './searchModule';
 import { addSpinner, removeSpinner } from './spinner';
@@ -72,7 +72,7 @@ function loadImages() {
           const thumbnail = res.thumbnail ? res.thumbnail : res.url;
           const title = unicodeToString(res.title);
           const { license, id } = res;
-          const source = res.source.toLowerCase();
+          const source = getSourceDisplayName(res.source);
           const licenseArray = license.split('-'); // split license in individual characteristics
           const foreignLandingUrl = res.foreign_landing_url;
 
