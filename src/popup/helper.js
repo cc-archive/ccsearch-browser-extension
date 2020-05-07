@@ -6,37 +6,6 @@ export function unicodeToString(string) {
   return '';
 }
 
-// all the source logo image file names
-export const sourceLogos = [
-  '500px_logo.png',
-  'animaldiversity_logo.png',
-  'brooklynmuseum_logo.png',
-  'behance_logo.svg',
-  'CAPL_logo.png',
-  'clevelandmuseum_logo.png',
-  'deviantart_logo.png',
-  'digitaltmuseum_logo.png',
-  'eol_logo.png',
-  'flickr_logo.png',
-  'floraon_logo.png',
-  'geographorguk_logo.png',
-  'iha_logo.png',
-  'mccordmuseum_logo.png',
-  'met_logo.png',
-  'museumsvictoria_logo.svg',
-  'nypl_logo.svg',
-  'phylopic_log.png',
-  'rawpixel_logo.png',
-  'rijksmuseum_logo.png',
-  'sciencemuseum_logo.svg',
-  'svgsilh_logo.png',
-  'thingiverse_logo.png',
-  'thorvaldsensmuseum_logo.png',
-  'WoRMS_logo.png',
-  'wikimedia_logo.png',
-  'sketchfab_logo.png',
-];
-
 export function isObjectEmpty(obj) {
   return Object.keys(obj).length === 0 && obj.constructor === Object;
 }
