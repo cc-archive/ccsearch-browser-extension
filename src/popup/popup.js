@@ -18,7 +18,7 @@ import {
   removeClassFromElements,
   removeLoadMoreButton,
 } from './helper';
-import { loadSourcesToDom, resetLicenseDropDown, loadUserDefaults } from './filterModule';
+import { loadSourcesToDom, resetLicenseDropDown, loadUserDefaults, loadStoredFilterPreferences } from './filterModule';
 import { handleImageAttributionDownload, handleImageDownload } from './infoPopupModule';
 import { addSpinner } from './spinner';
 import { showNotification, removeNode, getLatestSources, restoreInitialContent, showModal } from '../utils';
@@ -380,6 +380,19 @@ async function loadStoredSearchOnInit() {
       loadStoredContentToUI();
 
       if (elements.sourceChooser.value || elements.useCaseChooser.value || elements.licenseChooser.value) {
+        const activeLicenseOptions = {};
+        const activeUseCaseOptions = {};
+        elements.licenseChooser.value.split(', ').forEach(x => {
+          activeLicenseOptions[x] = true;
+        });
+        elements.useCaseChooser.value.split(', ').forEach(x => {
+          activeUseCaseOptions[useCaseAPIQueryStrings[x]] = true;
+        });
+        loadStoredFilterPreferences(elements.licenseChooserWrapper, activeLicenseOptions);
+        loadStoredFilterPreferences(elements.useCaseChooserWrapper, activeUseCaseOptions);
+        // console.log(elements.useCaseChooser.value);
+        // console.log(useCaseAPIQueryStrings);
+        // console.log(activeUseCaseOptions);
         elements.filterIcon.classList.add('activate-filter');
       }
     } else {
