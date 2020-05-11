@@ -1,9 +1,10 @@
 import { elements } from './base';
+import { backupSourceAPIQueryStrings } from './helper';
 
 // list to hold Sources to show to the user in dropdown
 // the list must have objects with id and title as properties.
 // see https://github.com/kirlisakal/combo-tree#sample-json-data
-function loadFilterPreferences(wrapperElement) {
+function loadUserFilterPreferences(wrapperElement) {
   const dropdownContainer = wrapperElement.querySelector('.comboTreeDropDownContainer');
   const inputCheckboxes = dropdownContainer.getElementsByTagName('input');
   // unchecking all the options
@@ -19,6 +20,18 @@ function loadFilterPreferences(wrapperElement) {
   }
 }
 
+export function loadStoredFilterPreferences(wrapperElement, items) {
+  const dropdownContainer = wrapperElement.querySelector('.comboTreeDropDownContainer');
+  const inputCheckboxes = dropdownContainer.getElementsByTagName('input');
+  for (let i = 0; i < inputCheckboxes.length; i += 1) {
+    const id = inputCheckboxes[i].parentElement.getAttribute('data-id');
+    if (items[id]) {
+      inputCheckboxes[i].click();
+      elements.filterIcon.classList.add('activate-filter');
+    }
+  }
+}
+
 export function loadSourcesToDom(SourcesList, loadingStoredSearch = false) {
   $('#choose-source').comboTree({
     source: SourcesList,
@@ -29,7 +42,13 @@ export function loadSourcesToDom(SourcesList, loadingStoredSearch = false) {
   elements.sourceChooserWrapper.style.display = 'inline-block';
 
   if (!loadingStoredSearch) {
-    loadFilterPreferences(elements.sourceChooserWrapper);
+    loadUserFilterPreferences(elements.sourceChooserWrapper);
+  } else {
+    const activeSourceOptions = {};
+    elements.sourceChooser.value.split(', ').forEach(x => {
+      activeSourceOptions[backupSourceAPIQueryStrings[x]] = true;
+    });
+    loadStoredFilterPreferences(elements.sourceChooserWrapper, activeSourceOptions);
   }
 }
 
@@ -48,6 +67,6 @@ export function resetLicenseDropDown() {
 }
 
 export function loadUserDefaults() {
-  loadFilterPreferences(elements.useCaseChooserWrapper);
-  loadFilterPreferences(elements.licenseChooserWrapper);
+  loadUserFilterPreferences(elements.useCaseChooserWrapper);
+  loadUserFilterPreferences(elements.licenseChooserWrapper);
 }
