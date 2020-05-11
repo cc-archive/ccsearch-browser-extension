@@ -112,8 +112,9 @@ async function populateSourceList() {
 
 elements.filterIcon.addEventListener('click', () => {
   elements.filterSection.classList.toggle('section-filter--active');
-  populateSourceList();
 });
+
+setTimeout(populateSourceList(), 2500);
 
 // TODO: divide the steps into functions
 elements.filterResetButton.addEventListener('click', () => {
@@ -235,11 +236,19 @@ elements.filterApplyButton.addEventListener('click', () => {
   elements.searchIcon.click();
 });
 
+function checkIfSourceFilterIsRendered() {
+  if (elements.sourceChooserWrapper.style.display !== 'inline-block') {
+    showNotification('Loading Source Filters. Please try again!', 'negative', 'snackbar-bookmarks');
+    throw new Error('Source Filter not loaded yet');
+  }
+}
+
 elements.searchIcon.addEventListener('click', () => {
   inputText = elements.inputField.value.trim().replace('/[ ]+/g', ' ');
   pageNo = 1;
 
   checkInputError(inputText);
+  checkIfSourceFilterIsRendered();
   checkInternetConnection();
   removeNode('primary__initial-info');
   removeNode('no-image-found');
