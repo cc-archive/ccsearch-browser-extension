@@ -22,40 +22,40 @@
     <div id="tabs-content" class="tabs-content">
       <div class="tabs-panel is-active" data-content-no="1">
         <div class="note">
-          <p class="vocab paragraph margin-bottom-normal">
+          <p class="margin-bottom-normal has-text-tomato">
             <strong>Note: </strong>Changes will take effect after you click the save button at the bottom.
           </p>
         </div>
 
-        <h6 class="vocab heading">I want something that (use-case)</h6>
+        <h5>I want something that (use-case)</h5>
         <div class="use-case margin-left-normal">
-          <input type="checkbox" class="vocab choice-field magenta-colored small-sized" id="commercial" />
+          <input type="checkbox" id="commercial" />
           <label for="commercial">I can use commercially</label><br />
-          <input type="checkbox" class="vocab choice-field magenta-colored small-sized" id="modification" />
+          <input type="checkbox" id="modification" />
           <label for="modification">I can modify or adapt</label><br />
         </div>
 
-        <h6 class="margin-top-small vocab heading">All licenses</h6>
+        <h5 class="margin-top-small">All licenses</h5>
         <div class="license margin-left-normal">
-          <input type="checkbox" class="vocab choice-field magenta-colored small-sized" id="CC0" />
+          <input type="checkbox" id="CC0" />
           <label for="CC0">CC0</label><br />
-          <input type="checkbox" class="vocab choice-field magenta-colored small-sized" id="Public Domain Mark" />
+          <input type="checkbox" id="Public Domain Mark" />
           <label for="Public Domain Mark">Public Domain Mark</label><br />
-          <input type="checkbox" class="vocab choice-field magenta-colored small-sized" id="BY" />
+          <input type="checkbox" id="BY" />
           <label for="BY">BY</label><br />
-          <input type="checkbox" class="vocab choice-field magenta-colored small-sized" id="BY-SA" />
+          <input type="checkbox" id="BY-SA" />
           <label for="BY-SA">BY-SA</label><br />
-          <input type="checkbox" class="vocab choice-field magenta-colored small-sized" id="BY-NC" />
+          <input type="checkbox" id="BY-NC" />
           <label for="BY-NC">BY-NC</label><br />
-          <input type="checkbox" class="vocab choice-field magenta-colored small-sized" id="BY-ND" />
+          <input type="checkbox" id="BY-ND" />
           <label for="BY-ND">BY-ND</label><br />
-          <input type="checkbox" class="vocab choice-field magenta-colored small-sized" id="BY-NC-SA" />
+          <input type="checkbox" id="BY-NC-SA" />
           <label for="BY-NC-SA">BY-NC-SA</label><br />
-          <input type="checkbox" class="vocab choice-field magenta-colored small-sized" id="BY-NC-ND" />
+          <input type="checkbox" id="BY-NC-ND" />
           <label for="BY-NC-ND">BY-NC-ND</label><br />
         </div>
 
-        <h6 class="margin-top-small vocab heading">All Sources</h6>
+        <h5 class="margin-top-small">All Sources</h5>
         <div class="source margin-left-normal">
           Fetching Latest Sources ...
         </div>
@@ -66,29 +66,19 @@
         </div>
       </div>
       <div class="tabs-panel" data-content-no="2">
-        <h6 class="vocab heading">Store and load the last search results when you open the extension?</h6>
+        <h5 class="b-header">Store and load the last search results when you open the extension?</h5>
         <div class="margin-left-normal">
-          <input
-            type="checkbox"
-            class="vocab choice-field magenta-colored small-sized"
-            id="enable-search-storage-checkbox"
-          />
+          <input type="checkbox" id="enable-search-storage-checkbox" />
           <label for="enable-search-storage-checkbox">Yes</label>
         </div>
-        <h6 class="vocab heading margin-top-normal">
-          Ask for confirmation everytime before clearing search results?
-        </h6>
+        <h5 class="b-header margin-top-normal">Ask for confirmation everytime before clearing search results?</h5>
         <div class="margin-left-normal">
-          <input
-            type="checkbox"
-            class="vocab choice-field magenta-colored small-sized"
-            id="enable-search-clear-confirm-checkbox"
-          />
+          <input type="checkbox" id="enable-search-clear-confirm-checkbox" />
           <label for="enable-search-clear-confirm-checkbox">Yes</label>
         </div>
       </div>
       <div class="tabs-panel" data-content-no="3">
-        <div class="vocab input-field magenta-colored normal-sized">
+        <div>
           <input type="file" class="field" id="import-bookmarks-input" />
         </div>
         <div class="margin-top-smaller">
@@ -97,19 +87,17 @@
           </button>
         </div>
         <div class="margin-top-normal">
-          <p class="vocab paragraph">
-            <strong>Note</strong>: To know more about how you can sync your settings and bookmarks, read the FAQ.
-          </p>
+          <p><strong>Note</strong>: To know more about how you can sync your settings and bookmarks, read the FAQ.</p>
         </div>
       </div>
       <div class="tabs-panel" data-content-no="4">
-        <h6 class="vocab heading">CC Search Browser Extension</h6>
-        <p class="vocab paragraph">
+        <h3 class="margin-vertical-normal">CC Search Browser Extension</h3>
+        <p>
           This extension provides a new interface to
           <a href="https://search.creativecommons.org/">CC Search</a> to help you search for free content in the public
           domain and under Creative Commons licenses.
         </p>
-        <p class="vocab paragraph">
+        <p>
           This project is Open-Source. Your participation in the form of bug reports, feature requests or code
           contributions is very much appreciated.
         </p>
@@ -131,12 +119,12 @@
         </ul>
       </div>
       <div class="tabs-panel" data-content-no="5">
-        <p class="vocab paragraph">
+        <p>
           We welcome your ideas for improving the tool below. To provide regular user feedback, join the
           <a href="https://creativecommons.slack.com/messages/cc-dev-browser-exension">#cc-dev-browser-extension</a>
           channel on <a href="https://opensource.creativecommons.org/community/#slack">CC Slack</a>.
         </p>
-        <p class="vocab paragraph margin-bottom-normal">
+        <p class="margin-bottom-normal">
           If you would like to report a bug you are encountering when using the tool,
           <a href="https://github.com/creativecommons/ccsearch-browser-extension/issues/new?template=bug_report.md"
             >log the issue at Github</a
@@ -258,83 +246,80 @@
         </div>
       </div>
       <div class="tabs-panel" data-content-no="7">
-        <p class="vocab paragraph">
+        <p class="margin-vertical-normal">
           When you search, you can enter special symbols or words to your search term to make your search results more
           precise.
         </p>
 
-        <h5 class="vocab heading">Search for an exact match</h5>
-        <p class="vocab paragraph">
-          Put a word or phrase inside quotes. For example, <em class="highlight-orange">"Claude Monet"</em>
+        <h4 class="margin-vertical-normal">Search for an exact match</h4>
+        <p>
+          Put a word or phrase inside quotes. For example, <em class="highlight has-text-tomato">"Claude Monet"</em>
         </p>
 
-        <h5 class="vocab heading">Combining Terms</h5>
-        <p class="vocab paragraph">
+        <h5 class="margin-vertical-normal">Combining Terms</h5>
+        <p class="margin-vertical-normal">
           If you want to combine terms, you can use the following operators to perform more complex queries
         </p>
 
         <ul>
-          <li class="margin-bottom-small"><em class="highlight-green">+</em> signifies AND operation</li>
-          <li class="margin-bottom-small"><em class="highlight-green">|</em> signifies OR operation</li>
-          <li class="margin-bottom-small"><em class="highlight-green">-</em> negates a single token</li>
-          <li class="margin-bottom-small">
-            <em class="highlight-green">*</em> at the end of a term signifies a prefix query
+          <li><em class="highlight has-text-forest-green">+</em> signifies AND operation</li>
+          <li><em class="highlight has-text-forest-green">|</em> signifies OR operation</li>
+          <li><em class="highlight has-text-forest-green">-</em> negates a single token</li>
+          <li><em class="highlight has-text-forest-green">*</em> at the end of a term signifies a prefix query</li>
+          <li>
+            <em class="highlight has-text-forest-green">(</em> and
+            <em class="highlight has-text-forest-green">)</em> signify precedence
           </li>
-          <li class="margin-bottom-small">
-            <em class="highlight-green">(</em> and <em class="highlight-green">)</em> signify precedence
-          </li>
-          <li class="margin-bottom-small">
-            <em class="highlight-green">~N</em> after a word signifies edit distance (fuzziness)
-          </li>
+          <li><em class="highlight has-text-forest-green">~N</em> after a word signifies edit distance (fuzziness)</li>
         </ul>
 
-        <p class="vocab paragraph">
-          <em class="highlight-orange">Example:dog+cat</em><br />
+        <p class="margin-vertical-normal">
+          Example: <em class="highlight has-text-tomato">dog+cat</em><br />
           This will search for images related to both dog and cat.
         </p>
 
-        <p class="vocab paragraph">
-          <em class="highlight-orange">Example:dog|cat</em><br />
+        <p class="margin-vertical-normal">
+          Example: <em class="highlight has-text-tomato">dog|cat</em><br />
           This will search for images related to dog or cat, but not necessarily both.
         </p>
 
-        <p class="vocab paragraph">
-          You can use the <em class="highlight-green">- operator (signifies NOT)</em>
+        <p class="margin-vertical-normal">
+          You can use the <em class="highlight has-text-forest-green">- operator (signifies NOT)</em>
           to exclude a search term from the results.
         </p>
-        <p class="vocab paragraph">
-          <em class="highlight-orange">Example:dog -cat</em><br />
+        <p class="margin-vertical-normal">
+          Example: <em class="highlight has-text-tomato">dog -cat</em><br />
           This will search for images related to dog but won't include results related to "pug"
         </p>
 
-        <p class="vocab paragraph">
-          You can use the <em class="highlight-green">* operator (wildcard)</em>
+        <p class="margin-vertical-normal">
+          You can use the <em class="highlight has-text-forest-green">* operator (wildcard)</em>
           to mark a prefix term. This will match anything after the *.
         </p>
-        <p class="vocab paragraph">
-          <em class="highlight-orange">Example:net*</em><br />
+        <p class="margin-vertical-normal">
+          Example: <em class="highlight has-text-tomato">net*</em><br />
           This will search for images matching anything with "net". This might include "network", "Netflix",
           "Netherlands", etc..
         </p>
 
-        <p class="vocab paragraph">
-          You can use parentheses <em class="highlight-green">( and )</em>
+        <p class="margin-vertical-normal">
+          You can use parentheses <em class="highlight has-text-forest-green">( and )</em>
           to specify precedence of terms or combine more complex queries.
         </p>
-        <p class="vocab paragraph">
-          <em class="highlight-orange">Example: dogs + (corgis | labrador)</em><br />
+        <p class="margin-vertical-normal">
+          Example: <em class="highlight has-text-tomato">dogs + (corgis | labrador)</em><br />
           This will search for images that match dogs that are either corgis or labrador.
         </p>
 
-        <p class="vocab paragraph">
-          You can use <em class="highlight-green">~N</em>
+        <p class="margin-vertical-normal">
+          You can use <em class="highlight has-text-forest-green">~N</em>
           to specify some fuzzy logic to the term according to the
           <a href="http://en.wikipedia.org/wiki/Levenshtein_distance">Levenshtein Edit Distance</a>
           — the number of one character changes that need to be made to one string to make it the same as another
           string.
         </p>
-        <p class="vocab paragraph">
-          <em class="highlight-orange">Example: theatre~1</em><br />
+        <p class="margin-vertical-normal">
+          Example: <em class="highlight has-text-tomato">theatre~1</em><br />
           This will search for images that match strings close to the term "theatre" with a difference of one character.
           Results might include terms with different spellings like "theater".
         </p>
