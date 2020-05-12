@@ -91,22 +91,26 @@ elements.importBookmarksButton.addEventListener('click', () => {
 });
 
 // tab switching logic
-document.getElementById('vocab-tabbed-header').addEventListener('click', e => {
+elements.tabsHeader.addEventListener('click', e => {
+  console.log(e.target);
+  console.log(e.target.parentElement);
   // removing active class
-  if (e.target.classList.contains('tab')) {
-    Array.prototype.forEach.call(e.currentTarget.getElementsByClassName('tab active'), element => {
-      element.classList.remove('active');
+  if (e.target.parentElement.classList.contains('tab')) {
+    Array.prototype.forEach.call(e.currentTarget.getElementsByClassName('is-active'), element => {
+      element.classList.remove('is-active');
+      console.log('this is inner element');
+      console.log(element);
     });
 
     // add active class to the clicked tab header
-    e.target.classList.add('active');
+    e.target.parentElement.classList.add('is-active');
 
-    const tabNo = e.target.getAttribute('data-tab-no');
+    const tabNo = e.target.parentElement.getAttribute('data-tab-no');
     let targetContentDiv;
 
     // removing active class from any tab content div
-    Array.prototype.forEach.call(document.getElementById('vocab-tabbed-contents').children, element => {
-      element.classList.remove('active');
+    Array.prototype.forEach.call(document.getElementById('tabs-content').children, element => {
+      element.classList.remove('is-active');
       if (element.getAttribute('data-content-no') === tabNo) {
         // saving the target content div
         targetContentDiv = element;
@@ -114,7 +118,7 @@ document.getElementById('vocab-tabbed-header').addEventListener('click', e => {
     });
 
     // adding active class to target content div
-    targetContentDiv.classList.add('active');
+    targetContentDiv.classList.add('is-active');
   }
 });
 

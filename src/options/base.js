@@ -9,6 +9,7 @@ const elements = {
   accordionItems: document.querySelectorAll('.accordion .accordion-link'),
   enableSearchStorageCheckbox: document.getElementById('enable-search-storage-checkbox'),
   enableSearchClearConfirmCheckbox: document.getElementById('enable-search-clear-confirm-checkbox'),
+  tabsHeader: document.getElementsByClassName('tabs')[0].getElementsByTagName('ul')[0],
 };
 
 export default elements;
