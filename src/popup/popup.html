@@ -49,22 +49,10 @@
           </div>
           <div class="section-filter__filter-button">
             <div class="section-filter__filter-button--apply-filter-container">
-              <a href="#" class="section-filter--apply-button" title="apply filters">
-                <button class="vocab button small-sized positive-indicating">
-                  <div class="content">
-                    Apply
-                  </div>
-                </button>
-              </a>
+              <button class="button tiny is-success section-filter--apply-button" title="Apply filters">Apply</button>
             </div>
             <div class="section-filter__filter-button--reset-filter-container">
-              <a href="#" class="section-filter--reset-button" title="reset filters">
-                <button class="vocab button small-sized negative-indicating">
-                  <div class="content">
-                    Reset
-                  </div>
-                </button>
-              </a>
+              <button class="button tiny is-warning section-filter--reset-button" title="Reset filters">Reset</button>
             </div>
           </div>
         </section>
@@ -87,9 +75,7 @@
             </div>
           </div>
           <div class="load-more-button-wrapper display-none">
-            <button class="load-more-button vocab button blue-colored small-sized">
-              <div class="content">Load more</div>
-            </button>
+            <button class="load-more-button button is-text small" title="Load more images">Load more</button>
           </div>
           <div id="spinner-placeholder--grid"></div>
           <p class="no-more-images-mes display-none">No more images!</p>
@@ -100,20 +86,10 @@
     <div class="section-bookmarks">
       <div class="section-bookmarks--header">
         <h3 class="text-align-center vocab heading">Bookmarks</h3>
-        <button class="delete-bookmark-button vocab button negative-indicating dark-shaded normal-sized basic">
-          <div class="content">
-            Delete
-          </div>
-        </button>
-        <button class="select-all-checkbox-button vocab button green-colored dark-shaded normal-sized">
-          <div class="content">
-            Select All
-          </div>
-        </button>
-        <button class="export-bookmarks-button vocab button magenta-colored normal-sized">
-          <div class="content">
-            Export Bookmarks
-          </div>
+        <button class="delete-bookmark-button button is-danger small" title="Delete selected bookmarks">Delete</button>
+        <button class="select-all-checkbox-button button is-info small" title="Select all bookmarks">Select All</button>
+        <button class="export-bookmarks-button button is-success small" title="Export selected bookmarks">
+          Export Bookmarks
         </button>
       </div>
 
@@ -149,25 +125,28 @@
             <h6 class="vocab heading">Rich-text</h6>
             <p id="attribution-rich-text" class="margin-bottom-small"></p>
             <button
-              class="vocab button blue-colored normal-sized btn-copy"
+              class="button is-success tiny btn-copy"
+              title="Copy rich-text attribution"
               data-clipboard-target="#attribution-rich-text"
             >
-              <div class="content">Copy</div>
+              Copy
             </button>
             <h6 class="vocab heading margin-top-medium">HTML</h6>
             <textarea class="margin-bottom-small" id="attribution-html" id="" cols="30" rows="3" readonly>
             text area
           </textarea
             >
-            <button class="vocab button blue-colored normal-sized btn-copy" data-clipboard-target="#attribution-html">
-              <div class="content">Copy</div>
+            <button
+              class="button is-success tiny btn-copy"
+              title="Copy HTML attribution"
+              data-clipboard-target="#attribution-html"
+            >
+              Copy
             </button>
             <div class="download-buttons margin-top-medium">
-              <button class="vocab button blue-colored normal-sized margin-right-small" id="download-image">
-                <div class="content">Download Image</div>
-              </button>
-              <button class="vocab button blue-colored normal-sized" id="download-image-attribution">
-                <div class="content">Download Image and Attribution</div>
+              <button class="button is-primary tiny margin-right-small" id="download-image">Download Image</button>
+              <button class="button is-primary tiny margin-right-small" id="download-image-attribution">
+                Download Image and Attribution
               </button>
             </div>
           </div>
