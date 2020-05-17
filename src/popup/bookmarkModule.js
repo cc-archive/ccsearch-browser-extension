@@ -264,10 +264,13 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   elements.collectionsIcon.addEventListener('click', () => {
-    elements.primarySection.style.display = 'none';
-    elements.bookmarksSection.style.display = 'none';
-    elements.collectionsSection.style.display = 'block';
-    loadCollections();
+    if (window.activeSection !== 'collections') {
+      window.activeSection = 'collections';
+      elements.primarySection.style.display = 'none';
+      elements.bookmarksSection.style.display = 'none';
+      elements.collectionsSection.style.display = 'block';
+      loadCollections();
+    }
   });
 
   elements.deleteBookmarksButton.addEventListener('click', () => {
