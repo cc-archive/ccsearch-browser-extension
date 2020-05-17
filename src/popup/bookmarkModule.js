@@ -262,6 +262,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  elements.collectionsIcon.addEventListener('click', () => {
+    elements.primarySection.style.display = 'none';
+    elements.bookmarksSection.style.display = 'none';
+    elements.collectionsSection.style.display = 'block';
+  });
+
   elements.deleteBookmarksButton.addEventListener('click', () => {
     chrome.storage.sync.get({ bookmarks: [] }, items => {
       const bookmarksArray = items.bookmarks;
