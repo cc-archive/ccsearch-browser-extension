@@ -224,40 +224,42 @@ function loadImages() {
 
 // EventListeners
 document.addEventListener('DOMContentLoaded', () => {
-  elements.showBookmarksIcon.addEventListener('click', () => {
-    window.isBookmarksActive = true;
-    elements.homeIcon.style.pointerEvents = 'none';
-    setTimeout(() => {
-      elements.homeIcon.style.pointerEvents = 'auto';
-    }, 300);
-    elements.primarySection.style.display = 'none';
-    elements.bookmarksSection.style.display = 'block';
-    // elements.homeIcon.style.visibility = 'visible';
-    elements.homeIcon.style.display = 'inline-block';
-    elements.showBookmarksIcon.style.display = 'none';
-    elements.inputField.value = '';
-    checkInternetConnection();
-    addSpinner(elements.spinnerPlaceholderBookmarks, 'original');
-    removeOldSearchResults();
-    removeLoaderAnimation();
-    restoreInitialContent('primary');
-    loadImages();
+  elements.bookmarksIcon.addEventListener('click', () => {
+    if (window.activeSection !== 'bookmarks') {
+      window.activeSection = 'bookmarks';
+      elements.homeIcon.style.pointerEvents = 'none';
+      setTimeout(() => {
+        elements.homeIcon.style.pointerEvents = 'auto';
+      }, 300);
+      // show the bookmarks section and hide other ones
+      elements.primarySection.style.display = 'none';
+      elements.collectionsSection.style.display = 'none';
+      elements.bookmarksSection.style.display = 'block';
+      // prepare the bookmarks section
+      elements.inputField.value = '';
+      checkInternetConnection();
+      addSpinner(elements.spinnerPlaceholderBookmarks, 'original');
+      removeOldSearchResults();
+      removeLoaderAnimation();
+      loadImages();
+    }
   });
 
-  elements.homeIcon.addEventListener('click', e => {
-    window.isBookmarksActive = false;
-
-    elements.showBookmarksIcon.style.pointerEvents = 'none';
-    setTimeout(() => {
-      elements.showBookmarksIcon.style.pointerEvents = 'auto';
-    }, 300);
-    elements.primarySection.style.display = 'block';
-    elements.bookmarksSection.style.display = 'none';
-    elements.showBookmarksIcon.style.display = 'inline-block';
-    removeLoadMoreButton(elements.loadMoreButtonWrapper);
-    e.target.style.display = 'none';
-
-    removeBookmarkImages();
+  elements.homeIcon.addEventListener('click', () => {
+    if (window.activeSection !== 'search') {
+      window.activeSection = 'search';
+      elements.bookmarksIcon.style.pointerEvents = 'none';
+      setTimeout(() => {
+        elements.bookmarksIcon.style.pointerEvents = 'auto';
+      }, 300);
+      // show the bookmarks section and hide other ones
+      elements.primarySection.style.display = 'block';
+      elements.bookmarksSection.style.display = 'none';
+      elements.collectionsSection.style.display = 'none';
+      // prepare the search section
+      removeLoadMoreButton(elements.loadMoreButtonWrapper);
+      removeBookmarkImages();
+    }
   });
 
   elements.deleteBookmarksButton.addEventListener('click', () => {

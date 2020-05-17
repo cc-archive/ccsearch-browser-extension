@@ -372,12 +372,14 @@ function loadStoredContentToUI() {
 }
 
 async function loadStoredSearch() {
-  if (localStorage.length !== 0) {
-    loadStoredContentToUI();
-  } else {
-    removeNode('no-image-found');
-    restoreInitialContent('primary');
-    elements.clearSearchButton[0].classList.add('display-none');
+  if (window.activeSection !== 'search') {
+    if (localStorage.length !== 0) {
+      loadStoredContentToUI();
+    } else {
+      removeNode('no-image-found');
+      restoreInitialContent('primary');
+      elements.clearSearchButton[0].classList.add('display-none');
+    }
   }
 }
 
@@ -442,8 +444,8 @@ async function nextRequest(page) {
   pageNo += 1;
 }
 
-// global varialbe to check the status if user is viewwing the bookmarks section
-window.isBookmarksActive = false;
+// store the name of the current active section
+window.activeSection = 'search';
 
 elements.homeIcon.addEventListener('click', loadStoredSearch);
 

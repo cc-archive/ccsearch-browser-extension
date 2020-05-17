@@ -32,7 +32,7 @@ export const elements = {
   twitterShareButton: document.querySelector('.fa-twitter'),
   pinterestShareButton: document.querySelector('.fa-pinterest'),
   tumblrShareButton: document.querySelector('.fa-tumblr'),
-  showBookmarksIcon: document.getElementById('show_bookmarks-icon'),
+  bookmarksIcon: document.getElementById('bookmarks-icon'),
   homeIcon: document.getElementById('home-icon'),
   primarySection: document.querySelector('.section-primary'),
   bookmarksSection: document.querySelector('.section-bookmarks'),
