@@ -38,6 +38,7 @@ export const elements = {
   primarySection: document.querySelector('.section-primary'),
   bookmarksSection: document.querySelector('.section-bookmarks'),
   collectionsSection: document.querySelector('.section-collections'),
+  collectionsSectionBody: document.querySelector('.section-collections--body'),
   deleteBookmarksButton: document.querySelector('.delete-bookmark-button'),
   buttonBackToTop: document.getElementsByClassName('button-backToTop')[0],
   exportBookmarksButton: document.getElementsByClassName('export-bookmarks-button')[0],

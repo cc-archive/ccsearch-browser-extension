@@ -6,6 +6,7 @@ import { unicodeToString, removeLoadMoreButton, getSourceDisplayName } from './h
 import { removeOldSearchResults, removeLoaderAnimation, checkInternetConnection } from './searchModule';
 import { addSpinner, removeSpinner } from './spinner';
 import { showNotification, removeNode, restoreInitialContent } from '../utils';
+import loadCollections from './collectionModule';
 
 const download = require('downloadjs');
 
@@ -266,6 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
     elements.primarySection.style.display = 'none';
     elements.bookmarksSection.style.display = 'none';
     elements.collectionsSection.style.display = 'block';
+    loadCollections();
   });
 
   elements.deleteBookmarksButton.addEventListener('click', () => {
