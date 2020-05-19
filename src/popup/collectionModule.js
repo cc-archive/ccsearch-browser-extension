@@ -1,12 +1,20 @@
-import { getLatestSources } from '../utils';
+import { getLatestSources, removeNode } from '../utils';
 import { elements } from './base';
 // eslint-disable-next-line import/no-cycle
-import { getCollectionsUrl } from './searchModule';
+import { getCollectionsUrl, removeOldSearchResults } from './searchModule';
+// eslint-disable-next-line import/no-cycle
+import search from './popup';
+// import { getCollectionsUrl } from './searchModule';
 
 function searchCollection(event) {
   const collectionName = event.target.getAttribute('data-collection-name');
   const url = getCollectionsUrl(collectionName, 1);
   console.log(url);
+  elements.homeIcon.click();
+  removeNode('primary__initial-info');
+  removeNode('no-image-found');
+  removeOldSearchResults();
+  search(url);
 }
 
 export default async function loadCollections() {

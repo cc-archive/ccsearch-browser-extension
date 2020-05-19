@@ -1,4 +1,5 @@
 import { elements } from './base';
+// eslint-disable-next-line import/no-cycle
 import {
   checkInputError,
   removeOldSearchResults,
@@ -243,6 +244,34 @@ function checkIfSourceFilterIsRendered() {
   }
 }
 
+export default function search(url) {
+  fetch(url)
+    .then(data => data.json())
+    .then(res => {
+      checkValidationError(res);
+      const resultArray = res.results;
+
+      checkResultLength(resultArray);
+      addThumbnailsToDOM(resultArray);
+
+      // Store Data to local storage
+      if (resultArray.length !== 0) {
+        localStorage.clear(); // clear the old results
+        storeSearch.title = inputText;
+        localStorage.setItem('usecaseDropdownValues', elements.useCaseChooser.value);
+        localStorage.setItem('sourceDropdownValues', elements.sourceChooser.value);
+        localStorage.setItem('licenseDropdownValues', elements.licenseChooser.value);
+        storeSearch.page = { ...resultArray };
+        localStorage.setItem('title', storeSearch.title);
+        localStorage.setItem(pageNo, JSON.stringify(storeSearch.page));
+
+        console.log(localStorage);
+      }
+
+      pageNo += 1;
+    });
+}
+
 elements.searchIcon.addEventListener('click', () => {
   inputText = elements.inputField.value.trim().replace('/[ ]+/g', ' ');
   pageNo = 1;
@@ -270,34 +299,9 @@ elements.searchIcon.addEventListener('click', () => {
     pageNo,
   );
 
+  search(url);
   // console.log(url);
   // pageNo += 1;
-
-  fetch(url)
-    .then(data => data.json())
-    .then(res => {
-      checkValidationError(res);
-      const resultArray = res.results;
-
-      checkResultLength(resultArray);
-      addThumbnailsToDOM(resultArray);
-
-      // Store Data to local storage
-      if (resultArray.length !== 0) {
-        localStorage.clear(); // clear the old results
-        storeSearch.title = inputText;
-        localStorage.setItem('usecaseDropdownValues', elements.useCaseChooser.value);
-        localStorage.setItem('sourceDropdownValues', elements.sourceChooser.value);
-        localStorage.setItem('licenseDropdownValues', elements.licenseChooser.value);
-        storeSearch.page = { ...resultArray };
-        localStorage.setItem('title', storeSearch.title);
-        localStorage.setItem(pageNo, JSON.stringify(storeSearch.page));
-
-        console.log(localStorage);
-      }
-
-      pageNo += 1;
-    });
   elements.clearSearchButton[0].classList.remove('display-none');
 });
 
