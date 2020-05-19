@@ -261,13 +261,13 @@ export function search(url) {
       // Store Data to local storage
       if (resultArray.length !== 0) {
         localStorage.clear(); // clear the old results
-        window.storeSearch.title = window.appObject.inputText;
+        window.appObject.storeSearch.title = window.appObject.inputText;
         localStorage.setItem('usecaseDropdownValues', elements.useCaseChooser.value);
         localStorage.setItem('sourceDropdownValues', elements.sourceChooser.value);
         localStorage.setItem('licenseDropdownValues', elements.licenseChooser.value);
-        window.storeSearch.page = { ...resultArray };
-        localStorage.setItem('title', window.storeSearch.title);
-        localStorage.setItem(window.appObject.pageNo, JSON.stringify(window.storeSearch.page));
+        window.appObject.storeSearch.page = { ...resultArray };
+        localStorage.setItem('title', window.appObject.storeSearch.title);
+        localStorage.setItem(window.appObject.pageNo, JSON.stringify(window.appObject.storeSearch.page));
 
         console.log(localStorage);
       }

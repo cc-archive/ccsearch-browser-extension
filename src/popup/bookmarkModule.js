@@ -227,8 +227,8 @@ function loadImages() {
 // EventListeners
 document.addEventListener('DOMContentLoaded', () => {
   elements.bookmarksIcon.addEventListener('click', () => {
-    if (window.activeSection !== 'bookmarks') {
-      window.activeSection = 'bookmarks';
+    if (window.appObject.activeSection !== 'bookmarks') {
+      window.appObject.activeSection = 'bookmarks';
       elements.homeIcon.style.pointerEvents = 'none';
       setTimeout(() => {
         elements.homeIcon.style.pointerEvents = 'auto';
@@ -248,8 +248,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   elements.homeIcon.addEventListener('click', () => {
-    if (window.activeSection !== 'search') {
-      window.activeSection = 'search';
+    if (window.appObject.activeSection !== 'search') {
+      window.appObject.activeSection = 'search';
       elements.bookmarksIcon.style.pointerEvents = 'none';
       setTimeout(() => {
         elements.bookmarksIcon.style.pointerEvents = 'auto';
@@ -265,8 +265,9 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   elements.collectionsIcon.addEventListener('click', () => {
-    if (window.activeSection !== 'collections') {
-      window.activeSection = 'collections';
+    console.log('collections clicked');
+    if (window.appObject.activeSection !== 'collections') {
+      window.appObject.activeSection = 'collections';
       elements.primarySection.style.display = 'none';
       elements.bookmarksSection.style.display = 'none';
       elements.collectionsSection.style.display = 'block';

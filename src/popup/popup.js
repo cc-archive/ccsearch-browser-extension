@@ -43,8 +43,7 @@ let sourceAPIQueryStrings = {};
 let enableSearchStorageOption = true;
 
 // Search Storage
-// const storeSearch = {};
-window.storeSearch = {};
+window.appObject.storeSearch = {};
 
 // eslint-disable-next-line no-undef
 const clipboard = new ClipboardJS('.btn-copy');
@@ -350,7 +349,7 @@ function loadStoredContentToUI() {
 }
 
 async function loadStoredSearch() {
-  if (window.activeSection !== 'search') {
+  if (window.appObject.activeSection !== 'search') {
     if (localStorage.length !== 0) {
       loadStoredContentToUI();
     } else {
@@ -413,8 +412,8 @@ async function nextRequest(page) {
 
     if (enableSearchStorageOption) {
       // Update Local Storage Data
-      window.storeSearch.page = { ...result };
-      localStorage.setItem(window.appObject.pageNo, JSON.stringify(window.storeSearch.page));
+      window.appObject.storeSearch.page = { ...result };
+      localStorage.setItem(window.appObject.pageNo, JSON.stringify(window.appObject.storeSearch.page));
     }
   }
   // console.log(result);
@@ -423,7 +422,8 @@ async function nextRequest(page) {
 }
 
 // store the name of the current active section
-window.activeSection = 'search';
+window.appObject.activeSection = 'search';
+window.appObject.searchByCollection = false;
 
 elements.homeIcon.addEventListener('click', loadStoredSearch);
 
