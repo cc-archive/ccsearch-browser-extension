@@ -4,11 +4,10 @@ import {
   checkInputError,
   removeOldSearchResults,
   getRequestUrl,
-  checkResultLength,
+  search,
   addThumbnailsToDOM,
   removeLoaderAnimation,
   checkInternetConnection,
-  checkValidationError,
 } from './searchModule';
 import {
   licensesList,
@@ -24,8 +23,10 @@ import { handleImageAttributionDownload, handleImageDownload } from './infoPopup
 import { addSpinner } from './spinner';
 import { showNotification, removeNode, getLatestSources, restoreInitialContent, showModal } from '../utils';
 
-let inputText;
-let pageNo;
+// global object to store the application variables
+window.appObject = {};
+window.appObject.inputText = '';
+window.appObject.pageNo = 1;
 // List to hold  selected by the user from the drop down.
 let userSelectedSourcesList = [];
 
@@ -42,7 +43,8 @@ let sourceAPIQueryStrings = {};
 let enableSearchStorageOption = true;
 
 // Search Storage
-const storeSearch = {};
+// const storeSearch = {};
+window.storeSearch = {};
 
 // eslint-disable-next-line no-undef
 const clipboard = new ClipboardJS('.btn-copy');
@@ -244,39 +246,11 @@ function checkIfSourceFilterIsRendered() {
   }
 }
 
-export default function search(url) {
-  fetch(url)
-    .then(data => data.json())
-    .then(res => {
-      checkValidationError(res);
-      const resultArray = res.results;
-
-      checkResultLength(resultArray);
-      addThumbnailsToDOM(resultArray);
-
-      // Store Data to local storage
-      if (resultArray.length !== 0) {
-        localStorage.clear(); // clear the old results
-        storeSearch.title = inputText;
-        localStorage.setItem('usecaseDropdownValues', elements.useCaseChooser.value);
-        localStorage.setItem('sourceDropdownValues', elements.sourceChooser.value);
-        localStorage.setItem('licenseDropdownValues', elements.licenseChooser.value);
-        storeSearch.page = { ...resultArray };
-        localStorage.setItem('title', storeSearch.title);
-        localStorage.setItem(pageNo, JSON.stringify(storeSearch.page));
-
-        console.log(localStorage);
-      }
-
-      pageNo += 1;
-    });
-}
-
 elements.searchIcon.addEventListener('click', () => {
-  inputText = elements.inputField.value.trim().replace('/[ ]+/g', ' ');
-  pageNo = 1;
+  window.appObject.inputText = elements.inputField.value.trim().replace('/[ ]+/g', ' ');
+  window.appObject.pageNo = 1;
 
-  checkInputError(inputText);
+  checkInputError(window.appObject.inputText);
   checkIfSourceFilterIsRendered();
   checkInternetConnection();
   removeNode('primary__initial-info');
@@ -292,11 +266,11 @@ elements.searchIcon.addEventListener('click', () => {
   // elements.spinner.classList.add('spinner');
 
   const url = getRequestUrl(
-    inputText,
+    window.appObject.inputText,
     userSelectedUseCaseList,
     userSelectedLicensesList,
     userSelectedSourcesList,
-    pageNo,
+    window.appObject.pageNo,
   );
 
   search(url);
@@ -359,18 +333,18 @@ function setEnableSearchStorageOptionVariable(enableSearchStorage) {
 }
 
 function loadStoredContentToUI() {
-  inputText = localStorage.getItem('title');
-  elements.inputField.value = inputText;
+  window.appObject.inputText = localStorage.getItem('title');
+  elements.inputField.value = window.appObject.inputText;
   elements.sourceChooser.value = localStorage.getItem('sourceDropdownValues');
   elements.useCaseChooser.value = localStorage.getItem('usecaseDropdownValues');
   elements.licenseChooser.value = localStorage.getItem('licenseDropdownValues');
 
-  pageNo = 1;
-  if (localStorage.getItem(pageNo)) {
+  window.appObject.pageNo = 1;
+  if (localStorage.getItem(window.appObject.pageNo)) {
     removeNode('primary__initial-info');
-    const pageData = Object.values(JSON.parse(localStorage.getItem(pageNo)));
+    const pageData = Object.values(JSON.parse(localStorage.getItem(window.appObject.pageNo)));
     addThumbnailsToDOM(pageData);
-    pageNo = Number(pageNo) + 1;
+    window.appObject.pageNo = Number(window.appObject.pageNo) + 1;
   }
   elements.clearSearchButton[0].classList.remove('display-none');
 }
@@ -421,11 +395,11 @@ loadStoredSearchOnInit();
 
 async function nextRequest(page) {
   let result = [];
-  if (localStorage.getItem(pageNo)) {
-    result = Object.values(JSON.parse(localStorage.getItem(pageNo)));
+  if (localStorage.getItem(window.appObject.pageNo)) {
+    result = Object.values(JSON.parse(localStorage.getItem(window.appObject.pageNo)));
   } else {
     const url = getRequestUrl(
-      inputText,
+      window.appObject.inputText,
       userSelectedUseCaseList,
       userSelectedLicensesList,
       userSelectedSourcesList,
@@ -439,13 +413,13 @@ async function nextRequest(page) {
 
     if (enableSearchStorageOption) {
       // Update Local Storage Data
-      storeSearch.page = { ...result };
-      localStorage.setItem(pageNo, JSON.stringify(storeSearch.page));
+      window.storeSearch.page = { ...result };
+      localStorage.setItem(window.appObject.pageNo, JSON.stringify(window.storeSearch.page));
     }
   }
   // console.log(result);
   addThumbnailsToDOM(result);
-  pageNo += 1;
+  window.appObject.pageNo += 1;
 }
 
 // store the name of the current active section
@@ -456,7 +430,7 @@ elements.homeIcon.addEventListener('click', loadStoredSearch);
 elements.loadMoreButton.addEventListener('click', () => {
   removeLoadMoreButton(elements.loadMoreButtonWrapper);
   addSpinner(elements.spinnerPlaceholderGrid, 'for-bottom');
-  nextRequest(pageNo);
+  nextRequest(window.appObject.pageNo);
 });
 
 document.getElementById('settings-icon').addEventListener('click', () => {

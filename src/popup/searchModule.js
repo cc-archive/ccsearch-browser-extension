@@ -33,16 +33,16 @@ export function removeOldSearchResults() {
 }
 
 export function getRequestUrl(
-  inputText,
+  searchQuery,
   userSelectedUseCaseList,
   userSelectedLicensesList,
   userSelectedSourcesList,
   page,
 ) {
   if (userSelectedUseCaseList.length > 0) {
-    return `https://api.creativecommons.engineering/v1/images?q=${inputText}&page=${page}&page_size=20&license_type=${userSelectedUseCaseList}&source=${userSelectedSourcesList}`;
+    return `https://api.creativecommons.engineering/v1/images?q=${searchQuery}&page=${page}&page_size=20&license_type=${userSelectedUseCaseList}&source=${userSelectedSourcesList}`;
   }
-  return `https://api.creativecommons.engineering/v1/images?q=${inputText}&page=${page}&page_size=20&license=${userSelectedLicensesList}&source=${userSelectedSourcesList}`;
+  return `https://api.creativecommons.engineering/v1/images?q=${searchQuery}&page=${page}&page_size=20&license=${userSelectedLicensesList}&source=${userSelectedSourcesList}`;
 }
 
 export function getCollectionsUrl(collectionName, page) {
@@ -246,4 +246,32 @@ export function addThumbnailsToDOM(resultArray) {
 
     appendToGrid(msnry, fragment, divs, elements.gridPrimary);
   });
+}
+
+export function search(url) {
+  fetch(url)
+    .then(data => data.json())
+    .then(res => {
+      checkValidationError(res);
+      const resultArray = res.results;
+
+      checkResultLength(resultArray);
+      addThumbnailsToDOM(resultArray);
+
+      // Store Data to local storage
+      if (resultArray.length !== 0) {
+        localStorage.clear(); // clear the old results
+        window.storeSearch.title = window.appObject.inputText;
+        localStorage.setItem('usecaseDropdownValues', elements.useCaseChooser.value);
+        localStorage.setItem('sourceDropdownValues', elements.sourceChooser.value);
+        localStorage.setItem('licenseDropdownValues', elements.licenseChooser.value);
+        window.storeSearch.page = { ...resultArray };
+        localStorage.setItem('title', window.storeSearch.title);
+        localStorage.setItem(window.appObject.pageNo, JSON.stringify(window.storeSearch.page));
+
+        console.log(localStorage);
+      }
+
+      window.appObject.pageNo += 1;
+    });
 }
