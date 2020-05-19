@@ -8,6 +8,7 @@ import {
   addThumbnailsToDOM,
   removeLoaderAnimation,
   checkInternetConnection,
+  getCollectionsUrl,
 } from './searchModule';
 import {
   licensesList,
@@ -248,6 +249,7 @@ function checkIfSourceFilterIsRendered() {
 elements.searchIcon.addEventListener('click', () => {
   window.appObject.inputText = elements.inputField.value.trim().replace('/[ ]+/g', ' ');
   window.appObject.pageNo = 1;
+  window.appObject.searchByCollection = false;
 
   checkInputError(window.appObject.inputText);
   checkIfSourceFilterIsRendered();
@@ -394,16 +396,21 @@ loadStoredSearchOnInit();
 
 async function nextRequest(page) {
   let result = [];
+  let url;
   if (localStorage.getItem(window.appObject.pageNo)) {
     result = Object.values(JSON.parse(localStorage.getItem(window.appObject.pageNo)));
   } else {
-    const url = getRequestUrl(
-      window.appObject.inputText,
-      userSelectedUseCaseList,
-      userSelectedLicensesList,
-      userSelectedSourcesList,
-      page,
-    );
+    if (window.appObject.searchByCollection) {
+      url = getCollectionsUrl(window.appObject.collectionName, page);
+    } else {
+      url = getRequestUrl(
+        window.appObject.inputText,
+        userSelectedUseCaseList,
+        userSelectedLicensesList,
+        userSelectedSourcesList,
+        page,
+      );
+    }
 
     // console.log(url);
     const response = await fetch(url);
@@ -424,6 +431,7 @@ async function nextRequest(page) {
 // store the name of the current active section
 window.appObject.activeSection = 'search';
 window.appObject.searchByCollection = false;
+window.appObject.collectionName = '';
 
 elements.homeIcon.addEventListener('click', loadStoredSearch);
 
