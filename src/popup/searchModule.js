@@ -45,6 +45,10 @@ export function getRequestUrl(
   return `https://api.creativecommons.engineering/v1/images?q=${inputText}&page=${page}&page_size=20&license=${userSelectedLicensesList}&source=${userSelectedSourcesList}`;
 }
 
+export function getCollectionsUrl(collectionName, page) {
+  return `https://api.creativecommons.engineering/v1/images?source=${collectionName}&page=${page}&page_size=20`;
+}
+
 function showNoResultFoundMessage() {
   const sectionContentPrimary = document.querySelector('.section-content--primary');
 

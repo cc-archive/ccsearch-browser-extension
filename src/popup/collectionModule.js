@@ -1,8 +1,12 @@
 import { getLatestSources } from '../utils';
 import { elements } from './base';
+// eslint-disable-next-line import/no-cycle
+import { getCollectionsUrl } from './searchModule';
 
 function searchCollection(event) {
-  console.log(event.target.getAttribute('data-collection-name'));
+  const collectionName = event.target.getAttribute('data-collection-name');
+  const url = getCollectionsUrl(collectionName, 1);
+  console.log(url);
 }
 
 export default async function loadCollections() {

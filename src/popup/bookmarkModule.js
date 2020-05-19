@@ -6,6 +6,7 @@ import { unicodeToString, removeLoadMoreButton, getSourceDisplayName } from './h
 import { removeOldSearchResults, removeLoaderAnimation, checkInternetConnection } from './searchModule';
 import { addSpinner, removeSpinner } from './spinner';
 import { showNotification, removeNode, restoreInitialContent } from '../utils';
+// eslint-disable-next-line import/no-cycle
 import loadCollections from './collectionModule';
 
 const download = require('downloadjs');
