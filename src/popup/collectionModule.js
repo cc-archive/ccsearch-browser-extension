@@ -3,12 +3,17 @@ import { elements } from './base';
 // eslint-disable-next-line import/no-cycle
 import { getCollectionsUrl, removeOldSearchResults, search } from './searchModule';
 // eslint-disable-next-line import/no-cycle
+import { toggleOnFilterDropDownCheckboxes, resetAllFilterDropDowns } from './filterModule';
 
 function searchCollection(event) {
   window.appObject.pageNo = 1;
   window.appObject.searchByCollection = true;
   window.appObject.collectionName = event.target.getAttribute('data-collection-name');
   const url = getCollectionsUrl(window.appObject.collectionName, window.appObject.pageNo);
+  const items = {};
+  items[window.appObject.collectionName] = true;
+  resetAllFilterDropDowns();
+  toggleOnFilterDropDownCheckboxes(elements.sourceChooserWrapper, items);
   elements.homeIcon.click();
   removeNode('primary__initial-info');
   removeNode('no-image-found');

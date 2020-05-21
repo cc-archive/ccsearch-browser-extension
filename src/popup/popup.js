@@ -19,7 +19,12 @@ import {
   removeClassFromElements,
   removeLoadMoreButton,
 } from './helper';
-import { loadSourcesToDom, resetLicenseDropDown, loadUserDefaults, loadStoredFilterPreferences } from './filterModule';
+import {
+  loadSourcesToDom,
+  resetFilterDropDown,
+  loadUserDefaults,
+  toggleOnFilterDropDownCheckboxes,
+} from './filterModule';
 import { handleImageAttributionDownload, handleImageDownload } from './infoPopupModule';
 import { addSpinner } from './spinner';
 import { showNotification, removeNode, getLatestSources, restoreInitialContent, showModal } from '../utils';
@@ -167,7 +172,7 @@ elements.useCaseChooserWrapper.addEventListener(
       // only checking checkbox elements
       if (!event.target.querySelector('input').checked) {
         // if the clicked checkbox is unchecked
-        resetLicenseDropDown();
+        resetFilterDropDown(elements.licenseChooserWrapper);
         // clear the datastructures and make a fresh search
         userSelectedLicensesList = [];
         // disable the license dropdown (as atleast one checkbox is checked)
@@ -181,7 +186,7 @@ elements.useCaseChooserWrapper.addEventListener(
         // excluding the current checkbox
         if (inputCheckboxes[i].checked) {
           // if atleast one checkbox is checked, disable the license dropdown
-          resetLicenseDropDown();
+          resetFilterDropDown(elements.licenseChooserWrapper);
           elements.licenseChooser.disabled = true;
           flag = 1;
         }
@@ -378,8 +383,8 @@ async function loadStoredSearchOnInit() {
         elements.useCaseChooser.value.split(', ').forEach(x => {
           activeUseCaseOptions[useCaseAPIQueryStrings[x]] = true;
         });
-        loadStoredFilterPreferences(elements.licenseChooserWrapper, activeLicenseOptions);
-        loadStoredFilterPreferences(elements.useCaseChooserWrapper, activeUseCaseOptions);
+        toggleOnFilterDropDownCheckboxes(elements.licenseChooserWrapper, activeLicenseOptions);
+        toggleOnFilterDropDownCheckboxes(elements.useCaseChooserWrapper, activeUseCaseOptions);
         // console.log(elements.useCaseChooser.value);
         // console.log(useCaseAPIQueryStrings);
         // console.log(activeUseCaseOptions);
