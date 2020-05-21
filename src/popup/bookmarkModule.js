@@ -86,7 +86,7 @@ function loadImages() {
 
           // make a span to hold the title
           const spanTitleElement = document.createElement('span');
-          spanTitleElement.setAttribute('class', 'image-title');
+          spanTitleElement.setAttribute('class', 'extension-image-title');
           spanTitleElement.setAttribute('title', title);
           const imageTitleNode = document.createTextNode(title);
 

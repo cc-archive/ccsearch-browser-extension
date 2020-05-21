@@ -58,7 +58,7 @@
       opacity: 1;
     }
 
-    .image-title {
+    .extension-image-title {
       opacity: 1;
     }
 
@@ -75,7 +75,7 @@
     }
   }
 
-  .image-title {
+  .extension-image-title {
     backface-visibility: hidden;
     position: absolute;
     bottom: 1px;
@@ -122,6 +122,7 @@
       img {
         display: inline-block;
         height: inherit;
+        width: auto;
       }
     }
 
