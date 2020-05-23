@@ -435,8 +435,8 @@ async function nextRequest(page) {
 
 // store the name of the current active section
 window.appObject.activeSection = 'search';
-window.appObject.searchByCollection = false;
-window.appObject.collectionName = '';
+window.appObject.searchByCollection = localStorage.getItem('searchByCollection') === 'true';
+window.appObject.collectionName = localStorage.getItem('collectionName');
 
 elements.homeIcon.addEventListener('click', loadStoredSearch);
 

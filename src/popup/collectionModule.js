@@ -12,6 +12,7 @@ function searchCollection(event) {
   const url = getCollectionsUrl(window.appObject.collectionName, window.appObject.pageNo);
   const items = {};
   items[window.appObject.collectionName] = true;
+  elements.inputField.value = '';
   resetAllFilterDropDowns();
   toggleOnFilterDropDownCheckboxes(elements.sourceChooserWrapper, items);
   elements.homeIcon.click();
