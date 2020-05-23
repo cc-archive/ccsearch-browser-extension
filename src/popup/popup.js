@@ -34,16 +34,16 @@ window.appObject = {};
 window.appObject.inputText = '';
 window.appObject.pageNo = 1;
 // List to hold  selected by the user from the drop down.
-let userSelectedSourcesList = [];
+window.appObject.userSelectedSourcesList = [];
 
 // List to hold user selected licenses
-let userSelectedLicensesList = [];
+window.appObject.userSelectedLicensesList = [];
 
 // List to hold user selected use case
-let userSelectedUseCaseList = [];
+window.appObject.userSelectedUseCaseList = [];
 
 // object to map source display names to valid query names.
-let sourceAPIQueryStrings = {};
+window.appObject.sourceAPIQueryStrings = {};
 
 // Store Wheather Search Storage is enabled or not
 let enableSearchStorageOption = true;
@@ -101,15 +101,15 @@ elements.inputField.addEventListener('keydown', event => {
 });
 
 async function populateSourceList() {
-  sourceAPIQueryStrings = await getLatestSources();
+  window.appObject.sourceAPIQueryStrings = await getLatestSources();
 
   let count = 0;
   const sourcesList = [];
 
   // iterating over source object
-  Object.keys(sourceAPIQueryStrings).forEach(key => {
+  Object.keys(window.appObject.sourceAPIQueryStrings).forEach(key => {
     sourcesList[count] = {
-      id: sourceAPIQueryStrings[key],
+      id: window.appObject.sourceAPIQueryStrings[key],
       title: key,
     };
     count += 1;
@@ -154,9 +154,9 @@ elements.filterResetButton.addEventListener('click', () => {
   elements.filterIcon.classList.remove('activate-filter');
 
   // clear the datastructures and make a fresh search
-  userSelectedLicensesList = [];
-  userSelectedSourcesList = [];
-  userSelectedUseCaseList = [];
+  window.appObject.userSelectedLicensesList = [];
+  window.appObject.userSelectedSourcesList = [];
+  window.appObject.userSelectedUseCaseList = [];
   elements.searchIcon.click();
 });
 
@@ -174,7 +174,7 @@ elements.useCaseChooserWrapper.addEventListener(
         // if the clicked checkbox is unchecked
         resetFilterDropDown(elements.licenseChooserWrapper);
         // clear the datastructures and make a fresh search
-        userSelectedLicensesList = [];
+        window.appObject.userSelectedLicensesList = [];
         // disable the license dropdown (as atleast one checkbox is checked)
         elements.licenseChooser.disabled = true;
         flag = 1;
@@ -206,33 +206,37 @@ elements.useCaseChooserWrapper.addEventListener(
 
 function applyFilters() {
   //  reset filter data structures
-  userSelectedSourcesList = [];
-  userSelectedLicensesList = [];
-  userSelectedUseCaseList = [];
+  window.appObject.userSelectedSourcesList = [];
+  window.appObject.userSelectedLicensesList = [];
+  window.appObject.userSelectedUseCaseList = [];
 
   if (elements.sourceChooser.value) {
     const userInputSourcesList = elements.sourceChooser.value.split(', ');
     userInputSourcesList.forEach(element => {
-      userSelectedSourcesList.push(sourceAPIQueryStrings[element]);
+      window.appObject.userSelectedSourcesList.push(window.appObject.sourceAPIQueryStrings[element]);
     });
   }
 
   if (elements.licenseChooser.value) {
     const userInputLicensesList = elements.licenseChooser.value.split(', ');
     userInputLicensesList.forEach(element => {
-      userSelectedLicensesList.push(licenseAPIQueryStrings[element]);
+      window.appObject.userSelectedLicensesList.push(licenseAPIQueryStrings[element]);
     });
   }
 
   if (elements.useCaseChooser.value) {
     const userInputUseCaseList = elements.useCaseChooser.value.split(', ');
     userInputUseCaseList.forEach(element => {
-      userSelectedUseCaseList.push(useCaseAPIQueryStrings[element]);
+      window.appObject.userSelectedUseCaseList.push(useCaseAPIQueryStrings[element]);
     });
   }
 
   // "activate" filter icon if some filters are applied
-  if (userSelectedSourcesList.length > 0 || userSelectedLicensesList.length > 0 || userSelectedUseCaseList.length > 0) {
+  if (
+    window.appObject.userSelectedSourcesList.length > 0 ||
+    window.appObject.userSelectedLicensesList.length > 0 ||
+    window.appObject.userSelectedUseCaseList.length > 0
+  ) {
     elements.filterIcon.classList.add('activate-filter');
   } else {
     elements.filterIcon.classList.remove('activate-filter');
@@ -265,6 +269,7 @@ elements.searchIcon.addEventListener('click', () => {
   removeLoaderAnimation();
   applyFilters();
 
+  // check if this is necessary. localstorage.clear() is called in search() also
   localStorage.clear(); // clear the old results
 
   // enable spinner
@@ -273,9 +278,9 @@ elements.searchIcon.addEventListener('click', () => {
 
   const url = getRequestUrl(
     window.appObject.inputText,
-    userSelectedUseCaseList,
-    userSelectedLicensesList,
-    userSelectedSourcesList,
+    window.appObject.userSelectedUseCaseList,
+    window.appObject.userSelectedLicensesList,
+    window.appObject.userSelectedSourcesList,
     window.appObject.pageNo,
   );
 
@@ -379,9 +384,11 @@ async function loadStoredSearchOnInit() {
         const activeUseCaseOptions = {};
         elements.licenseChooser.value.split(', ').forEach(x => {
           activeLicenseOptions[x] = true;
+          window.appObject.userSelectedLicensesList.push(licenseAPIQueryStrings[x]);
         });
         elements.useCaseChooser.value.split(', ').forEach(x => {
           activeUseCaseOptions[useCaseAPIQueryStrings[x]] = true;
+          window.appObject.userSelectedUseCaseList.push(useCaseAPIQueryStrings[x]);
         });
         toggleOnFilterDropDownCheckboxes(elements.licenseChooserWrapper, activeLicenseOptions);
         toggleOnFilterDropDownCheckboxes(elements.useCaseChooserWrapper, activeUseCaseOptions);
@@ -410,14 +417,14 @@ async function nextRequest(page) {
     } else {
       url = getRequestUrl(
         window.appObject.inputText,
-        userSelectedUseCaseList,
-        userSelectedLicensesList,
-        userSelectedSourcesList,
+        window.appObject.userSelectedUseCaseList,
+        window.appObject.userSelectedLicensesList,
+        window.appObject.userSelectedSourcesList,
         page,
       );
     }
 
-    // console.log(url);
+    console.log(url);
     const response = await fetch(url);
     const json = await response.json();
     result = json.results;

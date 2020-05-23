@@ -45,8 +45,9 @@ export function loadSourcesToDom(SourcesList, loadingStoredSearch = false) {
     loadUserFilterPreferences(elements.sourceChooserWrapper);
   } else {
     const activeSourceOptions = {};
-    elements.sourceChooser.value.split(', ').forEach(x => {
-      activeSourceOptions[backupSourceAPIQueryStrings[x]] = true;
+    elements.sourceChooser.value.split(', ').forEach(source => {
+      activeSourceOptions[backupSourceAPIQueryStrings[source]] = true;
+      window.appObject.userSelectedSourcesList.push(window.appObject.sourceAPIQueryStrings[source]);
     });
     toggleOnFilterDropDownCheckboxes(elements.sourceChooserWrapper, activeSourceOptions);
   }
