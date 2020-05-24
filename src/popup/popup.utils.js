@@ -1,5 +1,6 @@
 import { elements } from './base';
 import { removeNode } from '../utils';
+// eslint-disable-next-line import/no-cycle
 import { addThumbnailsToDOM } from './searchModule';
 
 export default function loadStoredContentToUI() {

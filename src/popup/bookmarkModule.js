@@ -8,6 +8,8 @@ import { addSpinner, removeSpinner } from './spinner';
 import { showNotification, removeNode, restoreInitialContent } from '../utils';
 // eslint-disable-next-line import/no-cycle
 import loadCollections from './collectionModule';
+// eslint-disable-next-line import/no-cycle
+import loadStoredContentToUI from './popup.utils';
 
 const download = require('downloadjs');
 
@@ -261,6 +263,17 @@ document.addEventListener('DOMContentLoaded', () => {
       // prepare the search section
       removeLoadMoreButton(elements.loadMoreButtonWrapper);
       removeBookmarkImages();
+      if (window.appObject.searchByCollection === true) {
+        removeNode('primary__initial-info');
+        removeNode('no-image-found');
+        removeOldSearchResults();
+      } else if (localStorage.length !== 0) {
+        loadStoredContentToUI();
+      } else {
+        removeNode('no-image-found');
+        restoreInitialContent('primary');
+        elements.clearSearchButton[0].classList.add('display-none');
+      }
     }
   });
 
@@ -271,6 +284,8 @@ document.addEventListener('DOMContentLoaded', () => {
       elements.primarySection.style.display = 'none';
       elements.bookmarksSection.style.display = 'none';
       elements.collectionsSection.style.display = 'block';
+      removeOldSearchResults();
+      removeLoaderAnimation();
       loadCollections();
     }
   });

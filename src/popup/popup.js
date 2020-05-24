@@ -344,18 +344,6 @@ function setEnableSearchStorageOptionVariable(enableSearchStorage) {
   } else enableSearchStorageOption = enableSearchStorage;
 }
 
-async function loadStoredSearch() {
-  if (window.appObject.activeSection !== 'search') {
-    if (localStorage.length !== 0) {
-      loadStoredContentToUI();
-    } else {
-      removeNode('no-image-found');
-      restoreInitialContent('primary');
-      elements.clearSearchButton[0].classList.add('display-none');
-    }
-  }
-}
-
 async function loadStoredSearchOnInit() {
   await chrome.storage.sync.get(['enableSearchStorage'], res => {
     setEnableSearchStorageOptionVariable(res.enableSearchStorage);
@@ -428,8 +416,6 @@ async function nextRequest(page) {
 window.appObject.activeSection = 'search';
 window.appObject.searchByCollection = localStorage.getItem('searchByCollection') === 'true';
 window.appObject.collectionName = localStorage.getItem('collectionName');
-
-elements.homeIcon.addEventListener('click', loadStoredSearch);
 
 elements.loadMoreButton.addEventListener('click', () => {
   removeLoadMoreButton(elements.loadMoreButtonWrapper);

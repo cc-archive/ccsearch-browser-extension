@@ -1,7 +1,7 @@
-import { getLatestSources, removeNode } from '../utils';
+import { getLatestSources } from '../utils';
 import { elements } from './base';
 // eslint-disable-next-line import/no-cycle
-import { getCollectionsUrl, removeOldSearchResults, search } from './searchModule';
+import { getCollectionsUrl, search } from './searchModule';
 // eslint-disable-next-line import/no-cycle
 import { toggleOnFilterDropDownCheckboxes, resetAllFilterDropDowns } from './filterModule';
 
@@ -16,9 +16,6 @@ function searchCollection(event) {
   resetAllFilterDropDowns();
   toggleOnFilterDropDownCheckboxes(elements.sourceChooserWrapper, items);
   elements.homeIcon.click();
-  removeNode('primary__initial-info');
-  removeNode('no-image-found');
-  removeOldSearchResults();
   search(url);
 }
 
