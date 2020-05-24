@@ -28,6 +28,7 @@ import {
 import { handleImageAttributionDownload, handleImageDownload } from './infoPopupModule';
 import { addSpinner } from './spinner';
 import { showNotification, removeNode, getLatestSources, restoreInitialContent, showModal } from '../utils';
+import loadStoredContentToUI from './popup.utils';
 
 // global object to store the application variables
 window.appObject = {};
@@ -341,23 +342,6 @@ function setEnableSearchStorageOptionVariable(enableSearchStorage) {
     enableSearchStorageOption = true;
     chrome.storage.sync.set({ enableSearchStorage: enableSearchStorageOption });
   } else enableSearchStorageOption = enableSearchStorage;
-}
-
-function loadStoredContentToUI() {
-  window.appObject.inputText = localStorage.getItem('title');
-  elements.inputField.value = window.appObject.inputText;
-  elements.sourceChooser.value = localStorage.getItem('sourceDropdownValues');
-  elements.useCaseChooser.value = localStorage.getItem('usecaseDropdownValues');
-  elements.licenseChooser.value = localStorage.getItem('licenseDropdownValues');
-
-  window.appObject.pageNo = 1;
-  if (localStorage.getItem(window.appObject.pageNo)) {
-    removeNode('primary__initial-info');
-    const pageData = Object.values(JSON.parse(localStorage.getItem(window.appObject.pageNo)));
-    addThumbnailsToDOM(pageData);
-    window.appObject.pageNo = Number(window.appObject.pageNo) + 1;
-  }
-  elements.clearSearchButton[0].classList.remove('display-none');
 }
 
 async function loadStoredSearch() {
