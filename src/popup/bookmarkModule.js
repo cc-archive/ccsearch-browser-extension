@@ -5,7 +5,7 @@ import { unicodeToString, removeLoadMoreButton, getSourceDisplayName } from './h
 // eslint-disable-next-line import/no-cycle
 import { removeOldSearchResults, removeLoaderAnimation, checkInternetConnection } from './searchModule';
 import { addSpinner, removeSpinner } from './spinner';
-import { showNotification, removeNode, restoreInitialContent } from '../utils';
+import { showNotification, removeNode, restoreInitialContent, removeChildNodes } from '../utils';
 // eslint-disable-next-line import/no-cycle
 import loadCollections from './collectionModule';
 // eslint-disable-next-line import/no-cycle
@@ -286,6 +286,7 @@ document.addEventListener('DOMContentLoaded', () => {
       elements.collectionsSection.style.display = 'block';
       removeOldSearchResults();
       removeLoaderAnimation();
+      removeChildNodes(elements.collectionsSectionBody);
       loadCollections();
     }
   });
