@@ -4,6 +4,7 @@ import { elements } from './base';
 import { getCollectionsUrl, search } from './searchModule';
 // eslint-disable-next-line import/no-cycle
 import { toggleOnFilterDropDownCheckboxes, resetAllFilterDropDowns } from './filterModule';
+import { addSpinner, removeSpinner } from './spinner';
 
 function searchCollection(event) {
   window.appObject.pageNo = 1;
@@ -16,11 +17,13 @@ function searchCollection(event) {
   resetAllFilterDropDowns();
   toggleOnFilterDropDownCheckboxes(elements.sourceChooserWrapper, items);
   elements.homeIcon.click();
+  addSpinner(elements.spinnerPlaceholderGrid, 'original');
   search(url);
 }
 
 export default async function loadCollections() {
   const sources = await getLatestSources();
+  removeSpinner(elements.spinnerPlaceholderCollections);
   Object.keys(sources).forEach(key => {
     const link = document.createElement('a');
     link.href = '#';

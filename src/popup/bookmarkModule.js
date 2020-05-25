@@ -284,8 +284,8 @@ document.addEventListener('DOMContentLoaded', () => {
       elements.primarySection.style.display = 'none';
       elements.bookmarksSection.style.display = 'none';
       elements.collectionsSection.style.display = 'block';
+      addSpinner(elements.spinnerPlaceholderCollections, 'original');
       removeOldSearchResults();
-      removeLoaderAnimation();
       removeChildNodes(elements.collectionsSectionBody);
       loadCollections();
     }

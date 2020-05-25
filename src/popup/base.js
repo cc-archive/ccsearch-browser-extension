@@ -5,6 +5,7 @@ export const elements = {
   spinnerPlaceholderGrid: document.getElementById('spinner-placeholder--grid'),
   spinnerPlaceholderPopup: document.getElementById('spinner-placeholder--popup'),
   spinnerPlaceholderBookmarks: document.getElementById('spinner-placeholder--bookmarks'),
+  spinnerPlaceholderCollections: document.getElementById('spinner-placeholder--collections'),
   useCaseChooser: document.querySelector('#choose-usecase'),
   licenseChooser: document.querySelector('#choose-license'),
   sourceChooser: document.querySelector('#choose-source'),
