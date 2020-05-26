@@ -30,10 +30,9 @@ export default async function loadCollections() {
     const sourceName = document.createTextNode(key);
     link.appendChild(sourceName);
     link.setAttribute('data-collection-name', sources[key]);
-    const br = document.createElement('br');
     link.addEventListener('click', searchCollection);
+    link.classList.add('has-background-grey-lighter');
 
     elements.collectionsSectionBody.appendChild(link);
-    elements.collectionsSectionBody.appendChild(br);
   });
 }
