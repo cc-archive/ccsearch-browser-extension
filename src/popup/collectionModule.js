@@ -8,7 +8,7 @@ import { addSpinner, removeSpinner } from './spinner';
 
 function searchCollection(event) {
   window.appObject.pageNo = 1;
-  window.appObject.searchByCollection = true;
+  window.appObject.inputText = '';
   window.appObject.collectionName = event.target.getAttribute('data-collection-name');
   const url = getCollectionsUrl(window.appObject.collectionName, window.appObject.pageNo);
   const items = {};
