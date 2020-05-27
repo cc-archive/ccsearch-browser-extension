@@ -259,7 +259,7 @@ function checkIfSourceFilterIsRendered() {
 elements.searchIcon.addEventListener('click', () => {
   window.appObject.inputText = elements.inputField.value.trim().replace('/[ ]+/g', ' ');
   window.appObject.pageNo = 1;
-  window.appObject.searchByCollection = false;
+  window.appObject.searchByCollectionActivated = false;
 
   checkInputError(window.appObject.inputText);
   checkIfSourceFilterIsRendered();
@@ -384,7 +384,7 @@ async function nextRequest(page) {
   if (localStorage.getItem(window.appObject.pageNo)) {
     result = Object.values(JSON.parse(localStorage.getItem(window.appObject.pageNo)));
   } else {
-    if (window.appObject.searchByCollection) {
+    if (window.appObject.searchByCollectionActivated) {
       url = getCollectionsUrl(window.appObject.collectionName, page);
     } else {
       url = getRequestUrl(
@@ -414,7 +414,7 @@ async function nextRequest(page) {
 
 // store the name of the current active section
 window.appObject.activeSection = 'search';
-window.appObject.searchByCollection = localStorage.getItem('searchByCollection') === 'true';
+window.appObject.searchByCollectionActivated = localStorage.getItem('searchByCollectionActivated') === 'true';
 window.appObject.collectionName = localStorage.getItem('collectionName');
 
 elements.loadMoreButton.addEventListener('click', () => {

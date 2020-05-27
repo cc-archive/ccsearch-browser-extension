@@ -261,11 +261,11 @@ export function search(url) {
       // Store Data to local storage
       if (resultArray.length !== 0) {
         localStorage.clear(); // clear the old results
-        if (window.appObject.searchByCollection) {
-          localStorage.setItem('searchByCollection', true);
+        if (window.appObject.searchByCollectionActivated) {
+          localStorage.setItem('searchByCollectionActivated', true);
           localStorage.setItem('collectionName', window.appObject.collectionName);
         } else {
-          localStorage.setItem('searchByCollection', false);
+          localStorage.setItem('searchByCollectionActivated', false);
         }
         window.appObject.storeSearch.title = window.appObject.inputText;
         localStorage.setItem('usecaseDropdownValues', elements.useCaseChooser.value);

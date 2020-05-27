@@ -260,10 +260,11 @@ document.addEventListener('DOMContentLoaded', () => {
       // prepare the search section
       removeLoadMoreButton(elements.loadMoreButtonWrapper);
       removeBookmarkImages();
-      if (window.appObject.searchByCollection === true) {
+      if (window.appObject.searchByCollectionActivated === true && window.appObject.searchingNewCollection === true) {
         removeNode('primary__initial-info');
         removeNode('no-image-found');
         removeOldSearchResults();
+        window.appObject.searchingNewCollection = false;
       } else if (localStorage.length !== 0) {
         loadStoredContentToUI();
       } else {
