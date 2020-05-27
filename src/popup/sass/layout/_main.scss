@@ -62,10 +62,6 @@
 
     .image-license {
       opacity: 1;
-
-      a {
-        opacity: 0.7;
-      }
     }
   }
 
@@ -110,9 +106,6 @@
     a {
       height: inherit;
 
-      &:hover {
-        opacity: 1;
-      }
       img {
         display: inline-block;
         height: inherit;
@@ -124,14 +117,11 @@
       padding: 0;
       margin: 0;
       float: right;
-      // right: 5px;
-      // position: absolute;
       color: $color-white;
       cursor: pointer;
     }
   }
 }
-// }
 
 /* clearfix */
 .grid:after {
