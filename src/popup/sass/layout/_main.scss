@@ -43,12 +43,6 @@
     z-index: 2;
     top: 0;
     left: 0;
-    background-image: linear-gradient(
-      rgba($color-black, 0.5),
-      transparent 20%,
-      transparent 70%,
-      rgba($color-black, 0.8)
-    );
     backface-visibility: hidden;
     opacity: 0;
   }
