@@ -239,6 +239,9 @@ document.addEventListener('DOMContentLoaded', () => {
       // prepare the bookmarks section
       elements.inputField.value = '';
       checkInternetConnection();
+      // remove previous spinner. On low net connection, multiple spinner may appear
+      // due to delay in result fetching and continous section switching
+      removeSpinner(elements.spinnerPlaceholderBookmarks);
       addSpinner(elements.spinnerPlaceholderBookmarks, 'original');
       removeOldSearchResults();
       removeLoaderAnimation();
@@ -282,6 +285,9 @@ document.addEventListener('DOMContentLoaded', () => {
       elements.primarySection.style.display = 'none';
       elements.bookmarksSection.style.display = 'none';
       elements.collectionsSection.style.display = 'block';
+      // remove previous spinner. On low net connection, multiple spinner may appear
+      // due to delay in result fetching and continous section switching
+      removeSpinner(elements.spinnerPlaceholderCollections);
       addSpinner(elements.spinnerPlaceholderCollections, 'original');
       removeOldSearchResults();
       removeChildNodes(elements.collectionsSectionBody);
