@@ -14,7 +14,7 @@
   </head>
 
   <body>
-    <div class="button-backToTop"></div>
+    <div class="button-backToTop"><i class="icon backToTop-icon chevron-up"></i></div>
     <header>
       <a href="https://creativecommons.org" target="_blank">
         <img src="img/cc-logo_white.png" alt="cc logo" />
@@ -31,9 +31,9 @@
       <div class="container">
         <section class="section-search">
           <input type="text" placeholder="search the commons..." id="section-search-input" autofocus />
-          <i class="fa fa-search" id="search-icon"></i>
-          <i class="fa fa-filter" id="filter-icon"></i>
-          <i class="fa fa-times clear-search-button"></i>
+          <i class="icon search" id="search-icon"></i>
+          <i class="icon filter" id="filter-icon"></i>
+          <i class="icon cross clear-search-button"></i>
         </section>
         <section class="section-filter">
           <div class="section-filter__filter-wrapper">
@@ -184,10 +184,18 @@
           </div>
           <div id="share" class="popup__tab-content">
             <h6 class="info__label margin-bottom-normal">Share</h6>
-            <a href="#" class="fa fa-facebook" title="share on facebook" target="_blank"></a>
-            <a href="#" class="fa fa-twitter" title="share on twitter" target="_blank"></a>
-            <a href="#" class="fa fa-pinterest" title="share on pinterest" target="_blank"></a>
-            <a href="#" class="fa fa-tumblr" title="share on tumblr" target="_blank"></a>
+            <div class="share-icons">
+              <a href="#" id="facebook-share" title="share on facebook" target="_blank"
+                ><i class="icon colored facebook"></i
+              ></a>
+              <a href="#" id="twitter-share" title="share on twitter" target="_blank"
+                ><i class="icon colored twitter"></i
+              ></a>
+              <a href="#" id="pinterest-share" title="share on pinterest" target="_blank"
+                ><i class="icon colored pinterest"></i
+              ></a>
+              <a href="#" class="fa fa-tumblr" title="share on tumblr" target="_blank"></a>
+            </div>
           </div>
         </div>
       </div>

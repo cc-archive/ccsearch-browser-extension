@@ -112,7 +112,17 @@
   }
 }
 
-// share buttons
+.share-icons {
+  a {
+    text-decoration: none;
+  }
+
+  .icon {
+    margin-right: 10px;
+    font-size: 55px;
+  }
+}
+
 .fa {
   box-sizing: content-box;
   padding: 20px;
@@ -124,22 +134,13 @@
   border-radius: 50%;
 }
 
-.fa-facebook {
-  background: #3b5998;
-  color: white;
-}
-
-.fa-twitter {
-  background: #55acee;
-  color: white;
-}
 .fa-tumblr {
   background: #001a36;
   color: white;
-}
-.fa-pinterest {
-  background: #cb2027;
-  color: white;
+
+  &:hover {
+    color: white;
+  }
 }
 .removeLoadMore {
   display: none;
