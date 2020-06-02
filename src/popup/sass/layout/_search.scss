@@ -29,10 +29,11 @@
 
     &#search-icon {
       right: 4%;
+      font-size: 1.57rem;
     }
 
     &#filter-icon {
-      right: 10%;
+      right: 10.5%;
     }
 
     &.activate-filter {
@@ -46,6 +47,7 @@
     &.clear-search-button {
       color: $color-primary-light;
       right: 16%;
+      font-size: 20px;
 
       &:hover {
         color: $color-primary-dark;

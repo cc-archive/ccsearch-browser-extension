@@ -20,7 +20,7 @@ function loadUserFilterPreferences(wrapperElement) {
   }
 }
 
-export function loadStoredFilterPreferences(wrapperElement, items) {
+export function toggleOnFilterDropDownCheckboxes(wrapperElement, items) {
   const dropdownContainer = wrapperElement.querySelector('.comboTreeDropDownContainer');
   const inputCheckboxes = dropdownContainer.getElementsByTagName('input');
   for (let i = 0; i < inputCheckboxes.length; i += 1) {
@@ -45,10 +45,11 @@ export function loadSourcesToDom(SourcesList, loadingStoredSearch = false) {
     loadUserFilterPreferences(elements.sourceChooserWrapper);
   } else {
     const activeSourceOptions = {};
-    elements.sourceChooser.value.split(', ').forEach(x => {
-      activeSourceOptions[backupSourceAPIQueryStrings[x]] = true;
+    elements.sourceChooser.value.split(', ').forEach(source => {
+      activeSourceOptions[backupSourceAPIQueryStrings[source]] = true;
+      window.appObject.userSelectedSourcesList.push(window.appObject.sourceAPIQueryStrings[source]);
     });
-    loadStoredFilterPreferences(elements.sourceChooserWrapper, activeSourceOptions);
+    toggleOnFilterDropDownCheckboxes(elements.sourceChooserWrapper, activeSourceOptions);
   }
 }
 
@@ -64,6 +65,25 @@ export function resetLicenseDropDown() {
       inputCheckboxes[i].click();
     }
   }
+}
+
+export function resetFilterDropDown(wrapperElement) {
+  console.log('reset function called');
+  const dropdownContainer = wrapperElement.querySelector('.comboTreeDropDownContainer');
+  const inputCheckboxes = dropdownContainer.getElementsByTagName('input');
+  // unchecking all the options
+  for (let i = 0; i < inputCheckboxes.length; i += 1) {
+    // using click to uncheck the box as setting checked=false also works visually
+    if (inputCheckboxes[i].checked) {
+      inputCheckboxes[i].click();
+    }
+  }
+}
+
+export function resetAllFilterDropDowns() {
+  resetFilterDropDown(elements.useCaseChooserWrapper);
+  resetFilterDropDown(elements.licenseChooserWrapper);
+  resetFilterDropDown(elements.sourceChooserWrapper);
 }
 
 export function loadUserDefaults() {

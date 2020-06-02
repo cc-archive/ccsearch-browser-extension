@@ -1,7 +1,3 @@
-#home-icon {
-  display: none;
-}
-
 .section-bookmarks {
   display: none;
 
@@ -9,9 +5,6 @@
     position: relative;
 
     .delete-bookmark-button {
-      // position: absolute;
-      // left: 10px;
-      // top: 1.25rem;
       margin-left: 0.2rem;
     }
 
@@ -19,6 +12,13 @@
       margin-right: 0.2rem;
       float: right;
     }
+  }
+
+  .bookmarks__initial-info {
+    position: absolute;
+    top: 7rem;
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
 

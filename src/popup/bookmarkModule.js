@@ -5,7 +5,11 @@ import { unicodeToString, removeLoadMoreButton, getSourceDisplayName } from './h
 // eslint-disable-next-line import/no-cycle
 import { removeOldSearchResults, removeLoaderAnimation, checkInternetConnection } from './searchModule';
 import { addSpinner, removeSpinner } from './spinner';
-import { showNotification, removeNode, restoreInitialContent } from '../utils';
+import { showNotification, removeNode, restoreInitialContent, removeChildNodes } from '../utils';
+// eslint-disable-next-line import/no-cycle
+import loadCollections from './collectionModule';
+// eslint-disable-next-line import/no-cycle
+import loadStoredContentToUI from './popup.utils';
 
 const download = require('downloadjs');
 
@@ -84,7 +88,7 @@ function loadImages() {
 
           // make a span to hold the title
           const spanTitleElement = document.createElement('span');
-          spanTitleElement.setAttribute('class', 'image-title');
+          spanTitleElement.setAttribute('class', 'extension-image-title');
           spanTitleElement.setAttribute('title', title);
           const imageTitleNode = document.createTextNode(title);
 
@@ -105,10 +109,7 @@ function loadImages() {
           selectCheckbox.setAttribute('type', 'checkbox');
           selectCheckbox.setAttribute('id', id);
           selectCheckbox.setAttribute('title', 'Select Image');
-          selectCheckbox.setAttribute(
-            'class',
-            'select-checkbox vocab choice-field green-colored dark-shaded small-sized',
-          );
+          selectCheckbox.setAttribute('class', 'select-checkbox');
           selectCheckboxElement.appendChild(selectCheckbox);
 
           // make a span to hold the license icons
@@ -224,40 +225,74 @@ function loadImages() {
 
 // EventListeners
 document.addEventListener('DOMContentLoaded', () => {
-  elements.showBookmarksIcon.addEventListener('click', () => {
-    window.isBookmarksActive = true;
-    elements.homeIcon.style.pointerEvents = 'none';
-    setTimeout(() => {
-      elements.homeIcon.style.pointerEvents = 'auto';
-    }, 300);
-    elements.primarySection.style.display = 'none';
-    elements.bookmarksSection.style.display = 'block';
-    // elements.homeIcon.style.visibility = 'visible';
-    elements.homeIcon.style.display = 'inline-block';
-    elements.showBookmarksIcon.style.display = 'none';
-    elements.inputField.value = '';
-    checkInternetConnection();
-    addSpinner(elements.spinnerPlaceholderBookmarks, 'original');
-    removeOldSearchResults();
-    removeLoaderAnimation();
-    restoreInitialContent('primary');
-    loadImages();
+  elements.bookmarksIcon.addEventListener('click', () => {
+    if (window.appObject.activeSection !== 'bookmarks') {
+      window.appObject.activeSection = 'bookmarks';
+      elements.homeIcon.style.pointerEvents = 'none';
+      setTimeout(() => {
+        elements.homeIcon.style.pointerEvents = 'auto';
+      }, 300);
+      // show the bookmarks section and hide other ones
+      elements.primarySection.style.display = 'none';
+      elements.collectionsSection.style.display = 'none';
+      elements.bookmarksSection.style.display = 'block';
+      // prepare the bookmarks section
+      elements.inputField.value = '';
+      checkInternetConnection();
+      // remove previous spinner. On low net connection, multiple spinner may appear
+      // due to delay in result fetching and continous section switching
+      removeSpinner(elements.spinnerPlaceholderBookmarks);
+      addSpinner(elements.spinnerPlaceholderBookmarks, 'original');
+      removeOldSearchResults();
+      removeLoaderAnimation();
+      loadImages();
+    }
   });
 
-  elements.homeIcon.addEventListener('click', e => {
-    window.isBookmarksActive = false;
+  elements.homeIcon.addEventListener('click', () => {
+    if (window.appObject.activeSection !== 'search') {
+      window.appObject.activeSection = 'search';
+      elements.bookmarksIcon.style.pointerEvents = 'none';
+      setTimeout(() => {
+        elements.bookmarksIcon.style.pointerEvents = 'auto';
+      }, 300);
+      // show the bookmarks section and hide other ones
+      elements.primarySection.style.display = 'block';
+      elements.bookmarksSection.style.display = 'none';
+      elements.collectionsSection.style.display = 'none';
+      // prepare the search section
+      removeLoadMoreButton(elements.loadMoreButtonWrapper);
+      removeBookmarkImages();
+      if (window.appObject.searchByCollectionActivated === true && window.appObject.searchingNewCollection === true) {
+        removeNode('primary__initial-info');
+        removeNode('no-image-found');
+        removeOldSearchResults();
+        window.appObject.searchingNewCollection = false;
+      } else if (localStorage.length !== 0) {
+        loadStoredContentToUI();
+      } else {
+        removeNode('no-image-found');
+        restoreInitialContent('primary');
+        elements.clearSearchButton[0].classList.add('display-none');
+      }
+    }
+  });
 
-    elements.showBookmarksIcon.style.pointerEvents = 'none';
-    setTimeout(() => {
-      elements.showBookmarksIcon.style.pointerEvents = 'auto';
-    }, 300);
-    elements.primarySection.style.display = 'block';
-    elements.bookmarksSection.style.display = 'none';
-    elements.showBookmarksIcon.style.display = 'inline-block';
-    removeLoadMoreButton(elements.loadMoreButtonWrapper);
-    e.target.style.display = 'none';
-
-    removeBookmarkImages();
+  elements.collectionsIcon.addEventListener('click', () => {
+    console.log('collections clicked');
+    if (window.appObject.activeSection !== 'collections') {
+      window.appObject.activeSection = 'collections';
+      elements.primarySection.style.display = 'none';
+      elements.bookmarksSection.style.display = 'none';
+      elements.collectionsSection.style.display = 'block';
+      // remove previous spinner. On low net connection, multiple spinner may appear
+      // due to delay in result fetching and continous section switching
+      removeSpinner(elements.spinnerPlaceholderCollections);
+      addSpinner(elements.spinnerPlaceholderCollections, 'original');
+      removeOldSearchResults();
+      removeChildNodes(elements.collectionsSectionBody);
+      loadCollections();
+    }
   });
 
   elements.deleteBookmarksButton.addEventListener('click', () => {

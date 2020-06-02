@@ -1,0 +1,17 @@
+.section-collections {
+  display: none;
+
+  &--body {
+    padding: 1rem;
+    display: grid;
+
+    height: auto;
+    grid-template-rows: repeat(7, 5rem);
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 0.5rem;
+
+    & > * {
+      padding: 0.5rem;
+    }
+  }
+}

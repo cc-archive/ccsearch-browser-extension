@@ -4,6 +4,15 @@ body.dark {
   background-color: $color-darkmode-1;
   color: $color-white;
 
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: $color-white;
+  }
+
   input,
   .section-search {
     background-color: $color-darkmode-2 !important;
@@ -88,5 +97,17 @@ body.dark {
 
   .modal-header {
     color: $color-white;
+  }
+
+  a:hover {
+    color: $color-white;
+  }
+
+  .button.is-text {
+    color: $color-white;
+
+    &:hover {
+      color: $color-darkmode-1;
+    }
   }
 }

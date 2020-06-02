@@ -8,21 +8,21 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700&display=swap" rel="stylesheet" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="https://unpkg.com/@creativecommons/vocabulary@0.0.0-alpha.22/css/root.css" />
-    <link rel="stylesheet" href="https://unpkg.com/@creativecommons/vocabulary@0.0.0-alpha.22/css/vocabulary.css" />
+    <link rel="stylesheet" href="https://unpkg.com/@creativecommons/vocabulary/css/vocabulary.css" />
     <link rel="stylesheet" href="popup.css" />
     <title>Creative Commons</title>
   </head>
 
   <body>
-    <div class="button-backToTop"></div>
+    <div class="button-backToTop"><i class="icon backToTop-icon chevron-up"></i></div>
     <header>
       <a href="https://creativecommons.org" target="_blank">
         <img src="img/cc-logo_white.png" alt="cc logo" />
       </a>
       <div class="header__icons">
         <i class="fa fa-home" id="home-icon" title="Home"></i>
-        <i class="fa fa-bookmark" id="show_bookmarks-icon" title="Show all bookmarks"></i>
+        <i class="fa fa-bookmark" id="bookmarks-icon" title="Show all bookmarks"></i>
+        <i class="fa fa-th" id="collections-icon" title="Show all Collections"></i>
         <i class="fa fa-cog" id="settings-icon" title="settings"></i>
         <i class="fa fa-tint" id="invert_colors-icon" title="Toggle Dark Mode"></i>
       </div>
@@ -31,9 +31,9 @@
       <div class="container">
         <section class="section-search">
           <input type="text" placeholder="search the commons..." id="section-search-input" autofocus />
-          <i class="fa fa-search" id="search-icon"></i>
-          <i class="fa fa-filter" id="filter-icon"></i>
-          <i class="fa fa-times clear-search-button"></i>
+          <i class="icon search" id="search-icon"></i>
+          <i class="icon filter" id="filter-icon"></i>
+          <i class="icon cross clear-search-button"></i>
         </section>
         <section class="section-filter">
           <div class="section-filter__filter-wrapper">
@@ -50,28 +50,16 @@
           </div>
           <div class="section-filter__filter-button">
             <div class="section-filter__filter-button--apply-filter-container">
-              <a href="#" class="section-filter--apply-button" title="apply filters">
-                <button class="vocab button small-sized positive-indicating">
-                  <div class="content">
-                    Apply
-                  </div>
-                </button>
-              </a>
+              <button class="button tiny is-success section-filter--apply-button" title="Apply filters">Apply</button>
             </div>
             <div class="section-filter__filter-button--reset-filter-container">
-              <a href="#" class="section-filter--reset-button" title="reset filters">
-                <button class="vocab button small-sized negative-indicating">
-                  <div class="content">
-                    Reset
-                  </div>
-                </button>
-              </a>
+              <button class="button tiny is-warning section-filter--reset-button" title="Reset filters">Reset</button>
             </div>
           </div>
         </section>
         <section class="section-content section-content--primary">
           <div class="row">
-            <p class="vocab paragraph inherit-colored initial-info primary__initial-info">
+            <p class="initial-info primary__initial-info">
               Search for free content in the public domain and under Creative Commons licenses.<br /><br />
               Learn more about CC licenses
               <a href="https://creativecommons.org/share-your-work/licensing-types-examples/" target="_blank"> here. </a
@@ -88,9 +76,7 @@
             </div>
           </div>
           <div class="load-more-button-wrapper display-none">
-            <button class="load-more-button vocab button blue-colored small-sized">
-              <div class="content">Load more</div>
-            </button>
+            <button class="load-more-button button is-text small" title="Load more images">Load more</button>
           </div>
           <div id="spinner-placeholder--grid"></div>
           <p class="no-more-images-mes display-none">No more images!</p>
@@ -100,21 +86,11 @@
     <div id="snackbar-bookmarks" class="snackbar"></div>
     <div class="section-bookmarks">
       <div class="section-bookmarks--header">
-        <h3 class="text-align-center vocab heading">Bookmarks</h3>
-        <button class="delete-bookmark-button vocab button negative-indicating dark-shaded normal-sized basic">
-          <div class="content">
-            Delete
-          </div>
-        </button>
-        <button class="select-all-checkbox-button vocab button green-colored dark-shaded normal-sized">
-          <div class="content">
-            Select All
-          </div>
-        </button>
-        <button class="export-bookmarks-button vocab button magenta-colored normal-sized">
-          <div class="content">
-            Export Bookmarks
-          </div>
+        <h2 class="text-align-center">Bookmarks</h2>
+        <button class="delete-bookmark-button button is-danger small" title="Delete selected bookmarks">Delete</button>
+        <button class="select-all-checkbox-button button is-info small" title="Select all bookmarks">Select All</button>
+        <button class="export-bookmarks-button button is-success small" title="Export selected bookmarks">
+          Export Bookmarks
         </button>
       </div>
 
@@ -122,7 +98,7 @@
         <div id="spinner-placeholder--bookmarks"></div>
         <section class="section-content section-content--bookmarks">
           <div class="row">
-            <p class="vocab paragraph inherit-colored negative-indicating initial-info bookmarks__initial-info">
+            <p class="initial-info bookmarks__initial-info has-text-tomato">
               No Bookmarks yet
             </p>
           </div>
@@ -135,6 +111,13 @@
         </section>
       </div>
     </div>
+
+    <section class="section-collections">
+      <h2 class="text-align-center">Sources</h2>
+      <div id="spinner-placeholder--collections"></div>
+      <section class="section-collections--body"></section>
+    </section>
+
     <div class="popup" id="popup">
       <div class="popup__body">
         <span class="popup__close-button">&#10006;</span>
@@ -147,61 +130,72 @@
         <div id="spinner-placeholder--popup"></div>
         <div class="popup__main">
           <div id="attribution" class="popup__tab-content">
-            <h6 class="vocab heading">Rich-text</h6>
+            <h6>Rich-text</h6>
             <p id="attribution-rich-text" class="margin-bottom-small"></p>
             <button
-              class="vocab button blue-colored normal-sized btn-copy"
+              class="button is-success tiny btn-copy"
+              title="Copy rich-text attribution"
               data-clipboard-target="#attribution-rich-text"
             >
-              <div class="content">Copy</div>
+              Copy
             </button>
-            <h6 class="vocab heading margin-top-medium">HTML</h6>
+            <h6 class="margin-top-normal">HTML</h6>
             <textarea class="margin-bottom-small" id="attribution-html" id="" cols="30" rows="3" readonly>
             text area
           </textarea
             >
-            <button class="vocab button blue-colored normal-sized btn-copy" data-clipboard-target="#attribution-html">
-              <div class="content">Copy</div>
+            <button
+              class="button is-success tiny btn-copy"
+              title="Copy HTML attribution"
+              data-clipboard-target="#attribution-html"
+            >
+              Copy
             </button>
-            <div class="download-buttons margin-top-medium">
-              <button class="vocab button blue-colored normal-sized margin-right-small" id="download-image">
-                <div class="content">Download Image</div>
-              </button>
-              <button class="vocab button blue-colored normal-sized" id="download-image-attribution">
-                <div class="content">Download Image and Attribution</div>
+            <div class="download-buttons margin-top-normal">
+              <button class="button is-primary tiny margin-right-small" id="download-image">Download Image</button>
+              <button class="button is-primary tiny margin-right-small" id="download-image-attribution">
+                Download Image and Attribution
               </button>
             </div>
           </div>
           <div id="info" class="popup__tab-content">
-            <div class="info margin-bottom-medium">
-              <h6 class="vocab heading">Name</h6>
-              <p class="vocab paragraph inherit-colored info__content info__content-title">Hello there</p>
+            <div class="info margin-bottom-normal">
+              <h6>Name</h6>
+              <p class="info__content info__content-title">Hello there</p>
             </div>
-            <div class="info margin-bottom-medium">
-              <h6 class="vocab heading">Creator</h6>
-              <p class="vocab paragraph inherit-colored info__content info__content-creator">
+            <div class="info margin-bottom-normal">
+              <h6>Creator</h6>
+              <p class="info__content info__content-creator">
                 <a href="creator_url">Creator Name</a>
               </p>
             </div>
-            <div class="info margin-bottom-medium">
-              <h6 class="vocab heading">License</h6>
-              <p class="vocab paragraph inherit-colored info__content info__content-license">
+            <div class="info margin-bottom-normal">
+              <h6>License</h6>
+              <p class="info__content info__content-license">
                 <a href="license_url">CC BY</a>
               </p>
             </div>
-            <div class="info margin-bottom-medium">
-              <h6 class="vocab heading">Verify at the source</h6>
-              <p class="vocab paragraph inherit-colored info__content info__content-source">
+            <div class="info margin-bottom-normal">
+              <h6>Verify at the source</h6>
+              <p class="info__content info__content-source">
                 <a href="source_url"> Flickr</a>
               </p>
             </div>
           </div>
           <div id="share" class="popup__tab-content">
-            <h6 class="vocab heading info__label margin-bottom-medium">Share</h6>
-            <a href="#" class="fa fa-facebook" title="share on facebook" target="_blank"></a>
-            <a href="#" class="fa fa-twitter" title="share on twitter" target="_blank"></a>
-            <a href="#" class="fa fa-pinterest" title="share on pinterest" target="_blank"></a>
-            <a href="#" class="fa fa-tumblr" title="share on tumblr" target="_blank"></a>
+            <h6 class="info__label margin-bottom-normal">Share</h6>
+            <div class="share-icons">
+              <a href="#" id="facebook-share" title="share on facebook" target="_blank"
+                ><i class="icon colored facebook"></i
+              ></a>
+              <a href="#" id="twitter-share" title="share on twitter" target="_blank"
+                ><i class="icon colored twitter"></i
+              ></a>
+              <a href="#" id="pinterest-share" title="share on pinterest" target="_blank"
+                ><i class="icon colored pinterest"></i
+              ></a>
+              <a href="#" class="fa fa-tumblr" title="share on tumblr" target="_blank"></a>
+            </div>
           </div>
         </div>
       </div>
@@ -215,25 +209,6 @@
         <button class="modal-button--cancel">No</button>
       </div>
     </div>
-    <footer>
-      <div class="footer-box">
-        <a href="https://creativecommons.org/about/contact/" target="_blank">Contact</a>
-      </div>
-      <div class="footer-box">
-        <a href="https://creativecommons.org/privacy/" target="_blank">Privacy</a>
-      </div>
-      <div class="footer-box">
-        <a href="https://creativecommons.org/donate/other-ways-to-give/" target="_blank">
-          <img src="img/ccheart_red.svg" alt="cc-heart-logo"
-        /></a>
-      </div>
-      <div class="footer-box">
-        <a href="https://creativecommons.org/policies/" target="_blank">Policies</a>
-      </div>
-      <div class="footer-box">
-        <a href="https://creativecommons.org/terms/" target="_blank">Terms</a>
-      </div>
-    </footer>
 
     <script src="vendors/js/jquery.min.js"></script>
     <script src="vendors/js/imagesloaded.min.js"></script>

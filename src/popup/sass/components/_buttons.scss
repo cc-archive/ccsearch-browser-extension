@@ -12,21 +12,21 @@
   opacity: 0;
   visibility: hidden;
   z-index: 1000;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #ff4e14;
+  }
+  &.show {
+    opacity: 1;
+    visibility: visible;
+  }
 }
-.button-backToTop::after {
-  content: '\f077';
-  font-family: FontAwesome;
+
+.backToTop-icon {
   font-weight: normal;
   font-style: normal;
   font-size: 1.5em;
   line-height: 35px;
   color: #fff;
-}
-.button-backToTop:hover {
-  cursor: pointer;
-  background-color: #ff4e14;
-}
-.button-backToTop.show {
-  opacity: 1;
-  visibility: visible;
 }

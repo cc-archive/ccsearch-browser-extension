@@ -23,7 +23,6 @@ function addSourcesToDom(sources) {
     const input = document.createElement('input');
     input.type = 'checkbox';
     input.id = sources[key];
-    input.classList = 'vocab choice-field magenta-colored small-sized';
 
     const label = document.createElement('label');
     label.setAttribute('for', input.id);
