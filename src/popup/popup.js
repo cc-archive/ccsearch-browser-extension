@@ -11,13 +11,13 @@ import {
   getCollectionsUrl,
 } from './searchModule';
 import {
-  licensesList,
-  usecasesList,
+  licenseDropDownFields,
   licenseAPIQueryStrings,
   useCaseAPIQueryStrings,
   makeElementsDisplayNone,
   removeClassFromElements,
   removeLoadMoreButton,
+  useCaseDropDownFields,
 } from './helper';
 import {
   loadSourcesToDom,
@@ -105,18 +105,18 @@ async function populateSourceList() {
   window.appObject.sourceAPIQueryStrings = await getLatestSources();
 
   let count = 0;
-  const sourcesList = [];
+  const sourceDropDownFields = [];
 
   // iterating over source object
   Object.keys(window.appObject.sourceAPIQueryStrings).forEach(key => {
-    sourcesList[count] = {
+    sourceDropDownFields[count] = {
       id: window.appObject.sourceAPIQueryStrings[key],
       title: key,
     };
     count += 1;
   });
 
-  loadSourcesToDom(sourcesList, enableSearchStorageOption && localStorage.length !== 0);
+  loadSourcesToDom(sourceDropDownFields, enableSearchStorageOption && localStorage.length !== 0);
 }
 
 elements.filterIcon.addEventListener('click', () => {
@@ -327,12 +327,14 @@ elements.clearSearchButton[0].addEventListener('click', () => {
 
 // applying comboTree (see https://github.com/kirlisakal/combo-tree)
 $('#choose-usecase').comboTree({
-  source: usecasesList,
+  source: useCaseDropDownFields,
   isMultiple: true,
 });
 
 $('#choose-license').comboTree({
-  source: licensesList,
+  source: licenseDropDownFields,
+  isMultiple: true,
+});
   isMultiple: true,
 });
 

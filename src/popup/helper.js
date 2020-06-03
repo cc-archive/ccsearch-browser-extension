@@ -10,8 +10,9 @@ export function isObjectEmpty(obj) {
   return Object.keys(obj).length === 0 && obj.constructor === Object;
 }
 
-// license drop down fields
-export const licensesList = [
+// id: sets as the data-id of the particulary dropdown entry
+// title: text displayed on the UI
+export const licenseDropDownFields = [
   {
     id: 'CC0',
     title: 'CC0',
@@ -46,8 +47,7 @@ export const licensesList = [
   },
 ];
 
-// Use-case drop down fields
-export const usecasesList = [
+export const useCaseDropDownFields = [
   {
     id: 'commercial',
     title: 'I can use commercially',
