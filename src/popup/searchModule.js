@@ -35,14 +35,18 @@ export function removeOldSearchResults() {
 export function getRequestUrl(
   searchQuery,
   userSelectedUseCaseList,
-  userSelectedLicensesList,
-  userSelectedSourcesList,
+  userSelectedLicenseList,
+  userSelectedSourceList,
+  userSelectedFileTypeList,
+  userSelectedImageTypeList,
+  userSelectedImageSizeList,
+  userSelectedAspectRatioList,
   page,
 ) {
   if (userSelectedUseCaseList.length > 0) {
-    return `https://api.creativecommons.engineering/v1/images?q=${searchQuery}&page=${page}&page_size=20&license_type=${userSelectedUseCaseList}&source=${userSelectedSourcesList}`;
+    return `https://api.creativecommons.engineering/v1/images?q=${searchQuery}&page=${page}&page_size=20&license_type=${userSelectedUseCaseList}&source=${userSelectedSourceList}&extension=${userSelectedFileTypeList}&categories=${userSelectedImageTypeList}&size=${userSelectedImageSizeList}&aspect_ratio=${userSelectedAspectRatioList}`;
   }
-  return `https://api.creativecommons.engineering/v1/images?q=${searchQuery}&page=${page}&page_size=20&license=${userSelectedLicensesList}&source=${userSelectedSourcesList}`;
+  return `https://api.creativecommons.engineering/v1/images?q=${searchQuery}&page=${page}&page_size=20&license=${userSelectedLicenseList}&source=${userSelectedSourceList}&extension=${userSelectedFileTypeList}&categories=${userSelectedImageTypeList}&size=${userSelectedImageSizeList}&aspect_ratio=${userSelectedAspectRatioList}`;
 }
 
 export function getCollectionsUrl(collectionName, page) {
