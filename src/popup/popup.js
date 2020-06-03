@@ -21,6 +21,9 @@ import {
   makeElementsDisplayNone,
   removeClassFromElements,
   removeLoadMoreButton,
+  imageTypeAPIQueryStrings,
+  fileTypeAPIQueryStrings,
+  aspectRatioAPIQueryStrings,
 } from './helper';
 import {
   loadSourcesToDom,
@@ -45,6 +48,10 @@ window.appObject.userSelectedLicensesList = [];
 
 // List to hold user selected use case
 window.appObject.userSelectedUseCaseList = [];
+
+window.appObject.userSelectedImageTypeList = [];
+window.appObject.userSelectedFileTypeList = [];
+window.appObject.userSelectedAspectRatioList = [];
 
 // object to map source display names to valid query names.
 window.appObject.sourceAPIQueryStrings = {};
@@ -213,6 +220,9 @@ function applyFilters() {
   window.appObject.userSelectedSourcesList = [];
   window.appObject.userSelectedLicensesList = [];
   window.appObject.userSelectedUseCaseList = [];
+  window.appObject.userSelectedImageTypeList = [];
+  window.appObject.userSelectedFileTypeList = [];
+  window.appObject.userSelectedAspectRatioList = [];
 
   if (elements.sourceChooser.value) {
     const userInputSourcesList = elements.sourceChooser.value.split(', ');
@@ -232,6 +242,27 @@ function applyFilters() {
     const userInputUseCaseList = elements.useCaseChooser.value.split(', ');
     userInputUseCaseList.forEach(element => {
       window.appObject.userSelectedUseCaseList.push(useCaseAPIQueryStrings[element]);
+    });
+  }
+
+  if (elements.imageTypeChooser.value) {
+    const userInputImageTypeList = elements.imageTypeChooser.value.split(', ');
+    userInputImageTypeList.forEach(element => {
+      window.appObject.userSelectedImageTypeList.push(imageTypeAPIQueryStrings[element]);
+    });
+  }
+
+  if (elements.fileTypeChooser.value) {
+    const userInputFileTypeList = elements.fileTypeChooser.value.split(', ');
+    userInputFileTypeList.forEach(element => {
+      window.appObject.userSelectedFileTypeList.push(fileTypeAPIQueryStrings[element]);
+    });
+  }
+
+  if (elements.aspectRatioChooser.value) {
+    const userInputAspectRatioList = elements.aspectRatioChooser.value.split(', ');
+    userInputAspectRatioList.forEach(element => {
+      window.appObject.userSelectedAspectRatioList.push(aspectRatioAPIQueryStrings[element]);
     });
   }
 
@@ -272,6 +303,10 @@ elements.searchIcon.addEventListener('click', () => {
   removeOldSearchResults();
   removeLoaderAnimation();
   applyFilters();
+
+  console.log(window.appObject.userSelectedFileTypeList);
+  console.log(window.appObject.userSelectedAspectRatioList);
+  console.log(window.appObject.userSelectedImageTypeList);
 
   // check if this is necessary. localstorage.clear() is called in search() also
   localStorage.clear(); // clear the old results

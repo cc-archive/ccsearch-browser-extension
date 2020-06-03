@@ -99,7 +99,7 @@ export const imageTypeDropDownFields = [
   },
   {
     id: 'illustration',
-    title: 'Illustration',
+    title: 'Illustrations',
   },
   {
     id: 'digitized_artwork',
@@ -122,6 +122,25 @@ export const licenseAPIQueryStrings = {
 export const useCaseAPIQueryStrings = {
   'I can use commercially': 'commercial',
   'I can modify or adapt': 'modification',
+};
+
+export const aspectRatioAPIQueryStrings = {
+  Tall: 'tall',
+  Wide: 'wide',
+  Square: 'square',
+};
+
+export const fileTypeAPIQueryStrings = {
+  JPEGs: 'jpeg',
+  PNGs: 'png',
+  GIFs: 'gif',
+  SVGs: 'svg',
+};
+
+export const imageTypeAPIQueryStrings = {
+  Photographs: 'photograph',
+  Illustrations: 'illustration',
+  'Digitized Artworks': 'digitized_artwork',
 };
 
 // backup object in case we cannot fetch source names from the API.
