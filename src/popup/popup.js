@@ -18,6 +18,7 @@ import {
   useCaseAPIQueryStrings,
   useCaseDropDownFields,
   imageTypeDropDownFields,
+  imageSizeDropDownFields,
   makeElementsDisplayNone,
   removeClassFromElements,
   removeLoadMoreButton,
@@ -386,6 +387,11 @@ $('#choose-fileType').comboTree({
 
 $('#choose-imageType').comboTree({
   source: imageTypeDropDownFields,
+  isMultiple: true,
+});
+
+$('#choose-imageSize').comboTree({
+  source: imageSizeDropDownFields,
   isMultiple: true,
 });
 

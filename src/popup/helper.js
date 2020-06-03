@@ -107,6 +107,21 @@ export const imageTypeDropDownFields = [
   },
 ];
 
+export const imageSizeDropDownFields = [
+  {
+    id: 'small',
+    title: 'Small',
+  },
+  {
+    id: 'medium',
+    title: 'Medium',
+  },
+  {
+    id: 'large',
+    title: 'Large',
+  },
+];
+
 // object to map user applied License filter to valid API query string
 export const licenseAPIQueryStrings = {
   CC0: 'CC0',
