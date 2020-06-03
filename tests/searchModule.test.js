@@ -27,6 +27,10 @@ test('testing getRequestUrl', () => {
   let userSelectedUseCaseList = ['commercial'];
   const userSelectedLicensesList = ['CC0'];
   const userSelectedSourcesList = ['sciencemuseum'];
+  const userSelectedFileTypeList = ['jpeg', 'gif'];
+  let userSelectedImageTypeList = ['illustration'];
+  const userSelectedImageSizeList = ['small'];
+  const userSelectedAspectRatioList = ['square'];
   const page = 2;
 
   const test1 = getRequestUrl(
@@ -34,20 +38,31 @@ test('testing getRequestUrl', () => {
     userSelectedUseCaseList,
     userSelectedLicensesList,
     userSelectedSourcesList,
+    userSelectedFileTypeList,
+    userSelectedImageTypeList,
+    userSelectedImageSizeList,
+    userSelectedAspectRatioList,
     page,
   );
   expect(test1).toMatch(/\?q=dogs&page=2&page_size=20/);
   expect(test1).toMatch(/license_type=commercial/);
+  expect(test1).toMatch(/extension=jpeg,gif&categories=illustration&size=small&aspect_ratio=square/);
 
   userSelectedUseCaseList = [];
+  userSelectedImageTypeList = ['illustration', 'digitized_artworks'];
 
   const test2 = getRequestUrl(
     inputText,
     userSelectedUseCaseList,
     userSelectedLicensesList,
     userSelectedSourcesList,
+    userSelectedFileTypeList,
+    userSelectedImageTypeList,
+    userSelectedImageSizeList,
+    userSelectedAspectRatioList,
     page,
   );
-  expect(test1).toMatch(/\?q=dogs&page=2&page_size=20/);
+  expect(test2).toMatch(/\?q=dogs&page=2&page_size=20/);
   expect(test2).toMatch(/license=CC0/);
+  expect(test2).toMatch(/extension=jpeg,gif&categories=illustration,digitized_artworks&size=small&aspect_ratio=square/);
 });
