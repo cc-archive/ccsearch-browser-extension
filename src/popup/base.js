@@ -10,6 +10,7 @@ export const elements = {
   licenseChooser: document.querySelector('#choose-license'),
   sourceChooser: document.querySelector('#choose-source'),
   imageTypeChooser: document.querySelector('#choose-imageType'),
+  imageSizeChooser: document.querySelector('#choose-imageSize'),
   fileTypeChooser: document.querySelector('#choose-fileType'),
   aspectRatioChooser: document.querySelector('#choose-aspectRatio'),
   licenseChooserWrapper: document.querySelector('.section-filter__filter-wrapper--choose-license'),

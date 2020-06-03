@@ -25,6 +25,7 @@ import {
   imageTypeAPIQueryStrings,
   fileTypeAPIQueryStrings,
   aspectRatioAPIQueryStrings,
+  imageSizeAPIQueryStrings,
 } from './helper';
 import {
   loadSourcesToDom,
@@ -51,6 +52,7 @@ window.appObject.userSelectedLicensesList = [];
 window.appObject.userSelectedUseCaseList = [];
 
 window.appObject.userSelectedImageTypeList = [];
+window.appObject.userSelectedImageSizeList = [];
 window.appObject.userSelectedFileTypeList = [];
 window.appObject.userSelectedAspectRatioList = [];
 
@@ -222,6 +224,7 @@ function applyFilters() {
   window.appObject.userSelectedLicensesList = [];
   window.appObject.userSelectedUseCaseList = [];
   window.appObject.userSelectedImageTypeList = [];
+  window.appObject.userSelectedImageSizeList = [];
   window.appObject.userSelectedFileTypeList = [];
   window.appObject.userSelectedAspectRatioList = [];
 
@@ -250,6 +253,13 @@ function applyFilters() {
     const userInputImageTypeList = elements.imageTypeChooser.value.split(', ');
     userInputImageTypeList.forEach(element => {
       window.appObject.userSelectedImageTypeList.push(imageTypeAPIQueryStrings[element]);
+    });
+  }
+
+  if (elements.imageSizeChooser.value) {
+    const userInputImageSizeList = elements.imageSizeChooser.value.split(', ');
+    userInputImageSizeList.forEach(element => {
+      window.appObject.userSelectedImageSizeList.push(imageSizeAPIQueryStrings[element]);
     });
   }
 
@@ -304,10 +314,6 @@ elements.searchIcon.addEventListener('click', () => {
   removeOldSearchResults();
   removeLoaderAnimation();
   applyFilters();
-
-  console.log(window.appObject.userSelectedFileTypeList);
-  console.log(window.appObject.userSelectedAspectRatioList);
-  console.log(window.appObject.userSelectedImageTypeList);
 
   // check if this is necessary. localstorage.clear() is called in search() also
   localStorage.clear(); // clear the old results

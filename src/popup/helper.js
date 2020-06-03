@@ -158,6 +158,12 @@ export const imageTypeAPIQueryStrings = {
   'Digitized Artworks': 'digitized_artwork',
 };
 
+export const imageSizeAPIQueryStrings = {
+  Small: 'small',
+  Medium: 'medium',
+  Large: 'large',
+};
+
 // backup object in case we cannot fetch source names from the API.
 export const backupSourceAPIQueryStrings = {
   'Animal Diversity Web': 'animaldiversity',
