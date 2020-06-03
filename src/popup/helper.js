@@ -58,6 +58,55 @@ export const useCaseDropDownFields = [
   },
 ];
 
+export const aspectRatioDropDownFields = [
+  {
+    id: 'tall',
+    title: 'Tall',
+  },
+  {
+    id: 'wide',
+    title: 'Wide',
+  },
+  {
+    id: 'square',
+    title: 'Square',
+  },
+];
+
+export const fileTypeDropDownFields = [
+  {
+    id: 'jpeg',
+    title: 'JPEGs',
+  },
+  {
+    id: 'png',
+    title: 'PNGs',
+  },
+  {
+    id: 'gif',
+    title: 'GIFs',
+  },
+  {
+    id: 'svg',
+    title: 'SVGs',
+  },
+];
+
+export const imageTypeDropDownFields = [
+  {
+    id: 'photograph',
+    title: 'Photographs',
+  },
+  {
+    id: 'illustration',
+    title: 'Illustration',
+  },
+  {
+    id: 'digitized_artwork',
+    title: 'Digitized Artworks',
+  },
+];
+
 // object to map user applied License filter to valid API query string
 export const licenseAPIQueryStrings = {
   CC0: 'CC0',

@@ -12,12 +12,15 @@ import {
 } from './searchModule';
 import {
   licenseDropDownFields,
+  aspectRatioDropDownFields,
+  fileTypeDropDownFields,
   licenseAPIQueryStrings,
   useCaseAPIQueryStrings,
+  useCaseDropDownFields,
+  imageTypeDropDownFields,
   makeElementsDisplayNone,
   removeClassFromElements,
   removeLoadMoreButton,
-  useCaseDropDownFields,
 } from './helper';
 import {
   loadSourcesToDom,
@@ -335,6 +338,19 @@ $('#choose-license').comboTree({
   source: licenseDropDownFields,
   isMultiple: true,
 });
+
+$('#choose-aspectRatio').comboTree({
+  source: aspectRatioDropDownFields,
+  isMultiple: true,
+});
+
+$('#choose-fileType').comboTree({
+  source: fileTypeDropDownFields,
+  isMultiple: true,
+});
+
+$('#choose-imageType').comboTree({
+  source: imageTypeDropDownFields,
   isMultiple: true,
 });
 
