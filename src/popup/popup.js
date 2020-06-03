@@ -144,12 +144,20 @@ elements.filterResetButton.addEventListener('click', () => {
   elements.useCaseChooser.value = '';
   elements.licenseChooser.value = '';
   elements.sourceChooser.value = '';
+  elements.fileTypeChooser.value = '';
+  elements.imageTypeChooser.value = '';
+  elements.imageSizeChooser.value = '';
+  elements.aspectRatioChooser.value = '';
 
   // array of dropdown container elements
   const dropdownElementsList = [
     elements.sourceChooserWrapper,
     elements.licenseChooserWrapper,
     elements.useCaseChooserWrapper,
+    elements.fileTypeChooserWrapper,
+    elements.imageTypeChooserWrapper,
+    elements.imageSizeChooserWrapper,
+    elements.aspectRatioChooserWrapper,
   ];
 
   dropdownElementsList.forEach(dropdown => {
@@ -171,6 +179,10 @@ elements.filterResetButton.addEventListener('click', () => {
   window.appObject.userSelectedLicensesList = [];
   window.appObject.userSelectedSourcesList = [];
   window.appObject.userSelectedUseCaseList = [];
+  window.appObject.userSelectedFileTypeList = [];
+  window.appObject.userSelectedImageTypeList = [];
+  window.appObject.userSelectedImageSizeList = [];
+  window.appObject.userSelectedAspectRatioList = [];
   elements.searchIcon.click();
 });
 
