@@ -275,6 +275,10 @@ export function search(url) {
         localStorage.setItem('usecaseDropdownValues', elements.useCaseChooser.value);
         localStorage.setItem('sourceDropdownValues', elements.sourceChooser.value);
         localStorage.setItem('licenseDropdownValues', elements.licenseChooser.value);
+        localStorage.setItem('fileTypeDropdownValues', elements.fileTypeChooser.value);
+        localStorage.setItem('imageTypeDropdownValues', elements.imageTypeChooser.value);
+        localStorage.setItem('imageSizeDropdownValues', elements.imageSizeChooser.value);
+        localStorage.setItem('aspectRatioDropdownValues', elements.aspectRatioChooser.value);
         window.appObject.storeSearch.page = { ...resultArray };
         localStorage.setItem('title', window.appObject.storeSearch.title);
         localStorage.setItem(window.appObject.pageNo, JSON.stringify(window.appObject.storeSearch.page));

@@ -9,6 +9,10 @@ export default function loadStoredContentToUI() {
   elements.sourceChooser.value = localStorage.getItem('sourceDropdownValues');
   elements.useCaseChooser.value = localStorage.getItem('usecaseDropdownValues');
   elements.licenseChooser.value = localStorage.getItem('licenseDropdownValues');
+  elements.fileTypeChooser.value = localStorage.getItem('fileTypeDropdownValues');
+  elements.imageTypeChooser.value = localStorage.getItem('imageTypeDropdownValues');
+  elements.imageSizeChooser.value = localStorage.getItem('imageSizeDropdownValues');
+  elements.aspectRatioChooser.value = localStorage.getItem('aspectRatioDropdownValues');
 
   window.appObject.pageNo = 1;
   if (localStorage.getItem(window.appObject.pageNo)) {

@@ -432,9 +432,21 @@ async function loadStoredSearchOnInit() {
     if (localStorage.length !== 0 && enableSearchStorageOption) {
       loadStoredContentToUI();
 
-      if (elements.sourceChooser.value || elements.useCaseChooser.value || elements.licenseChooser.value) {
+      if (
+        elements.sourceChooser.value ||
+        elements.useCaseChooser.value ||
+        elements.licenseChooser.value ||
+        elements.fileTypeChooser.value ||
+        elements.imageTypeChooser.value ||
+        elements.imageSizeChooser.value ||
+        elements.aspectRatioChooser.value
+      ) {
         const activeLicenseOptions = {};
         const activeUseCaseOptions = {};
+        const activeFileTypeOptions = {};
+        const activeImageTypeOptions = {};
+        const activeImageSizeOptions = {};
+        const activeAspectRatioOptions = {};
         elements.licenseChooser.value.split(', ').forEach(x => {
           activeLicenseOptions[x] = true;
           window.appObject.userSelectedLicensesList.push(licenseAPIQueryStrings[x]);
@@ -443,8 +455,28 @@ async function loadStoredSearchOnInit() {
           activeUseCaseOptions[useCaseAPIQueryStrings[x]] = true;
           window.appObject.userSelectedUseCaseList.push(useCaseAPIQueryStrings[x]);
         });
+        elements.fileTypeChooser.value.split(', ').forEach(x => {
+          activeFileTypeOptions[fileTypeAPIQueryStrings[x]] = true;
+          window.appObject.userSelectedFileTypeList.push(fileTypeAPIQueryStrings[x]);
+        });
+        elements.imageTypeChooser.value.split(', ').forEach(x => {
+          activeImageTypeOptions[imageTypeAPIQueryStrings[x]] = true;
+          window.appObject.userSelectedImageTypeList.push(imageTypeAPIQueryStrings[x]);
+        });
+        elements.imageSizeChooserWrapper.value.split(', ').forEach(x => {
+          activeImageSizeOptions[imageSizeAPIQueryStrings[x]] = true;
+          window.appObject.userSelectedImageSizeList.push(imageSizeAPIQueryStrings[x]);
+        });
+        elements.aspectRatioChooser.value.split(', ').forEach(x => {
+          activeAspectRatioOptions[aspectRatioAPIQueryStrings[x]] = true;
+          window.appObject.userSelectedAspectRatioList.push(aspectRatioAPIQueryStrings[x]);
+        });
         toggleOnFilterDropDownCheckboxes(elements.licenseChooserWrapper, activeLicenseOptions);
         toggleOnFilterDropDownCheckboxes(elements.useCaseChooserWrapper, activeUseCaseOptions);
+        toggleOnFilterDropDownCheckboxes(elements.fileTypeChooserWrapper, activeFileTypeOptions);
+        toggleOnFilterDropDownCheckboxes(elements.imageTypeChooserWrapper, activeImageTypeOptions);
+        toggleOnFilterDropDownCheckboxes(elements.imageSizeChooserWrapper, activeImageSizeOptions);
+        toggleOnFilterDropDownCheckboxes(elements.aspectRatioChooserWrapper, activeAspectRatioOptions);
         // console.log(elements.useCaseChooser.value);
         // console.log(useCaseAPIQueryStrings);
         // console.log(activeUseCaseOptions);
