@@ -473,7 +473,11 @@ async function nextRequest(page) {
         window.appObject.userSelectedUseCaseList,
         window.appObject.userSelectedLicensesList,
         window.appObject.userSelectedSourcesList,
-        page,
+        window.appObject.userSelectedFileTypeList,
+        window.appObject.userSelectedImageTypeList,
+        window.appObject.userSelectedImageSizeList,
+        window.appObject.userSelectedAspectRatioList,
+        window.appObject.pageNo,
       );
     }
 
