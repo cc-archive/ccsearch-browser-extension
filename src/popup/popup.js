@@ -467,7 +467,7 @@ async function loadStoredSearchOnInit() {
           activeImageTypeOptions[imageTypeAPIQueryStrings[x]] = true;
           window.appObject.userSelectedImageTypeList.push(imageTypeAPIQueryStrings[x]);
         });
-        elements.imageSizeChooserWrapper.value.split(', ').forEach(x => {
+        elements.imageSizeChooser.value.split(', ').forEach(x => {
           activeImageSizeOptions[imageSizeAPIQueryStrings[x]] = true;
           window.appObject.userSelectedImageSizeList.push(imageSizeAPIQueryStrings[x]);
         });
