@@ -293,7 +293,11 @@ function applyFilters() {
   if (
     window.appObject.userSelectedSourcesList.length > 0 ||
     window.appObject.userSelectedLicensesList.length > 0 ||
-    window.appObject.userSelectedUseCaseList.length > 0
+    window.appObject.userSelectedUseCaseList.length > 0 ||
+    window.appObject.userSelectedFileTypeList.length > 0 ||
+    window.appObject.userSelectedImageTypeList.length > 0 ||
+    window.appObject.userSelectedImageSizeList.length > 0 ||
+    window.appObject.userSelectedAspectRatioList.length > 0
   ) {
     elements.filterIcon.classList.add('activate-filter');
   } else {
