@@ -45,17 +45,7 @@ export function restoreInitialContent(context) {
   if (!sectionContentInitialInfo) {
     let initialInfoElement;
     if (context === 'primary') {
-      initialInfoElement = `<p class="vocab paragraph inherit-colored initial-info primary__initial-info">
-              Search for free content in the public domain and under Creative Commons licenses.<br /><br />
-              Learn more about CC licenses
-              <a href="https://creativecommons.org/share-your-work/licensing-types-examples/" target="_blank">
-                here.
-              </a><br>
-              License your own content
-              <a href="https://creativecommons.org/choose/" target="_blank">
-                here.
-              </a>
-            </p>`;
+      initialInfoElement = `<p></p>`;
     } else if (context === 'bookmarks') {
       initialInfoElement = `<p class="vocab paragraph inherit-colored negative-indicating initial-info bookmarks__initial-info">
               No Bookmarks yet
