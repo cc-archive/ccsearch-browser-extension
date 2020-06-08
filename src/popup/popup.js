@@ -550,6 +550,7 @@ document.getElementById('settings-icon').addEventListener('click', () => {
 
 document.getElementById('invert_colors-icon').addEventListener('click', () => {
   document.body.classList.toggle('dark');
+  document.documentElement.classList.toggle('dark');
   chrome.storage.sync.get('darkmode', items => {
     const value = !items.darkmode;
     chrome.storage.sync.set({
@@ -561,6 +562,7 @@ document.getElementById('invert_colors-icon').addEventListener('click', () => {
 chrome.storage.sync.get('darkmode', items => {
   if (items.darkmode) {
     document.body.classList.add('dark');
+    document.documentElement.classList.add('dark');
   }
 });
 
