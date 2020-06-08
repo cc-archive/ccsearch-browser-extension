@@ -197,7 +197,7 @@ function loadImages() {
           bookmarkDOM[checkbox.getAttribute('id')] = checkbox;
 
           selectedBookmarks = 0;
-          elements.buttonSelectAllCheckbox[0].children[0].innerText = 'Select All';
+          elements.buttonSelectAllCheckbox[0].innerText = 'Select All';
 
           // Add click function to keep checkbox data in sync with DOM
           checkbox.addEventListener('click', () => {
@@ -213,9 +213,9 @@ function loadImages() {
 
             // Update SelectAll Button
             if (selectedBookmarks === 0) {
-              elements.buttonSelectAllCheckbox[0].children[0].innerText = 'Select All';
+              elements.buttonSelectAllCheckbox[0].innerText = 'Select All';
             } else if (selectedBookmarks > 0) {
-              elements.buttonSelectAllCheckbox[0].children[0].innerText = 'Deselect All';
+              elements.buttonSelectAllCheckbox[0].innerText = 'Deselect All';
             }
           });
         });
@@ -329,7 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
           // confirm user action
           showNotification('Bookmarks successfully removed', 'positive', 'snackbar-bookmarks');
           // Read default "Select all"
-          elements.buttonSelectAllCheckbox[0].children[0].innerText = 'Select All';
+          elements.buttonSelectAllCheckbox[0].innerText = 'Select All';
           selectedBookmarks = 0;
         });
       }
