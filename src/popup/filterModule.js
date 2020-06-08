@@ -89,4 +89,8 @@ export function resetAllFilterDropDowns() {
 export function loadUserDefaults() {
   loadUserFilterPreferences(elements.useCaseChooserWrapper);
   loadUserFilterPreferences(elements.licenseChooserWrapper);
+  loadUserFilterPreferences(elements.fileTypeChooserWrapper);
+  loadUserFilterPreferences(elements.imageTypeChooserWrapper);
+  loadUserFilterPreferences(elements.imageSizeChooserWrapper);
+  loadUserFilterPreferences(elements.aspectRatioChooserWrapper);
 }
