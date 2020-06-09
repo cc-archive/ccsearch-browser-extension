@@ -42,6 +42,7 @@ import loadStoredContentToUI from './popup.utils';
 window.appObject = {};
 window.appObject.inputText = '';
 window.appObject.pageNo = 1;
+window.appObject.enableMatureContent = false;
 // List to hold  selected by the user from the drop down.
 window.appObject.userSelectedSourcesList = [];
 
@@ -428,6 +429,16 @@ function setEnableSearchStorageOptionVariable(enableSearchStorage) {
     chrome.storage.sync.set({ enableSearchStorage: enableSearchStorageOption });
   } else enableSearchStorageOption = enableSearchStorage;
 }
+
+function restoreAppObjectVariables() {
+  window.appObject.inputText = localStorage.getItem('title');
+
+  chrome.storage.sync.get(['enableMatureContent'], res => {
+    window.appObject.enableMatureContent = res.enableMatureContent === true;
+  });
+}
+
+restoreAppObjectVariables();
 
 async function loadStoredSearchOnInit() {
   await chrome.storage.sync.get(['enableSearchStorage'], res => {

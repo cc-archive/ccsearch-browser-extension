@@ -4,7 +4,6 @@ import { removeNode } from '../utils';
 import { addThumbnailsToDOM } from './searchModule';
 
 export default function loadStoredContentToUI() {
-  window.appObject.inputText = localStorage.getItem('title');
   elements.inputField.value = window.appObject.inputText;
   elements.sourceChooser.value = localStorage.getItem('sourceDropdownValues');
   elements.useCaseChooser.value = localStorage.getItem('usecaseDropdownValues');
