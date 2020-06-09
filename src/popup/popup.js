@@ -57,6 +57,16 @@ window.appObject.userSelectedImageSizeList = [];
 window.appObject.userSelectedFileTypeList = [];
 window.appObject.userSelectedAspectRatioList = [];
 
+// window.appObject.allUserSelectedFilterLists = [
+//   'userSelectedSourcesList',
+//   'userSelectedLicensesList',
+//   'userSelectedUseCaseList',
+//   'userSelectedFileTypeList',
+//   'userSelectedImageTypeList',
+//   'userSelectedImageSizeList',
+//   'userSelectedAspectRatioList',
+// ];
+
 // object to map source display names to valid query names.
 window.appObject.sourceAPIQueryStrings = {};
 
@@ -139,6 +149,18 @@ elements.filterIcon.addEventListener('click', () => {
 
 setTimeout(populateSourceList(), 2500);
 
+// function clearAllUserSelectedFilterLists() {
+//   window.appObject.allUserSelectedFilterLists.forEach(element => {
+//     console.log(`element name ${element}`);
+//     console.log(`it's value ${window.appObject.element}`);
+//     console.log(
+//       `usersselesourcelist window.appObject.userSelectedSourcesList ${window.appObject.userSelectedSourcesList}`,
+//     );
+//     window.appObject.element = [];
+//   });
+//   // console.log(window.appObject.allUserSelectedFilterLists);
+// }
+
 // TODO: divide the steps into functions
 elements.filterResetButton.addEventListener('click', () => {
   // reset values
@@ -184,6 +206,9 @@ elements.filterResetButton.addEventListener('click', () => {
   window.appObject.userSelectedImageTypeList = [];
   window.appObject.userSelectedImageSizeList = [];
   window.appObject.userSelectedAspectRatioList = [];
+  // console.log(window.appObject.userSelectedUseCaseList);
+  // clearAllUserSelectedFilterLists();
+  // console.log(window.appObject.userSelectedUseCaseList);
   elements.searchIcon.click();
 });
 
@@ -349,8 +374,11 @@ elements.searchIcon.addEventListener('click', () => {
     window.appObject.userSelectedImageSizeList,
     window.appObject.userSelectedAspectRatioList,
     window.appObject.pageNo,
+    window.appObject.enableMatureContent,
   );
 
+  // console.log(window.appObject.userSelectedUseCaseList);
+  console.log(window.appObject.userSelectedSourcesList);
   search(url);
   // console.log(url);
   // pageNo += 1;
@@ -513,7 +541,7 @@ async function nextRequest(page) {
     result = Object.values(JSON.parse(localStorage.getItem(window.appObject.pageNo)));
   } else {
     if (window.appObject.searchByCollectionActivated) {
-      url = getCollectionsUrl(window.appObject.collectionName, page);
+      url = getCollectionsUrl(window.appObject.collectionName, page, window.appObject.enableMatureContent);
     } else {
       url = getRequestUrl(
         window.appObject.inputText,
@@ -525,6 +553,7 @@ async function nextRequest(page) {
         window.appObject.userSelectedImageSizeList,
         window.appObject.userSelectedAspectRatioList,
         window.appObject.pageNo,
+        window.appObject.enableMatureContent,
       );
     }
 
