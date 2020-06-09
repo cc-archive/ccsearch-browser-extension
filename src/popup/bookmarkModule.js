@@ -109,7 +109,8 @@ function loadImages() {
           selectCheckbox.setAttribute('type', 'checkbox');
           selectCheckbox.setAttribute('id', id);
           selectCheckbox.setAttribute('title', 'Select Image');
-          selectCheckbox.setAttribute('class', 'select-checkbox');
+          selectCheckbox.classList.add('select-checkbox');
+          selectCheckbox.classList.add('margin-right-smaller');
           selectCheckboxElement.appendChild(selectCheckbox);
 
           // make a span to hold the license icons
