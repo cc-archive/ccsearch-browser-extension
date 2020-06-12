@@ -265,13 +265,13 @@ document.addEventListener('DOMContentLoaded', () => {
       removeLoadMoreButton(elements.loadMoreButtonWrapper);
       removeBookmarkImages();
       if (window.appObject.searchByCollectionActivated === true && window.appObject.searchingNewCollection === true) {
-        removeNode('no-image-found');
+        removeNode('no-image-found-mes');
         removeOldSearchResults();
         window.appObject.searchingNewCollection = false;
       } else if (localStorage.length !== 0) {
         loadStoredContentToUI();
       } else {
-        removeNode('no-image-found');
+        removeNode('no-image-found-mes');
         restoreInitialContent('primary');
         elements.clearSearchButton[0].classList.add('display-none');
       }

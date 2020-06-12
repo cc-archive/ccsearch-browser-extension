@@ -24,7 +24,6 @@ export const elements = {
   filterResetButton: document.querySelector('.section-filter--reset-button'),
   filterApplyButton: document.querySelector('.section-filter--apply-button'),
   clearSearchButton: document.getElementsByClassName('clear-search-button'),
-  noMoreImagesMessage: document.querySelector('.no-more-images-mes'),
   loadMoreButton: document.querySelector('.load-more-button'),
   loadMoreButtonWrapper: document.querySelector('.load-more-button-wrapper'),
   popup: document.getElementById('popup'),

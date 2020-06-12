@@ -60,11 +60,8 @@ function showNoResultFoundMessage() {
   const sectionContentInitialInfo = document.querySelector('.section-content--primary .initial-info');
 
   if (!sectionContentInitialInfo) {
-    // const initialInfoElement = `<p class="no-image-found initial-info">
-    // No Images Found. Please enter a different query.
-    //         </p>`;
     const paragraph = document.createElement('p');
-    paragraph.classList.add('no-image-found');
+    paragraph.classList.add('no-image-found-mes');
     paragraph.classList.add('initial-info');
     paragraph.textContent = 'No Images Found. Please enter a different query.';
 
@@ -79,7 +76,6 @@ export function removeLoaderAnimation() {
   // elements.spinner.classList.remove('spinner');
   removeSpinner(elements.spinnerPlaceholderGrid);
   // TODO: use better logic
-  // elements.noMoreImagesMessage.classList.remove('display-none');
 }
 
 export function checkResultLength(resultArray) {

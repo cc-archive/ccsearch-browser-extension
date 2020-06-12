@@ -4,9 +4,12 @@
     text-align: center;
   }
 
-  .no-more-images-mes {
-    margin: 10px auto;
-    text-align: center;
+  .no-image-found-mes {
+    position: absolute;
+    top: 13.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
   }
 
   &__images-container {

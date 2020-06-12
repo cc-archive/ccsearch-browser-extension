@@ -351,7 +351,7 @@ elements.searchIcon.addEventListener('click', () => {
   checkInputError(window.appObject.inputText);
   checkIfSourceFilterIsRendered();
   checkInternetConnection();
-  removeNode('no-image-found');
+  removeNode('no-image-found-mes');
   removeOldSearchResults();
   removeLoaderAnimation();
   applyFilters();
