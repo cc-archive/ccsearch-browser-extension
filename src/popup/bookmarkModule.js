@@ -265,7 +265,6 @@ document.addEventListener('DOMContentLoaded', () => {
       removeLoadMoreButton(elements.loadMoreButtonWrapper);
       removeBookmarkImages();
       if (window.appObject.searchByCollectionActivated === true && window.appObject.searchingNewCollection === true) {
-        removeNode('primary__initial-info');
         removeNode('no-image-found');
         removeOldSearchResults();
         window.appObject.searchingNewCollection = false;

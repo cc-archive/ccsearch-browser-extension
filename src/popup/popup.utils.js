@@ -1,5 +1,4 @@
 import { elements } from './base';
-import { removeNode } from '../utils';
 // eslint-disable-next-line import/no-cycle
 import { addThumbnailsToDOM } from './searchModule';
 
@@ -15,7 +14,6 @@ export default function loadStoredContentToUI() {
 
   window.appObject.pageNo = 1;
   if (localStorage.getItem(window.appObject.pageNo)) {
-    removeNode('primary__initial-info');
     const pageData = Object.values(JSON.parse(localStorage.getItem(window.appObject.pageNo)));
     addThumbnailsToDOM(pageData);
     window.appObject.pageNo = Number(window.appObject.pageNo) + 1;
