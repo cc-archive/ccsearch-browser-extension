@@ -11,13 +11,21 @@ import {
   getCollectionsUrl,
 } from './searchModule';
 import {
-  licensesList,
-  usecasesList,
+  licenseDropDownFields,
+  aspectRatioDropDownFields,
+  fileTypeDropDownFields,
   licenseAPIQueryStrings,
   useCaseAPIQueryStrings,
+  useCaseDropDownFields,
+  imageTypeDropDownFields,
+  imageSizeDropDownFields,
   makeElementsDisplayNone,
   removeClassFromElements,
   removeLoadMoreButton,
+  imageTypeAPIQueryStrings,
+  fileTypeAPIQueryStrings,
+  aspectRatioAPIQueryStrings,
+  imageSizeAPIQueryStrings,
 } from './helper';
 import {
   loadSourcesToDom,
@@ -34,6 +42,7 @@ import loadStoredContentToUI from './popup.utils';
 window.appObject = {};
 window.appObject.inputText = '';
 window.appObject.pageNo = 1;
+window.appObject.enableMatureContent = false;
 // List to hold  selected by the user from the drop down.
 window.appObject.userSelectedSourcesList = [];
 
@@ -42,6 +51,21 @@ window.appObject.userSelectedLicensesList = [];
 
 // List to hold user selected use case
 window.appObject.userSelectedUseCaseList = [];
+
+window.appObject.userSelectedImageTypeList = [];
+window.appObject.userSelectedImageSizeList = [];
+window.appObject.userSelectedFileTypeList = [];
+window.appObject.userSelectedAspectRatioList = [];
+
+// window.appObject.allUserSelectedFilterLists = [
+//   'userSelectedSourcesList',
+//   'userSelectedLicensesList',
+//   'userSelectedUseCaseList',
+//   'userSelectedFileTypeList',
+//   'userSelectedImageTypeList',
+//   'userSelectedImageSizeList',
+//   'userSelectedAspectRatioList',
+// ];
 
 // object to map source display names to valid query names.
 window.appObject.sourceAPIQueryStrings = {};
@@ -105,18 +129,18 @@ async function populateSourceList() {
   window.appObject.sourceAPIQueryStrings = await getLatestSources();
 
   let count = 0;
-  const sourcesList = [];
+  const sourceDropDownFields = [];
 
   // iterating over source object
   Object.keys(window.appObject.sourceAPIQueryStrings).forEach(key => {
-    sourcesList[count] = {
+    sourceDropDownFields[count] = {
       id: window.appObject.sourceAPIQueryStrings[key],
       title: key,
     };
     count += 1;
   });
 
-  loadSourcesToDom(sourcesList, enableSearchStorageOption && localStorage.length !== 0);
+  loadSourcesToDom(sourceDropDownFields, enableSearchStorageOption && localStorage.length !== 0);
 }
 
 elements.filterIcon.addEventListener('click', () => {
@@ -125,18 +149,38 @@ elements.filterIcon.addEventListener('click', () => {
 
 setTimeout(populateSourceList(), 2500);
 
+// function clearAllUserSelectedFilterLists() {
+//   window.appObject.allUserSelectedFilterLists.forEach(element => {
+//     console.log(`element name ${element}`);
+//     console.log(`it's value ${window.appObject.element}`);
+//     console.log(
+//       `usersselesourcelist window.appObject.userSelectedSourcesList ${window.appObject.userSelectedSourcesList}`,
+//     );
+//     window.appObject.element = [];
+//   });
+//   // console.log(window.appObject.allUserSelectedFilterLists);
+// }
+
 // TODO: divide the steps into functions
 elements.filterResetButton.addEventListener('click', () => {
   // reset values
   elements.useCaseChooser.value = '';
   elements.licenseChooser.value = '';
   elements.sourceChooser.value = '';
+  elements.fileTypeChooser.value = '';
+  elements.imageTypeChooser.value = '';
+  elements.imageSizeChooser.value = '';
+  elements.aspectRatioChooser.value = '';
 
   // array of dropdown container elements
   const dropdownElementsList = [
     elements.sourceChooserWrapper,
     elements.licenseChooserWrapper,
     elements.useCaseChooserWrapper,
+    elements.fileTypeChooserWrapper,
+    elements.imageTypeChooserWrapper,
+    elements.imageSizeChooserWrapper,
+    elements.aspectRatioChooserWrapper,
   ];
 
   dropdownElementsList.forEach(dropdown => {
@@ -158,6 +202,13 @@ elements.filterResetButton.addEventListener('click', () => {
   window.appObject.userSelectedLicensesList = [];
   window.appObject.userSelectedSourcesList = [];
   window.appObject.userSelectedUseCaseList = [];
+  window.appObject.userSelectedFileTypeList = [];
+  window.appObject.userSelectedImageTypeList = [];
+  window.appObject.userSelectedImageSizeList = [];
+  window.appObject.userSelectedAspectRatioList = [];
+  // console.log(window.appObject.userSelectedUseCaseList);
+  // clearAllUserSelectedFilterLists();
+  // console.log(window.appObject.userSelectedUseCaseList);
   elements.searchIcon.click();
 });
 
@@ -210,6 +261,10 @@ function applyFilters() {
   window.appObject.userSelectedSourcesList = [];
   window.appObject.userSelectedLicensesList = [];
   window.appObject.userSelectedUseCaseList = [];
+  window.appObject.userSelectedImageTypeList = [];
+  window.appObject.userSelectedImageSizeList = [];
+  window.appObject.userSelectedFileTypeList = [];
+  window.appObject.userSelectedAspectRatioList = [];
 
   if (elements.sourceChooser.value) {
     const userInputSourcesList = elements.sourceChooser.value.split(', ');
@@ -232,11 +287,43 @@ function applyFilters() {
     });
   }
 
+  if (elements.imageTypeChooser.value) {
+    const userInputImageTypeList = elements.imageTypeChooser.value.split(', ');
+    userInputImageTypeList.forEach(element => {
+      window.appObject.userSelectedImageTypeList.push(imageTypeAPIQueryStrings[element]);
+    });
+  }
+
+  if (elements.imageSizeChooser.value) {
+    const userInputImageSizeList = elements.imageSizeChooser.value.split(', ');
+    userInputImageSizeList.forEach(element => {
+      window.appObject.userSelectedImageSizeList.push(imageSizeAPIQueryStrings[element]);
+    });
+  }
+
+  if (elements.fileTypeChooser.value) {
+    const userInputFileTypeList = elements.fileTypeChooser.value.split(', ');
+    userInputFileTypeList.forEach(element => {
+      window.appObject.userSelectedFileTypeList.push(fileTypeAPIQueryStrings[element]);
+    });
+  }
+
+  if (elements.aspectRatioChooser.value) {
+    const userInputAspectRatioList = elements.aspectRatioChooser.value.split(', ');
+    userInputAspectRatioList.forEach(element => {
+      window.appObject.userSelectedAspectRatioList.push(aspectRatioAPIQueryStrings[element]);
+    });
+  }
+
   // "activate" filter icon if some filters are applied
   if (
     window.appObject.userSelectedSourcesList.length > 0 ||
     window.appObject.userSelectedLicensesList.length > 0 ||
-    window.appObject.userSelectedUseCaseList.length > 0
+    window.appObject.userSelectedUseCaseList.length > 0 ||
+    window.appObject.userSelectedFileTypeList.length > 0 ||
+    window.appObject.userSelectedImageTypeList.length > 0 ||
+    window.appObject.userSelectedImageSizeList.length > 0 ||
+    window.appObject.userSelectedAspectRatioList.length > 0
   ) {
     elements.filterIcon.classList.add('activate-filter');
   } else {
@@ -264,8 +351,7 @@ elements.searchIcon.addEventListener('click', () => {
   checkInputError(window.appObject.inputText);
   checkIfSourceFilterIsRendered();
   checkInternetConnection();
-  removeNode('primary__initial-info');
-  removeNode('no-image-found');
+  removeNode('no-image-found-mes');
   removeOldSearchResults();
   removeLoaderAnimation();
   applyFilters();
@@ -282,9 +368,16 @@ elements.searchIcon.addEventListener('click', () => {
     window.appObject.userSelectedUseCaseList,
     window.appObject.userSelectedLicensesList,
     window.appObject.userSelectedSourcesList,
+    window.appObject.userSelectedFileTypeList,
+    window.appObject.userSelectedImageTypeList,
+    window.appObject.userSelectedImageSizeList,
+    window.appObject.userSelectedAspectRatioList,
     window.appObject.pageNo,
+    window.appObject.enableMatureContent,
   );
 
+  // console.log(window.appObject.userSelectedUseCaseList);
+  console.log(window.appObject.userSelectedSourcesList);
   search(url);
   // console.log(url);
   // pageNo += 1;
@@ -327,12 +420,32 @@ elements.clearSearchButton[0].addEventListener('click', () => {
 
 // applying comboTree (see https://github.com/kirlisakal/combo-tree)
 $('#choose-usecase').comboTree({
-  source: usecasesList,
+  source: useCaseDropDownFields,
   isMultiple: true,
 });
 
 $('#choose-license').comboTree({
-  source: licensesList,
+  source: licenseDropDownFields,
+  isMultiple: true,
+});
+
+$('#choose-aspectRatio').comboTree({
+  source: aspectRatioDropDownFields,
+  isMultiple: true,
+});
+
+$('#choose-fileType').comboTree({
+  source: fileTypeDropDownFields,
+  isMultiple: true,
+});
+
+$('#choose-imageType').comboTree({
+  source: imageTypeDropDownFields,
+  isMultiple: true,
+});
+
+$('#choose-imageSize').comboTree({
+  source: imageSizeDropDownFields,
   isMultiple: true,
 });
 
@@ -344,6 +457,16 @@ function setEnableSearchStorageOptionVariable(enableSearchStorage) {
   } else enableSearchStorageOption = enableSearchStorage;
 }
 
+function restoreAppObjectVariables() {
+  window.appObject.inputText = localStorage.getItem('title');
+
+  chrome.storage.sync.get(['enableMatureContent'], res => {
+    window.appObject.enableMatureContent = res.enableMatureContent === true;
+  });
+}
+
+restoreAppObjectVariables();
+
 async function loadStoredSearchOnInit() {
   await chrome.storage.sync.get(['enableSearchStorage'], res => {
     setEnableSearchStorageOptionVariable(res.enableSearchStorage);
@@ -351,9 +474,21 @@ async function loadStoredSearchOnInit() {
     if (localStorage.length !== 0 && enableSearchStorageOption) {
       loadStoredContentToUI();
 
-      if (elements.sourceChooser.value || elements.useCaseChooser.value || elements.licenseChooser.value) {
+      if (
+        elements.sourceChooser.value ||
+        elements.useCaseChooser.value ||
+        elements.licenseChooser.value ||
+        elements.fileTypeChooser.value ||
+        elements.imageTypeChooser.value ||
+        elements.imageSizeChooser.value ||
+        elements.aspectRatioChooser.value
+      ) {
         const activeLicenseOptions = {};
         const activeUseCaseOptions = {};
+        const activeFileTypeOptions = {};
+        const activeImageTypeOptions = {};
+        const activeImageSizeOptions = {};
+        const activeAspectRatioOptions = {};
         elements.licenseChooser.value.split(', ').forEach(x => {
           activeLicenseOptions[x] = true;
           window.appObject.userSelectedLicensesList.push(licenseAPIQueryStrings[x]);
@@ -362,8 +497,28 @@ async function loadStoredSearchOnInit() {
           activeUseCaseOptions[useCaseAPIQueryStrings[x]] = true;
           window.appObject.userSelectedUseCaseList.push(useCaseAPIQueryStrings[x]);
         });
+        elements.fileTypeChooser.value.split(', ').forEach(x => {
+          activeFileTypeOptions[fileTypeAPIQueryStrings[x]] = true;
+          window.appObject.userSelectedFileTypeList.push(fileTypeAPIQueryStrings[x]);
+        });
+        elements.imageTypeChooser.value.split(', ').forEach(x => {
+          activeImageTypeOptions[imageTypeAPIQueryStrings[x]] = true;
+          window.appObject.userSelectedImageTypeList.push(imageTypeAPIQueryStrings[x]);
+        });
+        elements.imageSizeChooser.value.split(', ').forEach(x => {
+          activeImageSizeOptions[imageSizeAPIQueryStrings[x]] = true;
+          window.appObject.userSelectedImageSizeList.push(imageSizeAPIQueryStrings[x]);
+        });
+        elements.aspectRatioChooser.value.split(', ').forEach(x => {
+          activeAspectRatioOptions[aspectRatioAPIQueryStrings[x]] = true;
+          window.appObject.userSelectedAspectRatioList.push(aspectRatioAPIQueryStrings[x]);
+        });
         toggleOnFilterDropDownCheckboxes(elements.licenseChooserWrapper, activeLicenseOptions);
         toggleOnFilterDropDownCheckboxes(elements.useCaseChooserWrapper, activeUseCaseOptions);
+        toggleOnFilterDropDownCheckboxes(elements.fileTypeChooserWrapper, activeFileTypeOptions);
+        toggleOnFilterDropDownCheckboxes(elements.imageTypeChooserWrapper, activeImageTypeOptions);
+        toggleOnFilterDropDownCheckboxes(elements.imageSizeChooserWrapper, activeImageSizeOptions);
+        toggleOnFilterDropDownCheckboxes(elements.aspectRatioChooserWrapper, activeAspectRatioOptions);
         // console.log(elements.useCaseChooser.value);
         // console.log(useCaseAPIQueryStrings);
         // console.log(activeUseCaseOptions);
@@ -385,14 +540,19 @@ async function nextRequest(page) {
     result = Object.values(JSON.parse(localStorage.getItem(window.appObject.pageNo)));
   } else {
     if (window.appObject.searchByCollectionActivated) {
-      url = getCollectionsUrl(window.appObject.collectionName, page);
+      url = getCollectionsUrl(window.appObject.collectionName, page, window.appObject.enableMatureContent);
     } else {
       url = getRequestUrl(
         window.appObject.inputText,
         window.appObject.userSelectedUseCaseList,
         window.appObject.userSelectedLicensesList,
         window.appObject.userSelectedSourcesList,
-        page,
+        window.appObject.userSelectedFileTypeList,
+        window.appObject.userSelectedImageTypeList,
+        window.appObject.userSelectedImageSizeList,
+        window.appObject.userSelectedAspectRatioList,
+        window.appObject.pageNo,
+        window.appObject.enableMatureContent,
       );
     }
 
@@ -429,6 +589,7 @@ document.getElementById('settings-icon').addEventListener('click', () => {
 
 document.getElementById('invert_colors-icon').addEventListener('click', () => {
   document.body.classList.toggle('dark');
+  document.documentElement.classList.toggle('dark');
   chrome.storage.sync.get('darkmode', items => {
     const value = !items.darkmode;
     chrome.storage.sync.set({
@@ -440,6 +601,7 @@ document.getElementById('invert_colors-icon').addEventListener('click', () => {
 chrome.storage.sync.get('darkmode', items => {
   if (items.darkmode) {
     document.body.classList.add('dark');
+    document.documentElement.classList.add('dark');
   }
 });
 

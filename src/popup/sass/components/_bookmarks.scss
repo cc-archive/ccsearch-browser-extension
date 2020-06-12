@@ -16,7 +16,7 @@
 
   .bookmarks__initial-info {
     position: absolute;
-    top: 7rem;
+    top: 5.5rem;
     left: 50%;
     transform: translateX(-50%);
   }
@@ -41,4 +41,14 @@
 
 .select-checkbox {
   float: right;
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.bookmark-checkbox {
+  float: right;
+
+  &:checked::before {
+    opacity: 1;
+  }
 }

@@ -86,23 +86,11 @@
   }
 
   &__filter-wrapper {
-    display: flex;
-    justify-content: center;
+    display: grid;
 
-    &--choose-usecase {
-      width: 10.625rem;
-      margin-right: 1rem;
-    }
-
-    &--choose-license {
-      width: 6.875rem;
-      margin-right: 1rem;
-    }
-
-    &--choose-source {
-      width: 12.5rem;
-      display: none;
-    }
+    grid-template-rows: 2rem 2rem;
+    grid-template-columns: 2fr 1.5fr 2fr;
+    column-gap: 1rem;
   }
 
   &__filter-button {

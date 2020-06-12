@@ -32,9 +32,9 @@ export function toggleOnFilterDropDownCheckboxes(wrapperElement, items) {
   }
 }
 
-export function loadSourcesToDom(SourcesList, loadingStoredSearch = false) {
+export function loadSourcesToDom(sourceDropDownFields, loadingStoredSearch = false) {
   $('#choose-source').comboTree({
-    source: SourcesList,
+    source: sourceDropDownFields,
     isMultiple: true,
   });
 
@@ -89,4 +89,8 @@ export function resetAllFilterDropDowns() {
 export function loadUserDefaults() {
   loadUserFilterPreferences(elements.useCaseChooserWrapper);
   loadUserFilterPreferences(elements.licenseChooserWrapper);
+  loadUserFilterPreferences(elements.fileTypeChooserWrapper);
+  loadUserFilterPreferences(elements.imageTypeChooserWrapper);
+  loadUserFilterPreferences(elements.imageSizeChooserWrapper);
+  loadUserFilterPreferences(elements.aspectRatioChooserWrapper);
 }

@@ -109,7 +109,8 @@ function loadImages() {
           selectCheckbox.setAttribute('type', 'checkbox');
           selectCheckbox.setAttribute('id', id);
           selectCheckbox.setAttribute('title', 'Select Image');
-          selectCheckbox.setAttribute('class', 'select-checkbox');
+          selectCheckbox.classList.add('select-checkbox');
+          selectCheckbox.classList.add('margin-right-smaller');
           selectCheckboxElement.appendChild(selectCheckbox);
 
           // make a span to hold the license icons
@@ -197,7 +198,7 @@ function loadImages() {
           bookmarkDOM[checkbox.getAttribute('id')] = checkbox;
 
           selectedBookmarks = 0;
-          elements.buttonSelectAllCheckbox[0].children[0].innerText = 'Select All';
+          elements.buttonSelectAllCheckbox[0].innerText = 'Select All';
 
           // Add click function to keep checkbox data in sync with DOM
           checkbox.addEventListener('click', () => {
@@ -213,9 +214,9 @@ function loadImages() {
 
             // Update SelectAll Button
             if (selectedBookmarks === 0) {
-              elements.buttonSelectAllCheckbox[0].children[0].innerText = 'Select All';
+              elements.buttonSelectAllCheckbox[0].innerText = 'Select All';
             } else if (selectedBookmarks > 0) {
-              elements.buttonSelectAllCheckbox[0].children[0].innerText = 'Deselect All';
+              elements.buttonSelectAllCheckbox[0].innerText = 'Deselect All';
             }
           });
         });
@@ -264,14 +265,13 @@ document.addEventListener('DOMContentLoaded', () => {
       removeLoadMoreButton(elements.loadMoreButtonWrapper);
       removeBookmarkImages();
       if (window.appObject.searchByCollectionActivated === true && window.appObject.searchingNewCollection === true) {
-        removeNode('primary__initial-info');
-        removeNode('no-image-found');
+        removeNode('no-image-found-mes');
         removeOldSearchResults();
         window.appObject.searchingNewCollection = false;
       } else if (localStorage.length !== 0) {
         loadStoredContentToUI();
       } else {
-        removeNode('no-image-found');
+        removeNode('no-image-found-mes');
         restoreInitialContent('primary');
         elements.clearSearchButton[0].classList.add('display-none');
       }
@@ -329,7 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
           // confirm user action
           showNotification('Bookmarks successfully removed', 'positive', 'snackbar-bookmarks');
           // Read default "Select all"
-          elements.buttonSelectAllCheckbox[0].children[0].innerText = 'Select All';
+          elements.buttonSelectAllCheckbox[0].innerText = 'Select All';
           selectedBookmarks = 0;
         });
       }

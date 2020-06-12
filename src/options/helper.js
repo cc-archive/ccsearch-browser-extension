@@ -8,7 +8,7 @@ export function restoreFilters(inputElements) {
       // default value is false
       document.getElementById(id).checked = items[id];
     });
-    // chrome.storage.sync.get(null, (items) => {
+    // chrome.storage.sync.get(null, items => {
     //   console.log('all the storage items');
     //   console.log(items);
     // });
@@ -41,6 +41,10 @@ function addSourcesToDom(sources) {
 export async function init() {
   restoreFilters(elements.useCaseInputs);
   restoreFilters(elements.licenseInputs);
+  restoreFilters(elements.fileTypeInputs);
+  restoreFilters(elements.imageTypeInputs);
+  restoreFilters(elements.imageSizeInputs);
+  restoreFilters(elements.aspectRatioInputs);
   const sources = await getLatestSources();
   addSourcesToDom(sources);
 }
@@ -64,6 +68,10 @@ export function saveSingleFilter(inputElements) {
 export function saveFiltersOptions() {
   saveSingleFilter(elements.useCaseInputs);
   saveSingleFilter(elements.licenseInputs);
+  saveSingleFilter(elements.fileTypeInputs);
+  saveSingleFilter(elements.imageTypeInputs);
+  saveSingleFilter(elements.imageSizeInputs);
+  saveSingleFilter(elements.aspectRatioInputs);
   saveSingleFilter(elements.sourceInputs);
 }
 

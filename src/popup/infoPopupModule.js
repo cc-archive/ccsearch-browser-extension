@@ -116,7 +116,7 @@ function getFacebookShareLink(imageId) {
 }
 
 function getTwitterShareLink(sourceLink) {
-  return `https://twitter.com/intent/tweet?status=I%20found%20an%20image%20through%20CC%20search%20%40creativecommons%3A%20${sourceLink}`;
+  return `https://twitter.com/intent/tweet?text=I%20found%20an%20image%20through%20CC%20Search%20%40creativecommons%3A%20${sourceLink}`;
 }
 
 function getPinterestShareLink(sourceLink, imageLink) {

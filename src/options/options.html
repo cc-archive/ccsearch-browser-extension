@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <title>CC Search Extension Options</title>
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://unpkg.com/@creativecommons/vocabulary/css/vocabulary.css" />
+    <link rel="stylesheet" href="https://unpkg.com/@creativecommons/vocabulary@1.0.0-beta.14/css/vocabulary.css" />
     <link rel="stylesheet" href="options.css" />
   </head>
   <body>
@@ -13,10 +13,10 @@
         <li class="tab is-active" data-tab-no="1"><a> Filters </a></li>
         <li class="tab" data-tab-no="2"><a> Other Settings </a></li>
         <li class="tab" data-tab-no="3"><a> Bookmarks </a></li>
-        <li class="tab" data-tab-no="7"><a> Syntax Guide </a></li>
+        <li class="tab" data-tab-no="4"><a> Syntax Guide </a></li>
         <li class="tab" data-tab-no="5"><a> Feedback </a></li>
         <li class="tab" data-tab-no="6"><a> FAQ </a></li>
-        <li class="tab" data-tab-no="4"><a> About </a></li>
+        <li class="tab" data-tab-no="7"><a> About </a></li>
       </ul>
     </div>
     <div id="tabs-content" class="tabs-content">
@@ -55,6 +55,48 @@
           <label for="BY-NC-ND">BY-NC-ND</label><br />
         </div>
 
+        <h5 class="margin-top-small">File Type</h5>
+        <div class="fileType margin-left-normal">
+          <input type="checkbox" id="jpeg" />
+          <label for="jpeg">JPEGs</label><br />
+          <input type="checkbox" id="png" />
+          <label for="png">PNGs</label><br />
+          <input type="checkbox" id="gif" />
+          <label for="gif">GIFs</label><br />
+          <input type="checkbox" id="svg" />
+          <label for="svg">SVGs</label><br />
+        </div>
+
+        <h5 class="margin-top-small">Image Type</h5>
+        <div class="imageType margin-left-normal">
+          <input type="checkbox" id="photograph" />
+          <label for="photograph">Photographs</label><br />
+          <input type="checkbox" id="illustration" />
+          <label for="illustration">Illustrations</label><br />
+          <input type="checkbox" id="digitized_artwork" />
+          <label for="digitized_artwork">Digitized Artworks</label><br />
+        </div>
+
+        <h5 class="margin-top-small">Image Size</h5>
+        <div class="imageSize margin-left-normal">
+          <input type="checkbox" id="small" />
+          <label for="small">Small</label><br />
+          <input type="checkbox" id="medium" />
+          <label for="medium">Medium</label><br />
+          <input type="checkbox" id="large" />
+          <label for="large">Large</label><br />
+        </div>
+
+        <h5 class="margin-top-small">Aspect Ratio</h5>
+        <div class="aspectRatio margin-left-normal">
+          <input type="checkbox" id="tall" />
+          <label for="tall">Tall</label><br />
+          <input type="checkbox" id="wide" />
+          <label for="wide">Wide</label><br />
+          <input type="checkbox" id="square" />
+          <label for="square">Square</label><br />
+        </div>
+
         <h5 class="margin-top-small">All Sources</h5>
         <div class="source margin-left-normal">
           Fetching Latest Sources ...
@@ -76,6 +118,11 @@
           <input type="checkbox" id="enable-search-clear-confirm-checkbox" />
           <label for="enable-search-clear-confirm-checkbox">Yes</label>
         </div>
+        <h5 class="b-header margin-top-normal">Enable Mature Content?</h5>
+        <div class="margin-left-normal">
+          <input type="checkbox" id="enable-mature-content-checkbox" />
+          <label for="enable-mature-content-checkbox">Yes</label>
+        </div>
       </div>
       <div class="tabs-panel" data-content-no="3">
         <div>
@@ -90,7 +137,7 @@
           <p><strong>Note</strong>: To know more about how you can sync your settings and bookmarks, read the FAQ.</p>
         </div>
       </div>
-      <div class="tabs-panel" data-content-no="4">
+      <div class="tabs-panel" data-content-no="7">
         <h3 class="margin-vertical-normal">CC Search Browser Extension</h3>
         <p>
           This extension provides a new interface to
@@ -232,7 +279,7 @@
           >.
         </p>
       </div>
-      <div class="tabs-panel" data-content-no="7">
+      <div class="tabs-panel" data-content-no="4">
         <p class="margin-vertical-normal">
           When you search, you can enter special symbols or words to your search term to make your search results more
           precise.

@@ -27,27 +27,46 @@ test('testing getRequestUrl', () => {
   let userSelectedUseCaseList = ['commercial'];
   const userSelectedLicensesList = ['CC0'];
   const userSelectedSourcesList = ['sciencemuseum'];
+  const userSelectedFileTypeList = ['jpeg', 'gif'];
+  let userSelectedImageTypeList = ['illustration'];
+  const userSelectedImageSizeList = ['small'];
+  const userSelectedAspectRatioList = ['square'];
   const page = 2;
 
-  const test1 = getRequestUrl(
+  const urlTest1 = getRequestUrl(
     inputText,
     userSelectedUseCaseList,
     userSelectedLicensesList,
     userSelectedSourcesList,
+    userSelectedFileTypeList,
+    userSelectedImageTypeList,
+    userSelectedImageSizeList,
+    userSelectedAspectRatioList,
     page,
+    true, // enableMatureContent
   );
-  expect(test1).toMatch(/\?q=dogs&page=2&page_size=20/);
-  expect(test1).toMatch(/license_type=commercial/);
+  expect(urlTest1).toMatch(/\?q=dogs&page=2&page_size=20/);
+  expect(urlTest1).toMatch(/license_type=commercial/);
+  expect(urlTest1).toMatch(/extension=jpeg,gif&categories=illustration&size=small&aspect_ratio=square&mature=true/);
 
   userSelectedUseCaseList = [];
+  userSelectedImageTypeList = ['illustration', 'digitized_artworks'];
 
-  const test2 = getRequestUrl(
+  const urlTest2 = getRequestUrl(
     inputText,
     userSelectedUseCaseList,
     userSelectedLicensesList,
     userSelectedSourcesList,
+    userSelectedFileTypeList,
+    userSelectedImageTypeList,
+    userSelectedImageSizeList,
+    userSelectedAspectRatioList,
     page,
+    false, // enableMatureContent
   );
-  expect(test1).toMatch(/\?q=dogs&page=2&page_size=20/);
-  expect(test2).toMatch(/license=CC0/);
+  expect(urlTest2).toMatch(/\?q=dogs&page=2&page_size=20/);
+  expect(urlTest2).toMatch(/license=CC0/);
+  expect(urlTest2).toMatch(
+    /extension=jpeg,gif&categories=illustration,digitized_artworks&size=small&aspect_ratio=square&mature=false/,
+  );
 });

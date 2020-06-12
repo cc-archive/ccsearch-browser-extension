@@ -10,8 +10,9 @@ export function isObjectEmpty(obj) {
   return Object.keys(obj).length === 0 && obj.constructor === Object;
 }
 
-// license drop down fields
-export const licensesList = [
+// id: sets as the data-id of the particulary dropdown entry
+// title: text displayed on the UI
+export const licenseDropDownFields = [
   {
     id: 'CC0',
     title: 'CC0',
@@ -46,8 +47,7 @@ export const licensesList = [
   },
 ];
 
-// Use-case drop down fields
-export const usecasesList = [
+export const useCaseDropDownFields = [
   {
     id: 'commercial',
     title: 'I can use commercially',
@@ -55,6 +55,70 @@ export const usecasesList = [
   {
     id: 'modification',
     title: 'I can modify or adapt',
+  },
+];
+
+export const aspectRatioDropDownFields = [
+  {
+    id: 'tall',
+    title: 'Tall',
+  },
+  {
+    id: 'wide',
+    title: 'Wide',
+  },
+  {
+    id: 'square',
+    title: 'Square',
+  },
+];
+
+export const fileTypeDropDownFields = [
+  {
+    id: 'jpeg',
+    title: 'JPEGs',
+  },
+  {
+    id: 'png',
+    title: 'PNGs',
+  },
+  {
+    id: 'gif',
+    title: 'GIFs',
+  },
+  {
+    id: 'svg',
+    title: 'SVGs',
+  },
+];
+
+export const imageTypeDropDownFields = [
+  {
+    id: 'photograph',
+    title: 'Photographs',
+  },
+  {
+    id: 'illustration',
+    title: 'Illustrations',
+  },
+  {
+    id: 'digitized_artwork',
+    title: 'Digitized Artworks',
+  },
+];
+
+export const imageSizeDropDownFields = [
+  {
+    id: 'small',
+    title: 'Small',
+  },
+  {
+    id: 'medium',
+    title: 'Medium',
+  },
+  {
+    id: 'large',
+    title: 'Large',
   },
 ];
 
@@ -73,6 +137,31 @@ export const licenseAPIQueryStrings = {
 export const useCaseAPIQueryStrings = {
   'I can use commercially': 'commercial',
   'I can modify or adapt': 'modification',
+};
+
+export const aspectRatioAPIQueryStrings = {
+  Tall: 'tall',
+  Wide: 'wide',
+  Square: 'square',
+};
+
+export const fileTypeAPIQueryStrings = {
+  JPEGs: 'jpeg',
+  PNGs: 'png',
+  GIFs: 'gif',
+  SVGs: 'svg',
+};
+
+export const imageTypeAPIQueryStrings = {
+  Photographs: 'photograph',
+  Illustrations: 'illustration',
+  'Digitized Artworks': 'digitized_artwork',
+};
+
+export const imageSizeAPIQueryStrings = {
+  Small: 'small',
+  Medium: 'medium',
+  Large: 'large',
 };
 
 // backup object in case we cannot fetch source names from the API.
@@ -100,6 +189,7 @@ export const backupSourceAPIQueryStrings = {
   'World Register of Marine Species': 'WoRMS',
   'Wikimedia Commons': 'wikimedia',
   Sketchfab: 'sketchfab',
+  'Smithsonian Institution': 'smithsonian',
 };
 
 // object that maps source_name to display_name
@@ -127,6 +217,7 @@ const displayNames = {
   WoRMS: 'World Register of Marine Species',
   wikimedia: 'Wikimedia Commons',
   sketchfab: 'Sketchfab',
+  smithsonian: 'Smithsonian Institution',
 };
 
 export function getSourceDisplayName(sourceName) {

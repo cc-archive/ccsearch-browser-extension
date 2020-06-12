@@ -35,18 +35,23 @@ export function removeOldSearchResults() {
 export function getRequestUrl(
   searchQuery,
   userSelectedUseCaseList,
-  userSelectedLicensesList,
-  userSelectedSourcesList,
+  userSelectedLicenseList,
+  userSelectedSourceList,
+  userSelectedFileTypeList,
+  userSelectedImageTypeList,
+  userSelectedImageSizeList,
+  userSelectedAspectRatioList,
   page,
+  enableMatureContent,
 ) {
   if (userSelectedUseCaseList.length > 0) {
-    return `https://api.creativecommons.engineering/v1/images?q=${searchQuery}&page=${page}&page_size=20&license_type=${userSelectedUseCaseList}&source=${userSelectedSourcesList}`;
+    return `https://api.creativecommons.engineering/v1/images?q=${searchQuery}&page=${page}&page_size=20&license_type=${userSelectedUseCaseList}&source=${userSelectedSourceList}&extension=${userSelectedFileTypeList}&categories=${userSelectedImageTypeList}&size=${userSelectedImageSizeList}&aspect_ratio=${userSelectedAspectRatioList}&mature=${enableMatureContent}`;
   }
-  return `https://api.creativecommons.engineering/v1/images?q=${searchQuery}&page=${page}&page_size=20&license=${userSelectedLicensesList}&source=${userSelectedSourcesList}`;
+  return `https://api.creativecommons.engineering/v1/images?q=${searchQuery}&page=${page}&page_size=20&license=${userSelectedLicenseList}&source=${userSelectedSourceList}&extension=${userSelectedFileTypeList}&categories=${userSelectedImageTypeList}&size=${userSelectedImageSizeList}&aspect_ratio=${userSelectedAspectRatioList}&mature=${enableMatureContent}`;
 }
 
-export function getCollectionsUrl(collectionName, page) {
-  return `https://api.creativecommons.engineering/v1/images?source=${collectionName}&page=${page}&page_size=20`;
+export function getCollectionsUrl(collectionName, page, enableMatureContent) {
+  return `https://api.creativecommons.engineering/v1/images?source=${collectionName}&page=${page}&page_size=20&mature=${enableMatureContent}`;
 }
 
 function showNoResultFoundMessage() {
@@ -55,11 +60,8 @@ function showNoResultFoundMessage() {
   const sectionContentInitialInfo = document.querySelector('.section-content--primary .initial-info');
 
   if (!sectionContentInitialInfo) {
-    // const initialInfoElement = `<p class="no-image-found initial-info">
-    // No Images Found. Please enter a different query.
-    //         </p>`;
     const paragraph = document.createElement('p');
-    paragraph.classList.add('no-image-found');
+    paragraph.classList.add('no-image-found-mes');
     paragraph.classList.add('initial-info');
     paragraph.textContent = 'No Images Found. Please enter a different query.';
 
@@ -74,7 +76,6 @@ export function removeLoaderAnimation() {
   // elements.spinner.classList.remove('spinner');
   removeSpinner(elements.spinnerPlaceholderGrid);
   // TODO: use better logic
-  // elements.noMoreImagesMessage.classList.remove('display-none');
 }
 
 export function checkResultLength(resultArray) {
@@ -271,6 +272,10 @@ export function search(url) {
         localStorage.setItem('usecaseDropdownValues', elements.useCaseChooser.value);
         localStorage.setItem('sourceDropdownValues', elements.sourceChooser.value);
         localStorage.setItem('licenseDropdownValues', elements.licenseChooser.value);
+        localStorage.setItem('fileTypeDropdownValues', elements.fileTypeChooser.value);
+        localStorage.setItem('imageTypeDropdownValues', elements.imageTypeChooser.value);
+        localStorage.setItem('imageSizeDropdownValues', elements.imageSizeChooser.value);
+        localStorage.setItem('aspectRatioDropdownValues', elements.aspectRatioChooser.value);
         window.appObject.storeSearch.page = { ...resultArray };
         localStorage.setItem('title', window.appObject.storeSearch.title);
         localStorage.setItem(window.appObject.pageNo, JSON.stringify(window.appObject.storeSearch.page));
