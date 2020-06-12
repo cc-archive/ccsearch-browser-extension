@@ -189,6 +189,7 @@ export const backupSourceAPIQueryStrings = {
   'World Register of Marine Species': 'WoRMS',
   'Wikimedia Commons': 'wikimedia',
   Sketchfab: 'sketchfab',
+  'Smithsonian Institution': 'smithsonian',
 };
 
 // object that maps source_name to display_name
@@ -216,6 +217,7 @@ const displayNames = {
   WoRMS: 'World Register of Marine Species',
   wikimedia: 'Wikimedia Commons',
   sketchfab: 'Sketchfab',
+  smithsonian: 'Smithsonian Institution',
 };
 
 export function getSourceDisplayName(sourceName) {
