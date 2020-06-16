@@ -19,22 +19,32 @@ const bookmarkDOM = {};
 // Store number of selected bookmarks for export
 let selectedBookmarks = 0;
 
-export default function toggleBookmark(e) {
-  chrome.storage.sync.get({ bookmarks: [] }, items => {
-    const bookmarksArray = items.bookmarks;
+async function getImageDetail(imageId) {
+  const url = `http://api.creativecommons.engineering/v1/images/${imageId}`;
+  const data = await fetch(url);
+
+  return data.json();
+}
+
+export default async function toggleBookmark(e) {
+  chrome.storage.sync.get({ bookmarks: {} }, async items => {
+    const bookmarksObject = items.bookmarks;
     const imageId = e.target.dataset.imageid;
-    if (bookmarksArray.indexOf(imageId) === -1) {
-      bookmarksArray.push(imageId);
-      chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
+    console.log(bookmarksObject);
+    if (!Object.prototype.hasOwnProperty.call(bookmarksObject, imageId)) {
+      const imageDetail = await getImageDetail(imageId);
+      // bookmarksArray.push(imageId);
+      bookmarksObject[imageId] = imageDetail;
+      console.log(bookmarksObject);
+      chrome.storage.sync.set({ bookmarks: bookmarksObject }, () => {
         e.target.classList.remove('fa-bookmark-o');
         e.target.classList.add('fa-bookmark');
         e.target.title = 'Remove Bookmark';
         showNotification('Image Bookmarked', 'positive', 'snackbar-bookmarks');
       });
     } else {
-      const bookmarkIndex = bookmarksArray.indexOf(imageId);
-      bookmarksArray.splice(bookmarkIndex, 1);
-      chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
+      delete bookmarksObject[imageId];
+      chrome.storage.sync.set({ bookmarks: bookmarksObject }, () => {
         e.target.classList.remove('fa-bookmark');
         e.target.classList.add('fa-bookmark-o');
         e.target.title = 'Bookmark Image';
