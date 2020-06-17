@@ -203,9 +203,17 @@ export function addThumbnailsToDOM(resultArray) {
       bookmarkIcon.classList.add('bookmark-icon');
       bookmarkIcon.id = 'bookmark-icon';
       bookmarkIcon.setAttribute('data-imageid', id);
+      bookmarkIcon.setAttribute('data-image-thumbnail', thumbnail);
+      bookmarkIcon.setAttribute('data-image-title', title);
+      bookmarkIcon.setAttribute('data-image-license', license);
+      bookmarkIcon.setAttribute('data-image-source', source);
+      bookmarkIcon.setAttribute('data-image-license', license);
+      bookmarkIcon.setAttribute('data-image-foreign-landing-url', foreignLandingUrl);
       bookmarkIcon.addEventListener('click', toggleBookmark);
 
-      if (bookmarksArray.indexOf(id) === -1) {
+      if (!Object.prototype.hasOwnProperty.call(bookmarksArray, id)) {
+        console.log(bookmarksArray);
+        console.log(bookmarksArray[id]);
         bookmarkIcon.classList.add('fa-bookmark-o');
         bookmarkIcon.title = 'Bookmark image';
       } else {

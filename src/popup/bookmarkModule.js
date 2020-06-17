@@ -19,11 +19,16 @@ const bookmarkDOM = {};
 // Store number of selected bookmarks for export
 let selectedBookmarks = 0;
 
-async function getImageDetail(imageId) {
-  const url = `http://api.creativecommons.engineering/v1/images/${imageId}`;
-  const data = await fetch(url);
+function getImageDetail(eventTarget) {
+  const imageObject = {};
+  imageObject.title = eventTarget.dataset.imageTitle;
+  imageObject.thumbnail = eventTarget.dataset.imageThumbnail;
+  imageObject.license = eventTarget.dataset.imageLicense;
+  imageObject.source = eventTarget.dataset.imageSource;
+  imageObject.foreignLandingUrl = eventTarget.dataset.imageForeignLandingUrl;
 
-  return data.json();
+  console.log(imageObject);
+  return imageObject;
 }
 
 export default async function toggleBookmark(e) {
@@ -32,7 +37,7 @@ export default async function toggleBookmark(e) {
     const imageId = e.target.dataset.imageid;
     console.log(bookmarksObject);
     if (!Object.prototype.hasOwnProperty.call(bookmarksObject, imageId)) {
-      const imageDetail = await getImageDetail(imageId);
+      const imageDetail = getImageDetail(e.target);
       // bookmarksArray.push(imageId);
       bookmarksObject[imageId] = imageDetail;
       console.log(bookmarksObject);
