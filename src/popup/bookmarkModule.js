@@ -27,12 +27,11 @@ function getImageDetail(eventTarget) {
   imageObject.source = eventTarget.dataset.imageSource;
   imageObject.foreignLandingUrl = eventTarget.dataset.imageForeignLandingUrl;
 
-  console.log(imageObject);
-  return imageObject;
+  return JSON.stringify(imageObject);
 }
 
-export default async function toggleBookmark(e) {
-  chrome.storage.sync.get({ bookmarks: {} }, async items => {
+export default function toggleBookmark(e) {
+  chrome.storage.sync.get({ bookmarks: {} }, items => {
     const bookmarksObject = items.bookmarks;
     const imageId = e.target.dataset.imageid;
     console.log(bookmarksObject);
@@ -40,7 +39,6 @@ export default async function toggleBookmark(e) {
       const imageDetail = getImageDetail(e.target);
       // bookmarksArray.push(imageId);
       bookmarksObject[imageId] = imageDetail;
-      console.log(bookmarksObject);
       chrome.storage.sync.set({ bookmarks: bookmarksObject }, () => {
         e.target.classList.remove('fa-bookmark-o');
         e.target.classList.add('fa-bookmark');
@@ -70,9 +68,9 @@ function appendToGrid(msnryObject, fragment, e, grid) {
 }
 
 function loadImages() {
-  chrome.storage.sync.get({ bookmarks: [] }, items => {
-    const bookmarksArray = items.bookmarks;
-    if (bookmarksArray.length > 0) {
+  chrome.storage.sync.get({ bookmarks: {} }, items => {
+    const bookmarksObject = items.bookmarks;
+    if (bookmarksObject.length > 0) {
       removeNode('bookmarks__initial-info');
     } else {
       removeSpinner(elements.spinnerPlaceholderBookmarks);
@@ -81,7 +79,7 @@ function loadImages() {
 
     // get the details of each image
 
-    bookmarksArray.forEach(imageId => {
+    Object.keys(bookmarksObject).forEach(imageId => {
       const url = `http://api.creativecommons.engineering/v1/images/${imageId}`;
       fetch(url)
         .then(data => data.json())
@@ -294,7 +292,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   elements.collectionsIcon.addEventListener('click', () => {
-    console.log('collections clicked');
+    // console.log('collections clicked');
     if (window.appObject.activeSection !== 'collections') {
       window.appObject.activeSection = 'collections';
       elements.primarySection.style.display = 'none';
