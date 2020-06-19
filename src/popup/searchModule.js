@@ -138,7 +138,7 @@ export function addThumbnailsToDOM(resultArray) {
     const bookmarksArray = items.bookmarks;
 
     resultArray.forEach(element => {
-      const thumbnail = element.url; // element.thumbnail giving 403
+      const thumbnail = element.thumbnail ? element.thumbnail : element.url;
       const title = unicodeToString(element.title);
       const { license, id } = element;
       const source = getSourceDisplayName(element.source);
