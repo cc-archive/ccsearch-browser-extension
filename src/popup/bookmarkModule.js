@@ -1,7 +1,7 @@
 import { elements } from './base';
 import { activatePopup } from './infoPopupModule';
 import { msnry, removeBookmarkImages, removeBookmark } from './bookmarkModule.utils';
-import { unicodeToString, removeLoadMoreButton, getSourceDisplayName } from './helper';
+import { removeLoadMoreButton } from './helper';
 // eslint-disable-next-line import/no-cycle
 import { removeOldSearchResults, removeLoaderAnimation, checkInternetConnection } from './searchModule';
 import { addSpinner, removeSpinner } from './spinner';
@@ -87,33 +87,14 @@ function loadImages() {
           const fragment = document.createDocumentFragment();
 
           const thumbnail = res.thumbnail ? res.thumbnail : res.url;
-          const title = unicodeToString(res.title);
           const { license, id } = res;
-          const source = getSourceDisplayName(res.source);
           const licenseArray = license.split('-'); // split license in individual characteristics
-          const foreignLandingUrl = res.foreign_landing_url;
 
           // make an image element
           const imgElement = document.createElement('img');
           imgElement.setAttribute('src', thumbnail);
           imgElement.setAttribute('class', 'image-thumbnails');
           imgElement.setAttribute('id', id);
-
-          // make a span to hold the title
-          const spanTitleElement = document.createElement('span');
-          spanTitleElement.setAttribute('class', 'extension-image-title');
-          spanTitleElement.setAttribute('title', title);
-          const imageTitleNode = document.createTextNode(title);
-
-          // make a link to foreign landing page of image
-          const foreignLandingLinkElement = document.createElement('a');
-          foreignLandingLinkElement.setAttribute('href', foreignLandingUrl);
-          foreignLandingLinkElement.setAttribute('target', '_blank');
-          foreignLandingLinkElement.setAttribute('class', 'foreign-landing-url');
-          foreignLandingLinkElement.setAttribute('title', `Source: ${source}`);
-          foreignLandingLinkElement.appendChild(imageTitleNode);
-
-          spanTitleElement.appendChild(foreignLandingLinkElement);
 
           // make select button
           const selectCheckboxElement = document.createElement('span');
@@ -186,7 +167,6 @@ function loadImages() {
 
           divElement.appendChild(imgElement);
           divElement.appendChild(selectCheckboxElement);
-          divElement.appendChild(spanTitleElement);
           divElement.appendChild(spanLicenseElement);
 
           // div to act as grid itemj
