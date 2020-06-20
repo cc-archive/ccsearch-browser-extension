@@ -1,6 +1,7 @@
 import { elements, attributionTabLink } from './base';
 import { addSpinner, removeSpinner } from './spinner';
 import { removeChildNodes } from '../utils';
+import { getSourceDisplayName, unicodeToString } from './helper';
 
 const download = require('downloadjs');
 
@@ -145,7 +146,7 @@ function getPopupSourceChildNode(foreignLandingUrl, source) {
   const link = document.createElement('a');
   link.href = foreignLandingUrl;
   link.target = '_blank';
-  link.textContent = source;
+  link.textContent = getSourceDisplayName(source);
   return link;
 }
 
