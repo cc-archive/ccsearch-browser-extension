@@ -165,7 +165,6 @@ function getImageData(imageId) {
     .then(data => data.json())
     .then(res => {
       const {
-        title,
         source,
         foreign_landing_url: foreignLandingUrl,
         license_url: licenseUrl,
@@ -173,6 +172,7 @@ function getImageData(imageId) {
         id,
         url: imageUrl,
       } = res;
+      const title = unicodeToString(res.title);
       let { creator, creator_url: creatorUrl } = res;
       if (!creatorUrl) {
         creatorUrl = '#';
