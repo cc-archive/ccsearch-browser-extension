@@ -289,28 +289,27 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   elements.deleteBookmarksButton.addEventListener('click', () => {
-    chrome.storage.sync.get({ bookmarks: [] }, items => {
-      const bookmarksArray = items.bookmarks;
+    chrome.storage.sync.get({ bookmarks: {} }, items => {
+      const bookmarksObject = items.bookmarks;
       const bookmarkDOMArray = Object.values(bookmarkDOM);
 
       // to store the id's of deleted bookmarks
       const deletedBookmarks = [];
-      // to store the id's of non-deleted bookmarks
-      const nonDeletedBookmarks = [];
 
       bookmarkDOMArray.forEach(checkbox => {
         if (checkbox.checked) {
           delete bookmarkDOM[checkbox.id]; // remove the selected bookmark from bookmarkDOM object
           deletedBookmarks.push(checkbox.id);
-        } else {
-          nonDeletedBookmarks.push(checkbox.id);
         }
       });
 
-      if (bookmarksArray.length === nonDeletedBookmarks.length) {
+      if (deletedBookmarks.length === 0) {
         showNotification('No bookmark selected', 'negative', 'snackbar-bookmarks');
       } else {
-        chrome.storage.sync.set({ bookmarks: nonDeletedBookmarks }, () => {
+        deletedBookmarks.forEach(bookmarkId => {
+          delete bookmarksObject[bookmarkId];
+        });
+        chrome.storage.sync.set({ bookmarks: bookmarksObject }, () => {
           // removing the selected bookmarks from the grid
           deletedBookmarks.forEach(bookmarkdId => {
             const imageDiv = document.getElementById(`id_${bookmarkdId}`);
