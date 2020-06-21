@@ -21,11 +21,8 @@ let selectedBookmarks = 0;
 
 function getImageDetail(eventTarget) {
   const imageObject = {};
-  imageObject.title = eventTarget.dataset.imageTitle;
   imageObject.thumbnail = eventTarget.dataset.imageThumbnail;
   imageObject.license = eventTarget.dataset.imageLicense;
-  imageObject.source = eventTarget.dataset.imageSource;
-  imageObject.foreignLandingUrl = eventTarget.dataset.imageForeignLandingUrl;
 
   return JSON.stringify(imageObject);
 }
@@ -139,6 +136,7 @@ function loadImages() {
             licenseLinkElement.appendChild(licenseIcon);
           });
 
+          // remove bookmarks icon
           const bookmarkIcon = document.createElement('i');
           bookmarkIcon.classList.add('fa');
           bookmarkIcon.classList.add('fa-bookmark');
@@ -344,6 +342,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // change export and import accordingly
   elements.exportBookmarksButton.addEventListener('click', () => {
     const bookmarks = [];
 
