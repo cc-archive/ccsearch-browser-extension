@@ -1,6 +1,6 @@
 import { elements } from './base';
 import { activatePopup } from './infoPopupModule';
-import { msnry, removeBookmarkImages, removeBookmark } from './bookmarkModule.utils';
+import { msnry, removeBookmarkImages } from './bookmarkModule.utils';
 import { removeLoadMoreButton } from './helper';
 // eslint-disable-next-line import/no-cycle
 import { removeOldSearchResults, removeLoaderAnimation, checkInternetConnection } from './searchModule';
@@ -136,18 +136,7 @@ function loadImages() {
             licenseLinkElement.appendChild(licenseIcon);
           });
 
-          // remove bookmarks icon
-          const bookmarkIcon = document.createElement('i');
-          bookmarkIcon.classList.add('fa');
-          bookmarkIcon.classList.add('fa-bookmark');
-          bookmarkIcon.classList.add('bookmark-icon');
-          bookmarkIcon.id = 'bookmark-icon';
-          bookmarkIcon.title = 'Remove bookmark';
-          bookmarkIcon.setAttribute('data-imageid', id);
-          bookmarkIcon.addEventListener('click', removeBookmark);
-
           spanLicenseElement.appendChild(licenseLinkElement);
-          spanLicenseElement.appendChild(bookmarkIcon);
 
           // make a div element to encapsulate image element
           const divElement = document.createElement('div');
