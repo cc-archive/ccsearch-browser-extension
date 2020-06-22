@@ -67,7 +67,7 @@ function appendToGrid(msnryObject, fragment, e, grid) {
 function loadImages() {
   chrome.storage.sync.get({ bookmarks: {} }, items => {
     const bookmarksObject = items.bookmarks;
-    if (bookmarksObject.length > 0) {
+    if (Object.keys(bookmarksObject).length > 0) {
       removeNode('bookmarks__initial-info');
     } else {
       removeSpinner(elements.spinnerPlaceholderBookmarks);
