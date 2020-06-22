@@ -47,7 +47,7 @@ export function restoreInitialContent(context) {
     if (context === 'primary') {
       initialInfoElement = `<p></p>`;
     } else if (context === 'bookmarks') {
-      initialInfoElement = `<p class="vocab paragraph inherit-colored negative-indicating initial-info bookmarks__initial-info">
+      initialInfoElement = `<p class="initial-info bookmarks__initial-info has-text-tomato">
               No Bookmarks yet
             </p>`;
     }
