@@ -45,24 +45,6 @@
       outline: none;
     }
 
-    .btn-popup {
-      display: block;
-      padding: 9px 1.25rem;
-      box-sizing: content-box;
-      position: relative;
-      text-decoration: none;
-      background-color: $color-secondary-light;
-      color: $color-white;
-      border: none;
-      border-radius: 5px;
-      transition: background-color 0.3s;
-      cursor: pointer;
-
-      &:hover {
-        background-color: $color-secondary-dark;
-      }
-    }
-
     .download-buttons {
       @include clearfix;
 
