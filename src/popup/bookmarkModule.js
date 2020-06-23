@@ -64,7 +64,7 @@ function appendToGrid(msnryObject, fragment, e, grid) {
   });
 }
 
-function loadImages() {
+function loadBookmarkImages() {
   chrome.storage.sync.get({ bookmarks: {} }, items => {
     const bookmarksObject = items.bookmarks;
     if (Object.keys(bookmarksObject).length > 0) {
@@ -226,7 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
       addSpinner(elements.spinnerPlaceholderBookmarks, 'original');
       removeOldSearchResults();
       removeLoaderAnimation();
-      loadImages();
+      loadBookmarkImages();
     }
   });
 
@@ -270,6 +270,7 @@ document.addEventListener('DOMContentLoaded', () => {
       removeSpinner(elements.spinnerPlaceholderCollections);
       addSpinner(elements.spinnerPlaceholderCollections, 'original');
       removeOldSearchResults();
+      removeBookmarkImages();
       removeChildNodes(elements.collectionsSectionBody);
       loadCollections();
     }
