@@ -105,26 +105,18 @@
   }
 }
 
-.fa {
-  box-sizing: content-box;
-  padding: 20px;
-  margin-right: 10px;
-  font-size: 25px;
-  width: 24px;
-  text-align: center;
-  text-decoration: none;
-  border-radius: 50%;
-  color: $color-black;
-}
+// .fa {
+//   box-sizing: content-box;
+//   padding: 20px;
+//   margin-right: 10px;
+//   font-size: 25px;
+//   width: 24px;
+//   text-align: center;
+//   text-decoration: none;
+//   border-radius: 50%;
+//   color: $color-black;
+// }
 
-.fa-tumblr {
-  background: #001a36;
-  color: white;
-
-  &:hover {
-    color: white;
-  }
-}
 .removeLoadMore {
   display: none;
 }
