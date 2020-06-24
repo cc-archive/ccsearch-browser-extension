@@ -183,9 +183,8 @@ export function addThumbnailsToDOM(resultArray) {
       bookmarkIcon.classList.add('fa');
       bookmarkIcon.classList.add('bookmark-icon');
       bookmarkIcon.id = 'bookmark-icon';
-      bookmarkIcon.setAttribute('data-imageid', id);
+      bookmarkIcon.setAttribute('data-image-id', id);
       bookmarkIcon.setAttribute('data-image-thumbnail', thumbnail);
-      bookmarkIcon.setAttribute('data-image-license', license);
       bookmarkIcon.setAttribute('data-image-license', license);
       bookmarkIcon.addEventListener('click', toggleBookmark);
 

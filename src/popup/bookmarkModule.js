@@ -30,7 +30,7 @@ function getImageDetail(eventTarget) {
 export default function toggleBookmark(e) {
   chrome.storage.sync.get({ bookmarks: {} }, items => {
     const bookmarksObject = items.bookmarks;
-    const imageId = e.target.dataset.imageid;
+    const { imageId } = e.target.dataset;
     console.log(bookmarksObject);
     if (!Object.prototype.hasOwnProperty.call(bookmarksObject, imageId)) {
       const imageDetail = getImageDetail(e.target);
