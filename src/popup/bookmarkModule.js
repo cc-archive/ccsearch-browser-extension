@@ -24,7 +24,7 @@ function getImageDetail(eventTarget) {
   imageObject.thumbnail = eventTarget.dataset.imageThumbnail;
   imageObject.license = eventTarget.dataset.imageLicense;
 
-  return JSON.stringify(imageObject);
+  return imageObject;
 }
 
 export default function toggleBookmark(e) {
@@ -76,7 +76,7 @@ function loadBookmarkImages() {
     }
 
     bookmarkImageIds.forEach(imageId => {
-      const res = JSON.parse(bookmarksObject[imageId]);
+      const res = bookmarksObject[imageId];
       const fragment = document.createDocumentFragment();
 
       const { thumbnail, license } = res;
