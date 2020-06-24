@@ -87,12 +87,15 @@ elements.importBookmarksButton.addEventListener('click', () => {
     reader.onload = evt => {
       const fileContents = evt.target.result;
       try {
-        const bookmarksArray = JSON.parse(fileContents);
-        if (Array.isArray(bookmarksArray)) {
-          if (!bookmarksArray.length > 0)
+        const bookmarksObject = JSON.parse(fileContents);
+        console.log(bookmarksObject);
+        console.log(typeof bookmarksObject);
+        // if (Array.isArray(bookmarksArray)) {
+        if (typeof bookmarksObject === 'object') {
+          if (!(Object.keys(bookmarksObject).length > 0))
             showNotification('No bookmark ids found in file', 'negative', 'snackbar-options');
           else {
-            updateBookmarks(bookmarksArray);
+            updateBookmarks(bookmarksObject);
           }
         } else {
           showNotification('Contents not in valid format of ["id1", "id2", ...]', 'negative', 'snackbar-options');

@@ -75,13 +75,15 @@ export function saveFiltersOptions() {
   saveSingleFilter(elements.sourceInputs);
 }
 
-export function updateBookmarks(newBookmarksids) {
-  chrome.storage.sync.get({ bookmarks: [] }, items => {
-    const bookmarksArray = items.bookmarks;
-    newBookmarksids.forEach(bookmarkId => {
-      if (bookmarksArray.indexOf(bookmarkId) === -1) {
-        bookmarksArray.push(bookmarkId);
-        chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
+export function updateBookmarks(newBookmarksObject) {
+  chrome.storage.sync.get({ bookmarks: {} }, items => {
+    const bookmarksObject = items.bookmarks;
+    const bookmarksImageIds = Object.keys(bookmarksObject);
+    const newBookmarksImageIds = Object.keys(newBookmarksObject);
+    newBookmarksImageIds.forEach(bookmarkId => {
+      if (bookmarksImageIds.indexOf(bookmarkId) === -1) {
+        bookmarksObject[bookmarkId] = newBookmarksObject[bookmarkId];
+        chrome.storage.sync.set({ bookmarks: bookmarksObject }, () => {
           // console.log('bookmarks updated');
         });
       }
