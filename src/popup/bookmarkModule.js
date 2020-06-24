@@ -83,8 +83,7 @@ function loadBookmarkImages() {
         .then(res => {
           const fragment = document.createDocumentFragment();
 
-          const thumbnail = res.thumbnail ? res.thumbnail : res.url;
-          const { license, id } = res;
+          const { thumbnail, license, id } = res;
           const licenseArray = license.split('-'); // split license in individual characteristics
 
           // make an image element
