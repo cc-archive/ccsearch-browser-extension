@@ -330,16 +330,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // change export and import accordingly
   elements.exportBookmarksButton.addEventListener('click', () => {
-    const bookmarks = [];
+    const bookmarksObject = {};
 
     Object.values(bookmarkDOM).forEach(checkbox => {
       if (checkbox.checked) {
-        bookmarks.push(checkbox.dataset.imageId);
+        const imageObject = {};
+        imageObject.thumbnail = checkbox.dataset.imageThumbnail;
+        imageObject.license = checkbox.dataset.imageLicense;
+        bookmarksObject[checkbox.dataset.imageId] = imageObject;
       }
     });
 
-    if (bookmarks.length) {
-      const bookmarksString = JSON.stringify(bookmarks);
+    if (Object.keys(bookmarksObject).length) {
+      const bookmarksString = JSON.stringify(bookmarksObject);
       download(bookmarksString, 'bookmarks.json', 'text/plain');
     } else {
       showNotification('No bookmarks selected', 'negative', 'snackbar-bookmarks');
