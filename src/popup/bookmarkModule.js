@@ -97,8 +97,10 @@ function loadBookmarkImages() {
           selectCheckboxElement.setAttribute('class', 'bookmark-select');
           const selectCheckbox = document.createElement('input');
           selectCheckbox.setAttribute('type', 'checkbox');
-          selectCheckbox.setAttribute('id', id);
+          selectCheckbox.setAttribute('data-image-id', id);
           selectCheckbox.setAttribute('title', 'Select Image');
+          selectCheckbox.setAttribute('data-image-thumbnail', thumbnail);
+          selectCheckbox.setAttribute('data-image-license', license);
           selectCheckbox.classList.add('select-checkbox');
           selectCheckbox.classList.add('margin-right-smaller');
           selectCheckboxElement.appendChild(selectCheckbox);
@@ -285,8 +287,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       bookmarkDOMArray.forEach(checkbox => {
         if (checkbox.checked) {
-          delete bookmarkDOM[checkbox.id]; // remove the selected bookmark from bookmarkDOM object
-          deletedBookmarks.push(checkbox.id);
+          const { imageId } = checkbox.dataset;
+          delete bookmarkDOM[imageId]; // remove the selected bookmark from bookmarkDOM object
+          deletedBookmarks.push(imageId);
         }
       });
 
@@ -336,7 +339,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const bookmarks = [];
 
     Object.values(bookmarkDOM).forEach(checkbox => {
-      if (checkbox.checked) bookmarks.push(checkbox.id);
+      if (checkbox.checked) {
+        bookmarks.push(checkbox.dataset.imageId);
+      }
     });
 
     if (bookmarks.length) {
