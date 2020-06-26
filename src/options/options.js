@@ -90,18 +90,17 @@ elements.importBookmarksButton.addEventListener('click', () => {
         const bookmarksObject = JSON.parse(fileContents);
         console.log(bookmarksObject);
         console.log(typeof bookmarksObject);
-        // if (Array.isArray(bookmarksArray)) {
-        if (typeof bookmarksObject === 'object') {
+        if (typeof bookmarksObject === 'object' && !Array.isArray(bookmarksObject)) {
           if (!(Object.keys(bookmarksObject).length > 0))
-            showNotification('No bookmark ids found in file', 'negative', 'snackbar-options');
+            showNotification('Error: No bookmarks found in the file', 'negative', 'snackbar-options');
           else {
             updateBookmarks(bookmarksObject);
           }
         } else {
-          showNotification('Contents not in valid format of ["id1", "id2", ...]', 'negative', 'snackbar-options');
+          showNotification('Error: File contents not in the required format', 'negative', 'snackbar-options');
         }
       } catch (error) {
-        showNotification('This is not a valid JSON', 'negative', 'snackbar-options');
+        showNotification('Error in parsing file', 'negative', 'snackbar-options');
       }
     };
   }
