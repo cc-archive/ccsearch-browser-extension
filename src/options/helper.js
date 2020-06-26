@@ -83,11 +83,13 @@ export function updateBookmarks(newBookmarksObject) {
     newBookmarksImageIds.forEach(bookmarkId => {
       if (bookmarksImageIds.indexOf(bookmarkId) === -1) {
         bookmarksObject[bookmarkId] = newBookmarksObject[bookmarkId];
-        chrome.storage.sync.set({ bookmarks: bookmarksObject }, () => {
-          // console.log('bookmarks updated');
-        });
       }
     });
+
+    chrome.storage.sync.set({ bookmarks: bookmarksObject }, () => {
+      // console.log('bookmarks updated');
+    });
+
     showNotification('Bookmarks updated!', 'positive', 'snackbar-options');
   });
 }
