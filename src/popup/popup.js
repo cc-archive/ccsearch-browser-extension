@@ -614,3 +614,8 @@ window.addEventListener('scroll', () => {
 });
 
 elements.buttonBackToTop.addEventListener('click', () => window.scrollTo(0, 0));
+
+document.querySelector('.hover_bkgr_fricc').style.display = 'block';
+document.querySelector('.popupCloseButton').addEventListener('click', () => {
+  document.querySelector('.hover_bkgr_fricc').style.display = 'none';
+});
