@@ -134,8 +134,8 @@ export function addThumbnailsToDOM(resultArray) {
   const divs = [];
   const fragment = document.createDocumentFragment();
 
-  chrome.storage.sync.get({ bookmarks: [] }, items => {
-    const bookmarksArray = items.bookmarks;
+  chrome.storage.sync.get({ bookmarks: {} }, items => {
+    const bookmarksObject = items.bookmarks;
 
     resultArray.forEach(element => {
       const thumbnail = element.thumbnail ? element.thumbnail : element.url;
@@ -188,9 +188,7 @@ export function addThumbnailsToDOM(resultArray) {
       bookmarkIcon.setAttribute('data-image-license', license);
       bookmarkIcon.addEventListener('click', toggleBookmark);
 
-      if (!Object.prototype.hasOwnProperty.call(bookmarksArray, id)) {
-        console.log(bookmarksArray);
-        console.log(bookmarksArray[id]);
+      if (!Object.prototype.hasOwnProperty.call(bookmarksObject, id)) {
         bookmarkIcon.classList.add('fa-bookmark-o');
         bookmarkIcon.title = 'Bookmark image';
       } else {
