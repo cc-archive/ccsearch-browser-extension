@@ -618,9 +618,9 @@ elements.buttonBackToTop.addEventListener('click', () => window.scrollTo(0, 0));
 chrome.storage.sync.get({ notificationShown: false }, items => {
   // console.log(items);
   if (items.notificationShown === false) {
-      document.querySelector('.notification__popup--background').style.display = 'flex';
+    document.querySelector('.notification__popup--background').style.display = 'flex';
 
-      document.querySelector('.notification__popup--button').addEventListener('click', () => {
+    document.querySelector('.notification__popup--button').addEventListener('click', () => {
       chrome.storage.sync.set({ notificationShown: true }, () => {
         document.querySelector('.notification__popup--background').style.display = 'none';
       });
