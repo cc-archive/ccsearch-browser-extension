@@ -111,4 +111,8 @@ body.dark {
       color: $color-darkmode-1;
     }
   }
+
+  .notification__popup--body {
+    color: rgb(34, 34, 34);
+  }
 }
