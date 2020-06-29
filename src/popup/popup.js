@@ -615,7 +615,15 @@ window.addEventListener('scroll', () => {
 
 elements.buttonBackToTop.addEventListener('click', () => window.scrollTo(0, 0));
 
-document.querySelector('.hover_bkgr_fricc').style.display = 'block';
-document.querySelector('.popupCloseButton').addEventListener('click', () => {
-  document.querySelector('.hover_bkgr_fricc').style.display = 'none';
+chrome.storage.sync.get({ notificationShown: false }, items => {
+  // console.log(items);
+  if (items.notificationShown === false) {
+      document.querySelector('.notification__popup--background').style.display = 'flex';
+
+      document.querySelector('.notification__popup--button').addEventListener('click', () => {
+      chrome.storage.sync.set({ notificationShown: true }, () => {
+        document.querySelector('.notification__popup--background').style.display = 'none';
+      });
+    });
+  }
 });
