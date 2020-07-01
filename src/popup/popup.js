@@ -631,6 +631,20 @@ chrome.storage.sync.get({ notificationShown: false }, items => {
 const bookmarksIds = [
   'd5d7ffa1-ff1c-449d-b454-cd3da405a678',
   '484958fb-1993-4d34-a715-ddb65ebc8a07',
+  '484958fb-1993-4d34-a715-ddb65ebc8a07',
+  '484958fb-1993-4d34-a715-ddb65ebc8a07',
+  '484958fb-1993-4d34-a715-ddb65ebc8a07',
+  '484958fb-1993-4d34-a715-ddb65ebc8a07',
+  '84b8c9db-3882-4350-8b41-6cba73aa893c',
+  '5d4831f8-fc2e-49fc-af2d-e18aa65058ef',
+  '5d4831f8-fc2e-49cf-af2d-e18aa65058ef',
+  '484958fb-1993-4d34-a715-ddb65ebc8a07',
+  '484958fb-1993-4d34-a715-ddb65ebc8a07',
+  '484958fb-1993-4d34-a715-ddb65ebc8a07',
+  '484958fb-1993-4d34-a715-ddb65ebc8a07',
+  '484958fb-1993-4d34-a715-ddb65ebc8a07',
+  '484958fb-1993-4d34-a715-ddb65ebc8a07',
+  '484958fb-1993-4d34-a715-ddb65ebc8a07',
   '84b8c9db-3882-4350-8b41-6cba73aa893c',
   '84b8c9db-3882-4350-841-6cba73aa893c',
   'af9e23de-9fee-4010-9909-da874dbff8dc',
@@ -653,11 +667,14 @@ async function testing() {
         const bookmarkId = items.bookmarks[i];
         // eslint-disable-next-line no-await-in-loop
         const res = await fetchImageData(bookmarkId);
-        console.log(res);
+        const imageDetailResponse = res[0];
+        const responseCode = res[1];
         const imageObject = {};
-        imageObject.thumbnail = res.thumbnail;
-        imageObject.license = res.license;
-        newBookmarks[bookmarkId] = imageObject;
+        if (responseCode === 200) {
+          imageObject.thumbnail = imageDetailResponse.thumbnail;
+          imageObject.license = imageDetailResponse.license;
+          newBookmarks[bookmarkId] = imageObject;
+        }
       }
 
       console.log(newBookmarks);

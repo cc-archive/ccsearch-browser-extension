@@ -91,8 +91,10 @@ ${HtmlAttribution}`;
 export async function fetchImageData(imageId) {
   const url = `https://api.creativecommons.engineering/v1/images/${imageId}`;
   const data = await fetch(url);
+  const responseCode = data.status;
+  const res = await data.json();
 
-  return data.json();
+  return [res, responseCode];
 }
 
 function downloadImage(imageUrl, imageName) {
