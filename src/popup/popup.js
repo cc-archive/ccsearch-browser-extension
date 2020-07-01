@@ -642,15 +642,30 @@ const bookmarksIds = [
 chrome.storage.sync.set({ bookmarks: bookmarksIds });
 
 async function testing() {
+  chrome.storage.sync.get(null, items => {
+    console.log(items);
+  });
+
   chrome.storage.sync.get('bookmarks', async items => {
     if (items.bookmarks !== undefined) {
-      // items.bookmarks.forEach(bookmarkId => {
+      const newBookmarks = {};
       for (let i = 0; i < items.bookmarks.length; i += 1) {
         const bookmarkId = items.bookmarks[i];
         // eslint-disable-next-line no-await-in-loop
         const res = await fetchImageData(bookmarkId);
         console.log(res);
+        const imageObject = {};
+        imageObject.thumbnail = res.thumbnail;
+        imageObject.license = res.license;
+        newBookmarks[bookmarkId] = imageObject;
       }
+
+      console.log(newBookmarks);
+      chrome.storage.sync.remove('bookmarks');
+      chrome.storage.sync.set({ bookmarks: newBookmarks });
+      chrome.storage.sync.get(null, it => {
+        console.log(it);
+      });
     }
   });
 }
