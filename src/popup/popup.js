@@ -33,7 +33,7 @@ import {
   loadUserDefaults,
   toggleOnFilterDropDownCheckboxes,
 } from './filterModule';
-import { handleImageAttributionDownload, handleImageDownload } from './infoPopupModule';
+import { handleImageAttributionDownload, handleImageDownload, fetchImageData } from './infoPopupModule';
 import { addSpinner } from './spinner';
 import { showNotification, removeNode, getLatestSources, restoreInitialContent, showModal } from '../utils';
 import loadStoredContentToUI from './popup.utils';
@@ -627,3 +627,32 @@ chrome.storage.sync.get({ notificationShown: false }, items => {
     });
   }
 });
+
+const bookmarksIds = [
+  'd5d7ffa1-ff1c-449d-b454-cd3da405a678',
+  '484958fb-1993-4d34-a715-ddb65ebc8a07',
+  '84b8c9db-3882-4350-8b41-6cba73aa893c',
+  '84b8c9db-3882-4350-841-6cba73aa893c',
+  'af9e23de-9fee-4010-9909-da874dbff8dc',
+  '5d4831f8-fc2e-49fc-af2d-e18aa65058ef',
+  '5d4831f8-fc2e-49cf-af2d-e18aa65058ef',
+  'a7864008-d13c-4924-82d3-cb252888805d',
+];
+
+chrome.storage.sync.set({ bookmarks: bookmarksIds });
+
+async function testing() {
+  chrome.storage.sync.get('bookmarks', async items => {
+    if (items.bookmarks !== undefined) {
+      // items.bookmarks.forEach(bookmarkId => {
+      for (let i = 0; i < items.bookmarks.length; i += 1) {
+        const bookmarkId = items.bookmarks[i];
+        // eslint-disable-next-line no-await-in-loop
+        const res = await fetchImageData(bookmarkId);
+        console.log(res);
+      }
+    }
+  });
+}
+
+testing();

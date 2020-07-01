@@ -88,6 +88,13 @@ Creator Link: ${creatorUrl}\n\n
 ${HtmlAttribution}`;
 }
 
+export async function fetchImageData(imageId) {
+  const url = `https://api.creativecommons.engineering/v1/images/${imageId}`;
+  const data = await fetch(url);
+
+  return data.json();
+}
+
 function downloadImage(imageUrl, imageName) {
   const x = new XMLHttpRequest();
   x.open('GET', imageUrl, true);
