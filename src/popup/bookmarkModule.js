@@ -222,6 +222,10 @@ document.addEventListener('DOMContentLoaded', () => {
       removeOldSearchResults();
       removeLoaderAnimation();
       loadBookmarkImages();
+
+      chrome.storage.sync.get(null, it => {
+        console.log(it);
+      });
     }
   });
 
