@@ -662,7 +662,7 @@ const bookmarksIds = [
 ];
 
 chrome.storage.sync.set({ bookmarks: bookmarksIds });
-// chrome.storage.sync.remove('newBookmarks');
+chrome.storage.sync.remove('newBookmarks');
 
 chrome.storage.sync.get(null, it => {
   console.log(it);
@@ -673,61 +673,71 @@ async function testing() {
     console.log(items);
   });
 
-  let count = 0;
-  chrome.storage.sync.get({ newBookmarks: {} }, store => {
-    const { newBookmarks } = store;
-    console.log('new bookmarks');
-    console.log(newBookmarks);
+  chrome.storage.sync.get({ bookmarksMigrationDone: false }, items3 => {
+    if (!items3.bookmarksMigrationDone) {
+      console.log('inside');
+      document.querySelector('.notification__popup--background').style.display = 'flex';
+      let count = 0;
+      chrome.storage.sync.get({ newBookmarks: {} }, store => {
+        const { newBookmarks } = store;
+        console.log('new bookmarks');
+        console.log(newBookmarks);
 
-    chrome.storage.sync.get('bookmarks', async items => {
-      if (items.bookmarks !== undefined) {
-        if (items.bookmarks.length !== 0) {
-          const currentBookmarksArray = items.bookmarks;
+        chrome.storage.sync.get('bookmarks', async items => {
+          if (items.bookmarks !== undefined) {
+            if (items.bookmarks.length !== 0) {
+              const currentBookmarksArray = items.bookmarks;
 
-          for (let i = currentBookmarksArray.length - 1; i >= 0; i -= 1) {
-            count += 1;
-            console.log(count);
-            const bookmarkId = currentBookmarksArray[i];
-            // eslint-disable-next-line no-await-in-loop
-            const res = await fetchImageData(bookmarkId);
-            const imageDetailResponse = res[0];
-            const responseCode = res[1];
-            console.log(imageDetailResponse);
-            console.log(responseCode);
-            const imageObject = {};
-            if (responseCode === 200) {
-              imageObject.thumbnail = imageDetailResponse.thumbnail;
-              imageObject.license = imageDetailResponse.license;
-              newBookmarks[bookmarkId] = imageObject;
+              for (let i = currentBookmarksArray.length - 1; i >= 0; i -= 1) {
+                count += 1;
+                console.log(count);
+                const bookmarkId = currentBookmarksArray[i];
+                // eslint-disable-next-line no-await-in-loop
+                const res = await fetchImageData(bookmarkId);
+                const imageDetailResponse = res[0];
+                const responseCode = res[1];
+                console.log(imageDetailResponse);
+                console.log(responseCode);
+                const imageObject = {};
+                if (responseCode === 200) {
+                  imageObject.thumbnail = imageDetailResponse.thumbnail;
+                  imageObject.license = imageDetailResponse.license;
+                  newBookmarks[bookmarkId] = imageObject;
 
-              chrome.storage.sync.set({ newBookmarks }, () => {
-                const idx = currentBookmarksArray.indexOf(bookmarkId);
-                if (idx > -1) {
-                  currentBookmarksArray.splice(idx, 1);
+                  chrome.storage.sync.set({ newBookmarks }, () => {
+                    const idx = currentBookmarksArray.indexOf(bookmarkId);
+                    if (idx > -1) {
+                      currentBookmarksArray.splice(idx, 1);
+                    }
+
+                    chrome.storage.sync.set({ bookmarks: currentBookmarksArray });
+                  });
                 }
+              }
 
-                chrome.storage.sync.set({ bookmarks: currentBookmarksArray });
+              console.log(newBookmarks);
+              chrome.storage.sync.get(null, it => {
+                console.log(it);
               });
             }
+
+            console.log('final');
+            chrome.storage.sync.remove('bookmarks');
+            chrome.storage.sync.get({ newBookmarks: {} }, items2 => {
+              chrome.storage.sync.set({ bookmarks: items2.newBookmarks });
+              chrome.storage.sync.remove('newBookmarks');
+            });
+            document.querySelector('.notification__popup--background').style.display = 'none';
+            chrome.storage.sync.set({ bookmarksMigrationDone: true }, () => {
+              console.log('migration done');
+            });
+            chrome.storage.sync.get(null, it => {
+              console.log(it);
+            });
           }
-
-          console.log(newBookmarks);
-          chrome.storage.sync.get(null, it => {
-            console.log(it);
-          });
-        }
-
-        console.log('final');
-        chrome.storage.sync.remove('bookmarks');
-        chrome.storage.sync.get({ newBookmarks: {} }, items2 => {
-          chrome.storage.sync.set({ bookmarks: items2.newBookmarks });
-          chrome.storage.sync.remove('newBookmarks');
         });
-        chrome.storage.sync.get(null, it => {
-          console.log(it);
-        });
-      }
-    });
+      });
+    }
   });
 }
 
