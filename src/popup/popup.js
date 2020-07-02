@@ -701,7 +701,12 @@ async function testing() {
                 console.log(responseCode);
                 const imageObject = {};
                 if (responseCode === 200) {
-                  imageObject.thumbnail = imageDetailResponse.thumbnail;
+                  if (!imageDetailResponse.thumbnail) {
+                    console.log(imageDetailResponse.source);
+                  }
+                  imageObject.thumbnail = imageDetailResponse.thumbnail
+                    ? imageDetailResponse.thumbnail
+                    : imageDetailResponse.url;
                   imageObject.license = imageDetailResponse.license;
                   newBookmarks[bookmarkId] = imageObject;
 
