@@ -615,19 +615,6 @@ window.addEventListener('scroll', () => {
 
 elements.buttonBackToTop.addEventListener('click', () => window.scrollTo(0, 0));
 
-chrome.storage.sync.get({ notificationShown: false }, items => {
-  // console.log(items);
-  if (items.notificationShown === false) {
-    document.querySelector('.notification__popup--background').style.display = 'flex';
-
-    document.querySelector('.notification__popup--button').addEventListener('click', () => {
-      chrome.storage.sync.set({ notificationShown: true }, () => {
-        document.querySelector('.notification__popup--background').style.display = 'none';
-      });
-    });
-  }
-});
-
 const bookmarksIds = [
   'd5d7ffa1-ff1c-449d-b454-cd3da405a678',
   '65988c4c-2db6-43a7-bafd-b94787912a8b',
