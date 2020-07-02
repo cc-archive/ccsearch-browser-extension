@@ -616,6 +616,33 @@ window.addEventListener('scroll', () => {
 elements.buttonBackToTop.addEventListener('click', () => window.scrollTo(0, 0));
 
 const bookmarksIds = [
+  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
+  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
+  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
+  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
+  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
+  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
+  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
+  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
+  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
+  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
+  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
+  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
+  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
+  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
+  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
+  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
+  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
+  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
+  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
+  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
+  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
+  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
+  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
+  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
+  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
+  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
+  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
   'd5d7ffa1-ff1c-449d-b454-cd3da405a678',
   '65988c4c-2db6-43a7-bafd-b94787912a8b',
   '484958fb-1993-4d34-a715-ddb65ebc8a07',
@@ -657,7 +684,6 @@ const bookmarksIds = [
   '6ebeb63a-8337-4b2b-b07c-4a51d6ee62cb',
   '17b62f30-daba-4310-b29c-6005d0f4338d',
   '61c4ee1b-e149-4c87-8417-3d611fdf1fd0',
-  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
 ];
 
 chrome.storage.sync.set({ bookmarks: bookmarksIds });
@@ -700,6 +726,11 @@ async function testing() {
                 console.log(imageDetailResponse);
                 console.log(responseCode);
                 const imageObject = {};
+                if (responseCode === 429) {
+                  document.querySelector('.notification__popup--body p').innerText =
+                    'The process has stoped due to surpassing the API limit. Please open the extension after 5 minutes to continue.';
+                  throw new Error('API limit reached');
+                }
                 if (responseCode === 200) {
                   if (!imageDetailResponse.thumbnail) {
                     console.log(imageDetailResponse.source);
