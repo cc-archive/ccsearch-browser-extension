@@ -225,6 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       chrome.storage.sync.get(null, it => {
         console.log(it);
+        console.log(Object.keys(it.bookmarks).length);
       });
     }
   });

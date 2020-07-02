@@ -656,13 +656,13 @@ const bookmarksIds = [
   '83b7fb03-1518-46b5-817d-0067e28683ac',
   '6ebeb63a-8337-4b2b-b07c-4a51d6ee62cb',
   '17b62f30-daba-4310-b29c-6005d0f4338d',
-  '17b62f30-daba-4310-b29c-6005d0f4338d',
   '61c4ee1b-e149-4c87-8417-3d611fdf1fd0',
   '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
 ];
 
 chrome.storage.sync.set({ bookmarks: bookmarksIds });
 chrome.storage.sync.remove('newBookmarks');
+chrome.storage.sync.remove('bookmarksMigrationDone');
 
 chrome.storage.sync.get(null, it => {
   console.log(it);
@@ -696,6 +696,7 @@ async function testing() {
                 const res = await fetchImageData(bookmarkId);
                 const imageDetailResponse = res[0];
                 const responseCode = res[1];
+                console.log(bookmarkId);
                 console.log(imageDetailResponse);
                 console.log(responseCode);
                 const imageObject = {};
@@ -727,7 +728,8 @@ async function testing() {
               chrome.storage.sync.set({ bookmarks: items2.newBookmarks });
               chrome.storage.sync.remove('newBookmarks');
             });
-            document.querySelector('.notification__popup--background').style.display = 'none';
+            document.querySelector('.notification__popup--body p').innerText =
+              'Done! Please close and open the extension again.';
             chrome.storage.sync.set({ bookmarksMigrationDone: true }, () => {
               console.log('migration done');
             });
