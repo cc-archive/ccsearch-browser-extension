@@ -33,9 +33,16 @@ import {
   loadUserDefaults,
   toggleOnFilterDropDownCheckboxes,
 } from './filterModule';
-import { handleImageAttributionDownload, handleImageDownload, fetchImageData } from './infoPopupModule';
+import { handleImageAttributionDownload, handleImageDownload } from './infoPopupModule';
 import { addSpinner } from './spinner';
-import { showNotification, removeNode, getLatestSources, restoreInitialContent, showModal } from '../utils';
+import {
+  showNotification,
+  removeNode,
+  getLatestSources,
+  restoreInitialContent,
+  showModal,
+  fetchImageData,
+} from '../utils';
 import loadStoredContentToUI from './popup.utils';
 
 // global object to store the application variables
