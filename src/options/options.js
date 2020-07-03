@@ -77,6 +77,17 @@ elements.enableMatureContentCheckbox.addEventListener('click', () => {
 
 function addLegacyBookmarksToStorage(bookmarksArray) {
   console.log(bookmarksArray);
+  chrome.storage.sync.get({ bookmarks: {} }, items => {
+    // if user tries to import bookmarks before the bookmarks storage data is updated
+    if (Array.isArray(items.bookmarks)) {
+      showNotification(
+        'Error: First please open the extension popup to trigger the automatic update of bookmarks section. It will only take a few minutes',
+        'negative',
+        'snackbar-options',
+      );
+      throw new Error('Bookmarks data structures not updated');
+    }
+  });
 }
 
 function handleLegacyBookmarksFile(bookmarksArray) {
