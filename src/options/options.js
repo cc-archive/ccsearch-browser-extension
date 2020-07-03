@@ -120,7 +120,7 @@ elements.importBookmarksButton.addEventListener('click', () => {
         console.log(bookmarksObject);
         console.log(typeof bookmarksObject);
         if (typeof bookmarksObject === 'object') {
-          if (!Array.isArray(bookmarksObject)) {
+          if (Array.isArray(bookmarksObject)) {
             handleLegacyBookmarksFile(bookmarksObject);
           } else if (!(Object.keys(bookmarksObject).length > 0))
             showNotification('Error: No bookmarks found in the file', 'negative', 'snackbar-options');
