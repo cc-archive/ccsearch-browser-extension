@@ -75,7 +75,7 @@ export function saveFiltersOptions() {
   saveSingleFilter(elements.sourceInputs);
 }
 
-export function updateBookmarks(newBookmarksObject) {
+export function addBookmarksToStorage(newBookmarksObject) {
   chrome.storage.sync.get({ bookmarks: {} }, items => {
     const bookmarksObject = items.bookmarks;
     const bookmarksImageIds = Object.keys(bookmarksObject);

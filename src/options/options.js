@@ -1,5 +1,5 @@
 import elements from './base';
-import { init, saveFiltersOptions, updateBookmarks, toggleAccordion } from './helper';
+import { init, saveFiltersOptions, toggleAccordion, addBookmarksToStorage } from './helper';
 import { showNotification } from '../utils';
 
 document.addEventListener('DOMContentLoaded', init);
@@ -75,6 +75,24 @@ elements.enableMatureContentCheckbox.addEventListener('click', () => {
   );
 });
 
+function addLegacyBookmarksToStorage(bookmarksArray) {
+  console.log(bookmarksArray);
+}
+
+function handleLegacyBookmarksFile(bookmarksArray) {
+  try {
+    console.log(bookmarksArray);
+    console.log(typeof bookmarksArray);
+    if (bookmarksArray.length > 0) {
+      showNotification('Error: No bookmarks found in the file', 'negative', 'snackbar-options');
+    } else {
+      addLegacyBookmarksToStorage(bookmarksArray);
+    }
+  } catch (error) {
+    showNotification('Error in parsing file', 'negative', 'snackbar-options');
+  }
+}
+
 elements.importBookmarksButton.addEventListener('click', () => {
   const file = elements.importBookmarksInput.files[0];
   if (!file) {
@@ -90,11 +108,13 @@ elements.importBookmarksButton.addEventListener('click', () => {
         const bookmarksObject = JSON.parse(fileContents);
         console.log(bookmarksObject);
         console.log(typeof bookmarksObject);
-        if (typeof bookmarksObject === 'object' && !Array.isArray(bookmarksObject)) {
-          if (!(Object.keys(bookmarksObject).length > 0))
+        if (typeof bookmarksObject === 'object') {
+          if (!Array.isArray(bookmarksObject)) {
+            handleLegacyBookmarksFile(bookmarksObject);
+          } else if (!(Object.keys(bookmarksObject).length > 0))
             showNotification('Error: No bookmarks found in the file', 'negative', 'snackbar-options');
           else {
-            updateBookmarks(bookmarksObject);
+            addBookmarksToStorage(bookmarksObject);
           }
         } else {
           showNotification('Error: File contents not in the required format', 'negative', 'snackbar-options');
