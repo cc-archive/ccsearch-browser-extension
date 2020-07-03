@@ -1,6 +1,6 @@
 import elements from './base';
 import { init, saveFiltersOptions, toggleAccordion, addBookmarksToStorage } from './helper';
-import { showNotification } from '../utils';
+import { showNotification, fetchImageData } from '../utils';
 
 document.addEventListener('DOMContentLoaded', init);
 
@@ -75,17 +75,45 @@ elements.enableMatureContentCheckbox.addEventListener('click', () => {
   );
 });
 
-function addLegacyBookmarksToStorage(bookmarksArray) {
-  console.log(bookmarksArray);
-  chrome.storage.sync.get({ bookmarks: {} }, items => {
+async function addLegacyBookmarksToStorage(bookmarksArray) {
+  console.log('adding legacy to storage');
+  chrome.storage.sync.get({ bookmarks: {} }, async items => {
+    const bookmarksObject = items.bookmarks;
     // if user tries to import bookmarks before the bookmarks storage data is updated
-    if (Array.isArray(items.bookmarks)) {
+    if (Array.isArray(bookmarksObject)) {
       showNotification(
         'Error: First please open the extension popup to trigger the automatic update of bookmarks section. It will only take a few minutes',
         'negative',
         'snackbar-options',
       );
       throw new Error('Bookmarks data structures not updated');
+    }
+
+    let count = 0;
+    for (let i = 0; i < bookmarksArray.length; i += 1) {
+      count += 1;
+      console.log(count);
+      const bookmarkId = bookmarksArray[i];
+      // eslint-disable-next-line no-await-in-loop
+      const res = await fetchImageData(bookmarkId);
+      const imageDetailResponse = res[0];
+      const responseCode = res[1];
+      console.log(bookmarkId);
+      console.log(imageDetailResponse);
+      console.log(responseCode);
+      const imageObject = {};
+      if (responseCode === 200) {
+        if (!imageDetailResponse.thumbnail) {
+          console.log(imageDetailResponse.source);
+        }
+        imageObject.thumbnail = imageDetailResponse.thumbnail ? imageDetailResponse.thumbnail : imageDetailResponse.url;
+        imageObject.license = imageDetailResponse.license;
+        bookmarksObject[bookmarkId] = imageObject;
+
+        chrome.storage.sync.set({ bookmarks: bookmarksObject }, () => {
+          console.log('intermediate write');
+        });
+      }
     }
   });
 }
@@ -94,9 +122,10 @@ function handleLegacyBookmarksFile(bookmarksArray) {
   try {
     console.log(bookmarksArray);
     console.log(typeof bookmarksArray);
-    if (bookmarksArray.length > 0) {
+    if (!bookmarksArray.length > 0) {
       showNotification('Error: No bookmarks found in the file', 'negative', 'snackbar-options');
     } else {
+      console.log('calling legacy');
       addLegacyBookmarksToStorage(bookmarksArray);
     }
   } catch (error) {
