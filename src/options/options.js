@@ -94,25 +94,29 @@ async function addLegacyBookmarksToStorage(bookmarksArray) {
       count += 1;
       console.log(count);
       const bookmarkId = bookmarksArray[i];
-      // eslint-disable-next-line no-await-in-loop
-      const res = await fetchImageData(bookmarkId);
-      const imageDetailResponse = res[0];
-      const responseCode = res[1];
-      console.log(bookmarkId);
-      console.log(imageDetailResponse);
-      console.log(responseCode);
-      const imageObject = {};
-      if (responseCode === 200) {
-        if (!imageDetailResponse.thumbnail) {
-          console.log(imageDetailResponse.source);
-        }
-        imageObject.thumbnail = imageDetailResponse.thumbnail ? imageDetailResponse.thumbnail : imageDetailResponse.url;
-        imageObject.license = imageDetailResponse.license;
-        bookmarksObject[bookmarkId] = imageObject;
+      if (!Object.prototype.hasOwnProperty.call(bookmarksObject, bookmarkId)) {
+        // eslint-disable-next-line no-await-in-loop
+        const res = await fetchImageData(bookmarkId);
+        const imageDetailResponse = res[0];
+        const responseCode = res[1];
+        console.log(bookmarkId);
+        console.log(imageDetailResponse);
+        console.log(responseCode);
+        const imageObject = {};
+        if (responseCode === 200) {
+          if (!imageDetailResponse.thumbnail) {
+            console.log(imageDetailResponse.source);
+          }
+          imageObject.thumbnail = imageDetailResponse.thumbnail
+            ? imageDetailResponse.thumbnail
+            : imageDetailResponse.url;
+          imageObject.license = imageDetailResponse.license;
+          bookmarksObject[bookmarkId] = imageObject;
 
-        chrome.storage.sync.set({ bookmarks: bookmarksObject }, () => {
-          console.log('intermediate write');
-        });
+          chrome.storage.sync.set({ bookmarks: bookmarksObject }, () => {
+            console.log('intermediate write');
+          });
+        }
       }
     }
   });
