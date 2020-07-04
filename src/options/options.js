@@ -103,6 +103,11 @@ async function addLegacyBookmarksToStorage(bookmarksArray) {
         console.log(imageDetailResponse);
         console.log(responseCode);
         const imageObject = {};
+        if (responseCode === 429) {
+          document.querySelector('.notification__options--body p').innerText =
+            'The process has stoped due to surpassing the API limit. Some bookmarks have been imported. Refresh and upload the file after 5 minutes to import the rest.';
+          throw new Error('API limit reached');
+        }
         if (responseCode === 200) {
           if (!imageDetailResponse.thumbnail) {
             console.log(imageDetailResponse.source);
@@ -112,13 +117,13 @@ async function addLegacyBookmarksToStorage(bookmarksArray) {
             : imageDetailResponse.url;
           imageObject.license = imageDetailResponse.license;
           bookmarksObject[bookmarkId] = imageObject;
-
-          chrome.storage.sync.set({ bookmarks: bookmarksObject }, () => {
-            console.log('intermediate write');
-          });
         }
+        chrome.storage.sync.set({ bookmarks: bookmarksObject }, () => {
+          console.log('intermediate write');
+        });
       }
     }
+    document.querySelector('.notification__options--body p').innerText = 'Bookmarks imported';
   });
 }
 
@@ -130,6 +135,7 @@ function handleLegacyBookmarksFile(bookmarksArray) {
       showNotification('Error: No bookmarks found in the file', 'negative', 'snackbar-options');
     } else {
       console.log('calling legacy');
+      document.querySelector('.notification__options--background').style.display = 'flex';
       addLegacyBookmarksToStorage(bookmarksArray);
     }
   } catch (error) {
