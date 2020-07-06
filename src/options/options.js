@@ -76,7 +76,6 @@ elements.enableMatureContentCheckbox.addEventListener('click', () => {
 });
 
 async function addLegacyBookmarksToStorage(bookmarksArray) {
-  console.log('adding legacy to storage');
   chrome.storage.sync.get({ bookmarks: {} }, async items => {
     const bookmarksObject = items.bookmarks;
     // if user tries to import bookmarks before the bookmarks storage data is updated
@@ -89,38 +88,26 @@ async function addLegacyBookmarksToStorage(bookmarksArray) {
       throw new Error('Bookmarks data structures not updated');
     }
 
-    let count = 0;
     for (let i = 0; i < bookmarksArray.length; i += 1) {
-      count += 1;
-      console.log(count);
       const bookmarkId = bookmarksArray[i];
       if (!Object.prototype.hasOwnProperty.call(bookmarksObject, bookmarkId)) {
         // eslint-disable-next-line no-await-in-loop
         const res = await fetchImageData(bookmarkId);
         const imageDetailResponse = res[0];
         const responseCode = res[1];
-        console.log(bookmarkId);
-        console.log(imageDetailResponse);
-        console.log(responseCode);
         const imageObject = {};
         if (responseCode === 429) {
           document.querySelector('.notification__options--body p').innerText =
             'The process has stoped due to surpassing the API limit. Some bookmarks have been imported. Refresh and upload the file after 5 minutes to import the rest.';
           throw new Error('API limit reached');
-        }
-        if (responseCode === 200) {
-          if (!imageDetailResponse.thumbnail) {
-            console.log(imageDetailResponse.source);
-          }
+        } else if (responseCode === 200) {
           imageObject.thumbnail = imageDetailResponse.thumbnail
             ? imageDetailResponse.thumbnail
             : imageDetailResponse.url;
           imageObject.license = imageDetailResponse.license;
           bookmarksObject[bookmarkId] = imageObject;
         }
-        chrome.storage.sync.set({ bookmarks: bookmarksObject }, () => {
-          console.log('intermediate write');
-        });
+        chrome.storage.sync.set({ bookmarks: bookmarksObject });
       }
     }
     document.querySelector('.notification__options--body p').innerText = 'Bookmarks imported';
@@ -129,12 +116,9 @@ async function addLegacyBookmarksToStorage(bookmarksArray) {
 
 function handleLegacyBookmarksFile(bookmarksArray) {
   try {
-    console.log(bookmarksArray);
-    console.log(typeof bookmarksArray);
     if (!bookmarksArray.length > 0) {
       showNotification('Error: No bookmarks found in the file', 'negative', 'snackbar-options');
     } else {
-      console.log('calling legacy');
       document.querySelector('.notification__options--background').style.display = 'flex';
       addLegacyBookmarksToStorage(bookmarksArray);
     }
@@ -156,8 +140,6 @@ elements.importBookmarksButton.addEventListener('click', () => {
       const fileContents = evt.target.result;
       try {
         const bookmarksObject = JSON.parse(fileContents);
-        console.log(bookmarksObject);
-        console.log(typeof bookmarksObject);
         if (typeof bookmarksObject === 'object') {
           if (Array.isArray(bookmarksObject)) {
             handleLegacyBookmarksFile(bookmarksObject);
@@ -178,14 +160,10 @@ elements.importBookmarksButton.addEventListener('click', () => {
 
 // tab switching logic
 elements.tabsHeader.addEventListener('click', e => {
-  console.log(e.target);
-  console.log(e.target.parentElement);
   // removing active class
   if (e.target.parentElement.classList.contains('tab')) {
     Array.prototype.forEach.call(e.currentTarget.getElementsByClassName('is-active'), element => {
       element.classList.remove('is-active');
-      console.log('this is inner element');
-      console.log(element);
     });
 
     // add active class to the clicked tab header
