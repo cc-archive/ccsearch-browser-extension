@@ -1,6 +1,12 @@
 import elements from './base';
-import { init, saveFiltersOptions, toggleAccordion, addBookmarksToStorage } from './helper';
-import { showNotification, fetchImageData } from '../utils';
+import {
+  init,
+  saveFiltersOptions,
+  toggleAccordion,
+  addBookmarksToStorage,
+  addLegacyBookmarksToStorage,
+} from './helper';
+import { showNotification } from '../utils';
 
 document.addEventListener('DOMContentLoaded', init);
 
@@ -74,45 +80,6 @@ elements.enableMatureContentCheckbox.addEventListener('click', () => {
     },
   );
 });
-
-async function addLegacyBookmarksToStorage(bookmarksArray) {
-  chrome.storage.sync.get({ bookmarks: {} }, async items => {
-    const bookmarksObject = items.bookmarks;
-    // if user tries to import bookmarks before the bookmarks storage data is updated
-    if (Array.isArray(bookmarksObject)) {
-      showNotification(
-        'Error: First please open the extension popup to trigger the automatic update of bookmarks section. It will only take a few minutes',
-        'negative',
-        'snackbar-options',
-      );
-      throw new Error('Bookmarks data structures not updated');
-    }
-
-    for (let i = 0; i < bookmarksArray.length; i += 1) {
-      const bookmarkId = bookmarksArray[i];
-      if (!Object.prototype.hasOwnProperty.call(bookmarksObject, bookmarkId)) {
-        // eslint-disable-next-line no-await-in-loop
-        const res = await fetchImageData(bookmarkId);
-        const imageDetailResponse = res[0];
-        const responseCode = res[1];
-        const imageObject = {};
-        if (responseCode === 429) {
-          document.querySelector('.notification__options--body p').innerText =
-            'The process has stoped due to surpassing the API limit. Some bookmarks have been imported. Refresh and upload the file after 5 minutes to import the rest.';
-          throw new Error('API limit reached');
-        } else if (responseCode === 200) {
-          imageObject.thumbnail = imageDetailResponse.thumbnail
-            ? imageDetailResponse.thumbnail
-            : imageDetailResponse.url;
-          imageObject.license = imageDetailResponse.license;
-          bookmarksObject[bookmarkId] = imageObject;
-        }
-        chrome.storage.sync.set({ bookmarks: bookmarksObject });
-      }
-    }
-    document.querySelector('.notification__options--body p').innerText = 'Bookmarks imported';
-  });
-}
 
 function handleLegacyBookmarksFile(bookmarksArray) {
   try {
