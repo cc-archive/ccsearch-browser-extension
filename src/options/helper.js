@@ -112,9 +112,15 @@ export async function addLegacyBookmarksToStorage(bookmarksArray) {
         'Error: First please open the extension popup to trigger the automatic update of bookmarks section. It will only take a few minutes',
         'negative',
         'snackbar-options',
+        5500,
       );
       throw new Error('Bookmarks data structures not updated');
     }
+
+    document.querySelector('.notification__options--background').style.display = 'flex';
+    document.querySelector('.notification__options--body button').addEventListener('click', () => {
+      document.querySelector('.notification__options--background').style.display = 'none';
+    });
 
     for (let i = 0; i < bookmarksArray.length; i += 1) {
       const bookmarkId = bookmarksArray[i];
