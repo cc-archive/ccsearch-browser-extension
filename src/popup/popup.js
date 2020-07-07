@@ -406,7 +406,7 @@ elements.clearSearchButton[0].addEventListener('click', () => {
     elements.clearSearchButton[0].classList.add('display-none');
     elements.inputField.value = '';
     removeOldSearchResults();
-    removeLoadMoreButton(elements.loadMoreButtonWrapper);
+    removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);
     elements.gridPrimary.setAttribute('style', 'position: relative; height: 0px;');
     localStorage.clear();
     restoreInitialContent('primary');
@@ -584,8 +584,8 @@ window.appObject.activeSection = 'search';
 window.appObject.searchByCollectionActivated = localStorage.getItem('searchByCollectionActivated') === 'true';
 window.appObject.collectionName = localStorage.getItem('collectionName');
 
-elements.loadMoreButton.addEventListener('click', () => {
-  removeLoadMoreButton(elements.loadMoreButtonWrapper);
+elements.loadMoreSearchButton.addEventListener('click', () => {
+  removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);
   addSpinner(elements.spinnerPlaceholderGrid, 'for-bottom');
   nextRequest(window.appObject.pageNo);
 });
