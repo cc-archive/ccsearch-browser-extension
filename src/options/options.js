@@ -83,6 +83,9 @@ elements.enableMatureContentCheckbox.addEventListener('click', () => {
 
 function handleLegacyBookmarksFile(bookmarksArray) {
   try {
+    document.querySelector('.notification__options--body button').addEventListener('click', () => {
+      document.querySelector('.notification__options--background').style.display = 'none';
+    });
     if (!bookmarksArray.length > 0) {
       showNotification('Error: No bookmarks found in the file', 'negative', 'snackbar-options');
     } else {

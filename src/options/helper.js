@@ -138,7 +138,9 @@ export async function addLegacyBookmarksToStorage(bookmarksArray) {
         chrome.storage.sync.set({ bookmarks: bookmarksObject });
       }
     }
-    document.querySelector('.notification__options--body p').innerText = 'Bookmarks imported';
+    document.querySelector('.notification__options--body button').disabled = false;
+    document.querySelector('.notification__options--body button').classList.remove('is-loading');
+    showNotification('Bookmarks updated!', 'positive', 'snackbar-options');
   });
 }
 
