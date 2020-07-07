@@ -47,7 +47,7 @@ export function restoreInitialContent(context) {
     if (context === 'primary') {
       initialInfoElement = `<p></p>`;
     } else if (context === 'bookmarks') {
-      initialInfoElement = `<p class="vocab paragraph inherit-colored negative-indicating initial-info bookmarks__initial-info">
+      initialInfoElement = `<p class="initial-info bookmarks__initial-info has-text-tomato">
               No Bookmarks yet
             </p>`;
     }
@@ -86,4 +86,13 @@ export function removeChildNodes(targetNode) {
   while (targetNode.lastChild) {
     targetNode.removeChild(targetNode.lastChild);
   }
+}
+
+export async function fetchImageData(imageId) {
+  const url = `https://api.creativecommons.engineering/v1/images/${imageId}`;
+  const data = await fetch(url);
+  const responseCode = data.status;
+  const res = await data.json();
+
+  return [res, responseCode];
 }

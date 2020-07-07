@@ -1,5 +1,5 @@
 import { elements } from './base';
-import { showNotification, removeChildNodes, restoreInitialContent } from '../utils';
+import { removeChildNodes } from '../utils';
 
 const Masonry = require('masonry-layout');
 
@@ -17,31 +17,4 @@ export function removeBookmarkImages() {
   div.classList.add('gutter-sizer');
   removeChildNodes(elements.gridBookmarks);
   elements.gridBookmarks.appendChild(div);
-}
-
-export function removeBookmark(e) {
-  const imageId = e.target.dataset.imageid;
-  chrome.storage.sync.get({ bookmarks: [] }, items => {
-    const bookmarksArray = items.bookmarks;
-
-    const bookmarkIndex = bookmarksArray.indexOf(imageId);
-    bookmarksArray.splice(bookmarkIndex, 1);
-
-    let isLastImage = false;
-    if (bookmarksArray.length === 0) {
-      isLastImage = true;
-    }
-
-    chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
-      const imageDiv = document.getElementById(`id_${imageId}`);
-      imageDiv.parentElement.removeChild(imageDiv);
-      // eslint-disable-next-line no-use-before-define
-      msnry.layout(); // layout grid again
-      showNotification('Bookmark removed', 'positive', 'snackbar-bookmarks');
-
-      if (isLastImage) {
-        restoreInitialContent('bookmarks');
-      }
-    });
-  });
 }

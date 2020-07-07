@@ -39,7 +39,7 @@ export const elements = {
   facebookShareButton: document.querySelector('#facebook-share'),
   twitterShareButton: document.querySelector('#twitter-share'),
   pinterestShareButton: document.querySelector('#pinterest-share'),
-  tumblrShareButton: document.querySelector('.fa-tumblr'),
+  tumblrShareButton: document.querySelector('#tumblr-share'),
   bookmarksIcon: document.getElementById('bookmarks-icon'),
   collectionsIcon: document.getElementById('collections-icon'),
   homeIcon: document.getElementById('home-icon'),

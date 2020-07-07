@@ -1,5 +1,11 @@
 import elements from './base';
-import { init, saveFiltersOptions, updateBookmarks, toggleAccordion } from './helper';
+import {
+  init,
+  saveFiltersOptions,
+  toggleAccordion,
+  addBookmarksToStorage,
+  addLegacyBookmarksToStorage,
+} from './helper';
 import { showNotification } from '../utils';
 
 document.addEventListener('DOMContentLoaded', init);
@@ -75,6 +81,18 @@ elements.enableMatureContentCheckbox.addEventListener('click', () => {
   );
 });
 
+function handleLegacyBookmarksFile(bookmarksArray) {
+  try {
+    if (!bookmarksArray.length > 0) {
+      showNotification('Error: No bookmarks found in the file', 'negative', 'snackbar-options');
+    } else {
+      addLegacyBookmarksToStorage(bookmarksArray);
+    }
+  } catch (error) {
+    showNotification('Error in parsing file', 'negative', 'snackbar-options');
+  }
+}
+
 elements.importBookmarksButton.addEventListener('click', () => {
   const file = elements.importBookmarksInput.files[0];
   if (!file) {
@@ -87,18 +105,20 @@ elements.importBookmarksButton.addEventListener('click', () => {
     reader.onload = evt => {
       const fileContents = evt.target.result;
       try {
-        const bookmarksArray = JSON.parse(fileContents);
-        if (Array.isArray(bookmarksArray)) {
-          if (!bookmarksArray.length > 0)
-            showNotification('No bookmark ids found in file', 'negative', 'snackbar-options');
+        const bookmarksObject = JSON.parse(fileContents);
+        if (typeof bookmarksObject === 'object') {
+          if (Array.isArray(bookmarksObject)) {
+            handleLegacyBookmarksFile(bookmarksObject);
+          } else if (!(Object.keys(bookmarksObject).length > 0))
+            showNotification('Error: No bookmarks found in the file', 'negative', 'snackbar-options');
           else {
-            updateBookmarks(bookmarksArray);
+            addBookmarksToStorage(bookmarksObject);
           }
         } else {
-          showNotification('Contents not in valid format of ["id1", "id2", ...]', 'negative', 'snackbar-options');
+          showNotification('Error: File contents not in the required format', 'negative', 'snackbar-options');
         }
       } catch (error) {
-        showNotification('This is not a valid JSON', 'negative', 'snackbar-options');
+        showNotification('Error in parsing file', 'negative', 'snackbar-options');
       }
     };
   }
@@ -106,14 +126,10 @@ elements.importBookmarksButton.addEventListener('click', () => {
 
 // tab switching logic
 elements.tabsHeader.addEventListener('click', e => {
-  console.log(e.target);
-  console.log(e.target.parentElement);
   // removing active class
   if (e.target.parentElement.classList.contains('tab')) {
     Array.prototype.forEach.call(e.currentTarget.getElementsByClassName('is-active'), element => {
       element.classList.remove('is-active');
-      console.log('this is inner element');
-      console.log(element);
     });
 
     // add active class to the clicked tab header

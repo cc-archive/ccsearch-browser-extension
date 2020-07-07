@@ -5,3 +5,31 @@
 .tabs-panel {
   padding-right: 21rem;
 }
+
+.notification__options {
+  &--background {
+    background: rgba(0, 0, 0, 0.4);
+    display: none;
+    height: 100%;
+    position: fixed;
+    text-align: center;
+    top: 0;
+    width: 100%;
+    z-index: 10000;
+
+    // display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &--body {
+    font-size: 1.6rem;
+    background-color: #fff;
+    box-shadow: 10px 10px 60px #555;
+    display: inline-block;
+    height: auto;
+    width: 70%;
+    // position: relative;
+    border-radius: 3px;
+    padding: 2px;
+  }
+}

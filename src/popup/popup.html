@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700&display=swap" rel="stylesheet" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="https://unpkg.com/@creativecommons/vocabulary@1.0.0-beta.14/css/vocabulary.css" />
+    <link rel="stylesheet" href="https://unpkg.com/@creativecommons/vocabulary@1.0.0-beta.16/css/vocabulary.css" />
     <link rel="stylesheet" href="popup.css" />
     <title>Creative Commons</title>
   </head>
@@ -89,10 +89,9 @@
     <div class="notification__popup--background">
       <div class="notification__popup--body">
         <p>
-          Hi, We'll be pushing an important update next week that will make bookmarks loading very fast and efficient.
-          Your bookmarks will not be deleted in the process but we do recommend you to export them as a backup. Thanks!
+          An important update to the bookmarks is underway. This might take few minutes depending on the internet
+          connection. Please don't close the extension.
         </p>
-        <button class="notification__popup--button button small is-primary margin-top-small">Ok</button>
       </div>
     </div>
 
@@ -198,16 +197,18 @@
           <div id="share" class="popup__tab-content">
             <h6 class="info__label margin-bottom-normal">Share</h6>
             <div class="share-icons">
-              <a href="#" id="facebook-share" title="share on facebook" target="_blank"
+              <a href="#" id="facebook-share" title="Share on facebook" target="_blank"
                 ><i class="icon colored facebook"></i
               ></a>
-              <a href="#" id="twitter-share" title="share on twitter" target="_blank"
+              <a href="#" id="twitter-share" title="Share on twitter" target="_blank"
                 ><i class="icon colored twitter"></i
               ></a>
-              <a href="#" id="pinterest-share" title="share on pinterest" target="_blank"
+              <a href="#" id="pinterest-share" title="Share on pinterest" target="_blank"
                 ><i class="icon colored pinterest"></i
               ></a>
-              <a href="#" class="fa fa-tumblr" title="share on tumblr" target="_blank"></a>
+              <a href="#" id="tumblr-share" title="Share on tumblr" target="_blank">
+                <i class="icon colored tumblr"></i>
+              </a>
             </div>
           </div>
         </div>

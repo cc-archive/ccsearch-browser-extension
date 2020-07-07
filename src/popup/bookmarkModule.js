@@ -1,7 +1,7 @@
 import { elements } from './base';
 import { activatePopup } from './infoPopupModule';
-import { msnry, removeBookmarkImages, removeBookmark } from './bookmarkModule.utils';
-import { unicodeToString, removeLoadMoreButton, getSourceDisplayName } from './helper';
+import { msnry, removeBookmarkImages } from './bookmarkModule.utils';
+import { removeLoadMoreButton } from './helper';
 // eslint-disable-next-line import/no-cycle
 import { removeOldSearchResults, removeLoaderAnimation, checkInternetConnection } from './searchModule';
 import { addSpinner, removeSpinner } from './spinner';
@@ -19,22 +19,32 @@ const bookmarkDOM = {};
 // Store number of selected bookmarks for export
 let selectedBookmarks = 0;
 
+function getImageDetail(eventTarget) {
+  const imageObject = {};
+  imageObject.thumbnail = eventTarget.dataset.imageThumbnail;
+  imageObject.license = eventTarget.dataset.imageLicense;
+
+  return imageObject;
+}
+
 export default function toggleBookmark(e) {
-  chrome.storage.sync.get({ bookmarks: [] }, items => {
-    const bookmarksArray = items.bookmarks;
-    const imageId = e.target.dataset.imageid;
-    if (bookmarksArray.indexOf(imageId) === -1) {
-      bookmarksArray.push(imageId);
-      chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
+  chrome.storage.sync.get({ bookmarks: {} }, items => {
+    const bookmarksObject = items.bookmarks;
+    const { imageId } = e.target.dataset;
+    // console.log(bookmarksObject);
+    if (!Object.prototype.hasOwnProperty.call(bookmarksObject, imageId)) {
+      const imageDetail = getImageDetail(e.target);
+      // bookmarksArray.push(imageId);
+      bookmarksObject[imageId] = imageDetail;
+      chrome.storage.sync.set({ bookmarks: bookmarksObject }, () => {
         e.target.classList.remove('fa-bookmark-o');
         e.target.classList.add('fa-bookmark');
         e.target.title = 'Remove Bookmark';
         showNotification('Image Bookmarked', 'positive', 'snackbar-bookmarks');
       });
     } else {
-      const bookmarkIndex = bookmarksArray.indexOf(imageId);
-      bookmarksArray.splice(bookmarkIndex, 1);
-      chrome.storage.sync.set({ bookmarks: bookmarksArray }, () => {
+      delete bookmarksObject[imageId];
+      chrome.storage.sync.set({ bookmarks: bookmarksObject }, () => {
         e.target.classList.remove('fa-bookmark');
         e.target.classList.add('fa-bookmark-o');
         e.target.title = 'Bookmark Image';
@@ -54,172 +64,137 @@ function appendToGrid(msnryObject, fragment, e, grid) {
   });
 }
 
-function loadImages() {
-  chrome.storage.sync.get({ bookmarks: [] }, items => {
-    const bookmarksArray = items.bookmarks;
-    if (bookmarksArray.length > 0) {
+function loadBookmarkImages() {
+  chrome.storage.sync.get({ bookmarks: {} }, items => {
+    const bookmarksObject = items.bookmarks;
+    const bookmarkImageIds = Object.keys(bookmarksObject);
+    if (bookmarkImageIds.length > 0) {
       removeNode('bookmarks__initial-info');
     } else {
       removeSpinner(elements.spinnerPlaceholderBookmarks);
       restoreInitialContent('bookmarks');
     }
 
-    // get the details of each image
+    bookmarkImageIds.forEach(imageId => {
+      const res = bookmarksObject[imageId];
+      const fragment = document.createDocumentFragment();
 
-    bookmarksArray.forEach(imageId => {
-      const url = `http://api.creativecommons.engineering/v1/images/${imageId}`;
-      fetch(url)
-        .then(data => data.json())
-        .then(res => {
-          const fragment = document.createDocumentFragment();
+      const { thumbnail, license } = res;
+      const licenseArray = license.split('-'); // split license in individual characteristics
 
-          const thumbnail = res.thumbnail ? res.thumbnail : res.url;
-          const title = unicodeToString(res.title);
-          const { license, id } = res;
-          const source = getSourceDisplayName(res.source);
-          const licenseArray = license.split('-'); // split license in individual characteristics
-          const foreignLandingUrl = res.foreign_landing_url;
+      // make an image element
+      const imgElement = document.createElement('img');
+      imgElement.setAttribute('src', thumbnail);
+      imgElement.setAttribute('class', 'image-thumbnails');
+      imgElement.setAttribute('id', imageId);
 
-          // make an image element
-          const imgElement = document.createElement('img');
-          imgElement.setAttribute('src', thumbnail);
-          imgElement.setAttribute('class', 'image-thumbnails');
-          imgElement.setAttribute('id', id);
+      // make select button
+      const selectCheckboxElement = document.createElement('span');
+      selectCheckboxElement.setAttribute('class', 'bookmark-select');
+      const selectCheckbox = document.createElement('input');
+      selectCheckbox.setAttribute('type', 'checkbox');
+      selectCheckbox.setAttribute('data-image-id', imageId);
+      selectCheckbox.setAttribute('title', 'Select Image');
+      selectCheckbox.setAttribute('data-image-thumbnail', thumbnail);
+      selectCheckbox.setAttribute('data-image-license', license);
+      selectCheckbox.classList.add('select-checkbox');
+      selectCheckbox.classList.add('margin-right-smaller');
+      selectCheckboxElement.appendChild(selectCheckbox);
 
-          // make a span to hold the title
-          const spanTitleElement = document.createElement('span');
-          spanTitleElement.setAttribute('class', 'extension-image-title');
-          spanTitleElement.setAttribute('title', title);
-          const imageTitleNode = document.createTextNode(title);
+      // make a span to hold the license icons
+      const spanLicenseElement = document.createElement('span');
+      spanLicenseElement.setAttribute('class', 'image-license');
 
-          // make a link to foreign landing page of image
-          const foreignLandingLinkElement = document.createElement('a');
-          foreignLandingLinkElement.setAttribute('href', foreignLandingUrl);
-          foreignLandingLinkElement.setAttribute('target', '_blank');
-          foreignLandingLinkElement.setAttribute('class', 'foreign-landing-url');
-          foreignLandingLinkElement.setAttribute('title', `Source: ${source}`);
-          foreignLandingLinkElement.appendChild(imageTitleNode);
+      // make a link to license description
+      const licenseLinkElement = document.createElement('a');
+      licenseLinkElement.setAttribute('href', `https://creativecommons.org/licenses/${license}/2.0/`);
+      licenseLinkElement.setAttribute('target', '_blank'); // open link in new tab
+      licenseLinkElement.setAttribute('title', license); // open link in new tab
 
-          spanTitleElement.appendChild(foreignLandingLinkElement);
+      // Array to hold license image elements
+      const licenseIconElementsArray = [];
 
-          // make select button
-          const selectCheckboxElement = document.createElement('span');
-          selectCheckboxElement.setAttribute('class', 'bookmark-select');
-          const selectCheckbox = document.createElement('input');
-          selectCheckbox.setAttribute('type', 'checkbox');
-          selectCheckbox.setAttribute('id', id);
-          selectCheckbox.setAttribute('title', 'Select Image');
-          selectCheckbox.classList.add('select-checkbox');
-          selectCheckbox.classList.add('margin-right-smaller');
-          selectCheckboxElement.appendChild(selectCheckbox);
+      // Add the default cc icon
+      let licenseIconElement = document.createElement('img');
+      licenseIconElement.setAttribute('src', 'img/license_logos/cc_icon.svg');
+      licenseIconElement.setAttribute('alt', 'cc_icon');
+      licenseIconElementsArray.push(licenseIconElement);
 
-          // make a span to hold the license icons
-          const spanLicenseElement = document.createElement('span');
-          spanLicenseElement.setAttribute('class', 'image-license');
+      // make and push license image elements
+      licenseArray.forEach(name => {
+        const lowerCaseName = `${name}`.toLowerCase();
+        licenseIconElement = document.createElement('img');
+        licenseIconElement.setAttribute('src', `img/license_logos/cc-${lowerCaseName}_icon.svg`);
+        licenseIconElement.setAttribute('alt', `cc-${lowerCaseName}_icon`);
+        licenseIconElementsArray.push(licenseIconElement);
+      });
 
-          // make a link to license description
-          const licenseLinkElement = document.createElement('a');
-          licenseLinkElement.setAttribute('href', `https://creativecommons.org/licenses/${license}/2.0/`);
-          licenseLinkElement.setAttribute('target', '_blank'); // open link in new tab
-          licenseLinkElement.setAttribute('title', license); // open link in new tab
+      licenseIconElementsArray.forEach(licenseIcon => {
+        licenseLinkElement.appendChild(licenseIcon);
+      });
 
-          // Array to hold license image elements
-          const licenseIconElementsArray = [];
+      spanLicenseElement.appendChild(licenseLinkElement);
 
-          // Add the default cc icon
-          let licenseIconElement = document.createElement('img');
-          licenseIconElement.setAttribute('src', 'img/license_logos/cc_icon.svg');
-          licenseIconElement.setAttribute('alt', 'cc_icon');
-          licenseIconElementsArray.push(licenseIconElement);
+      // make a div element to encapsulate image element
+      const divElement = document.createElement('div');
+      divElement.setAttribute('class', 'image');
+      divElement.id = `id_${imageId}`; // used for searching image div element
 
-          // make and push license image elements
-          licenseArray.forEach(name => {
-            const lowerCaseName = `${name}`.toLowerCase();
-            licenseIconElement = document.createElement('img');
-            licenseIconElement.setAttribute('src', `img/license_logos/cc-${lowerCaseName}_icon.svg`);
-            licenseIconElement.setAttribute('alt', `cc-${lowerCaseName}_icon`);
-            licenseIconElementsArray.push(licenseIconElement);
-          });
+      // adding event listener to open popup.
+      divElement.addEventListener('click', e => {
+        if (e.target.classList.contains('image')) {
+          checkInternetConnection();
+          const imageThumbnail = e.target.querySelector('.image-thumbnails');
+          activatePopup(imageThumbnail);
+        }
+      });
 
-          licenseIconElementsArray.forEach(licenseIcon => {
-            licenseLinkElement.appendChild(licenseIcon);
-          });
+      divElement.appendChild(imgElement);
+      divElement.appendChild(selectCheckboxElement);
+      divElement.appendChild(spanLicenseElement);
 
-          const bookmarkIcon = document.createElement('i');
-          bookmarkIcon.classList.add('fa');
-          bookmarkIcon.classList.add('fa-bookmark');
-          bookmarkIcon.classList.add('bookmark-icon');
-          bookmarkIcon.id = 'bookmark-icon';
-          bookmarkIcon.title = 'Remove bookmark';
-          bookmarkIcon.setAttribute('data-imageid', id);
-          bookmarkIcon.addEventListener('click', removeBookmark);
+      // div to act as grid itemj
+      const gridItemDiv = document.createElement('div');
+      gridItemDiv.setAttribute('class', 'grid-item');
 
-          spanLicenseElement.appendChild(licenseLinkElement);
-          spanLicenseElement.appendChild(bookmarkIcon);
+      gridItemDiv.appendChild(divElement);
 
-          // make a div element to encapsulate image element
-          const divElement = document.createElement('div');
-          divElement.setAttribute('class', 'image');
-          divElement.id = `id_${imageId}`; // used for searching image div element
+      fragment.appendChild(gridItemDiv);
 
-          // adding event listener to open popup.
-          divElement.addEventListener('click', e => {
-            if (e.target.classList.contains('image')) {
-              checkInternetConnection();
-              const imageThumbnail = e.target.querySelector('.image-thumbnails');
-              activatePopup(imageThumbnail);
-            }
-          });
+      removeSpinner(elements.spinnerPlaceholderBookmarks);
+      appendToGrid(msnry, fragment, gridItemDiv, elements.gridBookmarks);
+      // Add onClick event to all the checkboxes
 
-          divElement.appendChild(imgElement);
-          divElement.appendChild(selectCheckboxElement);
-          divElement.appendChild(spanTitleElement);
-          divElement.appendChild(spanLicenseElement);
+      // Get checkbox data from DOM
+      const checkbox = elements.selectCheckboxes[elements.selectCheckboxes.length - 1];
 
-          // div to act as grid itemj
-          const gridItemDiv = document.createElement('div');
-          gridItemDiv.setAttribute('class', 'grid-item');
+      // Initiate isChecked property of checkbox and update bookmarkDOM
+      checkbox.isChecked = false;
+      bookmarkDOM[checkbox.dataset.imageId] = checkbox;
+      // console.log(bookmarkDOM);
 
-          gridItemDiv.appendChild(divElement);
+      selectedBookmarks = 0;
+      elements.buttonSelectAllCheckbox[0].innerText = 'Select All';
 
-          fragment.appendChild(gridItemDiv);
+      // Add click function to keep checkbox data in sync with DOM
+      checkbox.addEventListener('click', () => {
+        // Check wheather the checkbox is already checked or not
+        if (checkbox.isChecked) {
+          checkbox.parentElement.removeAttribute('style');
+          selectedBookmarks -= 1;
+        } else {
+          checkbox.parentElement.setAttribute('style', 'opacity : 1');
+          selectedBookmarks += 1;
+        }
+        checkbox.isChecked = !checkbox.isChecked; // Update isChecked Property in checkbox
 
-          removeSpinner(elements.spinnerPlaceholderBookmarks);
-          appendToGrid(msnry, fragment, gridItemDiv, elements.gridBookmarks);
-        })
-        .then(() => {
-          // Add onClick event to all the checkboxes
-
-          // Get checkbox data from DOM
-          const checkbox = elements.selectCheckboxes[elements.selectCheckboxes.length - 1];
-
-          // Initiate isChecked property of checkbox and update bookmarkDOM
-          checkbox.isChecked = false;
-          bookmarkDOM[checkbox.getAttribute('id')] = checkbox;
-
-          selectedBookmarks = 0;
+        // Update SelectAll Button
+        if (selectedBookmarks === 0) {
           elements.buttonSelectAllCheckbox[0].innerText = 'Select All';
-
-          // Add click function to keep checkbox data in sync with DOM
-          checkbox.addEventListener('click', () => {
-            // Check wheather the checkbox is already checked or not
-            if (checkbox.isChecked) {
-              checkbox.parentElement.removeAttribute('style');
-              selectedBookmarks -= 1;
-            } else {
-              checkbox.parentElement.setAttribute('style', 'opacity : 1');
-              selectedBookmarks += 1;
-            }
-            checkbox.isChecked = !checkbox.isChecked; // Update isChecked Property in checkbox
-
-            // Update SelectAll Button
-            if (selectedBookmarks === 0) {
-              elements.buttonSelectAllCheckbox[0].innerText = 'Select All';
-            } else if (selectedBookmarks > 0) {
-              elements.buttonSelectAllCheckbox[0].innerText = 'Deselect All';
-            }
-          });
-        });
+        } else if (selectedBookmarks > 0) {
+          elements.buttonSelectAllCheckbox[0].innerText = 'Deselect All';
+        }
+      });
     });
   });
 }
@@ -246,7 +221,12 @@ document.addEventListener('DOMContentLoaded', () => {
       addSpinner(elements.spinnerPlaceholderBookmarks, 'original');
       removeOldSearchResults();
       removeLoaderAnimation();
-      loadImages();
+      loadBookmarkImages();
+
+      chrome.storage.sync.get(null, it => {
+        console.log(it);
+        console.log(Object.keys(it.bookmarks).length);
+      });
     }
   });
 
@@ -279,7 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   elements.collectionsIcon.addEventListener('click', () => {
-    console.log('collections clicked');
+    // console.log('collections clicked');
     if (window.appObject.activeSection !== 'collections') {
       window.appObject.activeSection = 'collections';
       elements.primarySection.style.display = 'none';
@@ -290,34 +270,35 @@ document.addEventListener('DOMContentLoaded', () => {
       removeSpinner(elements.spinnerPlaceholderCollections);
       addSpinner(elements.spinnerPlaceholderCollections, 'original');
       removeOldSearchResults();
+      removeBookmarkImages();
       removeChildNodes(elements.collectionsSectionBody);
       loadCollections();
     }
   });
 
   elements.deleteBookmarksButton.addEventListener('click', () => {
-    chrome.storage.sync.get({ bookmarks: [] }, items => {
-      const bookmarksArray = items.bookmarks;
+    chrome.storage.sync.get({ bookmarks: {} }, items => {
+      const bookmarksObject = items.bookmarks;
       const bookmarkDOMArray = Object.values(bookmarkDOM);
 
       // to store the id's of deleted bookmarks
       const deletedBookmarks = [];
-      // to store the id's of non-deleted bookmarks
-      const nonDeletedBookmarks = [];
 
       bookmarkDOMArray.forEach(checkbox => {
         if (checkbox.checked) {
-          delete bookmarkDOM[checkbox.id]; // remove the selected bookmark from bookmarkDOM object
-          deletedBookmarks.push(checkbox.id);
-        } else {
-          nonDeletedBookmarks.push(checkbox.id);
+          const { imageId } = checkbox.dataset;
+          delete bookmarkDOM[imageId]; // remove the selected bookmark from bookmarkDOM object
+          deletedBookmarks.push(imageId);
         }
       });
 
-      if (bookmarksArray.length === nonDeletedBookmarks.length) {
+      if (deletedBookmarks.length === 0) {
         showNotification('No bookmark selected', 'negative', 'snackbar-bookmarks');
       } else {
-        chrome.storage.sync.set({ bookmarks: nonDeletedBookmarks }, () => {
+        deletedBookmarks.forEach(bookmarkId => {
+          delete bookmarksObject[bookmarkId];
+        });
+        chrome.storage.sync.set({ bookmarks: bookmarksObject }, () => {
           // removing the selected bookmarks from the grid
           deletedBookmarks.forEach(bookmarkdId => {
             const imageDiv = document.getElementById(`id_${bookmarkdId}`);
@@ -352,15 +333,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // change export and import accordingly
   elements.exportBookmarksButton.addEventListener('click', () => {
-    const bookmarks = [];
+    const bookmarksObject = {};
 
     Object.values(bookmarkDOM).forEach(checkbox => {
-      if (checkbox.checked) bookmarks.push(checkbox.id);
+      if (checkbox.checked) {
+        const imageObject = {};
+        imageObject.thumbnail = checkbox.dataset.imageThumbnail;
+        imageObject.license = checkbox.dataset.imageLicense;
+        bookmarksObject[checkbox.dataset.imageId] = imageObject;
+      }
     });
 
-    if (bookmarks.length) {
-      const bookmarksString = JSON.stringify(bookmarks);
+    if (Object.keys(bookmarksObject).length) {
+      const bookmarksString = JSON.stringify(bookmarksObject);
       download(bookmarksString, 'bookmarks.json', 'text/plain');
     } else {
       showNotification('No bookmarks selected', 'negative', 'snackbar-bookmarks');

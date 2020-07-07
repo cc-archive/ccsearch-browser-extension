@@ -1,5 +1,5 @@
 import { elements } from './base';
-import { unicodeToString, addLoadMoreButton, removeLoadMoreButton, getSourceDisplayName } from './helper';
+import { addLoadMoreButton, removeLoadMoreButton } from './helper';
 import { activatePopup } from './infoPopupModule';
 import { removeSpinner } from './spinner';
 // eslint-disable-next-line import/no-cycle
@@ -134,38 +134,19 @@ export function addThumbnailsToDOM(resultArray) {
   const divs = [];
   const fragment = document.createDocumentFragment();
 
-  chrome.storage.sync.get({ bookmarks: [] }, items => {
-    const bookmarksArray = items.bookmarks;
+  chrome.storage.sync.get({ bookmarks: {} }, items => {
+    const bookmarksObject = items.bookmarks;
 
     resultArray.forEach(element => {
-      const thumbnail = element.url; // element.thumbnail giving 403
-      const title = unicodeToString(element.title);
+      const thumbnail = element.thumbnail ? element.thumbnail : element.url;
       const { license, id } = element;
-      const source = getSourceDisplayName(element.source);
       const licenseArray = license.split('-'); // split license in individual characteristics
-      const foreignLandingUrl = element.foreign_landing_url;
 
       // make an image element
       const imgElement = document.createElement('img');
       imgElement.setAttribute('src', thumbnail);
       imgElement.setAttribute('class', 'image-thumbnails');
       imgElement.setAttribute('id', id);
-
-      // make a span to hold the title
-      const spanTitleElement = document.createElement('span');
-      spanTitleElement.setAttribute('class', 'extension-image-title');
-      spanTitleElement.setAttribute('title', title);
-      const imageTitleNode = document.createTextNode(title);
-
-      // make a link to foreign landing page of image
-      const foreignLandingLinkElement = document.createElement('a');
-      foreignLandingLinkElement.setAttribute('href', foreignLandingUrl);
-      foreignLandingLinkElement.setAttribute('target', '_blank');
-      foreignLandingLinkElement.setAttribute('class', 'foreign-landing-url');
-      foreignLandingLinkElement.setAttribute('title', `Source: ${source}`);
-      foreignLandingLinkElement.appendChild(imageTitleNode);
-
-      spanTitleElement.appendChild(foreignLandingLinkElement);
 
       // make a span to hold the license icons
       const spanLicenseElement = document.createElement('span');
@@ -202,10 +183,12 @@ export function addThumbnailsToDOM(resultArray) {
       bookmarkIcon.classList.add('fa');
       bookmarkIcon.classList.add('bookmark-icon');
       bookmarkIcon.id = 'bookmark-icon';
-      bookmarkIcon.setAttribute('data-imageid', id);
+      bookmarkIcon.setAttribute('data-image-id', id);
+      bookmarkIcon.setAttribute('data-image-thumbnail', thumbnail);
+      bookmarkIcon.setAttribute('data-image-license', license);
       bookmarkIcon.addEventListener('click', toggleBookmark);
 
-      if (bookmarksArray.indexOf(id) === -1) {
+      if (!Object.prototype.hasOwnProperty.call(bookmarksObject, id)) {
         bookmarkIcon.classList.add('fa-bookmark-o');
         bookmarkIcon.title = 'Bookmark image';
       } else {
@@ -230,7 +213,6 @@ export function addThumbnailsToDOM(resultArray) {
       });
 
       divElement.appendChild(imgElement);
-      divElement.appendChild(spanTitleElement);
       divElement.appendChild(spanLicenseElement);
 
       // div to act as grid itemj

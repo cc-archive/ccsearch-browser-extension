@@ -15,10 +15,15 @@ header {
     right: $size-big;
     top: 50%;
     transform: translateY(-50%);
-    cursor: pointer;
+    width: 25%;
+
+    display: flex;
+    justify-content: space-between;
+    color: rgb(20, 20, 20);
 
     i {
-      padding: 0;
+      font-size: 25px;
+      cursor: pointer;
     }
   }
 }

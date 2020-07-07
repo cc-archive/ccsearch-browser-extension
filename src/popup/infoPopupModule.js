@@ -1,6 +1,7 @@
 import { elements, attributionTabLink } from './base';
 import { addSpinner, removeSpinner } from './spinner';
 import { removeChildNodes } from '../utils';
+import { getSourceDisplayName, unicodeToString } from './helper';
 
 const download = require('downloadjs');
 
@@ -145,7 +146,7 @@ function getPopupSourceChildNode(foreignLandingUrl, source) {
   const link = document.createElement('a');
   link.href = foreignLandingUrl;
   link.target = '_blank';
-  link.textContent = source;
+  link.textContent = getSourceDisplayName(source);
   return link;
 }
 
@@ -164,7 +165,6 @@ function getImageData(imageId) {
     .then(data => data.json())
     .then(res => {
       const {
-        title,
         source,
         foreign_landing_url: foreignLandingUrl,
         license_url: licenseUrl,
@@ -172,6 +172,7 @@ function getImageData(imageId) {
         id,
         url: imageUrl,
       } = res;
+      const title = unicodeToString(res.title);
       let { creator, creator_url: creatorUrl } = res;
       if (!creatorUrl) {
         creatorUrl = '#';

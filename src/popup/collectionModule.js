@@ -37,7 +37,7 @@ export default async function loadCollections() {
     link.appendChild(sourceName);
     link.setAttribute('data-collection-name', sources[key]);
     link.addEventListener('click', searchCollection);
-    link.classList.add('has-background-grey-lighter');
+    link.classList.add('has-background-grey-light');
 
     elements.collectionsSectionBody.appendChild(link);
   });

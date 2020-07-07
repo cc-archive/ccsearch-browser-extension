@@ -50,43 +50,12 @@
       opacity: 1;
     }
 
-    .extension-image-title {
-      opacity: 1;
-    }
-
     .bookmark-select {
       opacity: 1;
     }
 
     .image-license {
       opacity: 1;
-    }
-  }
-
-  .extension-image-title {
-    backface-visibility: hidden;
-    position: absolute;
-    bottom: 1px;
-    color: $color-white;
-    font-size: $size-small;
-    font-weight: 700;
-    max-width: 100%;
-    opacity: 0;
-    z-index: 3;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    vertical-align: middle;
-    padding: 0.25rem 0.5rem;
-    background: $color-black;
-
-    .foreign-landing-url {
-      text-decoration: none;
-      color: $color-white;
-
-      &:hover {
-        text-decoration: underline;
-      }
     }
   }
 

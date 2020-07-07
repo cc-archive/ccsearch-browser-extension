@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <title>CC Search Extension Options</title>
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://unpkg.com/@creativecommons/vocabulary@1.0.0-beta.14/css/vocabulary.css" />
+    <link rel="stylesheet" href="https://unpkg.com/@creativecommons/vocabulary@1.0.0-beta.16/css/vocabulary.css" />
     <link rel="stylesheet" href="options.css" />
   </head>
   <body>
@@ -357,6 +357,20 @@
           This will search for images that match strings close to the term "theatre" with a difference of one character.
           Results might include terms with different spellings like "theater".
         </p>
+      </div>
+    </div>
+
+    <div class="notification__options--background">
+      <div class="notification__options--body">
+        <p>
+          You have uploaded an old bookmarks file. We are fetching more information about the bookmarks from the API.
+          This will take a few minutes depending on your internet connection. Also, it is recommended to export the
+          bookmarks again so that you have the new version of the bookmarks file which does not require to connect to
+          the API through internet every time you import.
+        </p>
+        <button class="notification__popup--button button small is-primary margin-top-small is-loading" disabled>
+          Done
+        </button>
       </div>
     </div>
 
