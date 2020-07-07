@@ -622,102 +622,21 @@ window.addEventListener('scroll', () => {
 
 elements.buttonBackToTop.addEventListener('click', () => window.scrollTo(0, 0));
 
-const bookmarksIds = [
-  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
-  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
-  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
-  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
-  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
-  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
-  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
-  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
-  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
-  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
-  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
-  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
-  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
-  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
-  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
-  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
-  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
-  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
-  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
-  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
-  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
-  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
-  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
-  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
-  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
-  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
-  '18b15328-c3e0-4f0b-bde6-fba2e7b0349b',
-  'd5d7ffa1-ff1c-449d-b454-cd3da405a678',
-  '65988c4c-2db6-43a7-bafd-b94787912a8b',
-  '484958fb-1993-4d34-a715-ddb65ebc8a07',
-  '2cb9248c-8784-4437-b27a-d7da868591fb',
-  '538dcb77-6064-48d0-b3d7-aee5511a6ff9',
-  '565dfa7b-2441-420d-ae7a-98e8b9eb5a1d',
-  '9aa0e96e-dff4-4b29-9c3e-de4dc16772c4',
-  '09d796b2-7878-48ea-9c7c-4cb141d757ea',
-  'f977b83e-1f6c-4ed2-a490-e9bebd71296d',
-  '72fd92e4-0b60-4484-84aa-4d271b6095f6',
-  'f530bd34-befc-456d-b70c-98574777e198',
-  'c7600d01-4186-41a3-816a-1e61d02154fd',
-  '2d551ad2-1dd3-4fc6-8a4b-2ddd9f418685',
-  '1bbaaf23-682a-48bb-8570-b40c0f1139f7',
-  '3c2b0724-ee26-4ac1-bd41-d62e486321a0',
-  'c80c1022-44fb-4a86-8fe1-dd01e3992e97',
-  '4145b07a-843d-49aa-8411-ad07e0559eb0',
-  '1edf0065-b715-439f-ac17-bce83241a2a3',
-  '37cd5c80-6142-405e-b544-e6b1ed7896fc',
-  '36187857-ce3c-4b2f-9cff-fa0687bb6740',
-  '29ee6365-4198-4a90-953a-2d2bc7dd6c18',
-  'acf900f0-2533-4edc-b9cc-bcfedd097794',
-  'e2410a6b-9b51-4eb8-b325-5211a8ba89b8',
-  'f5991240-af37-4300-bf01-14a1a4a034f4',
-  '75304bd2-2d81-4a74-8500-c79ed75bd170',
-  '5fa5ea3d-6eb1-45c3-9f90-d484504eb446',
-  '285ea587-0ba8-4e87-9ee8-232a0affc59e',
-  '6bd68679-caea-4a43-9bc3-4f129c4aabe4',
-  '35e2c578-9ddd-4521-ae85-3f6d3b626b04',
-  '2e64061a-9708-4e62-9fc0-41080e8c62be',
-  '14a23a54-d3eb-4af6-8e20-ed942796887a',
-  'f8695778-7021-4d6c-952d-83a401609a91',
-  'da8fe51d-c081-434b-b296-9b34a9af4426',
-  'c2330099-5354-4e7c-9a16-ed617f4d580b',
-  '8213e64d-c613-4ad3-8202-35ceda2d240a',
-  '7a816b2f-033c-4f06-bf3d-a6c13081e9e5',
-  '84563691-9a4c-4686-9d05-debed922b0fb',
-  '83b7fb03-1518-46b5-817d-0067e28683ac',
-  '6ebeb63a-8337-4b2b-b07c-4a51d6ee62cb',
-  '17b62f30-daba-4310-b29c-6005d0f4338d',
-  '61c4ee1b-e149-4c87-8417-3d611fdf1fd0',
-];
-
-chrome.storage.sync.set({ bookmarks: bookmarksIds });
-chrome.storage.sync.remove('newBookmarks');
-chrome.storage.sync.remove('bookmarksMigrationDone');
-
-chrome.storage.sync.get(null, it => {
-  console.log(it);
-});
-
-async function testing() {
+async function migrateOldBookmarks() {
   chrome.storage.sync.get(null, items => {
+    console.log('migrating old bookmarks');
     console.log(items);
   });
 
   chrome.storage.sync.get({ bookmarksMigrationDone: false }, items3 => {
     if (!items3.bookmarksMigrationDone) {
-      console.log('inside');
-      document.querySelector('.notification__popup--background').style.display = 'flex';
       let count = 0;
       chrome.storage.sync.get({ newBookmarks: {} }, store => {
         const { newBookmarks } = store;
-        console.log('new bookmarks');
-        console.log(newBookmarks);
 
         chrome.storage.sync.get('bookmarks', async items => {
           if (items.bookmarks !== undefined) {
+            document.querySelector('.notification__popup--background').style.display = 'flex';
             if (items.bookmarks.length !== 0) {
               const currentBookmarksArray = items.bookmarks;
 
@@ -729,9 +648,6 @@ async function testing() {
                 const res = await fetchImageData(bookmarkId);
                 const imageDetailResponse = res[0];
                 const responseCode = res[1];
-                console.log(bookmarkId);
-                console.log(imageDetailResponse);
-                console.log(responseCode);
                 const imageObject = {};
                 if (responseCode === 429) {
                   document.querySelector('.notification__popup--body p').innerText =
@@ -739,9 +655,6 @@ async function testing() {
                   throw new Error('API limit reached');
                 }
                 if (responseCode === 200) {
-                  if (!imageDetailResponse.thumbnail) {
-                    console.log(imageDetailResponse.source);
-                  }
                   imageObject.thumbnail = imageDetailResponse.thumbnail
                     ? imageDetailResponse.thumbnail
                     : imageDetailResponse.url;
@@ -758,14 +671,8 @@ async function testing() {
                   });
                 }
               }
-
-              console.log(newBookmarks);
-              chrome.storage.sync.get(null, it => {
-                console.log(it);
-              });
             }
 
-            console.log('final');
             chrome.storage.sync.remove('bookmarks');
             chrome.storage.sync.get({ newBookmarks: {} }, items2 => {
               chrome.storage.sync.set({ bookmarks: items2.newBookmarks });
@@ -786,4 +693,4 @@ async function testing() {
   });
 }
 
-testing();
+migrateOldBookmarks();

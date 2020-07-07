@@ -31,7 +31,7 @@ export default function toggleBookmark(e) {
   chrome.storage.sync.get({ bookmarks: {} }, items => {
     const bookmarksObject = items.bookmarks;
     const { imageId } = e.target.dataset;
-    console.log(bookmarksObject);
+    // console.log(bookmarksObject);
     if (!Object.prototype.hasOwnProperty.call(bookmarksObject, imageId)) {
       const imageDetail = getImageDetail(e.target);
       // bookmarksArray.push(imageId);
@@ -171,7 +171,7 @@ function loadBookmarkImages() {
       // Initiate isChecked property of checkbox and update bookmarkDOM
       checkbox.isChecked = false;
       bookmarkDOM[checkbox.dataset.imageId] = checkbox;
-      console.log(bookmarkDOM);
+      // console.log(bookmarkDOM);
 
       selectedBookmarks = 0;
       elements.buttonSelectAllCheckbox[0].innerText = 'Select All';
