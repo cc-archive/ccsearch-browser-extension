@@ -49,6 +49,7 @@ import loadStoredContentToUI from './popup.utils';
 window.appObject = {};
 window.appObject.inputText = '';
 window.appObject.pageNo = 1;
+window.appObject.bookmarksSectionIdx = 0;
 window.appObject.enableMatureContent = false;
 // List to hold  selected by the user from the drop down.
 window.appObject.userSelectedSourcesList = [];
