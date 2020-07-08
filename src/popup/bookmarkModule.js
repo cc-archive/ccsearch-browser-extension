@@ -202,6 +202,7 @@ export function loadBookmarkImages() {
       removeNode('bookmarks__initial-info');
     } else {
       removeSpinner(elements.spinnerPlaceholderBookmarks);
+      removeLoadMoreButton(elements.loadMoreBookmarkButtonkWrapper);
       restoreInitialContent('bookmarks');
     }
     testing(bookmarksObject, bookmarkImageIds);
