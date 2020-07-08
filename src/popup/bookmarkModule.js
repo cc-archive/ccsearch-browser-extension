@@ -1,7 +1,7 @@
 import { elements } from './base';
 import { activatePopup } from './infoPopupModule';
 import { msnry, removeBookmarkImages } from './bookmarkModule.utils';
-import { removeLoadMoreButton } from './helper';
+import { removeLoadMoreButton, addLoadMoreButton } from './helper';
 // eslint-disable-next-line import/no-cycle
 import { removeOldSearchResults, removeLoaderAnimation, checkInternetConnection } from './searchModule';
 import { addSpinner, removeSpinner } from './spinner';
@@ -62,6 +62,8 @@ function appendToGrid(msnryObject, fragment, e, grid) {
     // layout Masonry after each image loads
     msnryObject.layout();
   });
+  removeLoaderAnimation();
+  addLoadMoreButton(elements.loadMoreBookmarkButtonkWrapper);
 }
 
 function testing(bookmarksObject, bookmarkImageIds) {
@@ -206,11 +208,19 @@ function loadBookmarkImages() {
   });
 }
 
+elements.loadMoreBookmarkButton.addEventListener('click', () => {
+  removeLoadMoreButton(elements.loadMoreBookmarkButtonkWrapper);
+  addSpinner(elements.spinnerPlaceholderGrid, 'for-bottom');
+  loadBookmarkImages();
+  // nextRequest(window.appObject.pageNo);
+});
+
 // EventListeners
 document.addEventListener('DOMContentLoaded', () => {
   elements.bookmarksIcon.addEventListener('click', () => {
     if (window.appObject.activeSection !== 'bookmarks') {
       window.appObject.activeSection = 'bookmarks';
+      window.appObject.bookmarksSectionIdx = 0;
       elements.homeIcon.style.pointerEvents = 'none';
       setTimeout(() => {
         elements.homeIcon.style.pointerEvents = 'auto';
