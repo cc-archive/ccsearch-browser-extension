@@ -43,6 +43,7 @@ import {
   showModal,
   fetchImageData,
 } from '../utils';
+import { loadBookmarkImages } from './bookmarkModule';
 import loadStoredContentToUI from './popup.utils';
 
 // global object to store the application variables
@@ -589,6 +590,12 @@ elements.loadMoreSearchButton.addEventListener('click', () => {
   removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);
   addSpinner(elements.spinnerPlaceholderGrid, 'for-bottom');
   nextRequest(window.appObject.pageNo);
+});
+
+elements.loadMoreBookmarkButton.addEventListener('click', () => {
+  removeLoadMoreButton(elements.loadMoreBookmarkButtonkWrapper);
+  addSpinner(elements.spinnerPlaceholderGrid, 'for-bottom');
+  loadBookmarkImages();
 });
 
 document.getElementById('settings-icon').addEventListener('click', () => {

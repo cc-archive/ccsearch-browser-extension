@@ -190,7 +190,7 @@ function testing(bookmarksObject, bookmarkImageIds) {
   });
 }
 
-function loadBookmarkImages() {
+export function loadBookmarkImages() {
   chrome.storage.sync.get({ bookmarks: {} }, items => {
     const bookmarksObject = items.bookmarks;
     const bookmarkImageIds = Object.keys(bookmarksObject).slice(
@@ -207,13 +207,6 @@ function loadBookmarkImages() {
     testing(bookmarksObject, bookmarkImageIds);
   });
 }
-
-elements.loadMoreBookmarkButton.addEventListener('click', () => {
-  removeLoadMoreButton(elements.loadMoreBookmarkButtonkWrapper);
-  addSpinner(elements.spinnerPlaceholderGrid, 'for-bottom');
-  loadBookmarkImages();
-  // nextRequest(window.appObject.pageNo);
-});
 
 // EventListeners
 document.addEventListener('DOMContentLoaded', () => {
