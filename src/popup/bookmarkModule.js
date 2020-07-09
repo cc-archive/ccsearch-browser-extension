@@ -66,7 +66,7 @@ function appendToGrid(msnryObject, fragment, e, grid) {
   addLoadMoreButton(elements.loadMoreBookmarkButtonkWrapper);
 }
 
-function testing(bookmarksObject, bookmarkImageIds) {
+function addBookmarkThumbnailsToDOM(bookmarksObject, bookmarkImageIds) {
   bookmarkImageIds.forEach(imageId => {
     const res = bookmarksObject[imageId];
     const fragment = document.createDocumentFragment();
@@ -205,7 +205,7 @@ export function loadBookmarkImages(numberOfImages) {
       removeLoadMoreButton(elements.loadMoreBookmarkButtonkWrapper);
       restoreInitialContent('bookmarks');
     }
-    testing(bookmarksObject, bookmarkImageIds);
+    addBookmarkThumbnailsToDOM(bookmarksObject, bookmarkImageIds);
   });
 }
 

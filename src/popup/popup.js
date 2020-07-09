@@ -5,7 +5,7 @@ import {
   removeOldSearchResults,
   getRequestUrl,
   search,
-  addThumbnailsToDOM,
+  addSearchThumbnailsToDOM,
   removeLoaderAnimation,
   checkInternetConnection,
   getCollectionsUrl,
@@ -577,7 +577,7 @@ async function nextRequest(page) {
     }
   }
   // console.log(result);
-  addThumbnailsToDOM(result);
+  addSearchThumbnailsToDOM(result);
   window.appObject.pageNo += 1;
 }
 

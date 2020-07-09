@@ -130,7 +130,7 @@ const msnry = new Masonry(elements.gridPrimary, {
   transitionDuration: '0',
 });
 
-export function addThumbnailsToDOM(resultArray) {
+export function addSearchThumbnailsToDOM(resultArray) {
   const divs = [];
   const fragment = document.createDocumentFragment();
 
@@ -239,7 +239,7 @@ export function search(url) {
       const resultArray = res.results;
 
       checkResultLength(resultArray);
-      addThumbnailsToDOM(resultArray);
+      addSearchThumbnailsToDOM(resultArray);
 
       // Store Data to local storage
       if (resultArray.length !== 0) {
