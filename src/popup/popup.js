@@ -595,7 +595,7 @@ elements.loadMoreSearchButton.addEventListener('click', () => {
 elements.loadMoreBookmarkButton.addEventListener('click', () => {
   removeLoadMoreButton(elements.loadMoreBookmarkButtonkWrapper);
   addSpinner(elements.spinnerPlaceholderGrid, 'for-bottom');
-  loadBookmarkImages();
+  loadBookmarkImages(10);
 });
 
 document.getElementById('settings-icon').addEventListener('click', () => {

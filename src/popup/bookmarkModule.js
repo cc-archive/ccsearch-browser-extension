@@ -190,14 +190,14 @@ function testing(bookmarksObject, bookmarkImageIds) {
   });
 }
 
-export function loadBookmarkImages() {
+export function loadBookmarkImages(numberOfImages) {
   chrome.storage.sync.get({ bookmarks: {} }, items => {
     const bookmarksObject = items.bookmarks;
     const bookmarkImageIds = Object.keys(bookmarksObject).slice(
       window.appObject.bookmarksSectionIdx,
-      window.appObject.bookmarksSectionIdx + 10,
+      window.appObject.bookmarksSectionIdx + numberOfImages,
     );
-    window.appObject.bookmarksSectionIdx += 10;
+    window.appObject.bookmarksSectionIdx += numberOfImages;
     if (bookmarkImageIds.length > 0) {
       removeNode('bookmarks__initial-info');
     } else {
@@ -232,7 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
       addSpinner(elements.spinnerPlaceholderBookmarks, 'original');
       removeOldSearchResults();
       removeLoaderAnimation();
-      loadBookmarkImages();
+      loadBookmarkImages(10);
 
       chrome.storage.sync.get(null, it => {
         console.log(it);
@@ -315,7 +315,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const imageDiv = document.getElementById(`id_${bookmarkdId}`);
             imageDiv.parentElement.removeChild(imageDiv);
           });
-
+          window.appObject.bookmarksSectionIdx -= deletedBookmarks.length;
+          loadBookmarkImages(deletedBookmarks.length);
           // reorganizing the layout using masonry
           msnry.layout();
           // confirm user action
