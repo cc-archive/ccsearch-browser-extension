@@ -67,7 +67,7 @@ function showNoResultFoundMessage() {
 
     removeChildNodes(sectionContentPrimary.querySelector('.row'));
     // remove the "Load More" button.
-    elements.loadMoreButtonWrapper.classList.add('removeLoadMore');
+    removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);
     sectionContentPrimary.querySelector('.row').appendChild(paragraph);
   }
 }
@@ -85,8 +85,8 @@ export function checkResultLength(resultArray) {
     // eslint-disable-next-line no-use-before-define
     msnry.layout();
   } else {
-    // render the "Load More" button if non emtpy result
-    elements.loadMoreButtonWrapper.classList.remove('removeLoadMore');
+    // render the "Load More" button if non empty result
+    addLoadMoreButton(elements.loadMoreSearchButtonWrapper);
   }
 }
 
@@ -99,13 +99,13 @@ function appendToGrid(msnry, fragment, divs, grid) {
     msnry.layout();
   });
   removeLoaderAnimation();
-  addLoadMoreButton(elements.loadMoreButtonWrapper);
+  addLoadMoreButton(elements.loadMoreSearchButtonWrapper);
 }
 
 // TODO: be more specific
 export function checkValidationError(apiResponse) {
   if (Object.prototype.hasOwnProperty.call(apiResponse, 'error_type')) {
-    removeLoadMoreButton(elements.loadMoreButtonWrapper);
+    removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);
     elements.gridPrimary.setAttribute('style', 'position: relative; height: 0px;');
     removeLoaderAnimation();
     restoreInitialContent('primary');
@@ -130,7 +130,7 @@ const msnry = new Masonry(elements.gridPrimary, {
   transitionDuration: '0',
 });
 
-export function addThumbnailsToDOM(resultArray) {
+export function addSearchThumbnailsToDOM(resultArray) {
   const divs = [];
   const fragment = document.createDocumentFragment();
 
@@ -239,7 +239,7 @@ export function search(url) {
       const resultArray = res.results;
 
       checkResultLength(resultArray);
-      addThumbnailsToDOM(resultArray);
+      addSearchThumbnailsToDOM(resultArray);
 
       // Store Data to local storage
       if (resultArray.length !== 0) {

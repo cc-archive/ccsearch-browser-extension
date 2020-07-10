@@ -236,10 +236,10 @@ export function makeElementsDisplayNone(elemArray) {
   });
 }
 
-export function addLoadMoreButton(loadMoreButtonPlaceholder) {
-  loadMoreButtonPlaceholder.classList.remove('display-none');
+export function addLoadMoreButton(loadMoreButtonWrapper) {
+  loadMoreButtonWrapper.classList.remove('display-none');
 }
 
-export function removeLoadMoreButton(loadMoreButtonPlaceholder) {
-  loadMoreButtonPlaceholder.classList.add('display-none');
+export function removeLoadMoreButton(loadMoreButtonWrapper) {
+  loadMoreButtonWrapper.classList.add('display-none');
 }

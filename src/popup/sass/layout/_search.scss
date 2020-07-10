@@ -109,9 +109,9 @@
   }
 }
 
-.load-more-button {
+.load-more-search-button,
+.load-more-bookmark-button {
   &-wrapper {
-    margin-bottom: 6rem; // vertical height is increasing
     text-align: center;
   }
 }

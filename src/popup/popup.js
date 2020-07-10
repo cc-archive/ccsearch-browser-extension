@@ -5,7 +5,7 @@ import {
   removeOldSearchResults,
   getRequestUrl,
   search,
-  addThumbnailsToDOM,
+  addSearchThumbnailsToDOM,
   removeLoaderAnimation,
   checkInternetConnection,
   getCollectionsUrl,
@@ -43,12 +43,14 @@ import {
   showModal,
   fetchImageData,
 } from '../utils';
+import { loadBookmarkImages } from './bookmarkModule';
 import loadStoredContentToUI from './popup.utils';
 
 // global object to store the application variables
 window.appObject = {};
 window.appObject.inputText = '';
 window.appObject.pageNo = 1;
+window.appObject.bookmarksSectionIdx = 0;
 window.appObject.enableMatureContent = false;
 // List to hold  selected by the user from the drop down.
 window.appObject.userSelectedSourcesList = [];
@@ -406,7 +408,7 @@ elements.clearSearchButton[0].addEventListener('click', () => {
     elements.clearSearchButton[0].classList.add('display-none');
     elements.inputField.value = '';
     removeOldSearchResults();
-    removeLoadMoreButton(elements.loadMoreButtonWrapper);
+    removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);
     elements.gridPrimary.setAttribute('style', 'position: relative; height: 0px;');
     localStorage.clear();
     restoreInitialContent('primary');
@@ -575,7 +577,7 @@ async function nextRequest(page) {
     }
   }
   // console.log(result);
-  addThumbnailsToDOM(result);
+  addSearchThumbnailsToDOM(result);
   window.appObject.pageNo += 1;
 }
 
@@ -584,10 +586,16 @@ window.appObject.activeSection = 'search';
 window.appObject.searchByCollectionActivated = localStorage.getItem('searchByCollectionActivated') === 'true';
 window.appObject.collectionName = localStorage.getItem('collectionName');
 
-elements.loadMoreButton.addEventListener('click', () => {
-  removeLoadMoreButton(elements.loadMoreButtonWrapper);
+elements.loadMoreSearchButton.addEventListener('click', () => {
+  removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);
   addSpinner(elements.spinnerPlaceholderGrid, 'for-bottom');
   nextRequest(window.appObject.pageNo);
+});
+
+elements.loadMoreBookmarkButton.addEventListener('click', () => {
+  removeLoadMoreButton(elements.loadMoreBookmarkButtonkWrapper);
+  addSpinner(elements.spinnerPlaceholderGrid, 'for-bottom');
+  loadBookmarkImages(10);
 });
 
 document.getElementById('settings-icon').addEventListener('click', () => {
