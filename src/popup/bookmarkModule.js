@@ -9,7 +9,7 @@ import { showNotification, removeNode, restoreInitialContent, removeChildNodes }
 // eslint-disable-next-line import/no-cycle
 import loadCollections from './collectionModule';
 // eslint-disable-next-line import/no-cycle
-import loadStoredContentToUI from './popup.utils';
+import { loadStoredContentToUI } from './popup.utils';
 
 const download = require('downloadjs');
 
