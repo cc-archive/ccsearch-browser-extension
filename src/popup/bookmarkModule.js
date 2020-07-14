@@ -36,6 +36,21 @@ export default function toggleBookmark(e) {
       const imageDetail = getImageDetail(e.target);
       // bookmarksArray.push(imageId);
       bookmarksObject[imageId] = imageDetail;
+      chrome.storage.sync.get('bookmarksLength', items2 => {
+        const { bookmarksLength } = items2;
+        const bookmarksLengthKeys = Object.keys(bookmarksLength);
+        for (let i = 0; i < bookmarksLengthKeys.length; i += 1) {
+          let validBookmarksKey = null;
+          if (bookmarksLength[bookmarksLengthKeys[i]] <= 30) {
+            console.log(bookmarksLengthKeys[i]);
+            validBookmarksKey = bookmarksLengthKeys[i];
+            break;
+          }
+          if (!validBookmarksKey) {
+            showNotification('Error: Bookmarks Limit reached', 'negative', 'snackbar-bookmarks');
+          }
+        }
+      });
       chrome.storage.sync.set({ bookmarks: bookmarksObject }, () => {
         e.target.classList.remove('fa-bookmark-o');
         e.target.classList.add('fa-bookmark');
