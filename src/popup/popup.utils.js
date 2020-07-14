@@ -54,10 +54,10 @@ export function setBookmarksStorageSchema() {
 
   chrome.storage.sync.set({ bookmarksLength: bookmarkKeyLengths });
   chrome.storage.sync.set({
-    bookmarksImageIds0: [],
-    bookmarksImageIds1: [],
-    bookmarksImageIds2: [],
-    bookmarksImageIds3: [],
+    bookmarksImageIds0: {},
+    bookmarksImageIds1: {},
+    bookmarksImageIds2: {},
+    bookmarksImageIds3: {},
   });
 
   chrome.storage.sync.get('bookmarksLength', items => {
