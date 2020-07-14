@@ -49,7 +49,7 @@ export default function toggleBookmark(e) {
           const bookmarksLengthKeys = Object.keys(bookmarksLength);
           let validBookmarksKey = null;
           for (let i = 0; i < bookmarksLengthKeys.length; i += 1) {
-            if (bookmarksLength[bookmarksLengthKeys[i]] < 0) {
+            if (bookmarksLength[bookmarksLengthKeys[i]] <= 30) {
               validBookmarksKey = bookmarksLengthKeys[i];
               break;
             }
@@ -77,8 +77,13 @@ export default function toggleBookmark(e) {
             console.log(items3);
             console.log(bookmarksObject);
             bookmarksObject[imageId] = imageDetail;
+            bookmarksLength[validBookmarksKey] += 1;
             chrome.storage.sync.set(
-              { [validBookmarksKey]: bookmarksObject, [validBookmarksImageIdKey]: items[validBookmarksImageIdKey] },
+              {
+                [validBookmarksKey]: bookmarksObject,
+                [validBookmarksImageIdKey]: items[validBookmarksImageIdKey],
+                bookmarksLength,
+              },
               () => {
                 e.target.classList.remove('fa-bookmark-o');
                 e.target.classList.add('fa-bookmark');
