@@ -32,10 +32,10 @@ export default function toggleBookmark(e) {
     ['bookmarksImageIds0', 'bookmarksImageIds1', 'bookmarksImageIds2', 'bookmarksImageIds3'],
     items => {
       const allBookmarksImageIds = [
-        ...items.bookmarksImageIds0,
-        ...items.bookmarksImageIds1,
-        ...items.bookmarksImageIds2,
-        ...items.bookmarksImageIds3,
+        ...Object.keys(items.bookmarksImageIds0),
+        ...Object.keys(items.bookmarksImageIds1),
+        ...Object.keys(items.bookmarksImageIds2),
+        ...Object.keys(items.bookmarksImageIds3),
       ];
       console.log('all bookmarks image ids');
       console.log(allBookmarksImageIds);
@@ -62,14 +62,15 @@ export default function toggleBookmark(e) {
           const bookmarksImageIdsContainer = Object.keys(items);
           console.log(bookmarksImageIdsContainer);
           for (let i = 0; i < bookmarksImageIdsContainer.length; i += 1) {
-            if (bookmarksImageIdsContainer[i].length <= 80) {
+            if (Object.keys(bookmarksImageIdsContainer[i]).length <= 80) {
               validBookmarksImageIdKey = bookmarksImageIdsContainer[i];
               break;
             }
           }
 
           console.log(validBookmarksImageIdKey);
-          items[validBookmarksImageIdKey].push(imageId);
+          // items[validBookmarksImageIdKey][imageId] = validBookmarksKey.slice(-1);
+          Object.assign(items[validBookmarksImageIdKey], { [imageId]: validBookmarksKey.slice(-1) });
 
           chrome.storage.sync.get(validBookmarksKey, items3 => {
             console.log(validBookmarksKey);
