@@ -31,12 +31,13 @@ export default function toggleBookmark(e) {
   chrome.storage.sync.get(
     ['bookmarksImageIds0', 'bookmarksImageIds1', 'bookmarksImageIds2', 'bookmarksImageIds3'],
     items => {
-      const allBookmarksImageIds = [
-        ...Object.keys(items.bookmarksImageIds0),
-        ...Object.keys(items.bookmarksImageIds1),
-        ...Object.keys(items.bookmarksImageIds2),
-        ...Object.keys(items.bookmarksImageIds3),
-      ];
+      const allBookmarksImageIdsObject = {
+        ...items.bookmarksImageIds0,
+        ...items.bookmarksImageIds1,
+        ...items.bookmarksImageIds2,
+        ...items.bookmarksImageIds3,
+      };
+      const allBookmarksImageIds = Object.keys(allBookmarksImageIdsObject);
       console.log('all bookmarks image ids');
       console.log(allBookmarksImageIds);
       const { imageId } = e.target.dataset;
@@ -95,13 +96,28 @@ export default function toggleBookmark(e) {
           });
         });
       } else {
+        const bookmarkContainerNo = allBookmarksImageIdsObject[imageId];
+        const bookmarkContainerName = `bookmarks${bookmarkContainerNo}`;
+        console.log(bookmarkContainerName);
         // delete bookmarksObject[imageId];
+        chrome.storage.sync.get(bookmarkContainerName, items4 => {
+          const bookmarkContainer = items4[bookmarkContainerName];
+          delete bookmarkContainer[imageId];
         // chrome.storage.sync.set({ bookmarks: bookmarksObject }, () => {
         //   e.target.classList.remove('fa-bookmark');
         //   e.target.classList.add('fa-bookmark-o');
         //   e.target.title = 'Bookmark Image';
         //   showNotification('Bookmark removed', 'positive', 'snackbar-bookmarks');
         // });
+          console.log(imageId);
+          console.log(bookmarkContainer);
+          chrome.storage.sync.set({ [bookmarkContainerName]: bookmarkContainer }, () => {
+            e.target.classList.remove('fa-bookmark');
+            e.target.classList.add('fa-bookmark-o');
+            e.target.title = 'Bookmark Image';
+            showNotification('Bookmark removed', 'positive', 'snackbar-bookmarks');
+          });
+        });
       }
     },
   );
