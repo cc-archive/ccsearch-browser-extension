@@ -272,22 +272,32 @@ function addBookmarkThumbnailsToDOM(bookmarksObject, bookmarkImageIds) {
 }
 
 export function loadBookmarkImages(numberOfImages) {
-  chrome.storage.sync.get({ bookmarks: {} }, items => {
-    const bookmarksObject = items.bookmarks;
-    const bookmarkImageIds = Object.keys(bookmarksObject).slice(
-      window.appObject.bookmarksSectionIdx,
-      window.appObject.bookmarksSectionIdx + numberOfImages,
-    );
-    window.appObject.bookmarksSectionIdx += numberOfImages;
-    if (bookmarkImageIds.length > 0) {
-      removeNode('bookmarks__initial-info');
-    } else {
-      removeSpinner(elements.spinnerPlaceholderBookmarks);
-      removeLoadMoreButton(elements.loadMoreBookmarkButtonkWrapper);
-      restoreInitialContent('bookmarks');
-    }
-    addBookmarkThumbnailsToDOM(bookmarksObject, bookmarkImageIds);
-  });
+  chrome.storage.sync.get(
+    ['bookmarksImageIds0', 'bookmarksImageIds1', 'bookmarksImageIds2', 'bookmarksImageIds3'],
+    items => {
+      const bookmarksImageIdsObject = {
+        ...items.bookmarksImageIds0,
+        ...items.bookmarksImageIds1,
+        ...items.bookmarksImageIds2,
+        ...items.bookmarksImageIds3,
+      };
+      const bookmarkImageIds = Object.keys(bookmarksImageIdsObject).slice(
+        window.appObject.bookmarksSectionIdx,
+        window.appObject.bookmarksSectionIdx + numberOfImages,
+      );
+      console.log('target bookmark Image ids');
+      console.log(bookmarkImageIds);
+      window.appObject.bookmarksSectionIdx += numberOfImages;
+      if (bookmarkImageIds.length > 0) {
+        removeNode('bookmarks__initial-info');
+      } else {
+        removeSpinner(elements.spinnerPlaceholderBookmarks);
+        removeLoadMoreButton(elements.loadMoreBookmarkButtonkWrapper);
+        restoreInitialContent('bookmarks');
+      }
+      addBookmarkThumbnailsToDOM(bookmarksImageIdsObject, bookmarkImageIds);
+    },
+  );
 }
 
 // EventListeners
