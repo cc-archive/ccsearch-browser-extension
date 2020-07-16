@@ -31,12 +31,15 @@ export default function toggleBookmark(e) {
   chrome.storage.sync.get(
     ['bookmarksImageIds0', 'bookmarksImageIds1', 'bookmarksImageIds2', 'bookmarksImageIds3'],
     items => {
-      const allBookmarksImageIdsObject = {
-        ...items.bookmarksImageIds0,
-        ...items.bookmarksImageIds1,
-        ...items.bookmarksImageIds2,
-        ...items.bookmarksImageIds3,
-      };
+      const allBookmarksImageIdsObject = {};
+      Object.keys(items).forEach(bookmarksImageIdContainerName => {
+        const bookmarksImageIdContainer = items[bookmarksImageIdContainerName];
+        Object.keys(bookmarksImageIdContainer).forEach(id => {
+          // 0th idx -> bookmark container number, 1st idx -> bookmark image id container number
+          allBookmarksImageIdsObject[id] = [bookmarksImageIdContainer[id], bookmarksImageIdContainerName.slice(-1)];
+        });
+      });
+      console.log(allBookmarksImageIdsObject);
       const allBookmarksImageIds = Object.keys(allBookmarksImageIdsObject);
       console.log('all bookmarks image ids');
       console.log(allBookmarksImageIds);
