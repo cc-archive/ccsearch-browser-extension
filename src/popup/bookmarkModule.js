@@ -100,23 +100,22 @@ export default function toggleBookmark(e) {
         const bookmarkContainerName = `bookmarks${bookmarkContainerNo}`;
         console.log(bookmarkContainerName);
         // delete bookmarksObject[imageId];
-        chrome.storage.sync.get(bookmarkContainerName, items4 => {
+        chrome.storage.sync.get([bookmarkContainerName, 'bookmarksLength'], items4 => {
           const bookmarkContainer = items4[bookmarkContainerName];
           delete bookmarkContainer[imageId];
-        // chrome.storage.sync.set({ bookmarks: bookmarksObject }, () => {
-        //   e.target.classList.remove('fa-bookmark');
-        //   e.target.classList.add('fa-bookmark-o');
-        //   e.target.title = 'Bookmark Image';
-        //   showNotification('Bookmark removed', 'positive', 'snackbar-bookmarks');
-        // });
+          const updatedBookmarksLength = items4.bookmarksLength;
+          updatedBookmarksLength[bookmarkContainerName] -= 1;
           console.log(imageId);
           console.log(bookmarkContainer);
-          chrome.storage.sync.set({ [bookmarkContainerName]: bookmarkContainer }, () => {
-            e.target.classList.remove('fa-bookmark');
-            e.target.classList.add('fa-bookmark-o');
-            e.target.title = 'Bookmark Image';
-            showNotification('Bookmark removed', 'positive', 'snackbar-bookmarks');
-          });
+          chrome.storage.sync.set(
+            { [bookmarkContainerName]: bookmarkContainer, bookmarksLength: updatedBookmarksLength },
+            () => {
+              e.target.classList.remove('fa-bookmark');
+              e.target.classList.add('fa-bookmark-o');
+              e.target.title = 'Bookmark Image';
+              showNotification('Bookmark removed', 'positive', 'snackbar-bookmarks');
+            },
+          );
         });
       }
     },
