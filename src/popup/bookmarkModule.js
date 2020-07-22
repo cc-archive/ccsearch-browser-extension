@@ -441,8 +441,22 @@ document.addEventListener('DOMContentLoaded', () => {
           console.log('items');
           console.log(items);
         });
-        keyNames.forEach(key => {
-          chrome.storage.sync.set({ [key]: items[key] });
+
+        chrome.storage.sync.set(items, () => {
+          // removing the selected bookmarks from the grid
+          deletedBookmarks.forEach(bookmarkdId => {
+            const imageDiv = document.getElementById(`id_${bookmarkdId}`);
+            imageDiv.parentElement.removeChild(imageDiv);
+          });
+          window.appObject.bookmarksSectionIdx -= deletedBookmarks.length;
+          loadBookmarkImages(deletedBookmarks.length);
+          // reorganizing the layout using masonry
+          msnry.layout();
+          // confirm user action
+          showNotification('Bookmarks successfully removed', 'positive', 'snackbar-bookmarks');
+          // Read default "Select all"
+          elements.buttonSelectAllCheckbox[0].innerText = 'Select All';
+          selectedBookmarks = 0;
         });
       });
     }
