@@ -285,8 +285,6 @@ export function loadBookmarkImages(numberOfImages) {
         window.appObject.bookmarksSectionIdx,
         window.appObject.bookmarksSectionIdx + numberOfImages,
       );
-      console.log('target bookmark Image ids');
-      console.log(bookmarkImageIds);
       window.appObject.bookmarksSectionIdx += numberOfImages;
       if (bookmarkImageIds.length > 0) {
         removeNode('bookmarks__initial-info');
@@ -295,7 +293,30 @@ export function loadBookmarkImages(numberOfImages) {
         removeLoadMoreButton(elements.loadMoreBookmarkButtonkWrapper);
         restoreInitialContent('bookmarks');
       }
-      addBookmarkThumbnailsToDOM(bookmarksImageIdsObject, bookmarkImageIds);
+      const ob = {};
+      // segregate the bookmark image ids into respective container numbers
+      for (let i = 0; i < bookmarkImageIds.length; i += 1) {
+        const num = bookmarksImageIdsObject[bookmarkImageIds[i]];
+        if (!Object.prototype.hasOwnProperty.call(ob, num)) {
+          ob[num] = [];
+        }
+        ob[num].push(bookmarkImageIds[i]);
+      }
+      // this will contain only the bookmark data which will be rendered
+      const bookmarkObject = {};
+      // all the required bookmark containers that are to be fetched from the storage
+      const requiredBookmarkContainer = Object.keys(ob).map(item => `bookmarks${item}`);
+      // filling up bookmarkObject
+      chrome.storage.sync.get(requiredBookmarkContainer, items2 => {
+        for (let i = 0; i < requiredBookmarkContainer.length; i += 1) {
+          const containerNum = requiredBookmarkContainer[i].slice(-1);
+          for (let j = 0; j < ob[containerNum].length; j += 1) {
+            bookmarkObject[ob[containerNum][j]] = items2[requiredBookmarkContainer][ob[containerNum][j]];
+          }
+        }
+        console.log(bookmarkObject);
+        addBookmarkThumbnailsToDOM(bookmarkObject, bookmarkImageIds);
+      });
     },
   );
 }
