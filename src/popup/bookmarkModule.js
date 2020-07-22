@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { elements } from './base';
 import { activatePopup } from './infoPopupModule';
 import { msnry, removeBookmarkImages } from './bookmarkModule.utils';
@@ -397,45 +398,54 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   elements.deleteBookmarksButton.addEventListener('click', () => {
-    chrome.storage.sync.get({ bookmarks: {} }, items => {
-      const bookmarksObject = items.bookmarks;
-      const bookmarkDOMArray = Object.values(bookmarkDOM);
-
-      // to store the id's of deleted bookmarks
-      const deletedBookmarks = [];
-
-      bookmarkDOMArray.forEach(checkbox => {
-        if (checkbox.checked) {
-          const { imageId } = checkbox.dataset;
-          delete bookmarkDOM[imageId]; // remove the selected bookmark from bookmarkDOM object
-          deletedBookmarks.push(imageId);
-        }
-      });
-
-      if (deletedBookmarks.length === 0) {
-        showNotification('No bookmark selected', 'negative', 'snackbar-bookmarks');
-      } else {
-        deletedBookmarks.forEach(bookmarkId => {
-          delete bookmarksObject[bookmarkId];
-        });
-        chrome.storage.sync.set({ bookmarks: bookmarksObject }, () => {
-          // removing the selected bookmarks from the grid
-          deletedBookmarks.forEach(bookmarkdId => {
-            const imageDiv = document.getElementById(`id_${bookmarkdId}`);
-            imageDiv.parentElement.removeChild(imageDiv);
-          });
-          window.appObject.bookmarksSectionIdx -= deletedBookmarks.length;
-          loadBookmarkImages(deletedBookmarks.length);
-          // reorganizing the layout using masonry
-          msnry.layout();
-          // confirm user action
-          showNotification('Bookmarks successfully removed', 'positive', 'snackbar-bookmarks');
-          // Read default "Select all"
-          elements.buttonSelectAllCheckbox[0].innerText = 'Select All';
-          selectedBookmarks = 0;
-        });
+    const bookmarkDOMArray = Object.values(bookmarkDOM);
+    // to store the id's of deleted bookmarks
+    const deletedBookmarks = [];
+    bookmarkDOMArray.forEach(checkbox => {
+      if (checkbox.checked) {
+        const { imageId } = checkbox.dataset;
+        delete bookmarkDOM[imageId]; // remove the selected bookmark from bookmarkDOM object
+        deletedBookmarks.push(imageId);
       }
     });
+    console.log(deletedBookmarks);
+    if (deletedBookmarks.length === 0) {
+      showNotification('No bookmark selected', 'negative', 'snackbar-bookmarks');
+    } else {
+      chrome.storage.sync.get(keyNames, items => {
+        const allBookmarksImageIdsObject = {};
+        bookmarkIdContainerNames.forEach(bookmarksImageIdContainerName => {
+          const bookmarksImageIdContainer = items[bookmarksImageIdContainerName];
+          Object.keys(bookmarksImageIdContainer).forEach(id => {
+            // 0th idx -> bookmark container number, 1st idx -> bookmark image id container number
+            allBookmarksImageIdsObject[id] = [bookmarksImageIdContainer[id], bookmarksImageIdContainerName.slice(-1)];
+          });
+        });
+        console.log(allBookmarksImageIdsObject);
+        const allBookmarksImageIds = Object.keys(allBookmarksImageIdsObject);
+        console.log('all bookmarks image ids');
+        console.log(allBookmarksImageIds);
+        deletedBookmarks.forEach(imageId => {
+          const bookmarkContainerNo = allBookmarksImageIdsObject[imageId][0];
+          const bookmarkImageIdContainerNo = allBookmarksImageIdsObject[imageId][1];
+          const bookmarkContainerName = `bookmarks${bookmarkContainerNo}`;
+          const bookmarkImageIdContainerName = `bookmarksImageIds${bookmarkImageIdContainerNo}`;
+          console.log(bookmarkContainerName);
+          console.log(bookmarkImageIdContainerName);
+          // const bookmarkContainer = items4[bookmarkContainerName];
+          // const bookmarkImageIdContainer = items4[bookmarkImageIdContainerName];
+          delete items[bookmarkContainerName][imageId];
+          delete items[bookmarkImageIdContainerName][imageId];
+          // const updatedbookmarksLength = items4.bookmarksLength;
+          items.bookmarksLength[bookmarkContainerName] -= 1;
+          console.log('items');
+          console.log(items);
+        });
+        keyNames.forEach(key => {
+          chrome.storage.sync.set({ [key]: items[key] });
+        });
+      });
+    }
   });
 
   elements.buttonSelectAllCheckbox[0].addEventListener('click', () => {
