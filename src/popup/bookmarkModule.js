@@ -9,7 +9,7 @@ import { showNotification, removeNode, restoreInitialContent, removeChildNodes }
 // eslint-disable-next-line import/no-cycle
 import loadCollections from './collectionModule';
 // eslint-disable-next-line import/no-cycle
-import { loadStoredContentToUI } from './popup.utils';
+import { loadStoredContentToUI, keyNames, bookmarkIdContainerNames } from './popup.utils';
 
 const download = require('downloadjs');
 
@@ -28,111 +28,108 @@ function getImageDetail(eventTarget) {
 }
 
 export default function toggleBookmark(e) {
-  chrome.storage.sync.get(
-    ['bookmarksImageIds0', 'bookmarksImageIds1', 'bookmarksImageIds2', 'bookmarksImageIds3'],
-    items => {
-      const allBookmarksImageIdsObject = {};
-      Object.keys(items).forEach(bookmarksImageIdContainerName => {
-        const bookmarksImageIdContainer = items[bookmarksImageIdContainerName];
-        Object.keys(bookmarksImageIdContainer).forEach(id => {
-          // 0th idx -> bookmark container number, 1st idx -> bookmark image id container number
-          allBookmarksImageIdsObject[id] = [bookmarksImageIdContainer[id], bookmarksImageIdContainerName.slice(-1)];
-        });
+  chrome.storage.sync.get(bookmarkIdContainerNames, items => {
+    const allBookmarksImageIdsObject = {};
+    Object.keys(items).forEach(bookmarksImageIdContainerName => {
+      const bookmarksImageIdContainer = items[bookmarksImageIdContainerName];
+      Object.keys(bookmarksImageIdContainer).forEach(id => {
+        // 0th idx -> bookmark container number, 1st idx -> bookmark image id container number
+        allBookmarksImageIdsObject[id] = [bookmarksImageIdContainer[id], bookmarksImageIdContainerName.slice(-1)];
       });
-      console.log(allBookmarksImageIdsObject);
-      const allBookmarksImageIds = Object.keys(allBookmarksImageIdsObject);
-      console.log('all bookmarks image ids');
-      console.log(allBookmarksImageIds);
-      const { imageId } = e.target.dataset;
-      if (allBookmarksImageIds.indexOf(imageId) === -1) {
-        const imageDetail = getImageDetail(e.target);
-        // bookmarksArray.push(imageId);
-        // bookmarksObject[imageId] = imageDetail;
-        chrome.storage.sync.get('bookmarksLength', items2 => {
-          const { bookmarksLength } = items2;
-          const bookmarksLengthKeys = Object.keys(bookmarksLength);
-          let validBookmarksKey = null;
-          for (let i = 0; i < bookmarksLengthKeys.length; i += 1) {
-            if (bookmarksLength[bookmarksLengthKeys[i]] <= 30) {
-              validBookmarksKey = bookmarksLengthKeys[i];
-              break;
-            }
+    });
+    console.log(allBookmarksImageIdsObject);
+    const allBookmarksImageIds = Object.keys(allBookmarksImageIdsObject);
+    console.log('all bookmarks image ids');
+    console.log(allBookmarksImageIds);
+    const { imageId } = e.target.dataset;
+    if (allBookmarksImageIds.indexOf(imageId) === -1) {
+      const imageDetail = getImageDetail(e.target);
+      // bookmarksArray.push(imageId);
+      // bookmarksObject[imageId] = imageDetail;
+      chrome.storage.sync.get('bookmarksLength', items2 => {
+        const { bookmarksLength } = items2;
+        const bookmarksLengthKeys = Object.keys(bookmarksLength);
+        let validBookmarksKey = null;
+        for (let i = 0; i < bookmarksLengthKeys.length; i += 1) {
+          if (bookmarksLength[bookmarksLengthKeys[i]] <= 30) {
+            validBookmarksKey = bookmarksLengthKeys[i];
+            break;
           }
-          if (!validBookmarksKey) {
-            showNotification('Error: Bookmarks Limit reached', 'negative', 'snackbar-bookmarks');
-            throw new Error('Bookmarks Limit reached');
+        }
+        if (!validBookmarksKey) {
+          showNotification('Error: Bookmarks Limit reached', 'negative', 'snackbar-bookmarks');
+          throw new Error('Bookmarks Limit reached');
+        }
+        let validBookmarksImageIdKey;
+        const bookmarksImageIdsContainer = Object.keys(items);
+        console.log(bookmarksImageIdsContainer);
+        for (let i = 0; i < bookmarksImageIdsContainer.length; i += 1) {
+          if (Object.keys(bookmarksImageIdsContainer[i]).length <= 80) {
+            validBookmarksImageIdKey = bookmarksImageIdsContainer[i];
+            break;
           }
-          let validBookmarksImageIdKey;
-          const bookmarksImageIdsContainer = Object.keys(items);
-          console.log(bookmarksImageIdsContainer);
-          for (let i = 0; i < bookmarksImageIdsContainer.length; i += 1) {
-            if (Object.keys(bookmarksImageIdsContainer[i]).length <= 80) {
-              validBookmarksImageIdKey = bookmarksImageIdsContainer[i];
-              break;
-            }
-          }
+        }
 
-          console.log(validBookmarksImageIdKey);
-          // items[validBookmarksImageIdKey][imageId] = validBookmarksKey.slice(-1);
-          Object.assign(items[validBookmarksImageIdKey], { [imageId]: validBookmarksKey.slice(-1) });
+        console.log(validBookmarksImageIdKey);
+        // items[validBookmarksImageIdKey][imageId] = validBookmarksKey.slice(-1);
+        Object.assign(items[validBookmarksImageIdKey], { [imageId]: validBookmarksKey.slice(-1) });
 
-          chrome.storage.sync.get(validBookmarksKey, items3 => {
-            console.log(validBookmarksKey);
-            const bookmarksObject = items3[validBookmarksKey];
-            console.log(items3);
-            console.log(bookmarksObject);
-            bookmarksObject[imageId] = imageDetail;
-            bookmarksLength[validBookmarksKey] += 1;
-            chrome.storage.sync.set(
-              {
-                [validBookmarksKey]: bookmarksObject,
-                [validBookmarksImageIdKey]: items[validBookmarksImageIdKey],
-                bookmarksLength,
-              },
-              () => {
-                e.target.classList.remove('fa-bookmark-o');
-                e.target.classList.add('fa-bookmark');
-                e.target.title = 'Remove Bookmark';
-                showNotification('Image Bookmarked', 'positive', 'snackbar-bookmarks');
-              },
-            );
-          });
-        });
-      } else {
-        const bookmarkContainerNo = allBookmarksImageIdsObject[imageId][0];
-        const bookmarkImageIdContainerNo = allBookmarksImageIdsObject[imageId][1];
-        const bookmarkContainerName = `bookmarks${bookmarkContainerNo}`;
-        const bookmarkImageIdContainerName = `bookmarksImageIds${bookmarkImageIdContainerNo}`;
-        console.log(bookmarkContainerName);
-        console.log(bookmarkImageIdContainerName);
-        // delete bookmarksObject[imageId];
-        chrome.storage.sync.get([bookmarkContainerName, bookmarkImageIdContainerName, 'bookmarksLength'], items4 => {
-          const bookmarkContainer = items4[bookmarkContainerName];
-          const bookmarkImageIdContainer = items4[bookmarkImageIdContainerName];
-          delete bookmarkContainer[imageId];
-          delete bookmarkImageIdContainer[imageId];
-          const updatedBookmarksLength = items4.bookmarksLength;
-          updatedBookmarksLength[bookmarkContainerName] -= 1;
-          console.log(imageId);
-          console.log(bookmarkContainer);
-          console.log(bookmarkImageIdContainer);
+        chrome.storage.sync.get(validBookmarksKey, items3 => {
+          console.log(validBookmarksKey);
+          const bookmarksObject = items3[validBookmarksKey];
+          console.log(items3);
+          console.log(bookmarksObject);
+          bookmarksObject[imageId] = imageDetail;
+          bookmarksLength[validBookmarksKey] += 1;
           chrome.storage.sync.set(
             {
-              [bookmarkContainerName]: bookmarkContainer,
-              [bookmarkImageIdContainerName]: bookmarkImageIdContainer,
-              bookmarksLength: updatedBookmarksLength,
+              [validBookmarksKey]: bookmarksObject,
+              [validBookmarksImageIdKey]: items[validBookmarksImageIdKey],
+              bookmarksLength,
             },
             () => {
-              e.target.classList.remove('fa-bookmark');
-              e.target.classList.add('fa-bookmark-o');
-              e.target.title = 'Bookmark Image';
-              showNotification('Bookmark removed', 'positive', 'snackbar-bookmarks');
+              e.target.classList.remove('fa-bookmark-o');
+              e.target.classList.add('fa-bookmark');
+              e.target.title = 'Remove Bookmark';
+              showNotification('Image Bookmarked', 'positive', 'snackbar-bookmarks');
             },
           );
         });
-      }
-    },
-  );
+      });
+    } else {
+      const bookmarkContainerNo = allBookmarksImageIdsObject[imageId][0];
+      const bookmarkImageIdContainerNo = allBookmarksImageIdsObject[imageId][1];
+      const bookmarkContainerName = `bookmarks${bookmarkContainerNo}`;
+      const bookmarkImageIdContainerName = `bookmarksImageIds${bookmarkImageIdContainerNo}`;
+      console.log(bookmarkContainerName);
+      console.log(bookmarkImageIdContainerName);
+      // delete bookmarksObject[imageId];
+      chrome.storage.sync.get([bookmarkContainerName, bookmarkImageIdContainerName, 'bookmarksLength'], items4 => {
+        const bookmarkContainer = items4[bookmarkContainerName];
+        const bookmarkImageIdContainer = items4[bookmarkImageIdContainerName];
+        delete bookmarkContainer[imageId];
+        delete bookmarkImageIdContainer[imageId];
+        const updatedBookmarksLength = items4.bookmarksLength;
+        updatedBookmarksLength[bookmarkContainerName] -= 1;
+        console.log(imageId);
+        console.log(bookmarkContainer);
+        console.log(bookmarkImageIdContainer);
+        chrome.storage.sync.set(
+          {
+            [bookmarkContainerName]: bookmarkContainer,
+            [bookmarkImageIdContainerName]: bookmarkImageIdContainer,
+            bookmarksLength: updatedBookmarksLength,
+          },
+          () => {
+            e.target.classList.remove('fa-bookmark');
+            e.target.classList.add('fa-bookmark-o');
+            e.target.title = 'Bookmark Image';
+            showNotification('Bookmark removed', 'positive', 'snackbar-bookmarks');
+          },
+        );
+      });
+    }
+  });
 }
 
 function appendToGrid(msnryObject, fragment, e, grid) {
