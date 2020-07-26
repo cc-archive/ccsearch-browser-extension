@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { elements } from './base';
+import { elements, constants } from './base';
 import { activatePopup } from './infoPopupModule';
 import { msnry, removeBookmarkImages } from './bookmarkModule.utils';
 import { removeLoadMoreButton, addLoadMoreButton } from './helper';
@@ -52,7 +52,7 @@ export default function toggleBookmark(e) {
         const bookmarksLengthKeys = Object.keys(bookmarksLength);
         let validBookmarksKey = null;
         for (let i = 0; i < bookmarksLengthKeys.length; i += 1) {
-          if (bookmarksLength[bookmarksLengthKeys[i]] <= 30) {
+          if (bookmarksLength[bookmarksLengthKeys[i]] <= constants.bookmarkContainerSize) {
             validBookmarksKey = bookmarksLengthKeys[i];
             break;
           }
@@ -65,7 +65,7 @@ export default function toggleBookmark(e) {
         const bookmarksImageIdsContainer = Object.keys(items);
         console.log(bookmarksImageIdsContainer);
         for (let i = 0; i < bookmarksImageIdsContainer.length; i += 1) {
-          if (Object.keys(bookmarksImageIdsContainer[i]).length <= 80) {
+          if (Object.keys(bookmarksImageIdsContainer[i]).length <= constants.bookmarkImageIdContainerSize) {
             validBookmarksImageIdKey = bookmarksImageIdsContainer[i];
             break;
           }

@@ -62,3 +62,8 @@ export const elements = {
   modalBody: document.getElementsByClassName('modal-content')[0],
 };
 export const attributionTabLink = elements.popupTabLinks[0];
+
+export const constants = {
+  bookmarkContainerSize: 30,
+  bookmarkImageIdContainerSize: 80,
+};
