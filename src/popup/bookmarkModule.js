@@ -6,11 +6,18 @@ import { removeLoadMoreButton, addLoadMoreButton } from './helper';
 // eslint-disable-next-line import/no-cycle
 import { removeOldSearchResults, removeLoaderAnimation, checkInternetConnection } from './searchModule';
 import { addSpinner, removeSpinner } from './spinner';
-import { showNotification, removeNode, restoreInitialContent, removeChildNodes } from '../utils';
+import {
+  showNotification,
+  removeNode,
+  restoreInitialContent,
+  removeChildNodes,
+  keyNames,
+  bookmarkIdContainerNames,
+} from '../utils';
 // eslint-disable-next-line import/no-cycle
 import loadCollections from './collectionModule';
 // eslint-disable-next-line import/no-cycle
-import { loadStoredContentToUI, keyNames, bookmarkIdContainerNames } from './popup.utils';
+import { loadStoredContentToUI } from './popup.utils';
 
 const download = require('downloadjs');
 

@@ -96,3 +96,28 @@ export async function fetchImageData(imageId) {
 
   return [res, responseCode];
 }
+
+export const bookmarkIdContainerNames = [
+  'bookmarksImageIds0',
+  'bookmarksImageIds1',
+  'bookmarksImageIds2',
+  'bookmarksImageIds3',
+];
+
+export const keyNames = [
+  'bookmarks0',
+  'bookmarks1',
+  'bookmarks2',
+  'bookmarks3',
+  'bookmarks4',
+  'bookmarks5',
+  'bookmarks6',
+  'bookmarks7',
+  'bookmarks8',
+  'bookmarks9',
+  'bookmarksImageIds0',
+  'bookmarksImageIds1',
+  'bookmarksImageIds2',
+  'bookmarksImageIds3',
+  'bookmarksLength',
+];
