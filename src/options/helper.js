@@ -1,5 +1,5 @@
 import elements from './base';
-import { showNotification, getLatestSources, fetchImageData } from '../utils';
+import { showNotification, getLatestSources, fetchImageData, keyNames, bookmarkIdContainerNames } from '../utils';
 
 export function restoreFilters(inputElements) {
   for (let i = 0; i < inputElements.length; i += 1) {
@@ -76,7 +76,15 @@ export function saveFiltersOptions() {
 }
 
 export function addBookmarksToStorage(newBookmarksObject) {
-  chrome.storage.sync.get({ bookmarks: {} }, items => {
+  chrome.storage.sync.get(keyNames, items => {
+    const bookmarksImageIdsObject = {};
+    bookmarkIdContainerNames.forEach(bookmarksImageIdContainerName => {
+      const bookmarksImageIdContainer = items[bookmarksImageIdContainerName];
+      Object.keys(bookmarksImageIdContainer).forEach(id => {
+        bookmarksImageIdsObject[id] = [bookmarksImageIdContainer[id], bookmarksImageIdContainerName.slice(-1)];
+      });
+    });
+    const bookmarksImageIds = Object.keys(bookmarksImageIdsObject);
     // if user tries to import bookmarks before the bookmarks storage data is updated
     if (Array.isArray(items.bookmarks)) {
       showNotification(
@@ -86,18 +94,20 @@ export function addBookmarksToStorage(newBookmarksObject) {
       );
       throw new Error('Bookmarks data structures not updated');
     }
-    const bookmarksObject = items.bookmarks;
-    const bookmarksImageIds = Object.keys(bookmarksObject);
+    // iterate over all the bookmarks using a while loop
+
+    // iterate over all the bookmarks using a while loop
     const newBookmarksImageIds = Object.keys(newBookmarksObject);
     newBookmarksImageIds.forEach(bookmarkId => {
       if (bookmarksImageIds.indexOf(bookmarkId) === -1) {
-        bookmarksObject[bookmarkId] = newBookmarksObject[bookmarkId];
+        // bookmarksObject[bookmarkId] = newBookmarksObject[bookmarkId];
+        // new logic
       }
     });
 
-    chrome.storage.sync.set({ bookmarks: bookmarksObject }, () => {
-      // console.log('bookmarks updated');
-    });
+    // chrome.storage.sync.set({ bookmarks: bookmarksObject }, () => {
+    //   // console.log('bookmarks updated');
+    // });
 
     showNotification('Bookmarks updated!', 'positive', 'snackbar-options');
   });
