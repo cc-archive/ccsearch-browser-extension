@@ -152,7 +152,6 @@ export function addBookmarksToStorage(newBookmarksObject) {
   });
 }
 
-// modify legacy bookmarks support for new schema
 export async function addLegacyBookmarksToStorage(bookmarksArray) {
   const newKeyNames = keyNames;
   newKeyNames.push('bookmarks'); // also checking for legacy "bookmarks" key
@@ -178,10 +177,12 @@ export async function addLegacyBookmarksToStorage(bookmarksArray) {
     }
 
     document.querySelector('.notification__options--background').style.display = 'flex';
+    document.querySelector('.notification__options--body button').classList.add('is-loading');
     document.querySelector('.notification__options--body button').addEventListener('click', () => {
       document.querySelector('.notification__options--background').style.display = 'none';
     });
 
+    const newBookmarksObject = {};
     for (let i = 0; i < bookmarksArray.length; i += 1) {
       const bookmarkId = bookmarksArray[i];
       if (bookmarksImageIds.indexOf(bookmarkId) === -1) {
@@ -200,11 +201,12 @@ export async function addLegacyBookmarksToStorage(bookmarksArray) {
             : imageDetailResponse.url;
           imageObject.license = imageDetailResponse.license;
           console.log(imageObject);
-          // bookmarksObject[bookmarkId] = imageObject;
+          newBookmarksObject[bookmarkId] = imageObject;
         }
-        // chrome.storage.sync.set({ bookmarks: bookmarksObject });
       }
     }
+    console.log(newBookmarksObject);
+    addBookmarksToStorage(newBookmarksObject);
     document.querySelector('.notification__options--body button').disabled = false;
     document.querySelector('.notification__options--body button').classList.remove('is-loading');
     showNotification('Bookmarks updated!', 'positive', 'snackbar-options');
