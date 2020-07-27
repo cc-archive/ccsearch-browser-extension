@@ -110,6 +110,7 @@ export function addBookmarksToStorage(newBookmarksObject) {
     let currBookmarkIdx = 0; // points to the bookmark id in filteredBookmarksImageIds
 
     const bookmarkContainerNames = Object.keys(items.bookmarksLength);
+    const bookmarkIdContainerNum = {};
 
     // adding bookmarks data to bookmark containers
     for (let i = 0; i < bookmarkContainerNames.length; i += 1) {
@@ -124,16 +125,26 @@ export function addBookmarksToStorage(newBookmarksObject) {
         const currBookmarkImageId = filteredBookmarksImageIds[currBookmarkIdx];
         items[bookmarkContainerName][currBookmarkImageId] = newBookmarksObject[currBookmarkImageId];
         items.bookmarksLength[bookmarkContainerName] += 1;
+        bookmarkIdContainerNum[currBookmarkImageId] = bookmarkContainerName.slice(-1);
         currBookmarkIdx += 1;
       }
       if (allProcessed) break;
     }
 
-    console.log(items);
+    currBookmarkIdx = 0;
+    // adding bookmarks Image Ids to bookmark Image Ids containers
+    for (let i = 0; i < bookmarkIdContainerNames.length; i += 1) {
+      const bookmarkIdContainerName = bookmarkIdContainerNames[i];
+      while (currBookmarkIdx < filteredBookmarksImageIds.length) {
+        if (Object.keys(items[bookmarkIdContainerName]).length >= constants.bookmarkImageIdContainerSize) break;
+        const currBookmarkId = filteredBookmarksImageIds[currBookmarkIdx];
+        items[bookmarkIdContainerName][currBookmarkId] = bookmarkIdContainerNum[currBookmarkId];
+        currBookmarkIdx += 1;
+      }
+    }
 
-    // chrome.storage.sync.set({ bookmarks: bookmarksObject }, () => {
-    //   // console.log('bookmarks updated');
-    // });
+    console.log(items);
+    chrome.storage.sync.set(items);
 
     showNotification('Bookmarks updated!', 'positive', 'snackbar-options');
   });
