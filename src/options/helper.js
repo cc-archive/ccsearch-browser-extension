@@ -1,5 +1,7 @@
+/* eslint-disable no-param-reassign */
 import elements from './base';
 import { showNotification, getLatestSources, fetchImageData, keyNames, bookmarkIdContainerNames } from '../utils';
+import { constants } from '../popup/base';
 
 export function restoreFilters(inputElements) {
   for (let i = 0; i < inputElements.length; i += 1) {
@@ -94,16 +96,40 @@ export function addBookmarksToStorage(newBookmarksObject) {
       );
       throw new Error('Bookmarks data structures not updated');
     }
-    // iterate over all the bookmarks using a while loop
 
-    // iterate over all the bookmarks using a while loop
+    const filteredBookmarksImageIds = [];
     const newBookmarksImageIds = Object.keys(newBookmarksObject);
+    console.log(newBookmarksImageIds);
     newBookmarksImageIds.forEach(bookmarkId => {
       if (bookmarksImageIds.indexOf(bookmarkId) === -1) {
-        // bookmarksObject[bookmarkId] = newBookmarksObject[bookmarkId];
-        // new logic
+        filteredBookmarksImageIds.push(bookmarkId);
       }
     });
+    console.log(filteredBookmarksImageIds);
+
+    let currBookmarkIdx = 0; // points to the bookmark id in filteredBookmarksImageIds
+
+    const bookmarkContainerNames = Object.keys(items.bookmarksLength);
+
+    // adding bookmarks data to bookmark containers
+    for (let i = 0; i < bookmarkContainerNames.length; i += 1) {
+      let allProcessed = false;
+      const bookmarkContainerName = bookmarkContainerNames[i];
+      const currContainerLength = items.bookmarksLength[bookmarkContainerName];
+      for (let j = currContainerLength; j < constants.bookmarkContainerSize; j += 1) {
+        if (currBookmarkIdx === filteredBookmarksImageIds.length) {
+          allProcessed = true;
+          break;
+        }
+        const currBookmarkImageId = filteredBookmarksImageIds[currBookmarkIdx];
+        items[bookmarkContainerName][currBookmarkImageId] = newBookmarksObject[currBookmarkImageId];
+        items.bookmarksLength[bookmarkContainerName] += 1;
+        currBookmarkIdx += 1;
+      }
+      if (allProcessed) break;
+    }
+
+    console.log(items);
 
     // chrome.storage.sync.set({ bookmarks: bookmarksObject }, () => {
     //   // console.log('bookmarks updated');
