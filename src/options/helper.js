@@ -78,7 +78,9 @@ export function saveFiltersOptions() {
 }
 
 export function addBookmarksToStorage(newBookmarksObject) {
-  chrome.storage.sync.get(keyNames, items => {
+  const newKeyNames = keyNames;
+  newKeyNames.push('bookmarks'); // also checking for legacy "bookmarks" key
+  chrome.storage.sync.get(newKeyNames, items => {
     const bookmarksImageIdsObject = {};
     bookmarkIdContainerNames.forEach(bookmarksImageIdContainerName => {
       const bookmarksImageIdContainer = items[bookmarksImageIdContainerName];
