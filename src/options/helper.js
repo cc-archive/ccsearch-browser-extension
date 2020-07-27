@@ -152,11 +152,22 @@ export function addBookmarksToStorage(newBookmarksObject) {
   });
 }
 
+// modify legacy bookmarks support for new schema
 export async function addLegacyBookmarksToStorage(bookmarksArray) {
-  chrome.storage.sync.get({ bookmarks: {} }, async items => {
-    const bookmarksObject = items.bookmarks;
+  const newKeyNames = keyNames;
+  newKeyNames.push('bookmarks'); // also checking for legacy "bookmarks" key
+  chrome.storage.sync.get(newKeyNames, async items => {
+    const bookmarksImageIdsObject = {};
+    bookmarkIdContainerNames.forEach(bookmarksImageIdContainerName => {
+      const bookmarksImageIdContainer = items[bookmarksImageIdContainerName];
+      Object.keys(bookmarksImageIdContainer).forEach(id => {
+        bookmarksImageIdsObject[id] = [bookmarksImageIdContainer[id], bookmarksImageIdContainerName.slice(-1)];
+      });
+    });
+    const bookmarksImageIds = Object.keys(bookmarksImageIdsObject);
+    // const bookmarksObject = items.bookmarks;
     // if user tries to import bookmarks before the bookmarks storage data is updated
-    if (Array.isArray(bookmarksObject)) {
+    if (Array.isArray(items.bookmarks)) {
       showNotification(
         'Error: First please open the extension popup to trigger the automatic update of bookmarks section. It will only take a few minutes',
         'negative',
@@ -173,7 +184,7 @@ export async function addLegacyBookmarksToStorage(bookmarksArray) {
 
     for (let i = 0; i < bookmarksArray.length; i += 1) {
       const bookmarkId = bookmarksArray[i];
-      if (!Object.prototype.hasOwnProperty.call(bookmarksObject, bookmarkId)) {
+      if (bookmarksImageIds.indexOf(bookmarkId) === -1) {
         // eslint-disable-next-line no-await-in-loop
         const res = await fetchImageData(bookmarkId);
         const imageDetailResponse = res[0];
@@ -188,9 +199,10 @@ export async function addLegacyBookmarksToStorage(bookmarksArray) {
             ? imageDetailResponse.thumbnail
             : imageDetailResponse.url;
           imageObject.license = imageDetailResponse.license;
-          bookmarksObject[bookmarkId] = imageObject;
+          console.log(imageObject);
+          // bookmarksObject[bookmarkId] = imageObject;
         }
-        chrome.storage.sync.set({ bookmarks: bookmarksObject });
+        // chrome.storage.sync.set({ bookmarks: bookmarksObject });
       }
     }
     document.querySelector('.notification__options--body button').disabled = false;
