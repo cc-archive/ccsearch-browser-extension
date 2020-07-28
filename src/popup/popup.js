@@ -37,7 +37,7 @@ import { handleImageAttributionDownload, handleImageDownload } from './infoPopup
 import { addSpinner } from './spinner';
 import { showNotification, removeNode, getLatestSources, restoreInitialContent, showModal } from '../utils';
 import { loadBookmarkImages } from './bookmarkModule';
-import { loadStoredContentToUI, setBookmarksStorageSchema } from './popup.utils';
+import { loadStoredContentToUI, migrateStorage } from './popup.utils';
 
 // global object to store the application variables
 window.appObject = {};
@@ -623,4 +623,4 @@ window.addEventListener('scroll', () => {
 
 elements.buttonBackToTop.addEventListener('click', () => window.scrollTo(0, 0));
 
-setBookmarksStorageSchema();
+migrateStorage();
