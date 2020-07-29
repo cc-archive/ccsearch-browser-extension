@@ -77,7 +77,7 @@ export function saveFiltersOptions() {
   saveSingleFilter(elements.sourceInputs);
 }
 
-export function addBookmarksToStorage(newBookmarksObject) {
+export function addBookmarksToStorage(newBookmarksObject, showConfirmation = true) {
   const newKeyNames = keyNames;
   newKeyNames.push('bookmarks'); // also checking for legacy "bookmarks" key
   chrome.storage.sync.get(newKeyNames, items => {
@@ -148,7 +148,7 @@ export function addBookmarksToStorage(newBookmarksObject) {
     console.log(items);
     chrome.storage.sync.set(items);
 
-    showNotification('Bookmarks updated!', 'positive', 'snackbar-options');
+    if (showConfirmation) showNotification('Bookmarks updated!', 'positive', 'snackbar-options');
   });
 }
 
@@ -182,7 +182,8 @@ export async function addLegacyBookmarksToStorage(bookmarksArray) {
       document.querySelector('.notification__options--background').style.display = 'none';
     });
 
-    const newBookmarksObject = {};
+    let newBookmarksObject = {};
+    let bookmarkBatchCount = 0; // to track the number of bookmarks processed and pushed into newBookmarksObject
     for (let i = 0; i < bookmarksArray.length; i += 1) {
       const bookmarkId = bookmarksArray[i];
       if (bookmarksImageIds.indexOf(bookmarkId) === -1) {
@@ -202,11 +203,18 @@ export async function addLegacyBookmarksToStorage(bookmarksArray) {
           imageObject.license = imageDetailResponse.license;
           console.log(imageObject);
           newBookmarksObject[bookmarkId] = imageObject;
+          bookmarkBatchCount += 1;
+          // add bookmarks in the batch of 5 to storage
+          if (bookmarkBatchCount === 5) {
+            addBookmarksToStorage(newBookmarksObject, false);
+            bookmarkBatchCount = 0;
+            newBookmarksObject = {};
+          }
         }
       }
     }
     console.log(newBookmarksObject);
-    addBookmarksToStorage(newBookmarksObject);
+    addBookmarksToStorage(newBookmarksObject); // add left out bookmarks to storage
     document.querySelector('.notification__options--body button').disabled = false;
     document.querySelector('.notification__options--body button').classList.remove('is-loading');
     showNotification('Bookmarks updated!', 'positive', 'snackbar-options');
