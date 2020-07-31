@@ -45,7 +45,6 @@ export default function toggleBookmark(e) {
         allBookmarksImageIdsObject[id] = [bookmarksImageIdContainer[id], bookmarksImageIdContainerName.slice(-1)];
       });
     });
-    console.log(allBookmarksImageIdsObject);
     const allBookmarksImageIds = Object.keys(allBookmarksImageIdsObject);
     console.log('all bookmarks image ids');
     console.log(allBookmarksImageIds);
@@ -70,9 +69,8 @@ export default function toggleBookmark(e) {
         }
         let validBookmarksImageIdKey;
         const bookmarksImageIdsContainer = Object.keys(items);
-        console.log(bookmarksImageIdsContainer);
         for (let i = 0; i < bookmarksImageIdsContainer.length; i += 1) {
-          if (Object.keys(bookmarksImageIdsContainer[i]).length <= constants.bookmarkImageIdContainerSize) {
+          if (Object.keys(items[bookmarksImageIdsContainer[i]]).length <= constants.bookmarkImageIdContainerSize) {
             validBookmarksImageIdKey = bookmarksImageIdsContainer[i];
             break;
           }
