@@ -35,16 +35,9 @@ import {
 } from './filterModule';
 import { handleImageAttributionDownload, handleImageDownload } from './infoPopupModule';
 import { addSpinner } from './spinner';
-import {
-  showNotification,
-  removeNode,
-  getLatestSources,
-  restoreInitialContent,
-  showModal,
-  fetchImageData,
-} from '../utils';
+import { showNotification, removeNode, getLatestSources, restoreInitialContent, showModal } from '../utils';
 import { loadBookmarkImages } from './bookmarkModule';
-import loadStoredContentToUI from './popup.utils';
+import { loadStoredContentToUI, migrateStorage } from './popup.utils';
 
 // global object to store the application variables
 window.appObject = {};
@@ -630,75 +623,4 @@ window.addEventListener('scroll', () => {
 
 elements.buttonBackToTop.addEventListener('click', () => window.scrollTo(0, 0));
 
-async function migrateOldBookmarks() {
-  chrome.storage.sync.get(null, items => {
-    console.log('migrating old bookmarks');
-    console.log(items);
-  });
-
-  chrome.storage.sync.get({ bookmarksMigrationDone: false }, items3 => {
-    if (!items3.bookmarksMigrationDone) {
-      let count = 0;
-      chrome.storage.sync.get({ newBookmarks: {} }, store => {
-        const { newBookmarks } = store;
-
-        chrome.storage.sync.get('bookmarks', async items => {
-          if (items.bookmarks !== undefined) {
-            document.querySelector('.notification__popup--background').style.display = 'flex';
-            if (items.bookmarks.length !== 0) {
-              const currentBookmarksArray = items.bookmarks;
-
-              for (let i = currentBookmarksArray.length - 1; i >= 0; i -= 1) {
-                count += 1;
-                console.log(count);
-                const bookmarkId = currentBookmarksArray[i];
-                // eslint-disable-next-line no-await-in-loop
-                const res = await fetchImageData(bookmarkId);
-                const imageDetailResponse = res[0];
-                const responseCode = res[1];
-                const imageObject = {};
-                if (responseCode === 429) {
-                  document.querySelector('.notification__popup--body p').innerText =
-                    'The process has stoped due to surpassing the API limit. Please open the extension after 5 minutes to continue.';
-                  throw new Error('API limit reached');
-                }
-                if (responseCode === 200) {
-                  imageObject.thumbnail = imageDetailResponse.thumbnail
-                    ? imageDetailResponse.thumbnail
-                    : imageDetailResponse.url;
-                  imageObject.license = imageDetailResponse.license;
-                  newBookmarks[bookmarkId] = imageObject;
-
-                  chrome.storage.sync.set({ newBookmarks }, () => {
-                    const idx = currentBookmarksArray.indexOf(bookmarkId);
-                    if (idx > -1) {
-                      currentBookmarksArray.splice(idx, 1);
-                    }
-
-                    chrome.storage.sync.set({ bookmarks: currentBookmarksArray });
-                  });
-                }
-              }
-            }
-
-            chrome.storage.sync.remove('bookmarks');
-            chrome.storage.sync.get({ newBookmarks: {} }, items2 => {
-              chrome.storage.sync.set({ bookmarks: items2.newBookmarks });
-              chrome.storage.sync.remove('newBookmarks');
-            });
-            document.querySelector('.notification__popup--body p').innerText =
-              'Done! Please close and open the extension again.';
-            chrome.storage.sync.set({ bookmarksMigrationDone: true }, () => {
-              console.log('migration done');
-            });
-            chrome.storage.sync.get(null, it => {
-              console.log(it);
-            });
-          }
-        });
-      });
-    }
-  });
-}
-
-migrateOldBookmarks();
+migrateStorage();
