@@ -119,9 +119,17 @@ export function addBookmarksToStorage(newBookmarksObject, showConfirmation = tru
     });
     console.log(filteredBookmarksImageIds);
 
+    if (bookmarksImageIds.length + filteredBookmarksImageIds.length > constants.extensionBookmarkLimit) {
+      showNotification(
+        `Error: Cannot import because bookmark limit of ${constants.extensionBookmarkLimit} would be surpassed`,
+        'negative',
+        'snackbar-options',
+        5000,
+      );
+      throw new Error('Cannot store bookmarks over bookmark limit');
+    }
     let currBookmarkIdx = 0; // points to the bookmark id in filteredBookmarksImageIds
 
-    const bookmarkContainerNames = Object.keys(items.bookmarksLength);
     const bookmarkIdContainerNum = {};
 
     // adding bookmarks data to bookmark containers
