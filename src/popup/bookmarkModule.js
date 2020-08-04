@@ -489,22 +489,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // change export and import accordingly
   elements.exportBookmarksButton.addEventListener('click', () => {
-    const bookmarksObject = {};
+    let bookmarksObject = {};
 
-    Object.values(bookmarkDOM).forEach(checkbox => {
-      if (checkbox.checked) {
-        const imageObject = {};
-        imageObject.thumbnail = checkbox.dataset.imageThumbnail;
-        imageObject.license = checkbox.dataset.imageLicense;
-        bookmarksObject[checkbox.dataset.imageId] = imageObject;
+    chrome.storage.sync.get(activeBookmarkContainers, items => {
+      activeBookmarkContainers.forEach(containerName => {
+        bookmarksObject = { ...bookmarksObject, ...items[containerName] };
+      });
+      if (Object.keys(bookmarksObject).length) {
+        const bookmarksString = JSON.stringify(bookmarksObject);
+        download(bookmarksString, 'bookmarks.json', 'text/plain');
+        showNotification('Exported all bookmarks', 'negative', 'snackbar-bookmarks');
+      } else {
+        showNotification('No bookmarks available to export', 'negative', 'snackbar-bookmarks');
       }
     });
-
-    if (Object.keys(bookmarksObject).length) {
-      const bookmarksString = JSON.stringify(bookmarksObject);
-      download(bookmarksString, 'bookmarks.json', 'text/plain');
-    } else {
-      showNotification('No bookmarks selected', 'negative', 'snackbar-bookmarks');
-    }
   });
 });
