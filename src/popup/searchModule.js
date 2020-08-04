@@ -192,8 +192,8 @@ export function addSearchThumbnailsToDOM(resultArray) {
       bookmarkIcon.setAttribute('data-image-license', license);
       bookmarkIcon.addEventListener('click', toggleBookmark);
 
-      console.log(allBookmarksImageIds);
-      console.log(id);
+      // console.log(allBookmarksImageIds);
+      // console.log(id);
       if (allBookmarksImageIds.indexOf(id) === -1) {
         bookmarkIcon.classList.add('fa-bookmark-o');
         bookmarkIcon.title = 'Bookmark image';
@@ -268,7 +268,7 @@ export function search(url) {
         localStorage.setItem('title', window.appObject.storeSearch.title);
         localStorage.setItem(window.appObject.pageNo, JSON.stringify(window.appObject.storeSearch.page));
 
-        console.log(localStorage);
+        // console.log(localStorage);
       }
 
       window.appObject.pageNo += 1;

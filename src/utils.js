@@ -102,7 +102,6 @@ export const activeBookmarkIdContainers = [
   'bookmarksImageIds1',
   'bookmarksImageIds2',
   'bookmarksImageIds3',
-  'bookmarksImageIds4',
 ];
 
 export const keyNames = [

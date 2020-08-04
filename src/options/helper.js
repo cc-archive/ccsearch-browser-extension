@@ -89,11 +89,8 @@ export function addBookmarksToStorage(newBookmarksObject, showConfirmation = tru
   newKeyNames.push('bookmarks'); // also checking for legacy "bookmarks" key
   chrome.storage.sync.get(newKeyNames, items => {
     const bookmarksImageIdsObject = {};
-    console.log(activeBookmarkIdContainers);
     activeBookmarkIdContainers.forEach(bookmarksImageIdContainerName => {
-      console.log(bookmarksImageIdContainerName);
       const bookmarksImageIdContainer = items[bookmarksImageIdContainerName];
-      console.log(bookmarksImageIdContainer);
       Object.keys(bookmarksImageIdContainer).forEach(id => {
         bookmarksImageIdsObject[id] = [bookmarksImageIdContainer[id], bookmarksImageIdContainerName.substring(17)];
       });
@@ -111,7 +108,6 @@ export function addBookmarksToStorage(newBookmarksObject, showConfirmation = tru
 
     const filteredBookmarksImageIds = [];
     const newBookmarksImageIds = Object.keys(newBookmarksObject);
-    console.log(newBookmarksImageIds);
     newBookmarksImageIds.forEach(bookmarkId => {
       if (bookmarksImageIds.indexOf(bookmarkId) === -1) {
         filteredBookmarksImageIds.push(bookmarkId);

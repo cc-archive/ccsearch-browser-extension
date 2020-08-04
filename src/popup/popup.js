@@ -379,7 +379,7 @@ elements.searchIcon.addEventListener('click', () => {
   );
 
   // console.log(window.appObject.userSelectedUseCaseList);
-  console.log(window.appObject.userSelectedSourcesList);
+  // console.log(window.appObject.userSelectedSourcesList);
   search(url);
   // console.log(url);
   // pageNo += 1;

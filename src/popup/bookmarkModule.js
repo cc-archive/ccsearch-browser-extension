@@ -47,8 +47,6 @@ export default function toggleBookmark(e) {
       });
     });
     const allBookmarksImageIds = Object.keys(allBookmarksImageIdsObject);
-    console.log('all bookmarks image ids');
-    console.log(allBookmarksImageIds);
     const { imageId } = e.target.dataset;
     if (allBookmarksImageIds.indexOf(imageId) === -1) {
       const imageDetail = getImageDetail(e.target);
@@ -63,8 +61,6 @@ export default function toggleBookmark(e) {
             break;
           }
         }
-        console.log('the valid container key');
-        console.log(validBookmarksKey);
         if (!validBookmarksKey) {
           showNotification('Error: Bookmarks Limit reached', 'negative', 'snackbar-bookmarks');
           throw new Error('Bookmarks Limit reached');
@@ -77,16 +73,10 @@ export default function toggleBookmark(e) {
           }
         }
 
-        console.log('the valid key');
-        console.log(validBookmarksImageIdKey);
-
         Object.assign(items[validBookmarksImageIdKey], { [imageId]: validBookmarksKey.substring(9) });
 
         chrome.storage.sync.get(validBookmarksKey, items3 => {
-          console.log(validBookmarksKey);
           const bookmarksObject = items3[validBookmarksKey];
-          console.log(items3);
-          console.log(bookmarksObject);
           bookmarksObject[imageId] = imageDetail;
           bookmarksLength[validBookmarksKey] += 1;
           chrome.storage.sync.set(
@@ -109,8 +99,6 @@ export default function toggleBookmark(e) {
       const bookmarkImageIdContainerNo = allBookmarksImageIdsObject[imageId][1];
       const bookmarkContainerName = `bookmarks${bookmarkContainerNo}`;
       const bookmarkImageIdContainerName = `bookmarksImageIds${bookmarkImageIdContainerNo}`;
-      console.log(bookmarkContainerName);
-      console.log(bookmarkImageIdContainerName);
       // delete bookmarksObject[imageId];
       chrome.storage.sync.get([bookmarkContainerName, bookmarkImageIdContainerName, 'bookmarksLength'], items4 => {
         const bookmarkContainer = items4[bookmarkContainerName];
@@ -119,9 +107,6 @@ export default function toggleBookmark(e) {
         delete bookmarkImageIdContainer[imageId];
         const updatedBookmarksLength = items4.bookmarksLength;
         updatedBookmarksLength[bookmarkContainerName] -= 1;
-        console.log(imageId);
-        console.log(bookmarkContainer);
-        console.log(bookmarkImageIdContainer);
         chrome.storage.sync.set(
           {
             [bookmarkContainerName]: bookmarkContainer,
@@ -317,7 +302,7 @@ export function loadBookmarkImages(numberOfImages) {
             items2[requiredBookmarkContainer[i]][segBookmarkIds[containerNum][j]];
         }
       }
-      console.log(bookmarkObject);
+      // console.log(bookmarkObject);
       addBookmarkThumbnailsToDOM(bookmarkObject, bookmarkImageIds);
     });
   });
@@ -414,7 +399,6 @@ document.addEventListener('DOMContentLoaded', () => {
         deletedBookmarks.push(imageId);
       }
     });
-    console.log(deletedBookmarks);
     if (deletedBookmarks.length === 0) {
       showNotification('No bookmark selected', 'negative', 'snackbar-bookmarks');
     } else {
@@ -430,25 +414,17 @@ document.addEventListener('DOMContentLoaded', () => {
             ];
           });
         });
-        console.log(allBookmarksImageIdsObject);
-        const allBookmarksImageIds = Object.keys(allBookmarksImageIdsObject);
-        console.log('all bookmarks image ids');
-        console.log(allBookmarksImageIds);
         deletedBookmarks.forEach(imageId => {
           const bookmarkContainerNo = allBookmarksImageIdsObject[imageId][0];
           const bookmarkImageIdContainerNo = allBookmarksImageIdsObject[imageId][1];
           const bookmarkContainerName = `bookmarks${bookmarkContainerNo}`;
           const bookmarkImageIdContainerName = `bookmarksImageIds${bookmarkImageIdContainerNo}`;
-          console.log(bookmarkContainerName);
-          console.log(bookmarkImageIdContainerName);
           // const bookmarkContainer = items4[bookmarkContainerName];
           // const bookmarkImageIdContainer = items4[bookmarkImageIdContainerName];
           delete items[bookmarkContainerName][imageId];
           delete items[bookmarkImageIdContainerName][imageId];
           // const updatedbookmarksLength = items4.bookmarksLength;
           items.bookmarksLength[bookmarkContainerName] -= 1;
-          console.log('items');
-          console.log(items);
         });
 
         chrome.storage.sync.set(items, () => {

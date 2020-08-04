@@ -70,8 +70,8 @@ export function migrateStorage() {
   chrome.storage.sync.set(newStorageSchema, () => {
     chrome.storage.sync.get('bookmarks', items => {
       const bookmarkIds = Object.keys(items.bookmarks);
-      console.log('starting');
-      console.log(bookmarkIds);
+      // console.log('starting');
+      // console.log(bookmarkIds);
 
       let bookmarkContainerName = 'bookmarks0';
       const bookmarkImageIds = {};
@@ -89,11 +89,11 @@ export function migrateStorage() {
         bookmarkKeyLengths[bookmarkContainerName] += 1;
       }
 
-      console.log('final');
-      console.log(bookmarkImageIds);
-      console.log(bookmarksObject0);
-      console.log(bookmarksObject1);
-      console.log(bookmarkKeyLengths);
+      // console.log('final');
+      // console.log(bookmarkImageIds);
+      // console.log(bookmarksObject0);
+      // console.log(bookmarksObject1);
+      // console.log(bookmarkKeyLengths);
       chrome.storage.sync.set({
         bookmarks0: bookmarksObject0,
         bookmarks1: bookmarksObject1,
