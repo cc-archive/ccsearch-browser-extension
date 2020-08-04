@@ -38,10 +38,6 @@ const bookmarkKeyLengths = {
   bookmarks13: 0,
   bookmarks14: 0,
   bookmarks15: 0,
-  bookmarks16: 0,
-  bookmarks17: 0,
-  bookmarks18: 0,
-  bookmarks19: 0,
 };
 
 export function migrateStorage() {
@@ -62,10 +58,6 @@ export function migrateStorage() {
     bookmarks13: {},
     bookmarks14: {},
     bookmarks15: {},
-    bookmarks16: {},
-    bookmarks17: {},
-    bookmarks18: {},
-    bookmarks19: {},
     bookmarksLength: bookmarkKeyLengths,
     bookmarksImageIds0: {},
     bookmarksImageIds1: {},
@@ -73,8 +65,6 @@ export function migrateStorage() {
     bookmarksImageIds3: {},
     bookmarksImageIds4: {},
     bookmarksImageIds5: {},
-    bookmarksImageIds6: {},
-    bookmarksImageIds7: {},
   };
 
   chrome.storage.sync.set(newStorageSchema, () => {
