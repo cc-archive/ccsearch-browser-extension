@@ -68,7 +68,6 @@ export function resetLicenseDropDown() {
 }
 
 export function resetFilterDropDown(wrapperElement) {
-  console.log('reset function called');
   const dropdownContainer = wrapperElement.querySelector('.comboTreeDropDownContainer');
   const inputCheckboxes = dropdownContainer.getElementsByTagName('input');
   // unchecking all the options

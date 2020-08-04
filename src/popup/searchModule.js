@@ -4,7 +4,7 @@ import { activatePopup } from './infoPopupModule';
 import { removeSpinner } from './spinner';
 // eslint-disable-next-line import/no-cycle
 import toggleBookmark from './bookmarkModule';
-import { showNotification, removeChildNodes, restoreInitialContent } from '../utils';
+import { showNotification, removeChildNodes, restoreInitialContent, activeBookmarkIdContainers } from '../utils';
 
 const Masonry = require('masonry-layout');
 
@@ -134,112 +134,107 @@ export function addSearchThumbnailsToDOM(resultArray) {
   const divs = [];
   const fragment = document.createDocumentFragment();
 
-  chrome.storage.sync.get(
-    ['bookmarksImageIds0', 'bookmarksImageIds1', 'bookmarksImageIds2', 'bookmarksImageIds3'],
-    items => {
-      const allBookmarksImageIdsObject = {
-        ...items.bookmarksImageIds0,
-        ...items.bookmarksImageIds1,
-        ...items.bookmarksImageIds2,
-        ...items.bookmarksImageIds3,
-      };
-      const allBookmarksImageIds = Object.keys(allBookmarksImageIdsObject);
+  chrome.storage.sync.get(activeBookmarkIdContainers, items => {
+    let allBookmarksImageIdsObject = {};
+    activeBookmarkIdContainers.forEach(bookmarkIdContainerName => {
+      allBookmarksImageIdsObject = { ...allBookmarksImageIdsObject, ...items[bookmarkIdContainerName] };
+    });
+    const allBookmarksImageIds = Object.keys(allBookmarksImageIdsObject);
 
-      resultArray.forEach(element => {
-        const thumbnail = element.thumbnail ? element.thumbnail : element.url;
-        const { license, id } = element;
-        const licenseArray = license.split('-'); // split license in individual characteristics
+    resultArray.forEach(element => {
+      const thumbnail = element.thumbnail ? element.thumbnail : element.url;
+      const { license, id } = element;
+      const licenseArray = license.split('-'); // split license in individual characteristics
 
-        // make an image element
-        const imgElement = document.createElement('img');
-        imgElement.setAttribute('src', thumbnail);
-        imgElement.setAttribute('class', 'image-thumbnails');
-        imgElement.setAttribute('id', id);
+      // make an image element
+      const imgElement = document.createElement('img');
+      imgElement.setAttribute('src', thumbnail);
+      imgElement.setAttribute('class', 'image-thumbnails');
+      imgElement.setAttribute('id', id);
 
-        // make a span to hold the license icons
-        const spanLicenseElement = document.createElement('span');
-        spanLicenseElement.setAttribute('class', 'image-license');
+      // make a span to hold the license icons
+      const spanLicenseElement = document.createElement('span');
+      spanLicenseElement.setAttribute('class', 'image-license');
 
-        // make a link to license description
-        const licenseLinkElement = document.createElement('a');
-        licenseLinkElement.setAttribute('href', `https://creativecommons.org/licenses/${license}/2.0/`);
-        licenseLinkElement.setAttribute('target', '_blank'); // open link in new tab
-        licenseLinkElement.setAttribute('title', license); // open link in new tab
+      // make a link to license description
+      const licenseLinkElement = document.createElement('a');
+      licenseLinkElement.setAttribute('href', `https://creativecommons.org/licenses/${license}/2.0/`);
+      licenseLinkElement.setAttribute('target', '_blank'); // open link in new tab
+      licenseLinkElement.setAttribute('title', license); // open link in new tab
 
-        // Array to hold license image elements
-        const licenseIconElementsArray = [];
+      // Array to hold license image elements
+      const licenseIconElementsArray = [];
 
-        // Add the default cc icon
-        let licenseIconElement = document.createElement('img');
-        licenseIconElement.setAttribute('src', 'img/license_logos/cc_icon.svg');
-        licenseIconElement.setAttribute('alt', 'cc_icon');
+      // Add the default cc icon
+      let licenseIconElement = document.createElement('img');
+      licenseIconElement.setAttribute('src', 'img/license_logos/cc_icon.svg');
+      licenseIconElement.setAttribute('alt', 'cc_icon');
+      licenseIconElementsArray.push(licenseIconElement);
+
+      // make and push license image elements
+      licenseArray.forEach(name => {
+        licenseIconElement = document.createElement('img');
+        licenseIconElement.setAttribute('src', `img/license_logos/cc-${name}_icon.svg`);
+        licenseIconElement.setAttribute('alt', `cc-${name}_icon`);
         licenseIconElementsArray.push(licenseIconElement);
-
-        // make and push license image elements
-        licenseArray.forEach(name => {
-          licenseIconElement = document.createElement('img');
-          licenseIconElement.setAttribute('src', `img/license_logos/cc-${name}_icon.svg`);
-          licenseIconElement.setAttribute('alt', `cc-${name}_icon`);
-          licenseIconElementsArray.push(licenseIconElement);
-        });
-
-        licenseIconElementsArray.forEach(licenseIcon => {
-          licenseLinkElement.appendChild(licenseIcon);
-        });
-
-        const bookmarkIcon = document.createElement('i');
-        bookmarkIcon.classList.add('fa');
-        bookmarkIcon.classList.add('bookmark-icon');
-        bookmarkIcon.id = 'bookmark-icon';
-        bookmarkIcon.setAttribute('data-image-id', id);
-        bookmarkIcon.setAttribute('data-image-thumbnail', thumbnail);
-        bookmarkIcon.setAttribute('data-image-license', license);
-        bookmarkIcon.addEventListener('click', toggleBookmark);
-
-        console.log(allBookmarksImageIds);
-        console.log(id);
-        if (allBookmarksImageIds.indexOf(id) === -1) {
-          bookmarkIcon.classList.add('fa-bookmark-o');
-          bookmarkIcon.title = 'Bookmark image';
-        } else {
-          bookmarkIcon.classList.add('fa-bookmark');
-          bookmarkIcon.title = 'Remove Bookmark';
-        }
-
-        spanLicenseElement.appendChild(licenseLinkElement);
-        spanLicenseElement.appendChild(bookmarkIcon);
-
-        // make a div element to encapsulate image element
-        const divElement = document.createElement('div');
-        divElement.setAttribute('class', 'image');
-
-        // adding event listener to open popup.
-        divElement.addEventListener('click', e => {
-          if (e.target.classList.contains('image')) {
-            checkInternetConnection();
-            const imageThumbnail = e.target.querySelector('.image-thumbnails');
-            activatePopup(imageThumbnail);
-          }
-        });
-
-        divElement.appendChild(imgElement);
-        divElement.appendChild(spanLicenseElement);
-
-        // div to act as grid itemj
-        const gridItemDiv = document.createElement('div');
-        gridItemDiv.setAttribute('class', 'grid-item');
-
-        gridItemDiv.appendChild(divElement);
-
-        fragment.appendChild(gridItemDiv);
-        divs.push(gridItemDiv);
-
-        // console.log(gridItemDiv);
       });
 
-      appendToGrid(msnry, fragment, divs, elements.gridPrimary);
-    },
-  );
+      licenseIconElementsArray.forEach(licenseIcon => {
+        licenseLinkElement.appendChild(licenseIcon);
+      });
+
+      const bookmarkIcon = document.createElement('i');
+      bookmarkIcon.classList.add('fa');
+      bookmarkIcon.classList.add('bookmark-icon');
+      bookmarkIcon.id = 'bookmark-icon';
+      bookmarkIcon.setAttribute('data-image-id', id);
+      bookmarkIcon.setAttribute('data-image-thumbnail', thumbnail);
+      bookmarkIcon.setAttribute('data-image-license', license);
+      bookmarkIcon.addEventListener('click', toggleBookmark);
+
+      // console.log(allBookmarksImageIds);
+      // console.log(id);
+      if (allBookmarksImageIds.indexOf(id) === -1) {
+        bookmarkIcon.classList.add('fa-bookmark-o');
+        bookmarkIcon.title = 'Bookmark image';
+      } else {
+        bookmarkIcon.classList.add('fa-bookmark');
+        bookmarkIcon.title = 'Remove Bookmark';
+      }
+
+      spanLicenseElement.appendChild(licenseLinkElement);
+      spanLicenseElement.appendChild(bookmarkIcon);
+
+      // make a div element to encapsulate image element
+      const divElement = document.createElement('div');
+      divElement.setAttribute('class', 'image');
+
+      // adding event listener to open popup.
+      divElement.addEventListener('click', e => {
+        if (e.target.classList.contains('image')) {
+          checkInternetConnection();
+          const imageThumbnail = e.target.querySelector('.image-thumbnails');
+          activatePopup(imageThumbnail);
+        }
+      });
+
+      divElement.appendChild(imgElement);
+      divElement.appendChild(spanLicenseElement);
+
+      // div to act as grid itemj
+      const gridItemDiv = document.createElement('div');
+      gridItemDiv.setAttribute('class', 'grid-item');
+
+      gridItemDiv.appendChild(divElement);
+
+      fragment.appendChild(gridItemDiv);
+      divs.push(gridItemDiv);
+
+      // console.log(gridItemDiv);
+    });
+
+    appendToGrid(msnry, fragment, divs, elements.gridPrimary);
+  });
 }
 
 export function search(url) {
@@ -273,7 +268,7 @@ export function search(url) {
         localStorage.setItem('title', window.appObject.storeSearch.title);
         localStorage.setItem(window.appObject.pageNo, JSON.stringify(window.appObject.storeSearch.page));
 
-        console.log(localStorage);
+        // console.log(localStorage);
       }
 
       window.appObject.pageNo += 1;
