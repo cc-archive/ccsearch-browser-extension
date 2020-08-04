@@ -97,11 +97,15 @@ export async function fetchImageData(imageId) {
   return [res, responseCode];
 }
 
-export const bookmarkIdContainerNames = [
+export const activeBookmarkIdContainers = [
   'bookmarksImageIds0',
   'bookmarksImageIds1',
   'bookmarksImageIds2',
   'bookmarksImageIds3',
+  'bookmarksImageIds4',
+  'bookmarksImageIds5',
+  'bookmarksImageIds6',
+  'bookmarksImageIds7',
 ];
 
 export const keyNames = [
@@ -115,9 +119,46 @@ export const keyNames = [
   'bookmarks7',
   'bookmarks8',
   'bookmarks9',
+  'bookmarks10',
+  'bookmarks11',
+  'bookmarks12',
+  'bookmarks13',
+  'bookmarks14',
+  'bookmarks15',
+  'bookmarks16',
+  'bookmarks17',
+  'bookmarks18',
+  'bookmarks19',
   'bookmarksImageIds0',
   'bookmarksImageIds1',
   'bookmarksImageIds2',
   'bookmarksImageIds3',
+  'bookmarksImageIds4',
+  'bookmarksImageIds5',
+  'bookmarksImageIds6',
+  'bookmarksImageIds7',
   'bookmarksLength',
+];
+
+export const activeBookmarkContainers = [
+  'bookmarks0',
+  'bookmarks1',
+  'bookmarks2',
+  'bookmarks3',
+  'bookmarks4',
+  'bookmarks5',
+  'bookmarks6',
+  'bookmarks7',
+  'bookmarks8',
+  'bookmarks9',
+  'bookmarks10',
+  'bookmarks11',
+  'bookmarks12',
+  'bookmarks13',
+  'bookmarks14',
+  'bookmarks15',
+  'bookmarks16',
+  'bookmarks17',
+  'bookmarks18',
+  'bookmarks19',
 ];

@@ -32,6 +32,16 @@ const bookmarkKeyLengths = {
   bookmarks7: 0,
   bookmarks8: 0,
   bookmarks9: 0,
+  bookmarks10: 0,
+  bookmarks11: 0,
+  bookmarks12: 0,
+  bookmarks13: 0,
+  bookmarks14: 0,
+  bookmarks15: 0,
+  bookmarks16: 0,
+  bookmarks17: 0,
+  bookmarks18: 0,
+  bookmarks19: 0,
 };
 
 export function migrateStorage() {
@@ -46,11 +56,25 @@ export function migrateStorage() {
     bookmarks7: {},
     bookmarks8: {},
     bookmarks9: {},
+    bookmarks10: {},
+    bookmarks11: {},
+    bookmarks12: {},
+    bookmarks13: {},
+    bookmarks14: {},
+    bookmarks15: {},
+    bookmarks16: {},
+    bookmarks17: {},
+    bookmarks18: {},
+    bookmarks19: {},
     bookmarksLength: bookmarkKeyLengths,
     bookmarksImageIds0: {},
     bookmarksImageIds1: {},
     bookmarksImageIds2: {},
     bookmarksImageIds3: {},
+    bookmarksImageIds4: {},
+    bookmarksImageIds5: {},
+    bookmarksImageIds6: {},
+    bookmarksImageIds7: {},
   };
 
   chrome.storage.sync.set(newStorageSchema, () => {
@@ -71,7 +95,7 @@ export function migrateStorage() {
           bookmarkContainerName = 'bookmarks1';
           bookmarksObject1[bookmarkIds[i]] = items.bookmarks[bookmarkIds[i]];
         }
-        bookmarkImageIds[bookmarkIds[i]] = bookmarkContainerName.slice(-1);
+        bookmarkImageIds[bookmarkIds[i]] = bookmarkContainerName.substring(9);
         bookmarkKeyLengths[bookmarkContainerName] += 1;
       }
 

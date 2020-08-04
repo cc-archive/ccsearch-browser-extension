@@ -12,7 +12,8 @@ import {
   restoreInitialContent,
   removeChildNodes,
   keyNames,
-  bookmarkIdContainerNames,
+  activeBookmarkContainers,
+  activeBookmarkIdContainers,
 } from '../utils';
 // eslint-disable-next-line import/no-cycle
 import loadCollections from './collectionModule';
@@ -36,13 +37,13 @@ function getImageDetail(eventTarget) {
 }
 
 export default function toggleBookmark(e) {
-  chrome.storage.sync.get(bookmarkIdContainerNames, items => {
+  chrome.storage.sync.get(activeBookmarkIdContainers, items => {
     const allBookmarksImageIdsObject = {};
     Object.keys(items).forEach(bookmarksImageIdContainerName => {
       const bookmarksImageIdContainer = items[bookmarksImageIdContainerName];
       Object.keys(bookmarksImageIdContainer).forEach(id => {
         // 0th idx -> bookmark container number, 1st idx -> bookmark image id container number
-        allBookmarksImageIdsObject[id] = [bookmarksImageIdContainer[id], bookmarksImageIdContainerName.slice(-1)];
+        allBookmarksImageIdsObject[id] = [bookmarksImageIdContainer[id], bookmarksImageIdContainerName.substring(17)];
       });
     });
     const allBookmarksImageIds = Object.keys(allBookmarksImageIdsObject);
@@ -55,30 +56,31 @@ export default function toggleBookmark(e) {
       // bookmarksObject[imageId] = imageDetail;
       chrome.storage.sync.get('bookmarksLength', items2 => {
         const { bookmarksLength } = items2;
-        const bookmarksLengthKeys = Object.keys(bookmarksLength);
         let validBookmarksKey = null;
-        for (let i = 0; i < bookmarksLengthKeys.length; i += 1) {
-          if (bookmarksLength[bookmarksLengthKeys[i]] <= constants.bookmarkContainerSize) {
-            validBookmarksKey = bookmarksLengthKeys[i];
+        for (let i = 0; i < activeBookmarkContainers.length; i += 1) {
+          if (bookmarksLength[activeBookmarkContainers[i]] < constants.bookmarkContainerSize) {
+            validBookmarksKey = activeBookmarkContainers[i];
             break;
           }
         }
+        console.log('the valid container key');
+        console.log(validBookmarksKey);
         if (!validBookmarksKey) {
           showNotification('Error: Bookmarks Limit reached', 'negative', 'snackbar-bookmarks');
           throw new Error('Bookmarks Limit reached');
         }
         let validBookmarksImageIdKey;
-        const bookmarksImageIdsContainer = Object.keys(items);
-        for (let i = 0; i < bookmarksImageIdsContainer.length; i += 1) {
-          if (Object.keys(items[bookmarksImageIdsContainer[i]]).length <= constants.bookmarkImageIdContainerSize) {
-            validBookmarksImageIdKey = bookmarksImageIdsContainer[i];
+        for (let i = 0; i < activeBookmarkIdContainers.length; i += 1) {
+          if (Object.keys(items[activeBookmarkIdContainers[i]]).length < constants.bookmarkImageIdContainerSize) {
+            validBookmarksImageIdKey = activeBookmarkIdContainers[i];
             break;
           }
         }
 
+        console.log('the valid key');
         console.log(validBookmarksImageIdKey);
-        // items[validBookmarksImageIdKey][imageId] = validBookmarksKey.slice(-1);
-        Object.assign(items[validBookmarksImageIdKey], { [imageId]: validBookmarksKey.slice(-1) });
+
+        Object.assign(items[validBookmarksImageIdKey], { [imageId]: validBookmarksKey.substring(9) });
 
         chrome.storage.sync.get(validBookmarksKey, items3 => {
           console.log(validBookmarksKey);
@@ -275,54 +277,50 @@ function addBookmarkThumbnailsToDOM(bookmarksObject, bookmarkImageIds) {
 }
 
 export function loadBookmarkImages(numberOfImages) {
-  chrome.storage.sync.get(
-    ['bookmarksImageIds0', 'bookmarksImageIds1', 'bookmarksImageIds2', 'bookmarksImageIds3'],
-    items => {
-      const bookmarksImageIdsObject = {
-        ...items.bookmarksImageIds0,
-        ...items.bookmarksImageIds1,
-        ...items.bookmarksImageIds2,
-        ...items.bookmarksImageIds3,
-      };
-      const bookmarkImageIds = Object.keys(bookmarksImageIdsObject).slice(
-        window.appObject.bookmarksSectionIdx,
-        window.appObject.bookmarksSectionIdx + numberOfImages,
-      );
-      window.appObject.bookmarksSectionIdx += numberOfImages;
-      if (bookmarkImageIds.length > 0) {
-        removeNode('bookmarks__initial-info');
-      } else {
-        removeSpinner(elements.spinnerPlaceholderBookmarks);
-        removeLoadMoreButton(elements.loadMoreBookmarkButtonkWrapper);
-        restoreInitialContent('bookmarks');
+  chrome.storage.sync.get(activeBookmarkIdContainers, items => {
+    let bookmarksImageIdsObject = {};
+    activeBookmarkIdContainers.forEach(bookmarkIdContainerName => {
+      bookmarksImageIdsObject = { ...bookmarksImageIdsObject, ...items[bookmarkIdContainerName] };
+    });
+
+    const bookmarkImageIds = Object.keys(bookmarksImageIdsObject).slice(
+      window.appObject.bookmarksSectionIdx,
+      window.appObject.bookmarksSectionIdx + numberOfImages,
+    );
+    window.appObject.bookmarksSectionIdx += numberOfImages;
+    if (bookmarkImageIds.length > 0) {
+      removeNode('bookmarks__initial-info');
+    } else {
+      removeSpinner(elements.spinnerPlaceholderBookmarks);
+      removeLoadMoreButton(elements.loadMoreBookmarkButtonkWrapper);
+      restoreInitialContent('bookmarks');
+    }
+    const segBookmarkIds = {}; // object used to segregate bookmark ids
+    // segregate the bookmark image ids into respective container numbers
+    for (let i = 0; i < bookmarkImageIds.length; i += 1) {
+      const num = bookmarksImageIdsObject[bookmarkImageIds[i]];
+      if (!Object.prototype.hasOwnProperty.call(segBookmarkIds, num)) {
+        segBookmarkIds[num] = [];
       }
-      const segBookmarkIds = {}; // object used to segregate bookmark ids
-      // segregate the bookmark image ids into respective container numbers
-      for (let i = 0; i < bookmarkImageIds.length; i += 1) {
-        const num = bookmarksImageIdsObject[bookmarkImageIds[i]];
-        if (!Object.prototype.hasOwnProperty.call(segBookmarkIds, num)) {
-          segBookmarkIds[num] = [];
+      segBookmarkIds[num].push(bookmarkImageIds[i]);
+    }
+    // this will contain only the bookmark data which will be rendered
+    const bookmarkObject = {};
+    // all the required bookmark containers that are to be fetched from the storage
+    const requiredBookmarkContainer = Object.keys(segBookmarkIds).map(item => `bookmarks${item}`);
+    // filling up bookmarkObject
+    chrome.storage.sync.get(requiredBookmarkContainer, items2 => {
+      for (let i = 0; i < requiredBookmarkContainer.length; i += 1) {
+        const containerNum = requiredBookmarkContainer[i].substring(9);
+        for (let j = 0; j < segBookmarkIds[containerNum].length; j += 1) {
+          bookmarkObject[segBookmarkIds[containerNum][j]] =
+            items2[requiredBookmarkContainer[i]][segBookmarkIds[containerNum][j]];
         }
-        segBookmarkIds[num].push(bookmarkImageIds[i]);
       }
-      // this will contain only the bookmark data which will be rendered
-      const bookmarkObject = {};
-      // all the required bookmark containers that are to be fetched from the storage
-      const requiredBookmarkContainer = Object.keys(segBookmarkIds).map(item => `bookmarks${item}`);
-      // filling up bookmarkObject
-      chrome.storage.sync.get(requiredBookmarkContainer, items2 => {
-        for (let i = 0; i < requiredBookmarkContainer.length; i += 1) {
-          const containerNum = requiredBookmarkContainer[i].slice(-1);
-          for (let j = 0; j < segBookmarkIds[containerNum].length; j += 1) {
-            bookmarkObject[segBookmarkIds[containerNum][j]] =
-              items2[requiredBookmarkContainer[i]][segBookmarkIds[containerNum][j]];
-          }
-        }
-        console.log(bookmarkObject);
-        addBookmarkThumbnailsToDOM(bookmarkObject, bookmarkImageIds);
-      });
-    },
-  );
+      console.log(bookmarkObject);
+      addBookmarkThumbnailsToDOM(bookmarkObject, bookmarkImageIds);
+    });
+  });
 }
 
 // EventListeners
@@ -352,7 +350,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       chrome.storage.sync.get(null, it => {
         console.log(it);
-        console.log(Object.keys(it.bookmarks).length);
+      });
+      chrome.storage.sync.getBytesInUse(null, it => {
+        console.log(it); // storage bytes usage
       });
     }
   });
@@ -420,11 +420,14 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       chrome.storage.sync.get(keyNames, items => {
         const allBookmarksImageIdsObject = {};
-        bookmarkIdContainerNames.forEach(bookmarksImageIdContainerName => {
+        activeBookmarkIdContainers.forEach(bookmarksImageIdContainerName => {
           const bookmarksImageIdContainer = items[bookmarksImageIdContainerName];
           Object.keys(bookmarksImageIdContainer).forEach(id => {
             // 0th idx -> bookmark container number, 1st idx -> bookmark image id container number
-            allBookmarksImageIdsObject[id] = [bookmarksImageIdContainer[id], bookmarksImageIdContainerName.slice(-1)];
+            allBookmarksImageIdsObject[id] = [
+              bookmarksImageIdContainer[id],
+              bookmarksImageIdContainerName.substring(17),
+            ];
           });
         });
         console.log(allBookmarksImageIdsObject);

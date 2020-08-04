@@ -1,6 +1,13 @@
 /* eslint-disable no-param-reassign */
 import elements from './base';
-import { showNotification, getLatestSources, fetchImageData, keyNames, bookmarkIdContainerNames } from '../utils';
+import {
+  showNotification,
+  getLatestSources,
+  fetchImageData,
+  keyNames,
+  activeBookmarkIdContainers,
+  activeBookmarkContainers,
+} from '../utils';
 import { constants } from '../popup/base';
 
 export function restoreFilters(inputElements) {
@@ -82,10 +89,13 @@ export function addBookmarksToStorage(newBookmarksObject, showConfirmation = tru
   newKeyNames.push('bookmarks'); // also checking for legacy "bookmarks" key
   chrome.storage.sync.get(newKeyNames, items => {
     const bookmarksImageIdsObject = {};
-    bookmarkIdContainerNames.forEach(bookmarksImageIdContainerName => {
+    console.log(activeBookmarkIdContainers);
+    activeBookmarkIdContainers.forEach(bookmarksImageIdContainerName => {
+      console.log(bookmarksImageIdContainerName);
       const bookmarksImageIdContainer = items[bookmarksImageIdContainerName];
+      console.log(bookmarksImageIdContainer);
       Object.keys(bookmarksImageIdContainer).forEach(id => {
-        bookmarksImageIdsObject[id] = [bookmarksImageIdContainer[id], bookmarksImageIdContainerName.slice(-1)];
+        bookmarksImageIdsObject[id] = [bookmarksImageIdContainer[id], bookmarksImageIdContainerName.substring(17)];
       });
     });
     const bookmarksImageIds = Object.keys(bookmarksImageIdsObject);
@@ -115,9 +125,9 @@ export function addBookmarksToStorage(newBookmarksObject, showConfirmation = tru
     const bookmarkIdContainerNum = {};
 
     // adding bookmarks data to bookmark containers
-    for (let i = 0; i < bookmarkContainerNames.length; i += 1) {
+    for (let i = 0; i < activeBookmarkContainers.length; i += 1) {
       let allProcessed = false;
-      const bookmarkContainerName = bookmarkContainerNames[i];
+      const bookmarkContainerName = activeBookmarkContainers[i];
       const currContainerLength = items.bookmarksLength[bookmarkContainerName];
       for (let j = currContainerLength; j < constants.bookmarkContainerSize; j += 1) {
         if (currBookmarkIdx === filteredBookmarksImageIds.length) {
@@ -127,7 +137,7 @@ export function addBookmarksToStorage(newBookmarksObject, showConfirmation = tru
         const currBookmarkImageId = filteredBookmarksImageIds[currBookmarkIdx];
         items[bookmarkContainerName][currBookmarkImageId] = newBookmarksObject[currBookmarkImageId];
         items.bookmarksLength[bookmarkContainerName] += 1;
-        bookmarkIdContainerNum[currBookmarkImageId] = bookmarkContainerName.slice(-1);
+        bookmarkIdContainerNum[currBookmarkImageId] = bookmarkContainerName.substring(9);
         currBookmarkIdx += 1;
       }
       if (allProcessed) break;
@@ -135,8 +145,8 @@ export function addBookmarksToStorage(newBookmarksObject, showConfirmation = tru
 
     currBookmarkIdx = 0;
     // adding bookmarks Image Ids to bookmark Image Ids containers
-    for (let i = 0; i < bookmarkIdContainerNames.length; i += 1) {
-      const bookmarkIdContainerName = bookmarkIdContainerNames[i];
+    for (let i = 0; i < activeBookmarkIdContainers.length; i += 1) {
+      const bookmarkIdContainerName = activeBookmarkIdContainers[i];
       while (currBookmarkIdx < filteredBookmarksImageIds.length) {
         if (Object.keys(items[bookmarkIdContainerName]).length >= constants.bookmarkImageIdContainerSize) break;
         const currBookmarkId = filteredBookmarksImageIds[currBookmarkIdx];
@@ -157,10 +167,10 @@ export async function addLegacyBookmarksToStorage(bookmarksArray) {
   newKeyNames.push('bookmarks'); // also checking for legacy "bookmarks" key
   chrome.storage.sync.get(newKeyNames, async items => {
     const bookmarksImageIdsObject = {};
-    bookmarkIdContainerNames.forEach(bookmarksImageIdContainerName => {
+    activeBookmarkIdContainers.forEach(bookmarksImageIdContainerName => {
       const bookmarksImageIdContainer = items[bookmarksImageIdContainerName];
       Object.keys(bookmarksImageIdContainer).forEach(id => {
-        bookmarksImageIdsObject[id] = [bookmarksImageIdContainer[id], bookmarksImageIdContainerName.slice(-1)];
+        bookmarksImageIdsObject[id] = [bookmarksImageIdContainer[id], bookmarksImageIdContainerName.substring(17)];
       });
     });
     const bookmarksImageIds = Object.keys(bookmarksImageIdsObject);
