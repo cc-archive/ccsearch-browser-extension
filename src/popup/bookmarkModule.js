@@ -86,8 +86,8 @@ export default function toggleBookmark(e) {
               bookmarksLength,
             },
             () => {
-              e.target.classList.remove('fa-bookmark-o');
-              e.target.classList.add('fa-bookmark');
+              e.target.classList.remove('bookmark-regular');
+              e.target.classList.add('bookmark-solid');
               e.target.title = 'Remove Bookmark';
               showNotification('Image Bookmarked', 'positive', 'snackbar-bookmarks');
             },
@@ -114,8 +114,8 @@ export default function toggleBookmark(e) {
             bookmarksLength: updatedBookmarksLength,
           },
           () => {
-            e.target.classList.remove('fa-bookmark');
-            e.target.classList.add('fa-bookmark-o');
+            e.target.classList.remove('bookmark-solid');
+            e.target.classList.add('bookmark-regular');
             e.target.title = 'Bookmark Image';
             showNotification('Bookmark removed', 'positive', 'snackbar-bookmarks');
           },
