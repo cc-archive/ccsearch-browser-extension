@@ -152,62 +152,54 @@ export function addSearchThumbnailsToDOM(resultArray) {
       imgElement.setAttribute('class', 'image-thumbnails');
       imgElement.setAttribute('id', id);
 
-      // make a span to hold the license icons
-      const spanLicenseElement = document.createElement('span');
-      spanLicenseElement.setAttribute('class', 'image-license');
+      const bookmarkIconDiv = document.createElement('div');
+      bookmarkIconDiv.classList.add('bookmark-icon');
 
-      // make a link to license description
-      const licenseLinkElement = document.createElement('a');
-      licenseLinkElement.setAttribute('href', `https://creativecommons.org/licenses/${license}/2.0/`);
-      licenseLinkElement.setAttribute('target', '_blank'); // open link in new tab
-      licenseLinkElement.setAttribute('title', license); // open link in new tab
+      const licenseDiv = document.createElement('div');
+      licenseDiv.classList.add('image-icons');
 
       // Array to hold license image elements
       const licenseIconElementsArray = [];
 
       // Add the default cc icon
-      let licenseIconElement = document.createElement('img');
-      licenseIconElement.setAttribute('src', 'img/license_logos/cc_icon.svg');
-      licenseIconElement.setAttribute('alt', 'cc_icon');
+      let licenseIconElement = document.createElement('i');
+      licenseIconElement.classList.add('icon', 'has-background-white', 'cc-logo');
       licenseIconElementsArray.push(licenseIconElement);
 
       // make and push license image elements
       licenseArray.forEach(name => {
-        licenseIconElement = document.createElement('img');
-        licenseIconElement.setAttribute('src', `img/license_logos/cc-${name}_icon.svg`);
-        licenseIconElement.setAttribute('alt', `cc-${name}_icon`);
+        licenseIconElement = document.createElement('i');
+        licenseIconElement.classList.add('icon', 'has-background-white', `cc-${name}`);
         licenseIconElementsArray.push(licenseIconElement);
       });
 
       licenseIconElementsArray.forEach(licenseIcon => {
-        licenseLinkElement.appendChild(licenseIcon);
+        licenseDiv.appendChild(licenseIcon);
       });
 
       const bookmarkIcon = document.createElement('i');
-      bookmarkIcon.classList.add('fa');
-      bookmarkIcon.classList.add('bookmark-icon');
+      bookmarkIcon.classList.add('icon');
       bookmarkIcon.id = 'bookmark-icon';
       bookmarkIcon.setAttribute('data-image-id', id);
       bookmarkIcon.setAttribute('data-image-thumbnail', thumbnail);
       bookmarkIcon.setAttribute('data-image-license', license);
       bookmarkIcon.addEventListener('click', toggleBookmark);
 
+      bookmarkIconDiv.appendChild(bookmarkIcon);
+
       // console.log(allBookmarksImageIds);
       // console.log(id);
       if (allBookmarksImageIds.indexOf(id) === -1) {
-        bookmarkIcon.classList.add('fa-bookmark-o');
+        bookmarkIcon.classList.add('bookmark-regular');
         bookmarkIcon.title = 'Bookmark image';
       } else {
-        bookmarkIcon.classList.add('fa-bookmark');
+        bookmarkIcon.classList.add('bookmark-solid');
         bookmarkIcon.title = 'Remove Bookmark';
       }
 
-      spanLicenseElement.appendChild(licenseLinkElement);
-      spanLicenseElement.appendChild(bookmarkIcon);
-
       // make a div element to encapsulate image element
       const divElement = document.createElement('div');
-      divElement.setAttribute('class', 'image');
+      divElement.classList.add('image', 'is-compact');
 
       // adding event listener to open popup.
       divElement.addEventListener('click', e => {
@@ -219,7 +211,8 @@ export function addSearchThumbnailsToDOM(resultArray) {
       });
 
       divElement.appendChild(imgElement);
-      divElement.appendChild(spanLicenseElement);
+      divElement.appendChild(bookmarkIconDiv);
+      divElement.appendChild(licenseDiv);
 
       // div to act as grid itemj
       const gridItemDiv = document.createElement('div');
