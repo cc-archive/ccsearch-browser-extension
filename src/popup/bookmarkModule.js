@@ -148,7 +148,7 @@ function addBookmarkThumbnailsToDOM(bookmarksObject, bookmarkImageIds) {
     // make an image element
     const imgElement = document.createElement('img');
     imgElement.setAttribute('src', thumbnail);
-    imgElement.setAttribute('class', 'image-thumbnails');
+    imgElement.setAttribute('class', 'image-thumbnail');
     imgElement.setAttribute('id', imageId);
 
     // make select button
@@ -194,10 +194,9 @@ function addBookmarkThumbnailsToDOM(bookmarksObject, bookmarkImageIds) {
 
     // adding event listener to open popup.
     divElement.addEventListener('click', e => {
-      if (e.target.classList.contains('image')) {
+      if (e.target.classList.contains('image-thumbnail')) {
         checkInternetConnection();
-        const imageThumbnail = e.target.querySelector('.image-thumbnails');
-        activatePopup(imageThumbnail);
+        activatePopup(e.target);
       }
     });
 

@@ -149,7 +149,7 @@ export function addSearchThumbnailsToDOM(resultArray) {
       // make an image element
       const imgElement = document.createElement('img');
       imgElement.setAttribute('src', thumbnail);
-      imgElement.setAttribute('class', 'image-thumbnails');
+      imgElement.setAttribute('class', 'image-thumbnail');
       imgElement.setAttribute('id', id);
 
       const bookmarkIconDiv = document.createElement('div');
@@ -203,10 +203,9 @@ export function addSearchThumbnailsToDOM(resultArray) {
 
       // adding event listener to open popup.
       divElement.addEventListener('click', e => {
-        if (e.target.classList.contains('image')) {
+        if (e.target.classList.contains('image-thumbnail')) {
           checkInternetConnection();
-          const imageThumbnail = e.target.querySelector('.image-thumbnails');
-          activatePopup(imageThumbnail);
+          activatePopup(e.target);
         }
       });
 
