@@ -35,7 +35,7 @@ import {
 } from './filterModule';
 import { handleImageAttributionDownload, handleImageDownload } from './infoPopupModule';
 import { addSpinner } from './spinner';
-import { showNotification, removeNode, getLatestSources, restoreInitialContent, showModal } from '../utils';
+import { showNotification, removeNode, getLatestSources } from '../utils';
 import { loadBookmarkImages } from './bookmarkModule';
 import { loadStoredContentToUI, migrateStorage } from './popup.utils';
 
@@ -123,7 +123,7 @@ Array.prototype.forEach.call(elements.popupTabLinks, element => {
 // Activate the click event on pressing enter.
 elements.inputField.addEventListener('keydown', event => {
   if (event.keyCode === 13) {
-    elements.searchIcon.click();
+    elements.searchButton.click();
   }
 });
 
@@ -145,7 +145,7 @@ async function populateSourceList() {
   loadSourcesToDom(sourceDropDownFields, enableSearchStorageOption && localStorage.length !== 0);
 }
 
-elements.filterIcon.addEventListener('click', () => {
+elements.filterButton.addEventListener('click', () => {
   elements.filterSection.classList.toggle('section-filter--active');
 });
 
@@ -198,7 +198,7 @@ elements.filterResetButton.addEventListener('click', () => {
   });
 
   // the filter is not activated anymore
-  elements.filterIcon.classList.remove('activate-filter');
+  elements.filterButton.classList.remove('activate-filter');
 
   // clear the datastructures and make a fresh search
   window.appObject.userSelectedLicensesList = [];
@@ -211,7 +211,7 @@ elements.filterResetButton.addEventListener('click', () => {
   // console.log(window.appObject.userSelectedUseCaseList);
   // clearAllUserSelectedFilterLists();
   // console.log(window.appObject.userSelectedUseCaseList);
-  elements.searchIcon.click();
+  elements.searchButton.click();
 });
 
 // block to disable license dropdown, when atleast one of use-case checkboxes are checked
@@ -327,15 +327,15 @@ function applyFilters() {
     window.appObject.userSelectedImageSizeList.length > 0 ||
     window.appObject.userSelectedAspectRatioList.length > 0
   ) {
-    elements.filterIcon.classList.add('activate-filter');
+    elements.filterButton.classList.add('activate-filter');
   } else {
-    elements.filterIcon.classList.remove('activate-filter');
+    elements.filterButton.classList.remove('activate-filter');
   }
 }
 
 elements.filterApplyButton.addEventListener('click', () => {
   applyFilters();
-  elements.searchIcon.click();
+  elements.searchButton.click();
 });
 
 function checkIfSourceFilterIsRendered() {
@@ -345,7 +345,7 @@ function checkIfSourceFilterIsRendered() {
   }
 }
 
-elements.searchIcon.addEventListener('click', () => {
+elements.searchButton.addEventListener('click', () => {
   window.appObject.inputText = elements.inputField.value.trim().replace('/[ ]+/g', ' ');
   window.appObject.pageNo = 1;
   window.appObject.searchByCollectionActivated = false;
@@ -383,7 +383,7 @@ elements.searchIcon.addEventListener('click', () => {
   search(url);
   // console.log(url);
   // pageNo += 1;
-  elements.clearSearchButton[0].classList.remove('display-none');
+  // elements.clearSearchButton[0].classList.remove('display-none');
 });
 
 elements.modal.addEventListener('click', () => {
@@ -394,31 +394,31 @@ elements.modalBody.addEventListener('click', e => {
   e.stopPropagation();
 });
 
-elements.clearSearchButton[0].addEventListener('click', () => {
-  const modalText = 'Do you really want to clear the search?';
-  function onModalConfirm() {
-    // Restore Initial Content
-    elements.clearSearchButton[0].classList.add('display-none');
-    elements.inputField.value = '';
-    removeOldSearchResults();
-    removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);
-    elements.gridPrimary.setAttribute('style', 'position: relative; height: 0px;');
-    localStorage.clear();
-    restoreInitialContent('primary');
-    applyFilters();
-    elements.modal.classList.add('display-none');
-  }
-  function onModalClose() {
-    elements.modal.classList.add('display-none');
-  }
-  chrome.storage.sync.get('enableSearchClearConfirm', items => {
-    if (items.enableSearchClearConfirm) {
-      showModal(modalText, onModalConfirm, onModalClose);
-    } else {
-      onModalConfirm();
-    }
-  });
-});
+// elements.clearSearchButton[0].addEventListener('click', () => {
+//   const modalText = 'Do you really want to clear the search?';
+//   function onModalConfirm() {
+//     // Restore Initial Content
+//     elements.clearSearchButton[0].classList.add('display-none');
+//     elements.inputField.value = '';
+//     removeOldSearchResults();
+//     removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);
+//     elements.gridPrimary.setAttribute('style', 'position: relative; height: 0px;');
+//     localStorage.clear();
+//     restoreInitialContent('primary');
+//     applyFilters();
+//     elements.modal.classList.add('display-none');
+//   }
+//   function onModalClose() {
+//     elements.modal.classList.add('display-none');
+//   }
+//   chrome.storage.sync.get('enableSearchClearConfirm', items => {
+//     if (items.enableSearchClearConfirm) {
+//       showModal(modalText, onModalConfirm, onModalClose);
+//     } else {
+//       onModalConfirm();
+//     }
+//   });
+// });
 
 // applying comboTree (see https://github.com/kirlisakal/combo-tree)
 $('#choose-usecase').comboTree({
@@ -524,10 +524,10 @@ async function loadStoredSearchOnInit() {
         // console.log(elements.useCaseChooser.value);
         // console.log(useCaseAPIQueryStrings);
         // console.log(activeUseCaseOptions);
-        elements.filterIcon.classList.add('activate-filter');
+        elements.filterButton.classList.add('activate-filter');
       }
     } else {
-      elements.clearSearchButton[0].classList.add('display-none');
+      // elements.clearSearchButton[0].classList.add('display-none');
       loadUserDefaults();
     }
   });

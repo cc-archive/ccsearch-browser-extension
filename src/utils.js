@@ -1,20 +1,19 @@
 import { backupSourceAPIQueryStrings } from './popup/helper';
-import { elements } from './popup/base';
 
-export function showModal(modalText, onModalConfirm, onModalClose) {
-  const { modal, modalContent, modalCancel, modalClose, modalConfirm } = elements;
-  modalContent.innerText = modalText;
-  modal.classList.remove('display-none');
-  modalCancel.onclick = () => {
-    onModalClose();
-  };
-  modalClose.onclick = () => {
-    onModalClose();
-  };
-  modalConfirm.onclick = () => {
-    onModalConfirm();
-  };
-}
+// export function showModal(modalText, onModalConfirm, onModalClose) {
+//   const { modal, modalContent, modalCancel, modalClose, modalConfirm } = elements;
+//   modalContent.innerText = modalText;
+//   modal.classList.remove('display-none');
+//   modalCancel.onclick = () => {
+//     onModalClose();
+//   };
+//   modalClose.onclick = () => {
+//     onModalClose();
+//   };
+//   modalConfirm.onclick = () => {
+//     onModalConfirm();
+//   };
+// }
 
 export function showNotification(message, context, snackbarPlaceholderId, timeout) {
   const snackbar = document.getElementById(snackbarPlaceholderId);

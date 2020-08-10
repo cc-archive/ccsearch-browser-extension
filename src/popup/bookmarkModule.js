@@ -354,7 +354,7 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         removeNode('no-image-found-mes');
         restoreInitialContent('primary');
-        elements.clearSearchButton[0].classList.add('display-none');
+        // elements.clearSearchButton[0].classList.add('display-none');
       }
     }
   });

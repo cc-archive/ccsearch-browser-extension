@@ -18,7 +18,7 @@ export function loadStoredContentToUI() {
     addSearchThumbnailsToDOM(pageData);
     window.appObject.pageNo = Number(window.appObject.pageNo) + 1;
   }
-  elements.clearSearchButton[0].classList.remove('display-none');
+  // elements.clearSearchButton[0].classList.remove('display-none');
 }
 
 const bookmarkKeyLengths = {

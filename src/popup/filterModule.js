@@ -14,7 +14,7 @@ function loadUserFilterPreferences(wrapperElement) {
     chrome.storage.sync.get({ [id]: false }, items => {
       if (items[id]) {
         inputCheckboxes[i].click();
-        elements.filterIcon.classList.add('activate-filter');
+        elements.filterButton.classList.add('activate-filter');
       }
     });
   }
@@ -27,7 +27,7 @@ export function toggleOnFilterDropDownCheckboxes(wrapperElement, items) {
     const id = inputCheckboxes[i].parentElement.getAttribute('data-id');
     if (items[id]) {
       inputCheckboxes[i].click();
-      elements.filterIcon.classList.add('activate-filter');
+      elements.filterButton.classList.add('activate-filter');
     }
   }
 }

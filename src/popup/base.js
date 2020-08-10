@@ -1,7 +1,7 @@
 export const elements = {
   inputField: document.getElementById('section-search-input'),
-  searchIcon: document.getElementById('search-icon'),
-  filterIcon: document.getElementById('filter-icon'),
+  searchButton: document.getElementById('search-button'),
+  filterButton: document.getElementById('filter-button'),
   spinnerPlaceholderGrid: document.getElementById('spinner-placeholder--grid'),
   spinnerPlaceholderPopup: document.getElementById('spinner-placeholder--popup'),
   spinnerPlaceholderBookmarks: document.getElementById('spinner-placeholder--bookmarks'),
@@ -23,7 +23,7 @@ export const elements = {
   sourceChooserLoadingMessage: document.querySelector('.section-filter__source-loading-mes'),
   filterResetButton: document.querySelector('.section-filter--reset-button'),
   filterApplyButton: document.querySelector('.section-filter--apply-button'),
-  clearSearchButton: document.getElementsByClassName('clear-search-button'),
+  // clearSearchButton: document.getElementsByClassName('clear-search-button'),
   loadMoreSearchButton: document.querySelector('.load-more-search-button'),
   loadMoreSearchButtonWrapper: document.querySelector('.load-more-search-button-wrapper'),
   loadMoreBookmarkButton: document.querySelector('.load-more-bookmark-button'),
