@@ -1,4 +1,4 @@
-import { getLatestSources } from '../utils';
+import { fetchSources } from '../utils';
 import { elements } from './base';
 // eslint-disable-next-line import/no-cycle
 import { getCollectionsUrl, search } from './searchModule';
@@ -28,17 +28,45 @@ function searchCollection(event) {
 }
 
 export default async function loadCollections() {
-  const sources = await getLatestSources();
+  const sources = await fetchSources();
   removeSpinner(elements.spinnerPlaceholderCollections);
-  Object.keys(sources).forEach(key => {
-    const link = document.createElement('a');
-    link.href = '#';
-    const sourceName = document.createTextNode(key);
-    link.appendChild(sourceName);
-    link.setAttribute('data-collection-name', sources[key]);
-    link.addEventListener('click', searchCollection);
-    link.classList.add('has-background-grey-light');
+  const table = elements.collectionsSection.getElementsByTagName('table')[0];
 
-    elements.collectionsSectionBody.appendChild(link);
+  // adding header to the table
+  const tableHead = document.createElement('thead');
+  const tableHeadRow = document.createElement('tr');
+  ['Source', 'Provider', 'Total Items'].forEach(thName => {
+    const th = document.createElement('th');
+    th.innerText = thName;
+    tableHeadRow.appendChild(th);
+  });
+  tableHead.appendChild(tableHeadRow);
+  table.appendChild(tableHead);
+
+  // filling all the sources row by row
+  sources.forEach(sourceObject => {
+    const tRow = document.createElement('tr');
+
+    // first cell
+    let td = document.createElement('td');
+    const sourceLink = document.createElement('a');
+    sourceLink.setAttribute('data-collection-name', sourceObject.source_name);
+    sourceLink.addEventListener('click', searchCollection);
+    sourceLink.innerText = sourceObject.display_name;
+    td.appendChild(sourceLink);
+    tRow.appendChild(td);
+
+    // second cell
+    td = document.createElement('td');
+    td.innerText = sourceObject.display_name;
+    tRow.appendChild(td);
+
+    // third cell
+    td = document.createElement('td');
+    td.innerText = sourceObject.image_count;
+    tRow.appendChild(td);
+
+    // appending current row to table
+    table.appendChild(tRow);
   });
 }

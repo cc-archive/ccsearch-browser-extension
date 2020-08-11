@@ -371,7 +371,7 @@ document.addEventListener('DOMContentLoaded', () => {
       addSpinner(elements.spinnerPlaceholderCollections, 'original');
       removeOldSearchResults();
       removeBookmarkImages();
-      removeChildNodes(elements.collectionsSectionBody);
+      removeChildNodes(elements.collectionsSection.getElementsByTagName('table')[0]);
       loadCollections();
     }
   });
