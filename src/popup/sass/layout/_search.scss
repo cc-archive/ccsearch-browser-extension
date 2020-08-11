@@ -1,9 +1,18 @@
 .section-search {
   margin-bottom: 1.5rem;
   display: flex;
+  align-items: center;
+
+  .icon.search {
+    z-index: 2;
+    color: $color-gray;
+  }
 
   input[type='text'] {
-    width: 370px;
+    width: 380px;
+    margin-left: -2rem;
+    margin-right: -0.5rem;
+    padding-left: 2.3rem;
   }
 
   #filter-button {
