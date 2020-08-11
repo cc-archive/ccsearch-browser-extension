@@ -1,3 +1,7 @@
 .section-collections {
   display: none;
+
+  table > tr:nth-child(odd) {
+    background: $color-lighter-gray;
+  }
 }
