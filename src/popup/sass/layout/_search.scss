@@ -2,15 +2,17 @@
   margin-bottom: 1.5rem;
   display: flex;
   align-items: center;
+  position: relative;
 
   .icon.search {
     z-index: 2;
     color: $color-gray;
+    position: absolute;
+    left: 0.9rem;
   }
 
   input[type='text'] {
     width: 380px;
-    margin-left: -2rem;
     margin-right: -0.5rem;
     padding-left: 2.3rem;
   }
