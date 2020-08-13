@@ -53,40 +53,7 @@
           <button class="button small" id="filter-button">Filters</button>
           <!-- <i class="icon cross clear-search-button"></i> -->
         </section>
-        <section class="section-filter">
-          <div class="section-filter__filter-wrapper">
-            <div class="section-filter__filter-wrapper--choose-usecase">
-              <input type="text" id="choose-usecase" placeholder="Use" />
-            </div>
-            <div class="section-filter__filter-wrapper--choose-license">
-              <input type="text" id="choose-license" placeholder="Licenses" />
-            </div>
-            <div class="section-filter__filter-wrapper--choose-source">
-              <input type="text" id="choose-source" placeholder="Sources" />
-            </div>
-            <span class="section-filter__source-loading-mes">Fetching Sources List . . .</span>
-            <div class="section-filter__filter-wrapper--choose-fileType">
-              <input type="text" id="choose-fileType" placeholder="File type" />
-            </div>
-            <div class="section-filter__filter-wrapper--choose-imageType">
-              <input type="text" id="choose-imageType" placeholder="Image Type" />
-            </div>
-            <div class="section-filter__filter-wrapper--choose-imageSize">
-              <input type="text" id="choose-imageSize" placeholder="Image Size" />
-            </div>
-            <div class="section-filter__filter-wrapper--choose-aspectRatio">
-              <input type="text" id="choose-aspectRatio" placeholder="Aspect Ratio" />
-            </div>
-          </div>
-          <div class="section-filter__filter-button">
-            <div class="section-filter__filter-button--apply-filter-container">
-              <button class="button tiny is-success section-filter--apply-button" title="Apply filters">Apply</button>
-            </div>
-            <div class="section-filter__filter-button--reset-filter-container">
-              <button class="button tiny is-warning section-filter--reset-button" title="Reset filters">Reset</button>
-            </div>
-          </div>
-        </section>
+
         <section class="section-content section-content--primary">
           <div class="section-content__images-container">
             <div class="grid grid-primary">
@@ -100,7 +67,102 @@
         </section>
       </div>
 
+      <section class="section-filter">
+        <div class="section-filter__head margin-bottom-bigger">
+          <h4>Filter Results by</h4>
+          <a href="#" id="close-filters-link" class="has-text-weight-semibold">close filters</a>
+        </div>
+        <div class="section-filter__usecase">
+          <h5 class="b-header margin-bottom-normal">Use</h5>
+          <input type="checkbox" id="commercial" />
+          <label for="commercial">Use for commercial purposes</label><br />
+          <input type="checkbox" id="modification" />
+          <label for="modification">Modify or Adapt</label>
+        </div>
+        <div class="section-filter__licenses margin-top-big">
+          <h5 class="b-header margin-bottom-normal">Licenses</h5>
+          <input type="checkbox" id="CC0" />
+          <label for="CC0"> <i class="icon cc-zero has-background-white margin-right-smaller"></i> CC0</label><br />
+          <input type="checkbox" id="Public Domain Mark" />
+          <label for="Public Domain Mark"
+            ><i class="icon cc-pd has-background-white margin-right-smaller"></i>Public Domain Mark</label
+          ><br />
+          <input type="checkbox" id="BY" />
+          <label for="BY"><i class="icon cc-by has-background-white margin-right-smaller"></i>BY</label><br />
+          <input type="checkbox" id="BY-SA" />
+          <label for="BY-SA"
+            ><i class="icon cc-by has-background-white margin-right-smaller"></i
+            ><i class="icon cc-sa has-background-white margin-right-smaller"></i>BY-SA</label
+          ><br />
+          <input type="checkbox" id="BY-NC" />
+          <label for="BY-NC"
+            ><i class="icon cc-by has-background-white margin-right-smaller"></i
+            ><i class="icon cc-nc has-background-white margin-right-smaller"></i>BY-NC</label
+          ><br />
+          <input type="checkbox" id="BY-ND" />
+          <label for="BY-ND"
+            ><i class="icon cc-by has-background-white margin-right-smaller"></i
+            ><i class="icon cc-nd has-background-white margin-right-smaller"></i>BY-ND</label
+          ><br />
+          <input type="checkbox" id="BY-NC-SA" />
+          <label for="BY-NC-SA"
+            ><i class="icon cc-by has-background-white margin-right-smaller"></i
+            ><i class="icon cc-nc has-background-white margin-right-smaller"></i
+            ><i class="icon cc-sa has-background-white margin-right-smaller"></i>BY-NC-SA</label
+          ><br />
+          <input type="checkbox" id="BY-NC-ND" />
+          <label for="BY-NC-ND"
+            ><i class="icon cc-by has-background-white margin-right-smaller"></i
+            ><i class="icon cc-nc has-background-white margin-right-smaller"></i
+            ><i class="icon cc-nd has-background-white margin-right-smaller"></i>BY-NC-ND</label
+          ><br />
+        </div>
+        <div class="section-filter__file-type margin-top-big">
+          <h5 class="b-header margin-bottom-normal">File Type</h5>
+          <input type="checkbox" id="jpeg" />
+          <label for="jpeg">JPEGs</label><br />
+          <input type="checkbox" id="png" />
+          <label for="png">PNGs</label><br />
+          <input type="checkbox" id="gif" />
+          <label for="gif">GIFs</label><br />
+          <input type="checkbox" id="svg" />
+          <label for="svg">SVGs</label><br />
+        </div>
+        <div class="section-filter__image-type margin-top-big">
+          <h5 class="b-header margin-bottom-normal">Image Type</h5>
+          <input type="checkbox" id="photograph" />
+          <label for="photograph">Photographs</label><br />
+          <input type="checkbox" id="illustration" />
+          <label for="illustration">Illustrations</label><br />
+          <input type="checkbox" id="digitized_artwork" />
+          <label for="digitized_artwork">Digitized Artworks</label><br />
+        </div>
+        <div class="section-filter__image-size margin-top-big">
+          <h5 class="b-header margin-bottom-normal">Image Size</h5>
+          <input type="checkbox" id="small" />
+          <label for="small">Small</label><br />
+          <input type="checkbox" id="medium" />
+          <label for="medium">Medium</label><br />
+          <input type="checkbox" id="large" />
+          <label for="large">Large</label><br />
+        </div>
+        <div class="section-filter__aspect-ratio margin-top-big margin-bottom-xl">
+          <h5 class="b-header margin-bottom-normal">Aspect Ratio</h5>
+          <input type="checkbox" id="tall" />
+          <label for="tall">Tall</label><br />
+          <input type="checkbox" id="wide" />
+          <label for="wide">Wide</label><br />
+          <input type="checkbox" id="square" />
+          <label for="square">Square</label><br />
+        </div>
+        <div class="section-filter__footer">
+          <button class="button small">Clear Filters</button>
+          <button class="button is-primary small" id="apply-filters-button">Apply Filters</button>
+        </div>
+      </section>
+
       <div id="snackbar-bookmarks" class="snackbar"></div>
+
       <div class="section-bookmarks">
         <div class="section-bookmarks--header">
           <h2 class="text-align-center">Bookmarks</h2>
