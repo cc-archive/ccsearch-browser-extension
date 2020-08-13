@@ -591,11 +591,11 @@ elements.loadMoreBookmarkButton.addEventListener('click', () => {
   loadBookmarkImages(10);
 });
 
-document.getElementById('settings-icon').addEventListener('click', () => {
+elements.navSettingsButton.addEventListener('click', () => {
   chrome.runtime.openOptionsPage();
 });
 
-document.getElementById('invert_colors-icon').addEventListener('click', () => {
+elements.navInvertColorsIcon.addEventListener('click', () => {
   document.body.classList.toggle('dark');
   document.documentElement.classList.toggle('dark');
   chrome.storage.sync.get('darkmode', items => {

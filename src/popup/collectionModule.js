@@ -22,7 +22,7 @@ function searchCollection(event) {
   elements.inputField.value = '';
   resetAllFilterDropDowns();
   toggleOnFilterDropDownCheckboxes(elements.sourceChooserWrapper, items);
-  elements.homeIcon.click();
+  // elements.homeIcon.click();
   addSpinner(elements.spinnerPlaceholderGrid, 'original');
   search(url);
 }

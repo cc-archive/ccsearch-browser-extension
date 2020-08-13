@@ -16,17 +16,28 @@
   <body>
     <div class="button-backToTop"><i class="icon backToTop-icon chevron-up"></i></div>
     <header>
-      <a href="https://creativecommons.org" target="_blank">
-        <img src="img/cc-logo_white.png" alt="cc logo" />
-      </a>
-      <div class="header__icons">
-        <i class="fa fa-bookmark" id="bookmarks-icon" title="Bookmarks"></i>
-        <i class="fa fa-home" id="home-icon" title="Home"></i>
-        <i class="fa fa-list-ul" id="collections-icon" title="Search by Sources"></i>
-        <i class="fa fa-cog" id="settings-icon" title="Settings"></i>
-        <i class="fa fa-tint" id="invert_colors-icon" title="Toggle Dark Mode"></i>
-      </div>
+      <nav class="navbar is-compact">
+        <div class="navbar-brand">
+          <a class="has-text-black">
+            <svg
+              class="logo"
+              xmlns="http://www.w3.org/2000/svg"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 145 40"
+            >
+              <use href="img/search.svg#search"></use>
+            </svg>
+          </a>
+        </div>
+        <div class="navbar-end">
+          <a class="navbar-item" id="nav-bookmarks-button">Bookmarks</a>
+          <a class="navbar-item" id="nav-sources-button">Sources</a>
+          <a class="navbar-item" id="nav-settings-button">Settings</a>
+          <i class="navbar-item icon adjust" id="nav-invert_colors-icon"></i>
+        </div>
+      </nav>
     </header>
+
     <div class="section-main">
       <div class="section-primary">
         <section class="section-search">

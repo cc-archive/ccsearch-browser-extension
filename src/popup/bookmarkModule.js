@@ -18,7 +18,7 @@ import {
 // eslint-disable-next-line import/no-cycle
 import loadCollections from './collectionModule';
 // eslint-disable-next-line import/no-cycle
-import { loadStoredContentToUI } from './popup.utils';
+// import { loadStoredContentToUI } from './popup.utils';
 
 const download = require('downloadjs');
 
@@ -298,14 +298,14 @@ export function loadBookmarkImages(numberOfImages) {
 
 // EventListeners
 document.addEventListener('DOMContentLoaded', () => {
-  elements.bookmarksIcon.addEventListener('click', () => {
+  elements.navBookmarksButton.addEventListener('click', () => {
     if (window.appObject.activeSection !== 'bookmarks') {
       window.appObject.activeSection = 'bookmarks';
       window.appObject.bookmarksSectionIdx = 0;
-      elements.homeIcon.style.pointerEvents = 'none';
-      setTimeout(() => {
-        elements.homeIcon.style.pointerEvents = 'auto';
-      }, 300);
+      // elements.homeIcon.style.pointerEvents = 'none';
+      // setTimeout(() => {
+      //   elements.homeIcon.style.pointerEvents = 'auto';
+      // }, 300);
       // show the bookmarks section and hide other ones
       elements.primarySection.style.display = 'none';
       elements.collectionsSection.style.display = 'none';
@@ -330,35 +330,35 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  elements.homeIcon.addEventListener('click', () => {
-    if (window.appObject.activeSection !== 'search') {
-      window.appObject.activeSection = 'search';
-      elements.bookmarksIcon.style.pointerEvents = 'none';
-      setTimeout(() => {
-        elements.bookmarksIcon.style.pointerEvents = 'auto';
-      }, 300);
-      // show the bookmarks section and hide other ones
-      elements.primarySection.style.display = 'block';
-      elements.bookmarksSection.style.display = 'none';
-      elements.collectionsSection.style.display = 'none';
-      // prepare the search section
-      removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);
-      removeBookmarkImages();
-      if (window.appObject.searchByCollectionActivated === true && window.appObject.searchingNewCollection === true) {
-        removeNode('no-image-found-mes');
-        removeOldSearchResults();
-        window.appObject.searchingNewCollection = false;
-      } else if (localStorage.length !== 0) {
-        loadStoredContentToUI();
-      } else {
-        removeNode('no-image-found-mes');
-        restoreInitialContent('primary');
-        // elements.clearSearchButton[0].classList.add('display-none');
-      }
-    }
-  });
+  // elements.homeIcon.addEventListener('click', () => {
+  //   if (window.appObject.activeSection !== 'search') {
+  //     window.appObject.activeSection = 'search';
+  //     elements.navBookmarksButton.style.pointerEvents = 'none';
+  //     setTimeout(() => {
+  //       elements.navBookmarksButton.style.pointerEvents = 'auto';
+  //     }, 300);
+  //     // show the bookmarks section and hide other ones
+  //     elements.primarySection.style.display = 'block';
+  //     elements.bookmarksSection.style.display = 'none';
+  //     elements.collectionsSection.style.display = 'none';
+  //     // prepare the search section
+  //     removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);
+  //     removeBookmarkImages();
+  //     if (window.appObject.searchByCollectionActivated === true && window.appObject.searchingNewCollection === true) {
+  //       removeNode('no-image-found-mes');
+  //       removeOldSearchResults();
+  //       window.appObject.searchingNewCollection = false;
+  //     } else if (localStorage.length !== 0) {
+  //       loadStoredContentToUI();
+  //     } else {
+  //       removeNode('no-image-found-mes');
+  //       restoreInitialContent('primary');
+  //       // elements.clearSearchButton[0].classList.add('display-none');
+  //     }
+  //   }
+  // });
 
-  elements.collectionsIcon.addEventListener('click', () => {
+  elements.navSourcesButton.addEventListener('click', () => {
     // console.log('collections clicked');
     if (window.appObject.activeSection !== 'collections') {
       window.appObject.activeSection = 'collections';
