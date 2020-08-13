@@ -11,14 +11,8 @@ import {
   getCollectionsUrl,
 } from './searchModule';
 import {
-  licenseDropDownFields,
-  aspectRatioDropDownFields,
-  fileTypeDropDownFields,
   licenseAPIQueryStrings,
   useCaseAPIQueryStrings,
-  useCaseDropDownFields,
-  imageTypeDropDownFields,
-  imageSizeDropDownFields,
   makeElementsDisplayNone,
   removeClassFromElements,
   removeLoadMoreButton,
@@ -421,37 +415,6 @@ elements.modalBody.addEventListener('click', e => {
 //     }
 //   });
 // });
-
-// applying comboTree (see https://github.com/kirlisakal/combo-tree)
-$('#choose-usecase').comboTree({
-  source: useCaseDropDownFields,
-  isMultiple: true,
-});
-
-$('#choose-license').comboTree({
-  source: licenseDropDownFields,
-  isMultiple: true,
-});
-
-$('#choose-aspectRatio').comboTree({
-  source: aspectRatioDropDownFields,
-  isMultiple: true,
-});
-
-$('#choose-fileType').comboTree({
-  source: fileTypeDropDownFields,
-  isMultiple: true,
-});
-
-$('#choose-imageType').comboTree({
-  source: imageTypeDropDownFields,
-  isMultiple: true,
-});
-
-$('#choose-imageSize').comboTree({
-  source: imageSizeDropDownFields,
-  isMultiple: true,
-});
 
 function setEnableSearchStorageOptionVariable(enableSearchStorage) {
   if (enableSearchStorage === undefined) {

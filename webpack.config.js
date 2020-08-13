@@ -48,11 +48,6 @@ module.exports = {
         ignore: ['*.js'],
       },
       {
-        from: './popup/vendors/css/*',
-        to: './popup/vendors/css/',
-        flatten: true,
-      },
-      {
         from: './popup/vendors/js/*',
         to: './popup/vendors/js/',
         flatten: true,

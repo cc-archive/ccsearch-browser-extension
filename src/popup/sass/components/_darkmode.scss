@@ -28,28 +28,6 @@ body.dark {
     background-color: $color-darkmode-1 !important ;
   }
 
-  // dropdown input placeholder
-  .comboTreeInputBox::placeholder {
-    color: $color-white;
-  }
-
-  // dropdown input
-  .comboTreeInputBox {
-    color: transparent !important;
-    text-shadow: 0 0 0 #2196f3 !important;
-  }
-
-  // dropdown colors
-  .ComboTreeItemChlid {
-    background-color: $color-darkmode-2 !important;
-    color: $color-white !important;
-  }
-
-  // dropdown arrow icon
-  .comboTreeArrowBtnImg {
-    color: white;
-  }
-
   #search-icon {
     color: $color-white;
   }
