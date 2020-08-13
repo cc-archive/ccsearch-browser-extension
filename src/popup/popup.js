@@ -35,7 +35,7 @@ import {
 } from './filterModule';
 import { handleImageAttributionDownload, handleImageDownload } from './infoPopupModule';
 import { addSpinner } from './spinner';
-import { showNotification, removeNode, getLatestSources } from '../utils';
+import { showNotification, removeNode, getLatestSources, allowCheckingOneTypeOfCheckbox } from '../utils';
 import { loadBookmarkImages } from './bookmarkModule';
 import { loadStoredContentToUI, migrateStorage } from './popup.utils';
 
@@ -150,6 +150,8 @@ elements.filterButton.addEventListener('click', () => {
 });
 
 setTimeout(populateSourceList(), 2500);
+
+allowCheckingOneTypeOfCheckbox(elements.licenseCheckboxesWrapper, elements.useCaseCheckboxesWrapper);
 
 // function clearAllUserSelectedFilterLists() {
 //   window.appObject.allUserSelectedFilterLists.forEach(element => {

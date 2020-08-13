@@ -1,6 +1,8 @@
 const elements = {
   importBookmarksButton: document.getElementById('import-bookmarks-button'),
   importBookmarksInput: document.getElementById('import-bookmarks-input'),
+  useCaseInputsWrapper: document.querySelector('.use-case'),
+  licenseInputsWrapper: document.querySelector('.license'),
   useCaseInputs: document.querySelector('.use-case').getElementsByTagName('input'),
   licenseInputs: document.querySelector('.license').getElementsByTagName('input'),
   fileTypeInputs: document.querySelector('.fileType').getElementsByTagName('input'),

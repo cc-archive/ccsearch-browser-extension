@@ -96,6 +96,27 @@ export async function fetchImageData(imageId) {
   return [res, responseCode];
 }
 
+export function allowCheckingOneTypeOfCheckbox(checkboxesWrapper1, checkboxesWrapper2) {
+  const checkboxesFirst = checkboxesWrapper1.querySelectorAll('input[type=checkbox]');
+  const checkboxesSecond = checkboxesWrapper2.querySelectorAll('input[type=checkbox]');
+
+  [
+    [checkboxesFirst, checkboxesSecond],
+    [checkboxesSecond, checkboxesFirst],
+  ].forEach(item => {
+    Array.prototype.forEach.call(item[0], element => {
+      element.addEventListener('click', e => {
+        if (e.target.checked) {
+          Array.prototype.forEach.call(item[1], licenseElement => {
+            // eslint-disable-next-line no-param-reassign
+            licenseElement.checked = false;
+          });
+        }
+      });
+    });
+  });
+}
+
 export const activeBookmarkIdContainers = [
   'bookmarksImageIds0',
   'bookmarksImageIds1',

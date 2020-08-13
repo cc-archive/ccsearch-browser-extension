@@ -6,34 +6,13 @@ import {
   addBookmarksToStorage,
   addLegacyBookmarksToStorage,
 } from './helper';
-import { showNotification } from '../utils';
+import { showNotification, allowCheckingOneTypeOfCheckbox } from '../utils';
 
 document.addEventListener('DOMContentLoaded', init);
 
 elements.saveFiltersButton.addEventListener('click', saveFiltersOptions);
 
-// Making sure that only license or use-case is selected at the same time
-Array.prototype.forEach.call(elements.useCaseInputs, element => {
-  element.addEventListener('click', e => {
-    if (e.target.checked) {
-      Array.prototype.forEach.call(elements.licenseInputs, licenseElement => {
-        // eslint-disable-next-line no-param-reassign
-        licenseElement.checked = false;
-      });
-    }
-  });
-});
-
-Array.prototype.forEach.call(elements.licenseInputs, element => {
-  element.addEventListener('click', e => {
-    if (e.target.checked) {
-      Array.prototype.forEach.call(elements.useCaseInputs, licenseElement => {
-        // eslint-disable-next-line no-param-reassign
-        licenseElement.checked = false;
-      });
-    }
-  });
-});
+allowCheckingOneTypeOfCheckbox(elements.useCaseInputsWrapper, elements.licenseInputsWrapper);
 
 elements.enableSearchStorageCheckbox.addEventListener('click', () => {
   chrome.storage.sync.set({ enableSearchStorage: elements.enableSearchStorageCheckbox.checked }, () => {
