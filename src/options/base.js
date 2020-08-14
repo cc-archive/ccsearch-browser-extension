@@ -13,7 +13,6 @@ const elements = {
   sourceWrapper: document.querySelector('.source'),
   saveFiltersButton: document.getElementById('save-filters'),
   accordionItems: document.querySelectorAll('.accordion .accordion-link'),
-  enableSearchStorageCheckbox: document.getElementById('enable-search-storage-checkbox'),
   enableSearchClearConfirmCheckbox: document.getElementById('enable-search-clear-confirm-checkbox'),
   enableMatureContentCheckbox: document.getElementById('enable-mature-content-checkbox'),
   tabsHeader: document.getElementsByClassName('tabs')[0].getElementsByTagName('ul')[0],

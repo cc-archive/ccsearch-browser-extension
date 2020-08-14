@@ -14,20 +14,8 @@ elements.saveFiltersButton.addEventListener('click', saveFiltersOptions);
 
 allowCheckingOneTypeOfCheckbox(elements.useCaseInputsWrapper, elements.licenseInputsWrapper);
 
-elements.enableSearchStorageCheckbox.addEventListener('click', () => {
-  chrome.storage.sync.set({ enableSearchStorage: elements.enableSearchStorageCheckbox.checked }, () => {
-    showNotification('Settings Saved', 'positive', 'snackbar-options');
-  });
-
-  // Clear Saved Search If user selects the option to not save their search.
-  if (!elements.enableSearchStorageCheckbox.checked) localStorage.clear();
-});
-
 // Mark the checkboxes in the "Other Settings" tab according to the local storage values
 function initOtherSettingsCheckboxes() {
-  chrome.storage.sync.get(['enableSearchStorage'], res => {
-    elements.enableSearchStorageCheckbox.checked = res.enableSearchStorage;
-  });
   chrome.storage.sync.get(['enableSearchClearConfirm'], res => {
     elements.enableSearchClearConfirmCheckbox.checked = res.enableSearchClearConfirm;
   });

@@ -11,20 +11,21 @@ import {
   getCollectionsUrl,
 } from './searchModule';
 import {
-  licenseAPIQueryStrings,
-  useCaseAPIQueryStrings,
+  // licenseAPIQueryStrings,
+  // useCaseAPIQueryStrings,
   makeElementsDisplayNone,
   removeClassFromElements,
   removeLoadMoreButton,
-  imageTypeAPIQueryStrings,
-  fileTypeAPIQueryStrings,
-  aspectRatioAPIQueryStrings,
-  imageSizeAPIQueryStrings,
+  // imageTypeAPIQueryStrings,
+  // fileTypeAPIQueryStrings,
+  // aspectRatioAPIQueryStrings,
+  // imageSizeAPIQueryStrings,
 } from './helper';
 import {
-  loadSourcesToDom,
+  // loadSourcesToDom,
   // resetFilterDropDown,
   loadUserDefaults,
+  loadUserFilterPreferences,
   // toggleOnFilterDropDownCheckboxes,
 } from './filterModule';
 import { handleImageAttributionDownload, handleImageDownload } from './infoPopupModule';
@@ -37,7 +38,7 @@ import {
   // activeBookmarkContainers,
 } from '../utils';
 import { loadBookmarkImages } from './bookmarkModule';
-import { loadStoredContentToUI, migrateStorage } from './popup.utils';
+import migrateStorage from './popup.utils';
 
 // global object to store the application variables
 window.appObject = {};
@@ -71,9 +72,6 @@ window.appObject.userSelectedAspectRatioList = [];
 
 // object to map source display names to valid query names.
 window.appObject.sourceAPIQueryStrings = {};
-
-// Store Wheather Search Storage is enabled or not
-let enableSearchStorageOption = true;
 
 // Search Storage
 window.appObject.storeSearch = {};
@@ -150,8 +148,7 @@ async function populateSourceList() {
       elements.sourceCheckboxesWrapper.appendChild(labelElement);
       elements.sourceCheckboxesWrapper.appendChild(breakElement);
     }
-    loadSourcesToDom(false);
-    // loadSourcesToDom(sourceDropDownFields, enableSearchStorageOption && localStorage.length !== 0);
+    loadUserFilterPreferences(false);
   }
 }
 
@@ -374,9 +371,6 @@ elements.searchButton.addEventListener('click', () => {
   removeLoaderAnimation();
   // applyFilters();
 
-  // check if this is necessary. localstorage.clear() is called in search() also
-  localStorage.clear(); // clear the old results
-
   // enable spinner
   addSpinner(elements.spinnerPlaceholderGrid, 'original');
   // elements.spinner.classList.add('spinner');
@@ -412,150 +406,38 @@ elements.modalBody.addEventListener('click', e => {
   e.stopPropagation();
 });
 
-// elements.clearSearchButton[0].addEventListener('click', () => {
-//   const modalText = 'Do you really want to clear the search?';
-//   function onModalConfirm() {
-//     // Restore Initial Content
-//     elements.clearSearchButton[0].classList.add('display-none');
-//     elements.inputField.value = '';
-//     removeOldSearchResults();
-//     removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);
-//     elements.gridPrimary.setAttribute('style', 'position: relative; height: 0px;');
-//     localStorage.clear();
-//     restoreInitialContent('primary');
-//     applyFilters();
-//     elements.modal.classList.add('display-none');
-//   }
-//   function onModalClose() {
-//     elements.modal.classList.add('display-none');
-//   }
-//   chrome.storage.sync.get('enableSearchClearConfirm', items => {
-//     if (items.enableSearchClearConfirm) {
-//       showModal(modalText, onModalConfirm, onModalClose);
-//     } else {
-//       onModalConfirm();
-//     }
-//   });
-// });
-
-function setEnableSearchStorageOptionVariable(enableSearchStorage) {
-  if (enableSearchStorage === undefined) {
-    // enable the feature by default (on startup, enableSearchStorage key will by undefined)
-    enableSearchStorageOption = true;
-    chrome.storage.sync.set({ enableSearchStorage: enableSearchStorageOption });
-  } else enableSearchStorageOption = enableSearchStorage;
-}
-
 function restoreAppObjectVariables() {
-  window.appObject.inputText = localStorage.getItem('title');
-
   chrome.storage.sync.get(['enableMatureContent'], res => {
     window.appObject.enableMatureContent = res.enableMatureContent === true;
   });
 }
 
 restoreAppObjectVariables();
-
-async function loadStoredSearchOnInit() {
-  await chrome.storage.sync.get(['enableSearchStorage'], res => {
-    setEnableSearchStorageOptionVariable(res.enableSearchStorage);
-
-    if (localStorage.length !== 0 && enableSearchStorageOption) {
-      loadStoredContentToUI();
-
-      if (
-        elements.sourceChooser.value ||
-        elements.useCaseChooser.value ||
-        elements.licenseChooser.value ||
-        elements.fileTypeChooser.value ||
-        elements.imageTypeChooser.value ||
-        elements.imageSizeChooser.value ||
-        elements.aspectRatioChooser.value
-      ) {
-        const activeLicenseOptions = {};
-        const activeUseCaseOptions = {};
-        const activeFileTypeOptions = {};
-        const activeImageTypeOptions = {};
-        const activeImageSizeOptions = {};
-        const activeAspectRatioOptions = {};
-        elements.licenseChooser.value.split(', ').forEach(x => {
-          activeLicenseOptions[x] = true;
-          window.appObject.userSelectedLicensesList.push(licenseAPIQueryStrings[x]);
-        });
-        elements.useCaseChooser.value.split(', ').forEach(x => {
-          activeUseCaseOptions[useCaseAPIQueryStrings[x]] = true;
-          window.appObject.userSelectedUseCaseList.push(useCaseAPIQueryStrings[x]);
-        });
-        elements.fileTypeChooser.value.split(', ').forEach(x => {
-          activeFileTypeOptions[fileTypeAPIQueryStrings[x]] = true;
-          window.appObject.userSelectedFileTypeList.push(fileTypeAPIQueryStrings[x]);
-        });
-        elements.imageTypeChooser.value.split(', ').forEach(x => {
-          activeImageTypeOptions[imageTypeAPIQueryStrings[x]] = true;
-          window.appObject.userSelectedImageTypeList.push(imageTypeAPIQueryStrings[x]);
-        });
-        elements.imageSizeChooser.value.split(', ').forEach(x => {
-          activeImageSizeOptions[imageSizeAPIQueryStrings[x]] = true;
-          window.appObject.userSelectedImageSizeList.push(imageSizeAPIQueryStrings[x]);
-        });
-        elements.aspectRatioChooser.value.split(', ').forEach(x => {
-          activeAspectRatioOptions[aspectRatioAPIQueryStrings[x]] = true;
-          window.appObject.userSelectedAspectRatioList.push(aspectRatioAPIQueryStrings[x]);
-        });
-        // toggleOnFilterDropDownCheckboxes(elements.licenseChooserWrapper, activeLicenseOptions);
-        // toggleOnFilterDropDownCheckboxes(elements.useCaseChooserWrapper, activeUseCaseOptions);
-        // toggleOnFilterDropDownCheckboxes(elements.fileTypeChooserWrapper, activeFileTypeOptions);
-        // toggleOnFilterDropDownCheckboxes(elements.imageTypeChooserWrapper, activeImageTypeOptions);
-        // toggleOnFilterDropDownCheckboxes(elements.imageSizeChooserWrapper, activeImageSizeOptions);
-        // toggleOnFilterDropDownCheckboxes(elements.aspectRatioChooserWrapper, activeAspectRatioOptions);
-        // console.log(elements.useCaseChooser.value);
-        // console.log(useCaseAPIQueryStrings);
-        // console.log(activeUseCaseOptions);
-        // elements.filterButton.classList.add('activate-filter');
-      }
-    } else {
-      // elements.clearSearchButton[0].classList.add('display-none');
-      loadUserDefaults();
-    }
-  });
-}
-
-loadStoredSearchOnInit();
 loadUserDefaults();
 
 async function nextRequest(page) {
   let result = [];
   let url;
-  if (localStorage.getItem(window.appObject.pageNo)) {
-    result = Object.values(JSON.parse(localStorage.getItem(window.appObject.pageNo)));
+  if (window.appObject.searchByCollectionActivated) {
+    url = getCollectionsUrl(window.appObject.collectionName, page, window.appObject.enableMatureContent);
   } else {
-    if (window.appObject.searchByCollectionActivated) {
-      url = getCollectionsUrl(window.appObject.collectionName, page, window.appObject.enableMatureContent);
-    } else {
-      url = getRequestUrl(
-        window.appObject.inputText,
-        window.appObject.userSelectedUseCaseList,
-        window.appObject.userSelectedLicensesList,
-        window.appObject.userSelectedSourcesList,
-        window.appObject.userSelectedFileTypeList,
-        window.appObject.userSelectedImageTypeList,
-        window.appObject.userSelectedImageSizeList,
-        window.appObject.userSelectedAspectRatioList,
-        window.appObject.pageNo,
-        window.appObject.enableMatureContent,
-      );
-    }
+    url = getRequestUrl(
+      window.appObject.inputText,
+      window.appObject.userSelectedUseCaseList,
+      window.appObject.userSelectedLicensesList,
+      window.appObject.userSelectedSourcesList,
+      window.appObject.userSelectedFileTypeList,
+      window.appObject.userSelectedImageTypeList,
+      window.appObject.userSelectedImageSizeList,
+      window.appObject.userSelectedAspectRatioList,
+      window.appObject.pageNo,
+      window.appObject.enableMatureContent,
+    );
 
     console.log(url);
     const response = await fetch(url);
     const json = await response.json();
     result = json.results;
-
-    if (enableSearchStorageOption) {
-      // Update Local Storage Data
-      window.appObject.storeSearch.page = { ...result };
-      localStorage.setItem(window.appObject.pageNo, JSON.stringify(window.appObject.storeSearch.page));
-    }
   }
   // console.log(result);
   addSearchThumbnailsToDOM(result);
@@ -564,8 +446,8 @@ async function nextRequest(page) {
 
 // store the name of the current active section
 window.appObject.activeSection = 'search';
-window.appObject.searchByCollectionActivated = localStorage.getItem('searchByCollectionActivated') === 'true';
-window.appObject.collectionName = localStorage.getItem('collectionName');
+window.appObject.searchByCollectionActivated = false;
+window.appObject.collectionName = '';
 
 elements.loadMoreSearchButton.addEventListener('click', () => {
   removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);

@@ -1,7 +1,6 @@
 import { elements } from './base';
-import { backupSourceAPIQueryStrings } from './helper';
 
-function loadUserFilterPreferences(wrapperElement) {
+export function loadUserFilterPreferences(wrapperElement) {
   const inputCheckboxes = wrapperElement.getElementsByTagName('input');
   // unchecking all the options
   for (let i = 0; i < inputCheckboxes.length; i += 1) {
@@ -25,28 +24,6 @@ export function toggleOnFilterDropDownCheckboxes(wrapperElement, items) {
       inputCheckboxes[i].click();
       elements.filterButton.classList.add('activate-filter');
     }
-  }
-}
-
-// export function loadSourcesToDom(sourceDropDownFields, loadingStoredSearch = false) {
-export function loadSourcesToDom(loadingStoredSearch = false) {
-  // $('#choose-source').comboTree({
-  //   source: sourceDropDownFields,
-  //   isMultiple: true,
-  // });
-
-  // elements.sourceChooserLoadingMessage.style.display = 'none';
-  // elements.sourceChooserWrapper.style.display = 'inline-block';
-
-  if (!loadingStoredSearch) {
-    loadUserFilterPreferences(elements.sourceCheckboxesWrapper);
-  } else {
-    const activeSourceOptions = {};
-    elements.sourceChooser.value.split(', ').forEach(source => {
-      activeSourceOptions[backupSourceAPIQueryStrings[source]] = true;
-      window.appObject.userSelectedSourcesList.push(window.appObject.sourceAPIQueryStrings[source]);
-    });
-    toggleOnFilterDropDownCheckboxes(elements.sourceChooserWrapper, activeSourceOptions);
   }
 }
 

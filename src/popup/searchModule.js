@@ -239,30 +239,6 @@ export function search(url) {
       checkResultLength(resultArray);
       addSearchThumbnailsToDOM(resultArray);
 
-      // Store Data to local storage
-      // if (resultArray.length !== 0) {
-      //   localStorage.clear(); // clear the old results
-      //   if (window.appObject.searchByCollectionActivated) {
-      //     localStorage.setItem('searchByCollectionActivated', true);
-      //     localStorage.setItem('collectionName', window.appObject.collectionName);
-      //   } else {
-      //     localStorage.setItem('searchByCollectionActivated', false);
-      //   }
-      //   window.appObject.storeSearch.title = window.appObject.inputText;
-      //   localStorage.setItem('usecaseDropdownValues', elements.useCaseChooser.value);
-      //   localStorage.setItem('sourceDropdownValues', elements.sourceChooser.value);
-      //   localStorage.setItem('licenseDropdownValues', elements.licenseChooser.value);
-      //   localStorage.setItem('fileTypeDropdownValues', elements.fileTypeChooser.value);
-      //   localStorage.setItem('imageTypeDropdownValues', elements.imageTypeChooser.value);
-      //   localStorage.setItem('imageSizeDropdownValues', elements.imageSizeChooser.value);
-      //   localStorage.setItem('aspectRatioDropdownValues', elements.aspectRatioChooser.value);
-      //   window.appObject.storeSearch.page = { ...resultArray };
-      //   localStorage.setItem('title', window.appObject.storeSearch.title);
-      //   localStorage.setItem(window.appObject.pageNo, JSON.stringify(window.appObject.storeSearch.page));
-
-      //   // console.log(localStorage);
-      // }
-
       window.appObject.pageNo += 1;
     });
 }

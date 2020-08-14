@@ -1,25 +1,4 @@
-import { elements, constants } from './base';
-// eslint-disable-next-line import/no-cycle
-import { addSearchThumbnailsToDOM } from './searchModule';
-
-export function loadStoredContentToUI() {
-  elements.inputField.value = window.appObject.inputText;
-  elements.sourceChooser.value = localStorage.getItem('sourceDropdownValues');
-  elements.useCaseChooser.value = localStorage.getItem('usecaseDropdownValues');
-  elements.licenseChooser.value = localStorage.getItem('licenseDropdownValues');
-  elements.fileTypeChooser.value = localStorage.getItem('fileTypeDropdownValues');
-  elements.imageTypeChooser.value = localStorage.getItem('imageTypeDropdownValues');
-  elements.imageSizeChooser.value = localStorage.getItem('imageSizeDropdownValues');
-  elements.aspectRatioChooser.value = localStorage.getItem('aspectRatioDropdownValues');
-
-  window.appObject.pageNo = 1;
-  if (localStorage.getItem(window.appObject.pageNo)) {
-    const pageData = Object.values(JSON.parse(localStorage.getItem(window.appObject.pageNo)));
-    addSearchThumbnailsToDOM(pageData);
-    window.appObject.pageNo = Number(window.appObject.pageNo) + 1;
-  }
-  // elements.clearSearchButton[0].classList.remove('display-none');
-}
+import { constants } from './base';
 
 const bookmarkKeyLengths = {
   bookmarks0: 0,
@@ -40,7 +19,7 @@ const bookmarkKeyLengths = {
   bookmarks15: 0,
 };
 
-export function migrateStorage() {
+export default function migrateStorage() {
   const newStorageSchema = {
     bookmarks0: {},
     bookmarks1: {},
