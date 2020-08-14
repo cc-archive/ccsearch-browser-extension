@@ -3,7 +3,6 @@ import { elements } from './base';
 // eslint-disable-next-line import/no-cycle
 import { getCollectionsUrl, search } from './searchModule';
 // eslint-disable-next-line import/no-cycle
-import { toggleOnFilterDropDownCheckboxes, resetAllFilterDropDowns } from './filterModule';
 import { addSpinner, removeSpinner } from './spinner';
 
 function searchCollection(event) {
@@ -20,8 +19,6 @@ function searchCollection(event) {
   const items = {};
   items[window.appObject.collectionName] = true;
   elements.inputField.value = '';
-  resetAllFilterDropDowns();
-  toggleOnFilterDropDownCheckboxes(elements.sourceChooserWrapper, items);
   // elements.homeIcon.click();
   addSpinner(elements.spinnerPlaceholderGrid, 'original');
   search(url);

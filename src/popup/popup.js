@@ -23,10 +23,8 @@ import {
 } from './helper';
 import {
   // loadSourcesToDom,
-  // resetFilterDropDown,
   loadUserDefaults,
   loadUserFilterPreferences,
-  // toggleOnFilterDropDownCheckboxes,
 } from './filterModule';
 import { handleImageAttributionDownload, handleImageDownload } from './infoPopupModule';
 import { addSpinner } from './spinner';
@@ -216,50 +214,6 @@ elements.clearFiltersButton.addEventListener('click', () => {
   elements.searchButton.click();
 });
 
-// block to disable license dropdown, when atleast one of use-case checkboxes are checked
-// elements.useCaseChooserWrapper.addEventListener(
-//   'click',
-//   event => {
-//     const useCaseDropDownContainer = elements.useCaseChooserWrapper.querySelector('.comboTreeDropDownContainer');
-//     const inputCheckboxes = useCaseDropDownContainer.getElementsByTagName('input');
-
-//     let flag = 0;
-//     if (event.target.classList.contains('comboTreeItemTitle')) {
-//       // only checking checkbox elements
-//       if (!event.target.querySelector('input').checked) {
-//         // if the clicked checkbox is unchecked
-//         // resetFilterDropDown(elements.licenseChooserWrapper);
-//         // clear the datastructures and make a fresh search
-//         window.appObject.userSelectedLicensesList = [];
-//         // disable the license dropdown (as atleast one checkbox is checked)
-//         elements.licenseChooser.disabled = true;
-//         flag = 1;
-//       }
-//     }
-//     for (let i = 0; i < inputCheckboxes.length; i += 1) {
-//       // iterating all the checkboxes of use-case dropdown
-//       if (inputCheckboxes[i] !== event.target.querySelector('input')) {
-//         // excluding the current checkbox
-//         if (inputCheckboxes[i].checked) {
-//           // if atleast one checkbox is checked, disable the license dropdown
-//           // resetFilterDropDown(elements.licenseChooserWrapper);
-//           elements.licenseChooser.disabled = true;
-//           flag = 1;
-//         }
-//       }
-//     }
-//     if (!flag) {
-//       // if none of the checkbox is checked
-//       if (elements.licenseChooser.disabled) {
-//         // enable the license dropdown if it is not already.
-//         elements.licenseChooser.disabled = false;
-//       }
-//     }
-//   },
-//   true, // needed to make the event trigger during capturing phase
-//   // (https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#Parameters)
-// );
-
 function getCheckedCheckboxes(checkboxesWrapper) {
   const checkboxes = checkboxesWrapper.querySelectorAll('input[type=checkbox]');
 
@@ -279,55 +233,6 @@ function applyFilters() {
   window.appObject.userSelectedImageTypeList = getCheckedCheckboxes(elements.imageTypeCheckboxesWrapper);
   window.appObject.userSelectedImageSizeList = getCheckedCheckboxes(elements.imageSizeCheckboxesWrapper);
   window.appObject.userSelectedAspectRatioList = getCheckedCheckboxes(elements.aspectRatioCheckboxesWrapper);
-
-  // if (elements.sourceChooser.value) {
-  //   const userInputSourcesList = elements.sourceChooser.value.split(', ');
-  //   userInputSourcesList.forEach(element => {
-  //     window.appObject.userSelectedSourcesList.push(window.appObject.sourceAPIQueryStrings[element]);
-  //   });
-  // }
-
-  // if (elements.licenseChooser.value) {
-  //   const userInputLicensesList = elements.licenseChooser.value.split(', ');
-  //   userInputLicensesList.forEach(element => {
-  //     window.appObject.userSelectedLicensesList.push(licenseAPIQueryStrings[element]);
-  //   });
-  // }
-
-  // if (elements.useCaseChooser.value) {
-  //   const userInputUseCaseList = elements.useCaseChooser.value.split(', ');
-  //   userInputUseCaseList.forEach(element => {
-  //     window.appObject.userSelectedUseCaseList.push(useCaseAPIQueryStrings[element]);
-  //   });
-  // }
-
-  // if (elements.imageTypeChooser.value) {
-  //   const userInputImageTypeList = elements.imageTypeChooser.value.split(', ');
-  //   userInputImageTypeList.forEach(element => {
-  //     window.appObject.userSelectedImageTypeList.push(imageTypeAPIQueryStrings[element]);
-  //   });
-  // }
-
-  // if (elements.imageSizeChooser.value) {
-  //   const userInputImageSizeList = elements.imageSizeChooser.value.split(', ');
-  //   userInputImageSizeList.forEach(element => {
-  //     window.appObject.userSelectedImageSizeList.push(imageSizeAPIQueryStrings[element]);
-  //   });
-  // }
-
-  // if (elements.fileTypeChooser.value) {
-  //   const userInputFileTypeList = elements.fileTypeChooser.value.split(', ');
-  //   userInputFileTypeList.forEach(element => {
-  //     window.appObject.userSelectedFileTypeList.push(fileTypeAPIQueryStrings[element]);
-  //   });
-  // }
-
-  // if (elements.aspectRatioChooser.value) {
-  //   const userInputAspectRatioList = elements.aspectRatioChooser.value.split(', ');
-  //   userInputAspectRatioList.forEach(element => {
-  //     window.appObject.userSelectedAspectRatioList.push(aspectRatioAPIQueryStrings[element]);
-  //   });
-  // }
 
   // "activate" filter icon if some filters are applied
   // if (
@@ -350,13 +255,6 @@ elements.applyFiltersButton.addEventListener('click', () => {
   elements.closeFiltersLink.click();
   elements.searchButton.click();
 });
-
-// function checkIfSourceFilterIsRendered() {
-//   if (elements.sourceChooserWrapper.style.display !== 'inline-block') {
-//     showNotification('Loading Source Filters. Please try again!', 'negative', 'snackbar-bookmarks');
-//     throw new Error('Source Filter not loaded yet');
-//   }
-// }
 
 elements.searchButton.addEventListener('click', () => {
   window.appObject.inputText = elements.inputField.value.trim().replace('/[ ]+/g', ' ');
