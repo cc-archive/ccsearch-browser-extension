@@ -23,13 +23,19 @@ import {
 } from './helper';
 import {
   loadSourcesToDom,
-  resetFilterDropDown,
+  // resetFilterDropDown,
   loadUserDefaults,
-  toggleOnFilterDropDownCheckboxes,
+  // toggleOnFilterDropDownCheckboxes,
 } from './filterModule';
 import { handleImageAttributionDownload, handleImageDownload } from './infoPopupModule';
 import { addSpinner } from './spinner';
-import { showNotification, removeNode, getLatestSources, allowCheckingOneTypeOfCheckbox } from '../utils';
+import {
+  showNotification,
+  removeNode,
+  getLatestSources,
+  allowCheckingOneTypeOfCheckbox,
+  // activeBookmarkContainers,
+} from '../utils';
 import { loadBookmarkImages } from './bookmarkModule';
 import { loadStoredContentToUI, migrateStorage } from './popup.utils';
 
@@ -122,28 +128,43 @@ elements.inputField.addEventListener('keydown', event => {
 });
 
 async function populateSourceList() {
-  window.appObject.sourceAPIQueryStrings = await getLatestSources();
+  console.log('popuplate source list called');
 
-  let count = 0;
-  const sourceDropDownFields = [];
+  if (elements.sourceCheckboxesWrapper.children.length === 1) {
+    window.appObject.sourceAPIQueryStrings = await getLatestSources();
 
-  // iterating over source object
-  Object.keys(window.appObject.sourceAPIQueryStrings).forEach(key => {
-    sourceDropDownFields[count] = {
-      id: window.appObject.sourceAPIQueryStrings[key],
-      title: key,
-    };
-    count += 1;
-  });
+    const sourceDisplayNames = Object.keys(window.appObject.sourceAPIQueryStrings);
 
-  loadSourcesToDom(sourceDropDownFields, enableSearchStorageOption && localStorage.length !== 0);
+    for (let i = 0; i < sourceDisplayNames.length; i += 1) {
+      const checkboxElement = document.createElement('input');
+      checkboxElement.type = 'checkbox';
+      checkboxElement.id = window.appObject.sourceAPIQueryStrings[sourceDisplayNames[i]];
+
+      const labelElement = document.createElement('label');
+      labelElement.setAttribute('for', checkboxElement.id);
+      labelElement.innerText = sourceDisplayNames[i];
+
+      const breakElement = document.createElement('br');
+
+      elements.sourceCheckboxesWrapper.appendChild(checkboxElement);
+      elements.sourceCheckboxesWrapper.appendChild(labelElement);
+      elements.sourceCheckboxesWrapper.appendChild(breakElement);
+    }
+    loadSourcesToDom(false);
+    // loadSourcesToDom(sourceDropDownFields, enableSearchStorageOption && localStorage.length !== 0);
+  }
 }
 
-elements.filterButton.addEventListener('click', () => {
-  elements.filterSection.classList.toggle('section-filter--active');
-});
+elements.filterButton.onclick = () => {
+  elements.primarySection.classList.add('display-none');
+  elements.filterSection.classList.add('section-filter--active');
+  populateSourceList();
+};
 
-setTimeout(populateSourceList(), 2500);
+elements.closeFiltersLink.onclick = () => {
+  elements.primarySection.classList.remove('display-none');
+  elements.filterSection.classList.remove('section-filter--active');
+};
 
 allowCheckingOneTypeOfCheckbox(elements.licenseCheckboxesWrapper, elements.useCaseCheckboxesWrapper);
 
@@ -160,46 +181,32 @@ allowCheckingOneTypeOfCheckbox(elements.licenseCheckboxesWrapper, elements.useCa
 // }
 
 // TODO: divide the steps into functions
-elements.filterResetButton.addEventListener('click', () => {
-  // reset values
-  elements.useCaseChooser.value = '';
-  elements.licenseChooser.value = '';
-  elements.sourceChooser.value = '';
-  elements.fileTypeChooser.value = '';
-  elements.imageTypeChooser.value = '';
-  elements.imageSizeChooser.value = '';
-  elements.aspectRatioChooser.value = '';
+elements.clearFiltersButton.addEventListener('click', () => {
+  // the filter is not activated anymore
+  // elements.filterButton.classList.remove('activate-filter');
 
-  // array of dropdown container elements
-  const dropdownElementsList = [
-    elements.sourceChooserWrapper,
-    elements.licenseChooserWrapper,
-    elements.useCaseChooserWrapper,
-    elements.fileTypeChooserWrapper,
-    elements.imageTypeChooserWrapper,
-    elements.imageSizeChooserWrapper,
-    elements.aspectRatioChooserWrapper,
+  const checkboxesWrappers = [
+    elements.useCaseCheckboxesWrapper,
+    elements.licenseCheckboxesWrapper,
+    elements.sourceCheckboxesWrapper,
+    elements.fileTypeCheckboxesWrapper,
+    elements.imageTypeCheckboxesWrapper,
+    elements.imageSizeCheckboxesWrapper,
+    elements.aspectRatioCheckboxesWrapper,
   ];
 
-  dropdownElementsList.forEach(dropdown => {
-    const dropdownContainer = dropdown.querySelector('.comboTreeDropDownContainer');
-    const inputCheckboxes = dropdownContainer.getElementsByTagName('input');
-    // unchecking all the options
-    for (let i = 0; i < inputCheckboxes.length; i += 1) {
-      // using click to uncheck the box as setting checked=false also works visually
-      if (inputCheckboxes[i].checked) {
-        inputCheckboxes[i].click();
-      }
+  checkboxesWrappers.forEach(checkboxesWrapper => {
+    const checkboxes = checkboxesWrapper.querySelectorAll('input[type=checkbox]');
+
+    for (let i = 0; i < checkboxes.length; i += 1) {
+      checkboxes[i].checked = false;
     }
   });
 
-  // the filter is not activated anymore
-  elements.filterButton.classList.remove('activate-filter');
-
   // clear the datastructures and make a fresh search
+  window.appObject.userSelectedUseCaseList = [];
   window.appObject.userSelectedLicensesList = [];
   window.appObject.userSelectedSourcesList = [];
-  window.appObject.userSelectedUseCaseList = [];
   window.appObject.userSelectedFileTypeList = [];
   window.appObject.userSelectedImageTypeList = [];
   window.appObject.userSelectedImageSizeList = [];
@@ -207,139 +214,152 @@ elements.filterResetButton.addEventListener('click', () => {
   // console.log(window.appObject.userSelectedUseCaseList);
   // clearAllUserSelectedFilterLists();
   // console.log(window.appObject.userSelectedUseCaseList);
+
+  elements.closeFiltersLink.click();
   elements.searchButton.click();
 });
 
 // block to disable license dropdown, when atleast one of use-case checkboxes are checked
-elements.useCaseChooserWrapper.addEventListener(
-  'click',
-  event => {
-    const useCaseDropDownContainer = elements.useCaseChooserWrapper.querySelector('.comboTreeDropDownContainer');
-    const inputCheckboxes = useCaseDropDownContainer.getElementsByTagName('input');
+// elements.useCaseChooserWrapper.addEventListener(
+//   'click',
+//   event => {
+//     const useCaseDropDownContainer = elements.useCaseChooserWrapper.querySelector('.comboTreeDropDownContainer');
+//     const inputCheckboxes = useCaseDropDownContainer.getElementsByTagName('input');
 
-    let flag = 0;
-    if (event.target.classList.contains('comboTreeItemTitle')) {
-      // only checking checkbox elements
-      if (!event.target.querySelector('input').checked) {
-        // if the clicked checkbox is unchecked
-        resetFilterDropDown(elements.licenseChooserWrapper);
-        // clear the datastructures and make a fresh search
-        window.appObject.userSelectedLicensesList = [];
-        // disable the license dropdown (as atleast one checkbox is checked)
-        elements.licenseChooser.disabled = true;
-        flag = 1;
-      }
-    }
-    for (let i = 0; i < inputCheckboxes.length; i += 1) {
-      // iterating all the checkboxes of use-case dropdown
-      if (inputCheckboxes[i] !== event.target.querySelector('input')) {
-        // excluding the current checkbox
-        if (inputCheckboxes[i].checked) {
-          // if atleast one checkbox is checked, disable the license dropdown
-          resetFilterDropDown(elements.licenseChooserWrapper);
-          elements.licenseChooser.disabled = true;
-          flag = 1;
-        }
-      }
-    }
-    if (!flag) {
-      // if none of the checkbox is checked
-      if (elements.licenseChooser.disabled) {
-        // enable the license dropdown if it is not already.
-        elements.licenseChooser.disabled = false;
-      }
-    }
-  },
-  true, // needed to make the event trigger during capturing phase
-  // (https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#Parameters)
-);
+//     let flag = 0;
+//     if (event.target.classList.contains('comboTreeItemTitle')) {
+//       // only checking checkbox elements
+//       if (!event.target.querySelector('input').checked) {
+//         // if the clicked checkbox is unchecked
+//         // resetFilterDropDown(elements.licenseChooserWrapper);
+//         // clear the datastructures and make a fresh search
+//         window.appObject.userSelectedLicensesList = [];
+//         // disable the license dropdown (as atleast one checkbox is checked)
+//         elements.licenseChooser.disabled = true;
+//         flag = 1;
+//       }
+//     }
+//     for (let i = 0; i < inputCheckboxes.length; i += 1) {
+//       // iterating all the checkboxes of use-case dropdown
+//       if (inputCheckboxes[i] !== event.target.querySelector('input')) {
+//         // excluding the current checkbox
+//         if (inputCheckboxes[i].checked) {
+//           // if atleast one checkbox is checked, disable the license dropdown
+//           // resetFilterDropDown(elements.licenseChooserWrapper);
+//           elements.licenseChooser.disabled = true;
+//           flag = 1;
+//         }
+//       }
+//     }
+//     if (!flag) {
+//       // if none of the checkbox is checked
+//       if (elements.licenseChooser.disabled) {
+//         // enable the license dropdown if it is not already.
+//         elements.licenseChooser.disabled = false;
+//       }
+//     }
+//   },
+//   true, // needed to make the event trigger during capturing phase
+//   // (https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#Parameters)
+// );
 
-function applyFilters() {
-  //  reset filter data structures
-  window.appObject.userSelectedSourcesList = [];
-  window.appObject.userSelectedLicensesList = [];
-  window.appObject.userSelectedUseCaseList = [];
-  window.appObject.userSelectedImageTypeList = [];
-  window.appObject.userSelectedImageSizeList = [];
-  window.appObject.userSelectedFileTypeList = [];
-  window.appObject.userSelectedAspectRatioList = [];
+function getCheckedCheckboxes(checkboxesWrapper) {
+  const checkboxes = checkboxesWrapper.querySelectorAll('input[type=checkbox]');
 
-  if (elements.sourceChooser.value) {
-    const userInputSourcesList = elements.sourceChooser.value.split(', ');
-    userInputSourcesList.forEach(element => {
-      window.appObject.userSelectedSourcesList.push(window.appObject.sourceAPIQueryStrings[element]);
-    });
-  }
+  const checkedCheckboxes = [];
+  checkboxes.forEach(checkbox => {
+    if (checkbox.checked) checkedCheckboxes.push(checkbox.id);
+  });
 
-  if (elements.licenseChooser.value) {
-    const userInputLicensesList = elements.licenseChooser.value.split(', ');
-    userInputLicensesList.forEach(element => {
-      window.appObject.userSelectedLicensesList.push(licenseAPIQueryStrings[element]);
-    });
-  }
-
-  if (elements.useCaseChooser.value) {
-    const userInputUseCaseList = elements.useCaseChooser.value.split(', ');
-    userInputUseCaseList.forEach(element => {
-      window.appObject.userSelectedUseCaseList.push(useCaseAPIQueryStrings[element]);
-    });
-  }
-
-  if (elements.imageTypeChooser.value) {
-    const userInputImageTypeList = elements.imageTypeChooser.value.split(', ');
-    userInputImageTypeList.forEach(element => {
-      window.appObject.userSelectedImageTypeList.push(imageTypeAPIQueryStrings[element]);
-    });
-  }
-
-  if (elements.imageSizeChooser.value) {
-    const userInputImageSizeList = elements.imageSizeChooser.value.split(', ');
-    userInputImageSizeList.forEach(element => {
-      window.appObject.userSelectedImageSizeList.push(imageSizeAPIQueryStrings[element]);
-    });
-  }
-
-  if (elements.fileTypeChooser.value) {
-    const userInputFileTypeList = elements.fileTypeChooser.value.split(', ');
-    userInputFileTypeList.forEach(element => {
-      window.appObject.userSelectedFileTypeList.push(fileTypeAPIQueryStrings[element]);
-    });
-  }
-
-  if (elements.aspectRatioChooser.value) {
-    const userInputAspectRatioList = elements.aspectRatioChooser.value.split(', ');
-    userInputAspectRatioList.forEach(element => {
-      window.appObject.userSelectedAspectRatioList.push(aspectRatioAPIQueryStrings[element]);
-    });
-  }
-
-  // "activate" filter icon if some filters are applied
-  if (
-    window.appObject.userSelectedSourcesList.length > 0 ||
-    window.appObject.userSelectedLicensesList.length > 0 ||
-    window.appObject.userSelectedUseCaseList.length > 0 ||
-    window.appObject.userSelectedFileTypeList.length > 0 ||
-    window.appObject.userSelectedImageTypeList.length > 0 ||
-    window.appObject.userSelectedImageSizeList.length > 0 ||
-    window.appObject.userSelectedAspectRatioList.length > 0
-  ) {
-    elements.filterButton.classList.add('activate-filter');
-  } else {
-    elements.filterButton.classList.remove('activate-filter');
-  }
+  return checkedCheckboxes;
 }
 
-elements.filterApplyButton.addEventListener('click', () => {
+function applyFilters() {
+  window.appObject.userSelectedUseCaseList = getCheckedCheckboxes(elements.useCaseCheckboxesWrapper);
+  window.appObject.userSelectedLicensesList = getCheckedCheckboxes(elements.licenseCheckboxesWrapper);
+  window.appObject.userSelectedSourcesList = getCheckedCheckboxes(elements.sourceCheckboxesWrapper);
+  window.appObject.userSelectedFileTypeList = getCheckedCheckboxes(elements.fileTypeCheckboxesWrapper);
+  window.appObject.userSelectedImageTypeList = getCheckedCheckboxes(elements.imageTypeCheckboxesWrapper);
+  window.appObject.userSelectedImageSizeList = getCheckedCheckboxes(elements.imageSizeCheckboxesWrapper);
+  window.appObject.userSelectedAspectRatioList = getCheckedCheckboxes(elements.aspectRatioCheckboxesWrapper);
+
+  // if (elements.sourceChooser.value) {
+  //   const userInputSourcesList = elements.sourceChooser.value.split(', ');
+  //   userInputSourcesList.forEach(element => {
+  //     window.appObject.userSelectedSourcesList.push(window.appObject.sourceAPIQueryStrings[element]);
+  //   });
+  // }
+
+  // if (elements.licenseChooser.value) {
+  //   const userInputLicensesList = elements.licenseChooser.value.split(', ');
+  //   userInputLicensesList.forEach(element => {
+  //     window.appObject.userSelectedLicensesList.push(licenseAPIQueryStrings[element]);
+  //   });
+  // }
+
+  // if (elements.useCaseChooser.value) {
+  //   const userInputUseCaseList = elements.useCaseChooser.value.split(', ');
+  //   userInputUseCaseList.forEach(element => {
+  //     window.appObject.userSelectedUseCaseList.push(useCaseAPIQueryStrings[element]);
+  //   });
+  // }
+
+  // if (elements.imageTypeChooser.value) {
+  //   const userInputImageTypeList = elements.imageTypeChooser.value.split(', ');
+  //   userInputImageTypeList.forEach(element => {
+  //     window.appObject.userSelectedImageTypeList.push(imageTypeAPIQueryStrings[element]);
+  //   });
+  // }
+
+  // if (elements.imageSizeChooser.value) {
+  //   const userInputImageSizeList = elements.imageSizeChooser.value.split(', ');
+  //   userInputImageSizeList.forEach(element => {
+  //     window.appObject.userSelectedImageSizeList.push(imageSizeAPIQueryStrings[element]);
+  //   });
+  // }
+
+  // if (elements.fileTypeChooser.value) {
+  //   const userInputFileTypeList = elements.fileTypeChooser.value.split(', ');
+  //   userInputFileTypeList.forEach(element => {
+  //     window.appObject.userSelectedFileTypeList.push(fileTypeAPIQueryStrings[element]);
+  //   });
+  // }
+
+  // if (elements.aspectRatioChooser.value) {
+  //   const userInputAspectRatioList = elements.aspectRatioChooser.value.split(', ');
+  //   userInputAspectRatioList.forEach(element => {
+  //     window.appObject.userSelectedAspectRatioList.push(aspectRatioAPIQueryStrings[element]);
+  //   });
+  // }
+
+  // "activate" filter icon if some filters are applied
+  // if (
+  //   window.appObject.userSelectedSourcesList.length > 0 ||
+  //   window.appObject.userSelectedLicensesList.length > 0 ||
+  //   window.appObject.userSelectedUseCaseList.length > 0 ||
+  //   window.appObject.userSelectedFileTypeList.length > 0 ||
+  //   window.appObject.userSelectedImageTypeList.length > 0 ||
+  //   window.appObject.userSelectedImageSizeList.length > 0 ||
+  //   window.appObject.userSelectedAspectRatioList.length > 0
+  // ) {
+  //   elements.filterButton.classList.add('activate-filter');
+  // } else {
+  //   elements.filterButton.classList.remove('activate-filter');
+  // }
+}
+
+elements.applyFiltersButton.addEventListener('click', () => {
   applyFilters();
+  elements.closeFiltersLink.click();
   elements.searchButton.click();
 });
 
-function checkIfSourceFilterIsRendered() {
-  if (elements.sourceChooserWrapper.style.display !== 'inline-block') {
-    showNotification('Loading Source Filters. Please try again!', 'negative', 'snackbar-bookmarks');
-    throw new Error('Source Filter not loaded yet');
-  }
-}
+// function checkIfSourceFilterIsRendered() {
+//   if (elements.sourceChooserWrapper.style.display !== 'inline-block') {
+//     showNotification('Loading Source Filters. Please try again!', 'negative', 'snackbar-bookmarks');
+//     throw new Error('Source Filter not loaded yet');
+//   }
+// }
 
 elements.searchButton.addEventListener('click', () => {
   window.appObject.inputText = elements.inputField.value.trim().replace('/[ ]+/g', ' ');
@@ -347,12 +367,12 @@ elements.searchButton.addEventListener('click', () => {
   window.appObject.searchByCollectionActivated = false;
 
   checkInputError(window.appObject.inputText);
-  checkIfSourceFilterIsRendered();
+  // checkIfSourceFilterIsRendered();
   checkInternetConnection();
   removeNode('no-image-found-mes');
   removeOldSearchResults();
   removeLoaderAnimation();
-  applyFilters();
+  // applyFilters();
 
   // check if this is necessary. localstorage.clear() is called in search() also
   localStorage.clear(); // clear the old results
@@ -373,6 +393,8 @@ elements.searchButton.addEventListener('click', () => {
     window.appObject.pageNo,
     window.appObject.enableMatureContent,
   );
+
+  console.log(url);
 
   // console.log(window.appObject.userSelectedUseCaseList);
   // console.log(window.appObject.userSelectedSourcesList);
@@ -480,16 +502,16 @@ async function loadStoredSearchOnInit() {
           activeAspectRatioOptions[aspectRatioAPIQueryStrings[x]] = true;
           window.appObject.userSelectedAspectRatioList.push(aspectRatioAPIQueryStrings[x]);
         });
-        toggleOnFilterDropDownCheckboxes(elements.licenseChooserWrapper, activeLicenseOptions);
-        toggleOnFilterDropDownCheckboxes(elements.useCaseChooserWrapper, activeUseCaseOptions);
-        toggleOnFilterDropDownCheckboxes(elements.fileTypeChooserWrapper, activeFileTypeOptions);
-        toggleOnFilterDropDownCheckboxes(elements.imageTypeChooserWrapper, activeImageTypeOptions);
-        toggleOnFilterDropDownCheckboxes(elements.imageSizeChooserWrapper, activeImageSizeOptions);
-        toggleOnFilterDropDownCheckboxes(elements.aspectRatioChooserWrapper, activeAspectRatioOptions);
+        // toggleOnFilterDropDownCheckboxes(elements.licenseChooserWrapper, activeLicenseOptions);
+        // toggleOnFilterDropDownCheckboxes(elements.useCaseChooserWrapper, activeUseCaseOptions);
+        // toggleOnFilterDropDownCheckboxes(elements.fileTypeChooserWrapper, activeFileTypeOptions);
+        // toggleOnFilterDropDownCheckboxes(elements.imageTypeChooserWrapper, activeImageTypeOptions);
+        // toggleOnFilterDropDownCheckboxes(elements.imageSizeChooserWrapper, activeImageSizeOptions);
+        // toggleOnFilterDropDownCheckboxes(elements.aspectRatioChooserWrapper, activeAspectRatioOptions);
         // console.log(elements.useCaseChooser.value);
         // console.log(useCaseAPIQueryStrings);
         // console.log(activeUseCaseOptions);
-        elements.filterButton.classList.add('activate-filter');
+        // elements.filterButton.classList.add('activate-filter');
       }
     } else {
       // elements.clearSearchButton[0].classList.add('display-none');
@@ -499,6 +521,7 @@ async function loadStoredSearchOnInit() {
 }
 
 loadStoredSearchOnInit();
+loadUserDefaults();
 
 async function nextRequest(page) {
   let result = [];

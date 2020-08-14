@@ -1,20 +1,16 @@
 import { elements } from './base';
 import { backupSourceAPIQueryStrings } from './helper';
 
-// list to hold Sources to show to the user in dropdown
-// the list must have objects with id and title as properties.
-// see https://github.com/kirlisakal/combo-tree#sample-json-data
 function loadUserFilterPreferences(wrapperElement) {
-  const dropdownContainer = wrapperElement.querySelector('.comboTreeDropDownContainer');
-  const inputCheckboxes = dropdownContainer.getElementsByTagName('input');
+  const inputCheckboxes = wrapperElement.getElementsByTagName('input');
   // unchecking all the options
   for (let i = 0; i < inputCheckboxes.length; i += 1) {
     // data attribute is at the parent span element of input
-    const id = inputCheckboxes[i].parentElement.getAttribute('data-id');
+    const { id } = inputCheckboxes[i];
     chrome.storage.sync.get({ [id]: false }, items => {
       if (items[id]) {
         inputCheckboxes[i].click();
-        elements.filterButton.classList.add('activate-filter');
+        // elements.filterButton.classList.add('activate-filter');
       }
     });
   }
@@ -32,17 +28,18 @@ export function toggleOnFilterDropDownCheckboxes(wrapperElement, items) {
   }
 }
 
-export function loadSourcesToDom(sourceDropDownFields, loadingStoredSearch = false) {
-  $('#choose-source').comboTree({
-    source: sourceDropDownFields,
-    isMultiple: true,
-  });
+// export function loadSourcesToDom(sourceDropDownFields, loadingStoredSearch = false) {
+export function loadSourcesToDom(loadingStoredSearch = false) {
+  // $('#choose-source').comboTree({
+  //   source: sourceDropDownFields,
+  //   isMultiple: true,
+  // });
 
-  elements.sourceChooserLoadingMessage.style.display = 'none';
-  elements.sourceChooserWrapper.style.display = 'inline-block';
+  // elements.sourceChooserLoadingMessage.style.display = 'none';
+  // elements.sourceChooserWrapper.style.display = 'inline-block';
 
   if (!loadingStoredSearch) {
-    loadUserFilterPreferences(elements.sourceChooserWrapper);
+    loadUserFilterPreferences(elements.sourceCheckboxesWrapper);
   } else {
     const activeSourceOptions = {};
     elements.sourceChooser.value.split(', ').forEach(source => {
@@ -90,10 +87,10 @@ export function resetAllFilterDropDowns() {
 }
 
 export function loadUserDefaults() {
-  loadUserFilterPreferences(elements.useCaseChooserWrapper);
-  loadUserFilterPreferences(elements.licenseChooserWrapper);
-  loadUserFilterPreferences(elements.fileTypeChooserWrapper);
-  loadUserFilterPreferences(elements.imageTypeChooserWrapper);
-  loadUserFilterPreferences(elements.imageSizeChooserWrapper);
-  loadUserFilterPreferences(elements.aspectRatioChooserWrapper);
+  loadUserFilterPreferences(elements.useCaseCheckboxesWrapper);
+  loadUserFilterPreferences(elements.licenseCheckboxesWrapper);
+  loadUserFilterPreferences(elements.fileTypeCheckboxesWrapper);
+  loadUserFilterPreferences(elements.imageTypeCheckboxesWrapper);
+  loadUserFilterPreferences(elements.imageSizeCheckboxesWrapper);
+  loadUserFilterPreferences(elements.aspectRatioCheckboxesWrapper);
 }
