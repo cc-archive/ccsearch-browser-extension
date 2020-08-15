@@ -13,7 +13,6 @@ const elements = {
   enableMatureContentCheckbox: document.getElementsByClassName('enable-mature-content-checkbox'),
   sourceWrapper: document.querySelector('.source'),
   saveFiltersButton: document.getElementById('save-filters'),
-  accordionItems: document.querySelectorAll('.accordion .accordion-link'),
   tabsHeader: document.getElementsByClassName('tabs')[0].getElementsByTagName('ul')[0],
 };
 

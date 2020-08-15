@@ -1,11 +1,5 @@
 import elements from './base';
-import {
-  init,
-  saveFiltersOptions,
-  toggleAccordion,
-  addBookmarksToStorage,
-  addLegacyBookmarksToStorage,
-} from './helper';
+import { init, saveFiltersOptions, addBookmarksToStorage, addLegacyBookmarksToStorage } from './helper';
 import { showNotification, allowCheckingOneTypeOfCheckbox } from '../utils';
 
 document.addEventListener('DOMContentLoaded', init);
@@ -84,6 +78,3 @@ elements.tabsHeader.addEventListener('click', e => {
     targetContentDiv.classList.add('is-active');
   }
 });
-
-// to toggle FAQ page links
-elements.accordionItems.forEach(item => item.addEventListener('click', toggleAccordion));

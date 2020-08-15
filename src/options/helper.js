@@ -236,8 +236,3 @@ export async function addLegacyBookmarksToStorage(bookmarksArray) {
     showNotification('Bookmarks updated!', 'positive', 'snackbar-options');
   });
 }
-
-export function toggleAccordion() {
-  this.classList.toggle('active');
-  this.nextElementSibling.classList.toggle('active');
-}
