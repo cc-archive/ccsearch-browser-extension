@@ -347,6 +347,8 @@ window.appObject.activeSection = 'search';
 window.appObject.searchByCollectionActivated = false;
 window.appObject.collectionName = '';
 
+window.appObject.bookmarksEditViewEnabled = false;
+
 elements.loadMoreSearchButton.addEventListener('click', () => {
   removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);
   addSpinner(elements.spinnerPlaceholderGrid, 'for-bottom');

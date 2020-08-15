@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { elements, constants } from './base';
-import { activatePopup } from './infoPopupModule';
-import { msnry, removeBookmarkImages } from './bookmarkModule.utils';
+// eslint-disable-next-line import/no-cycle
+import { msnry, removeBookmarkImages, toggleEditView, openInfoPopup } from './bookmarkModule.utils';
 import { removeLoadMoreButton, addLoadMoreButton } from './helper';
 // eslint-disable-next-line import/no-cycle
 import { removeOldSearchResults, removeLoaderAnimation, checkInternetConnection } from './searchModule';
@@ -374,8 +374,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  elements.deleteBookmarksButton.addEventListener('click', () => {
-    const bookmarkDOMArray = Object.values(bookmarkDOM);
+  elements.closeEditViewLink.addEventListener('click', event => {
+    // using querySelectorAll instead of getElementsByClassName because we do not want live nodelist
+    const selectedImages = elements.gridBookmarks.querySelectorAll('.is-selected');
+    for (let i = 0; i < selectedImages.length; i += 1) {
+      selectedImages[i].classList.remove('is-selected');
+    }
+    window.appObject.bookmarksEditViewEnabled = false;
+    toggleEditView(event);
+  });
+
+  elements.editBookmarksLink.addEventListener('click', event => {
+    window.appObject.bookmarksEditViewEnabled = true;
+    toggleEditView(event);
+  });
+
     // to store the id's of deleted bookmarks
     const deletedBookmarks = [];
     bookmarkDOMArray.forEach(checkbox => {
