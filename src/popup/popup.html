@@ -156,7 +156,7 @@
           <input type="checkbox" id="square" />
           <label for="square">Square</label><br />
         </div>
-        <div class="section-filter__footer">
+        <div class="fixed-footer">
           <button class="button small" id="clear-filters-button">Clear Filters</button>
           <button class="button is-primary small" id="apply-filters-button">Apply Filters</button>
         </div>
@@ -165,26 +165,17 @@
       <div id="snackbar-bookmarks" class="snackbar"></div>
 
       <div class="section-bookmarks">
-        <div class="section-bookmarks--header">
-          <h2 class="text-align-center">Bookmarks</h2>
-          <button class="delete-bookmark-button button is-danger small" title="Delete selected bookmarks">
-            Delete
-          </button>
-          <button class="select-all-checkbox-button button is-info small" title="Select all bookmarks">
-            Select All
-          </button>
-          <button class="export-bookmarks-button button is-success small" title="Export all bookmarks">
-            Export All Bookmarks
-          </button>
+        <div class="section-bookmarks__head margin-bottom-big">
+          <a id="edit-bookmarks">Edit</a>
+          <a class="display-none" id="select-all-bookmarks">Select all</a>
+          <a class="display-none" id="close-edit-view">Done</a>
         </div>
 
         <div id="spinner-placeholder--bookmarks"></div>
         <section class="section-content section-content--bookmarks">
-          <div class="row">
-            <p class="initial-info bookmarks__initial-info has-text-tomato">
-              No Bookmarks yet
-            </p>
-          </div>
+          <p class="initial-info bookmarks__initial-info has-text-tomato">
+            No Bookmarks yet
+          </p>
           <div class="section-content__images-container">
             <div class="grid grid-bookmarks">
               <div class="gutter-sizer"></div>
@@ -195,6 +186,10 @@
           </div>
           <div id="spinner-placeholder--grid"></div>
         </section>
+        <div class="fixed-footer section-bookmarks__footer display-none">
+          <a id="delete-bookmarks">Delete Selected</a>
+          <button class="button is-primary small" id="export-bookmarks">Export All Bookmkarks</button>
+        </div>
       </div>
 
       <section class="section-collections">
