@@ -14,26 +14,6 @@ elements.saveFiltersButton.addEventListener('click', saveFiltersOptions);
 
 allowCheckingOneTypeOfCheckbox(elements.useCaseInputsWrapper, elements.licenseInputsWrapper);
 
-// Mark the checkboxes in the "Other Settings" tab according to the local storage values
-function initOtherSettingsCheckboxes() {
-  chrome.storage.sync.get(['enableMatureContent'], res => {
-    elements.enableMatureContentCheckbox.checked = res.enableMatureContent;
-  });
-}
-
-initOtherSettingsCheckboxes();
-
-elements.enableMatureContentCheckbox.addEventListener('click', () => {
-  chrome.storage.sync.set(
-    {
-      enableMatureContent: elements.enableMatureContentCheckbox.checked,
-    },
-    () => {
-      showNotification('Settings Saved', 'positive', 'snackbar-options');
-    },
-  );
-});
-
 function handleLegacyBookmarksFile(bookmarksArray) {
   try {
     if (!bookmarksArray.length > 0) {

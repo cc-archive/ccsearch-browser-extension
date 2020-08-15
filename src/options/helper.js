@@ -54,6 +54,7 @@ export async function init() {
   restoreFilters(elements.imageTypeInputs);
   restoreFilters(elements.imageSizeInputs);
   restoreFilters(elements.aspectRatioInputs);
+  restoreFilters(elements.enableMatureContentCheckbox);
   const sources = await getLatestSources();
   addSourcesToDom(sources);
 }
@@ -82,6 +83,7 @@ export function saveFiltersOptions() {
   saveSingleFilter(elements.imageSizeInputs);
   saveSingleFilter(elements.aspectRatioInputs);
   saveSingleFilter(elements.sourceInputs);
+  saveSingleFilter(elements.enableMatureContentCheckbox);
 }
 
 export function addBookmarksToStorage(newBookmarksObject, showConfirmation = true) {

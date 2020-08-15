@@ -11,12 +11,11 @@
     <div class="tabs">
       <ul id="tabs-header">
         <li class="tab is-active" data-tab-no="1"><a> Filters </a></li>
-        <li class="tab" data-tab-no="2"><a> Other Settings </a></li>
-        <li class="tab" data-tab-no="3"><a> Bookmarks </a></li>
-        <li class="tab" data-tab-no="4"><a> Syntax Guide </a></li>
-        <li class="tab" data-tab-no="5"><a> Feedback </a></li>
-        <li class="tab" data-tab-no="6"><a> FAQ </a></li>
-        <li class="tab" data-tab-no="7"><a> About </a></li>
+        <li class="tab" data-tab-no="2"><a> Bookmarks </a></li>
+        <li class="tab" data-tab-no="3"><a> Syntax Guide </a></li>
+        <li class="tab" data-tab-no="4"><a> Feedback </a></li>
+        <li class="tab" data-tab-no="5"><a> FAQ </a></li>
+        <li class="tab" data-tab-no="6"><a> About </a></li>
       </ul>
     </div>
     <div id="tabs-content" class="tabs-content">
@@ -101,6 +100,10 @@
         <div class="source margin-left-normal">
           Fetching Latest Sources ...
         </div>
+        <div class="margin-left-normal margin-top-big">
+          <input type="checkbox" class="enable-mature-content-checkbox" id="enableMatureContent" />
+          <label for="enableMatureContent">Show Mature Content</label>
+        </div>
         <div class="margin-top-small">
           <button id="save-filters" class="button small is-success">
             Save
@@ -108,18 +111,6 @@
         </div>
       </div>
       <div class="tabs-panel" data-content-no="2">
-        <h5 class="b-header margin-top-normal">Ask for confirmation everytime before clearing search results?</h5>
-        <div class="margin-left-normal">
-          <input type="checkbox" id="enable-search-clear-confirm-checkbox" />
-          <label for="enable-search-clear-confirm-checkbox">Yes</label>
-        </div>
-        <h5 class="b-header margin-top-normal">Enable Mature Content?</h5>
-        <div class="margin-left-normal">
-          <input type="checkbox" id="enable-mature-content-checkbox" />
-          <label for="enable-mature-content-checkbox">Yes</label>
-        </div>
-      </div>
-      <div class="tabs-panel" data-content-no="3">
         <div>
           <input type="file" class="field" id="import-bookmarks-input" />
         </div>
@@ -132,7 +123,7 @@
           <p><strong>Note</strong>: To know more about how you can sync your settings and bookmarks, read the FAQ.</p>
         </div>
       </div>
-      <div class="tabs-panel" data-content-no="7">
+      <div class="tabs-panel" data-content-no="6">
         <h3 class="margin-vertical-normal">CC Search Browser Extension</h3>
         <p>
           This extension provides a new interface to
@@ -172,7 +163,7 @@
           </li>
         </ul>
       </div>
-      <div class="tabs-panel" data-content-no="5">
+      <div class="tabs-panel" data-content-no="4">
         <p>
           We welcome your ideas for improving the tool below. To provide regular user feedback, join the
           <a href="https://creativecommons.slack.com/messages/cc-dev-browser-exension">#cc-dev-browser-extension</a>
@@ -196,7 +187,7 @@
         >
       </div>
 
-      <div class="tabs-panel" data-content-no="6">
+      <div class="tabs-panel" data-content-no="5">
         <h3 class="b-header margin-vertical-normal">What is the sync feature of the extension?</h3>
         <p>
           Chrome and Firefox have a built-in feature that syncs browser settings and preferences across your logged-in
@@ -274,7 +265,7 @@
           >.
         </p>
       </div>
-      <div class="tabs-panel" data-content-no="4">
+      <div class="tabs-panel" data-content-no="3">
         <p class="margin-vertical-normal">
           When you search, you can enter special symbols or words to your search term to make your search results more
           precise.

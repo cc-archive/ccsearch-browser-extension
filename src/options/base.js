@@ -10,10 +10,10 @@ const elements = {
   imageSizeInputs: document.querySelector('.imageSize').getElementsByTagName('input'),
   aspectRatioInputs: document.querySelector('.aspectRatio').getElementsByTagName('input'),
   sourceInputs: document.querySelector('.source').getElementsByTagName('input'),
+  enableMatureContentCheckbox: document.getElementsByClassName('enable-mature-content-checkbox'),
   sourceWrapper: document.querySelector('.source'),
   saveFiltersButton: document.getElementById('save-filters'),
   accordionItems: document.querySelectorAll('.accordion .accordion-link'),
-  enableMatureContentCheckbox: document.getElementById('enable-mature-content-checkbox'),
   tabsHeader: document.getElementsByClassName('tabs')[0].getElementsByTagName('ul')[0],
 };
 
