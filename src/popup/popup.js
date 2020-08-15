@@ -146,7 +146,7 @@ async function populateSourceList() {
       elements.sourceCheckboxesWrapper.appendChild(labelElement);
       elements.sourceCheckboxesWrapper.appendChild(breakElement);
     }
-    loadUserFilterPreferences(false);
+    loadUserFilterPreferences(elements.sourceCheckboxesWrapper);
   }
 }
 
