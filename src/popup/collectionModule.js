@@ -61,6 +61,7 @@ export default async function loadCollections() {
     // third cell
     td = document.createElement('td');
     td.innerText = sourceObject.image_count;
+    td.classList.add('number-cell');
     tRow.appendChild(td);
 
     // appending current row to table
