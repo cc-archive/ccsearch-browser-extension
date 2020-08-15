@@ -40,7 +40,7 @@ export const elements = {
   navSourcesButton: document.getElementById('nav-sources-button'),
   navSettingsButton: document.getElementById('nav-settings-button'),
   navInvertColorsIcon: document.getElementById('nav-invert_colors-icon'),
-  // homeIcon: document.getElementById('home-icon'),
+  headerLogo: document.getElementById('header-logo'),
   primarySection: document.querySelector('.section-primary'),
   bookmarksSection: document.querySelector('.section-bookmarks'),
   collectionsSection: document.querySelector('.section-collections'),

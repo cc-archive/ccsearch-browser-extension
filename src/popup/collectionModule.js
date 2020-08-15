@@ -19,7 +19,7 @@ function searchCollection(event) {
   const items = {};
   items[window.appObject.collectionName] = true;
   elements.inputField.value = '';
-  // elements.homeIcon.click();
+  elements.headerLogo.click();
   addSpinner(elements.spinnerPlaceholderGrid, 'original');
   search(url);
 }

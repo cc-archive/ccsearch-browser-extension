@@ -330,33 +330,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // elements.homeIcon.addEventListener('click', () => {
-  //   if (window.appObject.activeSection !== 'search') {
-  //     window.appObject.activeSection = 'search';
-  //     elements.navBookmarksButton.style.pointerEvents = 'none';
-  //     setTimeout(() => {
-  //       elements.navBookmarksButton.style.pointerEvents = 'auto';
-  //     }, 300);
-  //     // show the bookmarks section and hide other ones
-  //     elements.primarySection.style.display = 'block';
-  //     elements.bookmarksSection.style.display = 'none';
-  //     elements.collectionsSection.style.display = 'none';
-  //     // prepare the search section
-  //     removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);
-  //     removeBookmarkImages();
-  //     if (window.appObject.searchByCollectionActivated === true && window.appObject.searchingNewCollection === true) {
-  //       removeNode('no-image-found-mes');
-  //       removeOldSearchResults();
-  //       window.appObject.searchingNewCollection = false;
-  //     } else if (localStorage.length !== 0) {
-  //       loadStoredContentToUI();
-  //     } else {
-  //       removeNode('no-image-found-mes');
-  //       restoreInitialContent('primary');
-  //       // elements.clearSearchButton[0].classList.add('display-none');
-  //     }
-  //   }
-  // });
+  elements.headerLogo.addEventListener('click', () => {
+    if (window.appObject.activeSection !== 'search') {
+      window.appObject.activeSection = 'search';
+      // elements.navBookmarksButton.style.pointerEvents = 'none';
+      // setTimeout(() => {
+      //   elements.navBookmarksButton.style.pointerEvents = 'auto';
+      // }, 300);
+      // show the bookmarks section and hide other ones
+      elements.primarySection.style.display = 'block';
+      elements.bookmarksSection.style.display = 'none';
+      elements.collectionsSection.style.display = 'none';
+      // prepare the search section
+      removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);
+      removeBookmarkImages();
+      if (window.appObject.searchByCollectionActivated === true && window.appObject.searchingNewCollection === true) {
+        removeNode('no-image-found-mes');
+        removeOldSearchResults();
+        window.appObject.searchingNewCollection = false;
+      } else {
+        removeNode('no-image-found-mes');
+        restoreInitialContent('primary');
+        // elements.clearSearchButton[0].classList.add('display-none');
+      }
+    }
+  });
 
   elements.navSourcesButton.addEventListener('click', () => {
     // console.log('collections clicked');
