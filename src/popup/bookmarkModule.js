@@ -26,7 +26,7 @@ const download = require('downloadjs');
 const bookmarkDOM = {};
 
 // Store number of selected bookmarks for export
-let selectedBookmarks = 0;
+// let selectedBookmarks = 0;
 
 function getImageDetail(eventTarget) {
   const imageObject = {};
@@ -151,19 +151,6 @@ function addBookmarkThumbnailsToDOM(bookmarksObject, bookmarkImageIds) {
     imgElement.setAttribute('class', 'image-thumbnail');
     imgElement.setAttribute('id', imageId);
 
-    // make select button
-    // const selectCheckboxElement = document.createElement('span');
-    // selectCheckboxElement.setAttribute('class', 'bookmark-select');
-    // const selectCheckbox = document.createElement('input');
-    // selectCheckbox.setAttribute('type', 'checkbox');
-    // selectCheckbox.setAttribute('data-image-id', imageId);
-    // selectCheckbox.setAttribute('title', 'Select Image');
-    // selectCheckbox.setAttribute('data-image-thumbnail', thumbnail);
-    // selectCheckbox.setAttribute('data-image-license', license);
-    // selectCheckbox.classList.add('select-checkbox');
-    // selectCheckbox.classList.add('margin-right-smaller');
-    // selectCheckboxElement.appendChild(selectCheckbox);
-
     const licenseDiv = document.createElement('div');
     licenseDiv.classList.add('image-icons');
 
@@ -192,14 +179,10 @@ function addBookmarkThumbnailsToDOM(bookmarksObject, bookmarkImageIds) {
     divElement.classList.add('image', 'is-compact');
     divElement.id = `id_${imageId}`; // used for searching image div element
 
-    // adding event listener to open popup.
-    divElement.addEventListener('click', e => {
-      if (e.target.classList.contains('image-thumbnail')) {
-        checkInternetConnection();
-        activatePopup(e.target);
-      }
-    });
+    divElement.setAttribute('data-image-id', imageId);
 
+    // adding event listener to open popup.
+    divElement.addEventListener('click', openInfoPopup);
     divElement.appendChild(imgElement);
     // divElement.appendChild(selectCheckboxElement);
     divElement.appendChild(licenseDiv);
@@ -214,38 +197,8 @@ function addBookmarkThumbnailsToDOM(bookmarksObject, bookmarkImageIds) {
 
     removeSpinner(elements.spinnerPlaceholderBookmarks);
     appendToGrid(msnry, fragment, gridItemDiv, elements.gridBookmarks);
-    // Add onClick event to all the checkboxes
 
-    // Get checkbox data from DOM
-    // const checkbox = elements.selectCheckboxes[elements.selectCheckboxes.length - 1];
-
-    // Initiate isChecked property of checkbox and update bookmarkDOM
-    // checkbox.isChecked = false;
-    // bookmarkDOM[checkbox.dataset.imageId] = checkbox;
-    // console.log(bookmarkDOM);
-
-    selectedBookmarks = 0;
-    elements.buttonSelectAllCheckbox[0].innerText = 'Select All';
-
-    // Add click function to keep checkbox data in sync with DOM
-    // checkbox.addEventListener('click', () => {
-    //   // Check wheather the checkbox is already checked or not
-    //   if (checkbox.isChecked) {
-    //     checkbox.parentElement.removeAttribute('style');
-    //     selectedBookmarks -= 1;
-    //   } else {
-    //     checkbox.parentElement.setAttribute('style', 'opacity : 1');
-    //     selectedBookmarks += 1;
-    //   }
-    //   checkbox.isChecked = !checkbox.isChecked; // Update isChecked Property in checkbox
-
-    //   // Update SelectAll Button
-    //   if (selectedBookmarks === 0) {
-    //     elements.buttonSelectAllCheckbox[0].innerText = 'Select All';
-    //   } else if (selectedBookmarks > 0) {
-    //     elements.buttonSelectAllCheckbox[0].innerText = 'Deselect All';
-    //   }
-    // });
+    // selectedBookmarks = 0;
   });
 }
 
@@ -389,15 +342,19 @@ document.addEventListener('DOMContentLoaded', () => {
     toggleEditView(event);
   });
 
+  elements.deleteBookmarksLink.addEventListener('click', () => {
+    // const bookmarkDOMArray = Object.values(bookmarkDOM);
+    const images = elements.gridBookmarks.getElementsByClassName('image');
     // to store the id's of deleted bookmarks
     const deletedBookmarks = [];
-    bookmarkDOMArray.forEach(checkbox => {
-      if (checkbox.checked) {
-        const { imageId } = checkbox.dataset;
+    for (let i = 0; i < images.length; i += 1) {
+      const image = images[i];
+      if (image.classList.contains('is-selected')) {
+        const { imageId } = image.dataset;
         delete bookmarkDOM[imageId]; // remove the selected bookmark from bookmarkDOM object
         deletedBookmarks.push(imageId);
       }
-    });
+    }
     if (deletedBookmarks.length === 0) {
       showNotification('No bookmark selected', 'negative', 'snackbar-bookmarks');
     } else {
@@ -439,26 +396,20 @@ document.addEventListener('DOMContentLoaded', () => {
           // confirm user action
           showNotification('Bookmarks successfully removed', 'positive', 'snackbar-bookmarks');
           // Read default "Select all"
-          elements.buttonSelectAllCheckbox[0].innerText = 'Select All';
-          selectedBookmarks = 0;
+          // elements.buttonSelectAllCheckbox[0].innerText = 'Select All';
+          // selectedBookmarks = 0;
         });
       });
     }
   });
 
-  elements.buttonSelectAllCheckbox[0].addEventListener('click', () => {
+  elements.selectAllBookmarksLink.addEventListener('click', () => {
     // Stores data of Checkboxes for exporting
-    const bookmarkDOMArray = Object.values(bookmarkDOM);
+    // const bookmarkDOMArray = Object.values(bookmarkDOM);
+    const images = elements.gridBookmarks.getElementsByClassName('image');
 
-    if (selectedBookmarks > 0) {
-      bookmarkDOMArray.forEach(checkbox => {
-        if (checkbox.checked) checkbox.click();
-      });
-      selectedBookmarks = 0;
-    } else if (selectedBookmarks === 0) {
-      bookmarkDOMArray.forEach(checkbox => {
-        if (!checkbox.checked) checkbox.click();
-      });
+    for (let i = 0; i < images.length; i += 1) {
+      images[i].classList.add('is-selected');
     }
   });
 
@@ -473,7 +424,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (Object.keys(bookmarksObject).length) {
         const bookmarksString = JSON.stringify(bookmarksObject);
         download(bookmarksString, 'bookmarks.json', 'text/plain');
-        showNotification('Exported all bookmarks', 'negative', 'snackbar-bookmarks');
+        showNotification('Exported all bookmarks', 'positive', 'snackbar-bookmarks');
       } else {
         showNotification('No bookmarks available to export', 'negative', 'snackbar-bookmarks');
       }
