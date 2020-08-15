@@ -16,26 +16,12 @@ allowCheckingOneTypeOfCheckbox(elements.useCaseInputsWrapper, elements.licenseIn
 
 // Mark the checkboxes in the "Other Settings" tab according to the local storage values
 function initOtherSettingsCheckboxes() {
-  chrome.storage.sync.get(['enableSearchClearConfirm'], res => {
-    elements.enableSearchClearConfirmCheckbox.checked = res.enableSearchClearConfirm;
-  });
   chrome.storage.sync.get(['enableMatureContent'], res => {
     elements.enableMatureContentCheckbox.checked = res.enableMatureContent;
   });
 }
 
 initOtherSettingsCheckboxes();
-
-elements.enableSearchClearConfirmCheckbox.addEventListener('click', () => {
-  chrome.storage.sync.set(
-    {
-      enableSearchClearConfirm: elements.enableSearchClearConfirmCheckbox.checked,
-    },
-    () => {
-      showNotification('Settings Saved', 'positive', 'snackbar-options');
-    },
-  );
-});
 
 elements.enableMatureContentCheckbox.addEventListener('click', () => {
   chrome.storage.sync.set(

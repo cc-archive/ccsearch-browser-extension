@@ -55,12 +55,6 @@ export const elements = {
   selectCheckboxes: document.getElementsByClassName('select-checkbox'),
   selectAllBookmarksLink: document.getElementById('select-all-bookmarks'),
   closeEditViewLink: document.getElementById('close-edit-view'),
-  modal: document.getElementsByClassName('modal')[0],
-  modalClose: document.getElementsByClassName('modal-close')[0],
-  modalCancel: document.getElementsByClassName('modal-button--cancel')[0],
-  modalConfirm: document.getElementsByClassName('modal-button--confirm')[0],
-  modalContent: document.getElementsByClassName('modal-text')[0],
-  modalBody: document.getElementsByClassName('modal-content')[0],
 };
 export const attributionTabLink = elements.popupTabLinks[0];
 

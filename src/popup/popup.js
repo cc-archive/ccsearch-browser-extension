@@ -82,8 +82,6 @@ clipboard.on('success', e => {
   showNotification('Copied', 'positive', 'snackbar-bookmarks');
 });
 
-elements.modal.classList.add('display-none');
-
 elements.popupCloseButton.addEventListener('click', () => {
   elements.popup.style.opacity = 0;
   elements.popup.style.visibility = 'hidden';
@@ -294,14 +292,6 @@ elements.searchButton.addEventListener('click', () => {
   // console.log(url);
   // pageNo += 1;
   // elements.clearSearchButton[0].classList.remove('display-none');
-});
-
-elements.modal.addEventListener('click', () => {
-  elements.modalCancel.click();
-});
-
-elements.modalBody.addEventListener('click', e => {
-  e.stopPropagation();
 });
 
 function restoreAppObjectVariables() {
