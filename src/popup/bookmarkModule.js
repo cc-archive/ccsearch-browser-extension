@@ -1,7 +1,13 @@
 /* eslint-disable no-param-reassign */
 import { elements, constants } from './base';
 // eslint-disable-next-line import/no-cycle
-import { msnry, removeBookmarkImages, toggleEditView, openInfoPopup } from './bookmarkModule.utils';
+import {
+  msnry,
+  removeBookmarkImages,
+  toggleEditView,
+  openInfoPopup,
+  removeActiveClassFromNavLinks,
+} from './bookmarkModule.utils';
 import { removeLoadMoreButton, addLoadMoreButton } from './helper';
 // eslint-disable-next-line import/no-cycle
 import { removeOldSearchResults, removeLoaderAnimation, checkInternetConnection } from './searchModule';
@@ -251,8 +257,12 @@ export function loadBookmarkImages(numberOfImages) {
 
 // EventListeners
 document.addEventListener('DOMContentLoaded', () => {
-  elements.navBookmarksButton.addEventListener('click', () => {
+  elements.navBookmarksLink.addEventListener('click', () => {
     if (window.appObject.activeSection !== 'bookmarks') {
+      // visually marking bookmarks link as active
+      removeActiveClassFromNavLinks();
+      elements.navBookmarksLink.classList.add('active');
+
       window.appObject.activeSection = 'bookmarks';
       window.appObject.bookmarksSectionIdx = 0;
       // elements.homeIcon.style.pointerEvents = 'none';
@@ -285,10 +295,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   elements.headerLogo.addEventListener('click', () => {
     if (window.appObject.activeSection !== 'search') {
+      removeActiveClassFromNavLinks();
+
       window.appObject.activeSection = 'search';
-      // elements.navBookmarksButton.style.pointerEvents = 'none';
+      // elements.navBookmarksLink.style.pointerEvents = 'none';
       // setTimeout(() => {
-      //   elements.navBookmarksButton.style.pointerEvents = 'auto';
+      //   elements.navBookmarksLink.style.pointerEvents = 'auto';
       // }, 300);
       // show the bookmarks section and hide other ones
       elements.primarySection.style.display = 'block';
@@ -309,9 +321,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  elements.navSourcesButton.addEventListener('click', () => {
+  elements.navSourcesLink.addEventListener('click', () => {
     // console.log('collections clicked');
     if (window.appObject.activeSection !== 'collections') {
+      // visually marking sources link as active
+      removeActiveClassFromNavLinks();
+      elements.navSourcesLink.classList.add('active');
+
       window.appObject.activeSection = 'collections';
       elements.primarySection.style.display = 'none';
       elements.bookmarksSection.style.display = 'none';

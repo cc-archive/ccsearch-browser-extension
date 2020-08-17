@@ -37,6 +37,7 @@ import {
 } from '../utils';
 import { loadBookmarkImages } from './bookmarkModule';
 import migrateStorage from './popup.utils';
+import { removeActiveClassFromNavLinks } from './bookmarkModule.utils';
 
 // global object to store the application variables
 window.appObject = {};
@@ -351,7 +352,11 @@ elements.loadMoreBookmarkButton.addEventListener('click', () => {
   loadBookmarkImages(10);
 });
 
-elements.navSettingsButton.addEventListener('click', () => {
+elements.navSettingsLink.addEventListener('click', () => {
+  // visually marking settings link as active
+  removeActiveClassFromNavLinks();
+  elements.navSettingsLink.classList.add('active');
+
   chrome.runtime.openOptionsPage();
 });
 

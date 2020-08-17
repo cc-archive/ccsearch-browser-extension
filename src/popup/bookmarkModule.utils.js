@@ -56,3 +56,9 @@ export function toggleEditView() {
     }
   }
 }
+
+export function removeActiveClassFromNavLinks() {
+  elements.navBookmarksLink.classList.remove('active');
+  elements.navSourcesLink.classList.remove('active');
+  elements.navSettingsLink.classList.remove('active');
+}

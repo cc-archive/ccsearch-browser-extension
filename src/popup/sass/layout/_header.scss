@@ -1,7 +1,11 @@
 header {
-  .navbar-end > a,
-  .navbar-end > a:hover {
+  .navbar-end > a {
     color: $color-tomato !important;
+  }
+
+  .navbar-end > a:hover,
+  .navbar-end > a.active {
+    color: $color-dark-slate-gray !important;
   }
 
   .icon,
