@@ -1,24 +1,12 @@
 import elements from './base';
-import { init, saveFiltersOptions, addBookmarksToStorage, addLegacyBookmarksToStorage } from './helper';
+import { init, saveFiltersOptions, addBookmarksToStorage, handleLegacyBookmarksFile } from './helper';
 import { showNotification, allowCheckingOneTypeOfCheckbox } from '../utils';
 
 document.addEventListener('DOMContentLoaded', init);
 
 elements.saveFiltersButton.addEventListener('click', saveFiltersOptions);
 
-allowCheckingOneTypeOfCheckbox(elements.useCaseInputsWrapper, elements.licenseInputsWrapper);
-
-function handleLegacyBookmarksFile(bookmarksArray) {
-  try {
-    if (!bookmarksArray.length > 0) {
-      showNotification('Error: No bookmarks found in the file', 'negative', 'snackbar-options');
-    } else {
-      addLegacyBookmarksToStorage(bookmarksArray);
-    }
-  } catch (error) {
-    showNotification('Error in parsing file', 'negative', 'snackbar-options');
-  }
-}
+allowCheckingOneTypeOfCheckbox(elements.useCaseCheckboxesWrapper, elements.licenseCheckboxesWrapper);
 
 elements.importBookmarksButton.addEventListener('click', () => {
   const file = elements.importBookmarksInput.files[0];

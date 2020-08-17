@@ -10,7 +10,7 @@ import {
 } from '../utils';
 import { constants } from '../popup/base';
 
-export function restoreFilters(inputElements) {
+function restoreFilters(inputElements) {
   for (let i = 0; i < inputElements.length; i += 1) {
     const { id } = inputElements[i];
     chrome.storage.sync.get({ [id]: false }, items => {
@@ -25,8 +25,8 @@ export function restoreFilters(inputElements) {
 }
 
 function addSourcesToDom(sources) {
-  const { sourceWrapper } = elements;
-  sourceWrapper.innerText = '';
+  const { sourceCheckboxesWrapper } = elements;
+  sourceCheckboxesWrapper.innerText = '';
 
   Object.keys(sources).forEach(key => {
     const input = document.createElement('input');
@@ -40,26 +40,14 @@ function addSourcesToDom(sources) {
 
     const breakLine = document.createElement('br');
 
-    sourceWrapper.appendChild(input);
-    sourceWrapper.appendChild(label);
-    sourceWrapper.appendChild(breakLine);
+    sourceCheckboxesWrapper.appendChild(input);
+    sourceCheckboxesWrapper.appendChild(label);
+    sourceCheckboxesWrapper.appendChild(breakLine);
   });
-  restoreFilters(elements.sourceInputs);
+  restoreFilters(elements.sourceCheckboxes);
 }
 
-export async function init() {
-  restoreFilters(elements.useCaseInputs);
-  restoreFilters(elements.licenseInputs);
-  restoreFilters(elements.fileTypeInputs);
-  restoreFilters(elements.imageTypeInputs);
-  restoreFilters(elements.imageSizeInputs);
-  restoreFilters(elements.aspectRatioInputs);
-  restoreFilters(elements.enableMatureContentCheckbox);
-  const sources = await getLatestSources();
-  addSourcesToDom(sources);
-}
-
-export function saveSingleFilter(inputElements) {
+function saveSingleFilter(inputElements) {
   for (let i = 0; i < inputElements.length; i += 1) {
     const { id } = inputElements[i];
     const value = inputElements[i].checked;
@@ -75,14 +63,26 @@ export function saveSingleFilter(inputElements) {
   }
 }
 
+export async function init() {
+  restoreFilters(elements.useCaseCheckboxes);
+  restoreFilters(elements.licenseCheckboxes);
+  restoreFilters(elements.fileTypeCheckboxes);
+  restoreFilters(elements.imageTypeCheckboxes);
+  restoreFilters(elements.imageSizeCheckboxes);
+  restoreFilters(elements.aspectRatioCheckboxes);
+  restoreFilters(elements.enableMatureContentCheckbox);
+  const sources = await getLatestSources();
+  addSourcesToDom(sources);
+}
+
 export function saveFiltersOptions() {
-  saveSingleFilter(elements.useCaseInputs);
-  saveSingleFilter(elements.licenseInputs);
-  saveSingleFilter(elements.fileTypeInputs);
-  saveSingleFilter(elements.imageTypeInputs);
-  saveSingleFilter(elements.imageSizeInputs);
-  saveSingleFilter(elements.aspectRatioInputs);
-  saveSingleFilter(elements.sourceInputs);
+  saveSingleFilter(elements.useCaseCheckboxes);
+  saveSingleFilter(elements.licenseCheckboxes);
+  saveSingleFilter(elements.fileTypeCheckboxes);
+  saveSingleFilter(elements.imageTypeCheckboxes);
+  saveSingleFilter(elements.imageSizeCheckboxes);
+  saveSingleFilter(elements.aspectRatioCheckboxes);
+  saveSingleFilter(elements.sourceCheckboxes);
   saveSingleFilter(elements.enableMatureContentCheckbox);
 }
 
@@ -168,7 +168,7 @@ export function addBookmarksToStorage(newBookmarksObject, showConfirmation = tru
   });
 }
 
-export async function addLegacyBookmarksToStorage(bookmarksArray) {
+async function addLegacyBookmarksToStorage(bookmarksArray) {
   const newKeyNames = keyNames;
   newKeyNames.push('bookmarks'); // also checking for legacy "bookmarks" key
   chrome.storage.sync.get(newKeyNames, async items => {
@@ -235,4 +235,16 @@ export async function addLegacyBookmarksToStorage(bookmarksArray) {
     document.querySelector('.notification__options--body button').classList.remove('is-loading');
     showNotification('Bookmarks updated!', 'positive', 'snackbar-options');
   });
+}
+
+export function handleLegacyBookmarksFile(bookmarksArray) {
+  try {
+    if (!bookmarksArray.length > 0) {
+      showNotification('Error: No bookmarks found in the file', 'negative', 'snackbar-options');
+    } else {
+      addLegacyBookmarksToStorage(bookmarksArray);
+    }
+  } catch (error) {
+    showNotification('Error in parsing file', 'negative', 'snackbar-options');
+  }
 }
