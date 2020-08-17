@@ -1,6 +1,6 @@
 import elements from './base';
 import { init, saveFiltersOptions, addBookmarksToStorage, handleLegacyBookmarksFile } from './helper';
-import { showNotification, allowCheckingOneTypeOfCheckbox } from '../utils';
+import { showNotification, allowCheckingOneTypeOfCheckbox, enableTabSwitching } from '../utils';
 
 document.addEventListener('DOMContentLoaded', init);
 
@@ -39,30 +39,4 @@ elements.importBookmarksButton.addEventListener('click', () => {
   }
 });
 
-// tab switching logic
-elements.tabsHeader.addEventListener('click', e => {
-  // removing active class
-  if (e.target.parentElement.classList.contains('tab')) {
-    Array.prototype.forEach.call(e.currentTarget.getElementsByClassName('is-active'), element => {
-      element.classList.remove('is-active');
-    });
-
-    // add active class to the clicked tab header
-    e.target.parentElement.classList.add('is-active');
-
-    const tabNo = e.target.parentElement.getAttribute('data-tab-no');
-    let targetContentDiv;
-
-    // removing active class from any tab content div
-    Array.prototype.forEach.call(document.getElementById('tabs-content').children, element => {
-      element.classList.remove('is-active');
-      if (element.getAttribute('data-content-no') === tabNo) {
-        // saving the target content div
-        targetContentDiv = element;
-      }
-    });
-
-    // adding active class to target content div
-    targetContentDiv.classList.add('is-active');
-  }
-});
+elements.tabsHeader.addEventListener('click', enableTabSwitching);

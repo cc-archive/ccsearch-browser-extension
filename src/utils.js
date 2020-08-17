@@ -102,6 +102,38 @@ export function allowCheckingOneTypeOfCheckbox(checkboxesWrapper1, checkboxesWra
   });
 }
 
+// tab switching logic
+export function enableTabSwitching(e) {
+  // removing active class
+  if (e.target.parentElement.classList.contains('tab')) {
+    Array.prototype.forEach.call(e.currentTarget.getElementsByClassName('is-active'), element => {
+      element.classList.remove('is-active');
+    });
+
+    // add active class to the clicked tab header
+    e.target.parentElement.classList.add('is-active');
+
+    const tabsDiv = e.target.parentElement.parentElement.parentElement;
+    const tabsContentDiv = tabsDiv.nextElementSibling;
+    const tabNo = e.target.parentElement.getAttribute('data-tab-no');
+
+    let targetPanelDiv;
+
+    // removing active class from any tab content div
+    // Array.prototype.forEach.call(document.getElementById('tabs-content').children, element => {
+    Array.prototype.forEach.call(tabsContentDiv.children, element => {
+      element.classList.remove('is-active');
+      if (element.getAttribute('data-content-no') === tabNo) {
+        // saving the target content div
+        targetPanelDiv = element;
+      }
+    });
+
+    // adding active class to target content div
+    targetPanelDiv.classList.add('is-active');
+  }
+}
+
 export const activeBookmarkIdContainers = [
   'bookmarksImageIds0',
   'bookmarksImageIds1',
