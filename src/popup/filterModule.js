@@ -22,4 +22,5 @@ export function loadUserDefaults() {
   loadUserFilterPreferences(elements.imageTypeCheckboxesWrapper);
   loadUserFilterPreferences(elements.imageSizeCheckboxesWrapper);
   loadUserFilterPreferences(elements.aspectRatioCheckboxesWrapper);
+  loadUserFilterPreferences(elements.showMatureContentCheckboxWrapper);
 }

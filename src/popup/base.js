@@ -15,6 +15,7 @@ export const elements = {
   imageTypeCheckboxesWrapper: document.getElementsByClassName('section-filter__image-type')[0],
   imageSizeCheckboxesWrapper: document.getElementsByClassName('section-filter__image-size')[0],
   aspectRatioCheckboxesWrapper: document.getElementsByClassName('section-filter__aspect-ratio')[0],
+  showMatureContentCheckboxWrapper: document.getElementsByClassName('section-filter__show-mature-content')[0],
   clearFiltersButton: document.getElementById('clear-filters-button'),
   applyFiltersButton: document.getElementById('apply-filters-button'),
   // clearSearchButton: document.getElementsByClassName('clear-search-button'),
