@@ -169,7 +169,9 @@ export function addSearchThumbnailsToDOM(resultArray) {
       // make and push license image elements
       licenseArray.forEach(name => {
         licenseIconElement = document.createElement('i');
-        licenseIconElement.classList.add('icon', 'has-background-white', `cc-${name}`);
+        // for pdm, the logo name is cc-pd
+        if (name === 'pdm') licenseIconElement.classList.add('icon', 'has-background-white', 'cc-pd');
+        else licenseIconElement.classList.add('icon', 'has-background-white', `cc-${name}`);
         licenseIconElementsArray.push(licenseIconElement);
       });
 
