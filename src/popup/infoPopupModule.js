@@ -120,22 +120,22 @@ export function handleImageAttributionDownload(e) {
   downloadImageAttribution(e.currentTarget.image);
 }
 
-// function getFacebookShareLink(imageId) {
-//   // needs to be changed if CC Search domain changes.
-//   return `https://www.facebook.com/sharer/sharer.php?u=https://search.creativecommons.org/photos/${imageId}`;
-// }
+function getFacebookShareLink(imageId) {
+  // needs to be changed if CC Search domain changes.
+  return `https://www.facebook.com/sharer/sharer.php?u=https://search.creativecommons.org/photos/${imageId}`;
+}
 
-// function getTwitterShareLink(sourceLink) {
-//   return `https://twitter.com/intent/tweet?text=I%20found%20an%20image%20through%20CC%20Search%20%40creativecommons%3A%20${sourceLink}`;
-// }
+function getTwitterShareLink(sourceLink) {
+  return `https://twitter.com/intent/tweet?text=I%20found%20an%20image%20through%20CC%20Search%20%40creativecommons%3A%20${sourceLink}`;
+}
 
-// function getPinterestShareLink(sourceLink, imageLink) {
-//   return `https://pinterest.com/pin/create/button/?url=${sourceLink}&media=${imageLink}&description=I%20found%20an%20image%20through%20CC%20search%20%40creativecommons%3A%20${sourceLink}`;
-// }
-// // Shares the image to Tumblt
-// function getTumblrShareLink(sourceLink, imageLink) {
-//   return `http://tumblr.com/widgets/share/tool?canonicalUrl=${sourceLink}&posttype=photo&content=${imageLink}`;
-// }
+function getPinterestShareLink(sourceLink, imageLink) {
+  return `https://pinterest.com/pin/create/button/?url=${sourceLink}&media=${imageLink}&description=I%20found%20an%20image%20through%20CC%20search%20%40creativecommons%3A%20${sourceLink}`;
+}
+// Shares the image to Tumblt
+function getTumblrShareLink(sourceLink, imageLink) {
+  return `http://tumblr.com/widgets/share/tool?canonicalUrl=${sourceLink}&posttype=photo&content=${imageLink}`;
+}
 
 const licenseInfo = {
   by: {
@@ -264,8 +264,8 @@ function getImageData(imageId) {
         license,
         height,
         width,
-        // id,
-        // url: imageUrl,
+        id,
+        url: imageUrl,
       } = res;
       // const title = unicodeToString(res.title);
       let creator = unicodeToString(res.creator);
@@ -319,10 +319,10 @@ function getImageData(imageId) {
       // elements.downloadImageButton.addEventListener('click', handleImageDownload);
       // elements.downloadImageAttributionButton.addEventListener('click', handleImageAttributionDownload);
       // share tab
-      // elements.facebookShareButton.href = getFacebookShareLink(id);
-      // elements.twitterShareButton.href = getTwitterShareLink(foreignLandingUrl);
-      // elements.pinterestShareButton.href = getPinterestShareLink(foreignLandingUrl, imageUrl);
-      // elements.tumblrShareButton.href = getTumblrShareLink(foreignLandingUrl, imageUrl);
+      elements.facebookShareButton.href = getFacebookShareLink(id);
+      elements.twitterShareButton.href = getTwitterShareLink(foreignLandingUrl);
+      elements.pinterestShareButton.href = getPinterestShareLink(foreignLandingUrl, imageUrl);
+      elements.tumblrShareButton.href = getTumblrShareLink(foreignLandingUrl, imageUrl);
       // removeSpinner(elements.spinnerPlaceholderPopup);
       // elements.popupMain.style.opacity = 1;
       // elements.popupMain.style.visibility = 'visible';

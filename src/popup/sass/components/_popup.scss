@@ -94,30 +94,8 @@
   }
 }
 
-.share-icons {
-  a {
-    text-decoration: none;
-  }
-
-  .icon {
-    margin-right: 10px;
-    font-size: 55px;
-  }
-}
-
-// .fa {
-//   box-sizing: content-box;
-//   padding: 20px;
-//   margin-right: 10px;
-//   font-size: 25px;
-//   width: 24px;
-//   text-align: center;
-//   text-decoration: none;
-//   border-radius: 50%;
-//   color: $color-black;
-// }
-
 .section-image-detail {
+  // section navigation
   .tabs.image-detail__nav {
     margin-bottom: 0 !important;
     margin-top: $space-normal;
@@ -146,11 +124,19 @@
     }
   }
 
+  // common
   .image-detail__head {
     display: flex;
     align-items: center;
   }
 
+  i.license-logo {
+    color: #000;
+    font-size: $space-bigger;
+    margin-right: $space-small;
+  }
+
+  // reuse tab
   .attribution-tab {
     width: 450px;
   }
@@ -169,9 +155,16 @@
     display: flex;
     align-items: center;
   }
-  i.license-logo {
-    color: #000;
-    font-size: $space-bigger;
-    margin-right: $space-small;
+
+  // share tab
+  .share-icons {
+    a {
+      text-decoration: none;
+    }
+
+    .icon {
+      margin-right: 10px;
+      font-size: 55px;
+    }
   }
 }
