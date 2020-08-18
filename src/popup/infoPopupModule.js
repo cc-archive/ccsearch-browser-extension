@@ -1,9 +1,18 @@
 import { elements } from './base';
-import { removeSpinner } from './spinner';
-import { removeChildNodes } from '../utils';
-import { getSourceDisplayName, unicodeToString } from './helper';
+// import { removeSpinner } from './spinner';
+// import { removeChildNodes } from '../utils';
+// import { getSourceDisplayName, unicodeToString } from './helper';
 
 const download = require('downloadjs');
+
+export function getPlainTextAttribution(image) {
+  if (!image) {
+    return '';
+  }
+  return `"${image.title}" by ${image.creator} is licensed under CC ${image.license.toUpperCase()} ${
+    image.license_version
+  }. To view a copy of this license, visit ${image.license_url}`;
+}
 
 export function getRichTextAttribution(image) {
   if (!image) {
@@ -62,7 +71,7 @@ export function getHtmlAttribution(image) {
   return `<p style="font-size: 0.9rem;font-style: italic;">${imgLink}${creator}${licenseLink}${licenseImgLink}</p>`;
 }
 
-export function getPlainAttribution(image) {
+export function getAttributionForTextFile(image) {
   if (!image) {
     return '';
   }
@@ -100,7 +109,7 @@ function downloadImage(imageUrl, imageName) {
 }
 
 function downloadImageAttribution(image) {
-  download(getPlainAttribution(image), `${image.title}.txt`, 'text/plain');
+  download(getAttributionForTextFile(image), `${image.title}.txt`, 'text/plain');
 }
 
 export function handleImageDownload(e) {
@@ -111,68 +120,123 @@ export function handleImageAttributionDownload(e) {
   downloadImageAttribution(e.currentTarget.image);
 }
 
-function getFacebookShareLink(imageId) {
-  // needs to be changed if CC Search domain changes.
-  return `https://www.facebook.com/sharer/sharer.php?u=https://search.creativecommons.org/photos/${imageId}`;
+// function getFacebookShareLink(imageId) {
+//   // needs to be changed if CC Search domain changes.
+//   return `https://www.facebook.com/sharer/sharer.php?u=https://search.creativecommons.org/photos/${imageId}`;
+// }
+
+// function getTwitterShareLink(sourceLink) {
+//   return `https://twitter.com/intent/tweet?text=I%20found%20an%20image%20through%20CC%20Search%20%40creativecommons%3A%20${sourceLink}`;
+// }
+
+// function getPinterestShareLink(sourceLink, imageLink) {
+//   return `https://pinterest.com/pin/create/button/?url=${sourceLink}&media=${imageLink}&description=I%20found%20an%20image%20through%20CC%20search%20%40creativecommons%3A%20${sourceLink}`;
+// }
+// // Shares the image to Tumblt
+// function getTumblrShareLink(sourceLink, imageLink) {
+//   return `http://tumblr.com/widgets/share/tool?canonicalUrl=${sourceLink}&posttype=photo&content=${imageLink}`;
+// }
+
+const licenseInfo = {
+  by: {
+    licenseIcon: 'cc-by',
+    licenseDescription: 'Credit the creator.',
+  },
+  nc: {
+    licenseIcon: 'cc-nc',
+    licenseDescription: 'Commercial use not permitted',
+  },
+  sa: {
+    licenseIcon: 'cc-sa',
+    licenseDescription: 'Share adaptations under the same terms.',
+  },
+  nd: {
+    licenseIcon: 'cc-nd',
+    licenseDescription: 'No derivates or modifications permitted.',
+  },
+  pdm: {
+    licenseIcon: 'cc-pd',
+    licenseDescription: 'This work is marked as being in the public domain.',
+  },
+  cc0: {
+    licenseIcon: 'cc-zero',
+    licenseDescription: 'This work has been marked as dedicated to the public domain.',
+  },
+};
+
+function fillLicenseInfo(licenseArray) {
+  licenseArray.forEach(license => {
+    const { licenseIcon, licenseDescription } = licenseInfo[license];
+
+    const iconElement = document.createElement('i');
+    iconElement.classList.add('icon', licenseIcon);
+
+    const licenseDescriptionSpanElement = document.createElement('span');
+    licenseDescriptionSpanElement.innerText = licenseDescription;
+
+    const divElement = document.createElement('div');
+
+    divElement.appendChild(iconElement);
+    divElement.appendChild(licenseDescriptionSpanElement);
+
+    elements.licenseDescriptionDiv.appendChild(divElement);
+  });
 }
 
-function getTwitterShareLink(sourceLink) {
-  return `https://twitter.com/intent/tweet?text=I%20found%20an%20image%20through%20CC%20Search%20%40creativecommons%3A%20${sourceLink}`;
-}
+// function getPopupCreatorChildNode(creatorUrl, creator) {
+//   // return a paragraph tag if creatorURL not present
+//   if (creatorUrl === '#') {
+//     const paragraph = document.createElement('p');
+//     paragraph.textContent = creator;
+//     return paragraph;
+//   }
+//   const link = document.createElement('a');
+//   link.href = creatorUrl;
+//   link.target = '_blank';
+//   link.textContent = creator;
+//   return link;
+// }
 
-function getPinterestShareLink(sourceLink, imageLink) {
-  return `https://pinterest.com/pin/create/button/?url=${sourceLink}&media=${imageLink}&description=I%20found%20an%20image%20through%20CC%20search%20%40creativecommons%3A%20${sourceLink}`;
-}
-// Shares the image to Tumblt
-function getTumblrShareLink(sourceLink, imageLink) {
-  return `http://tumblr.com/widgets/share/tool?canonicalUrl=${sourceLink}&posttype=photo&content=${imageLink}`;
-}
+// function getPopupSourceChildNode(foreignLandingUrl, source) {
+//   const link = document.createElement('a');
+//   link.href = foreignLandingUrl;
+//   link.target = '_blank';
+//   link.textContent = getSourceDisplayName(source);
+//   return link;
+// }
 
-function getPopupCreatorChildNode(creatorUrl, creator) {
-  // return a paragraph tag if creatorURL not present
-  if (creatorUrl === '#') {
-    const paragraph = document.createElement('p');
-    paragraph.textContent = creator;
-    return paragraph;
-  }
-  const link = document.createElement('a');
-  link.href = creatorUrl;
-  link.target = '_blank';
-  link.textContent = creator;
-  return link;
-}
+// function getPopupLicenseChildNode(licenseUrl, license) {
+//   const link = document.createElement('a');
+//   link.href = licenseUrl;
+//   link.target = '_blank';
+//   link.textContent = license;
+//   return link;
+// }
 
-function getPopupSourceChildNode(foreignLandingUrl, source) {
-  const link = document.createElement('a');
-  link.href = foreignLandingUrl;
-  link.target = '_blank';
-  link.textContent = getSourceDisplayName(source);
-  return link;
-}
-
-function getPopupLicenseChildNode(licenseUrl, license) {
-  const link = document.createElement('a');
-  link.href = licenseUrl;
-  link.target = '_blank';
-  link.textContent = license;
-  return link;
+function fillLicenseLink(license, licenseVersion, licenseUrl) {
+  elements.licenseLink.innerText = `CC ${license.toUpperCase()} ${licenseVersion}`;
+  elements.licenseLink.setAttribute('href', licenseUrl);
+  elements.licenseLinkCaption.setAttribute('href', licenseUrl);
 }
 
 function getImageData(imageId) {
   const url = `https://api.creativecommons.engineering/v1/images/${imageId}`;
+  console.log('get image data called');
+  console.log(elements.downloadImageAttributionButton);
 
   fetch(url)
     .then(data => data.json())
     .then(res => {
       const {
-        source,
+        // source,
         foreign_landing_url: foreignLandingUrl,
         license_url: licenseUrl,
+        license_version: licenseVersion,
         license,
-        id,
-        url: imageUrl,
+        // id,
+        // url: imageUrl,
       } = res;
-      const title = unicodeToString(res.title);
+      // const title = unicodeToString(res.title);
       let { creator, creator_url: creatorUrl } = res;
       if (!creatorUrl) {
         creatorUrl = '#';
@@ -181,37 +245,50 @@ function getImageData(imageId) {
         creator = 'Not Available';
       }
       // adding arguments for event handlers to the target itself
-      elements.downloadImageButton.imageUrl = res.url;
-      elements.downloadImageButton.title = `${res.title}.${res.url.split('.').pop()}`;
-      elements.downloadImageAttributionButton.image = res;
-      elements.downloadImageAttributionButton.title = `${res.title}.${res.url.split('.').pop()}`;
-      const popupTitle = document.querySelector('.info__content-title');
-      const popupCreator = document.querySelector('.info__content-creator');
-      const popupSource = document.querySelector('.info__content-source');
-      const popupLicense = document.querySelector('.info__content-license');
-      const attributionRichTextPara = document.getElementById('attribution-rich-text');
-      const attributionHtmlTextArea = document.getElementById('attribution-html');
+      // elements.downloadImageButton.imageUrl = res.url;
+      // elements.downloadImageButton.title = `${res.title}.${res.url.split('.').pop()}`;
+      for (let i = 0; i < elements.downloadImageAttributionButton.length; i += 1) {
+        console.log('inside the loop');
+        console.log(elements.downloadImageAttributionButton[i]);
+        elements.downloadImageAttributionButton[i].image = res;
+        elements.downloadImageAttributionButton[i].title = `${res.title}.${res.url.split('.').pop()}`;
+        elements.downloadImageAttributionButton[i].addEventListener('click', handleImageAttributionDownload);
+      }
+
+      elements.imageExternalLink.href = foreignLandingUrl;
+      // elements.downloadImageAttributionButton.image = res;
+      // elements.downloadImageAttributionButton.title = `${res.title}.${res.url.split('.').pop()}`;
+      // const popupTitle = document.querySelector('.info__content-title');
+      // const popupCreator = document.querySelector('.info__content-creator');
+      // const popupSource = document.querySelector('.info__content-source');
+      // const popupLicense = document.querySelector('.info__content-license');
+      // const attributionRichTextPara = document.getElementById('attribution-rich-text');
+      // const attributionHtmlTextArea = document.getElementById('attribution-html');
       // filling the info tab
-      popupTitle.textContent = `${title}`;
-      removeChildNodes(popupCreator);
-      popupCreator.appendChild(getPopupCreatorChildNode(creatorUrl, creator));
-      removeChildNodes(popupSource);
-      popupSource.appendChild(getPopupSourceChildNode(foreignLandingUrl, source));
-      removeChildNodes(popupLicense);
-      popupLicense.appendChild(getPopupLicenseChildNode(licenseUrl, license.toUpperCase()));
-      removeChildNodes(attributionRichTextPara);
-      embedRichTextAttribution(res, attributionRichTextPara);
-      attributionHtmlTextArea.value = getHtmlAttribution(res);
-      elements.downloadImageButton.addEventListener('click', handleImageDownload);
-      elements.downloadImageAttributionButton.addEventListener('click', handleImageAttributionDownload);
+      // popupTitle.textContent = `${title}`;
+      // removeChildNodes(popupCreator);
+      // popupCreator.appendChild(getPopupCreatorChildNode(creatorUrl, creator));
+      // removeChildNodes(popupSource);
+      // popupSource.appendChild(getPopupSourceChildNode(foreignLandingUrl, source));
+      // removeChildNodes(popupLicense);
+      // popupLicense.appendChild(getPopupLicenseChildNode(licenseUrl, license.toUpperCase()));
+      // removeChildNodes(attributionRichTextPara);
+      embedRichTextAttribution(res, elements.richTextAttributionPara);
+      elements.htmlAttributionTextArea.value = getHtmlAttribution(res);
+      elements.plainTextAttributionPara.innerText = getPlainTextAttribution(res);
+
+      fillLicenseLink(license, licenseVersion, licenseUrl);
+      fillLicenseInfo(license.split('-'));
+      // elements.downloadImageButton.addEventListener('click', handleImageDownload);
+      // elements.downloadImageAttributionButton.addEventListener('click', handleImageAttributionDownload);
       // share tab
-      elements.facebookShareButton.href = getFacebookShareLink(id);
-      elements.twitterShareButton.href = getTwitterShareLink(foreignLandingUrl);
-      elements.pinterestShareButton.href = getPinterestShareLink(foreignLandingUrl, imageUrl);
-      elements.tumblrShareButton.href = getTumblrShareLink(foreignLandingUrl, imageUrl);
-      removeSpinner(elements.spinnerPlaceholderPopup);
-      elements.popupMain.style.opacity = 1;
-      elements.popupMain.style.visibility = 'visible';
+      // elements.facebookShareButton.href = getFacebookShareLink(id);
+      // elements.twitterShareButton.href = getTwitterShareLink(foreignLandingUrl);
+      // elements.pinterestShareButton.href = getPinterestShareLink(foreignLandingUrl, imageUrl);
+      // elements.tumblrShareButton.href = getTumblrShareLink(foreignLandingUrl, imageUrl);
+      // removeSpinner(elements.spinnerPlaceholderPopup);
+      // elements.popupMain.style.opacity = 1;
+      // elements.popupMain.style.visibility = 'visible';
     });
 }
 

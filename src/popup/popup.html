@@ -291,6 +291,7 @@
 
     <section class="section-image-detail display-none">
       <div class="tabs is-right image-detail__nav">
+        <a id="close-image-detail"><i class="icon chevron-left"></i> Back</a>
         <ul>
           <li class="tab is-active" data-tab-no="1"><a>Reuse</a></li>
           <li class="tab" data-tab-no="2"><a>Information</a></li>
@@ -300,6 +301,64 @@
       <div class="tabs-content">
         <div class="tabs-panel container is-active reuse-panel" data-content-no="1">
           Reuse Content
+          <div class="image-detail__head margin-bottom-bigger">
+            <button class="button is-success small margin-right-bigger download-image-attribution">
+              Download Image and Attribution
+            </button>
+            <a id="image-external-link" target="_blank">Go to image's website <i class="icon external-link"></i></a>
+          </div>
+
+          <h5 class="b-header margin-bottom-normal">Credit the creator</h5>
+          <div class="attribution-tab">
+            <div class="tabs is-boxed">
+              <ul>
+                <li class="tab is-active" data-tab-no="1"><a>Text</a></li>
+                <li class="tab" data-tab-no="2"><a>HTML</a></li>
+                <li class="tab" data-tab-no="3"><a>Plain Text</a></li>
+              </ul>
+            </div>
+            <div class="tabs-content is-boxed">
+              <div class="tabs-panel is-active" data-content-no="1">
+                <p class="margin-bottom-big" id="rich-text-attribution"></p>
+                <button
+                  class="button tiny donate btn-copy"
+                  title="Copy rich-text attribution"
+                  data-clipboard-target="#rich-text-attribution"
+                >
+                  Copy
+                </button>
+              </div>
+              <div class="tabs-panel" data-content-no="2">
+                <textarea class="margin-bottom-small" id="html-attribution" readonly>
+                  text area
+                </textarea>
+                <button
+                  class="button donate tiny btn-copy"
+                  title="Copy HTML attribution"
+                  data-clipboard-target="#html-attribution"
+                >
+                  Copy
+                </button>
+              </div>
+              <div class="tabs-panel" data-content-no="3">
+                <p class="margin-bottom-big" id="plain-text-attribution"></p>
+                <button
+                  class="button tiny donate btn-copy"
+                  title="Copy plain-text attribution"
+                  data-clipboard-target="#plain-text-attribution"
+                >
+                  Copy
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <h5 class="b-header margin-top-bigger margin-bottom-normal">License</h5>
+          <p class="margin-bottom-small">This image was marked with <a id="license-link"></a> license:</p>
+          <div class="license-description"></div>
+          <p class="caption has-text-weight-semibold">
+            Read more about the license <a id="license-link--caption">here</a>
+          </p>
         </div>
         <div class="tabs-panel" data-content-no="2">Information content</div>
         <div class="tabs-panel" data-content-no="3">Share content</div>

@@ -33,6 +33,7 @@ import {
   removeNode,
   getLatestSources,
   allowCheckingOneTypeOfCheckbox,
+  enableTabSwitching,
   // activeBookmarkContainers,
 } from '../utils';
 import { loadBookmarkImages } from './bookmarkModule';
@@ -82,6 +83,9 @@ clipboard.on('success', e => {
   e.clearSelection();
   showNotification('Copied', 'positive', 'snackbar-bookmarks');
 });
+
+elements.imageDetailNav.getElementsByTagName('ul')[0].addEventListener('click', enableTabSwitching);
+elements.attributionTab.firstElementChild.getElementsByTagName('ul')[0].addEventListener('click', enableTabSwitching);
 
 elements.popupCloseButton.addEventListener('click', () => {
   elements.popup.style.opacity = 0;

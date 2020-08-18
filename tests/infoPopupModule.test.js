@@ -1,4 +1,4 @@
-import { getRichTextAttribution, getHtmlAttribution, getPlainAttribution } from '../src/popup/infoPopupModule';
+import { getRichTextAttribution, getHtmlAttribution, getAttributionForTextFile } from '../src/popup/infoPopupModule';
 
 // sample image response used for testing
 const image = {
@@ -47,8 +47,8 @@ test('Testing getHtmlAttribution', () => {
   expect(testHtmlAttribution).toBe(correctAttribution);
 });
 
-test('Testing getPlainAttribution', () => {
-  const testPlainAttribution = getPlainAttribution(image);
+test('Testing getAttributionForTextFile', () => {
+  const testPlainAttribution = getAttributionForTextFile(image);
 
   const correctAttribution = `"Megi - Lutka Moja" by cipovic is licensed under CC BY-NC-ND 2.0
 
