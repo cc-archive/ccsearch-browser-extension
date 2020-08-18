@@ -1,5 +1,5 @@
-import { elements, attributionTabLink } from './base';
-import { addSpinner, removeSpinner } from './spinner';
+import { elements } from './base';
+import { removeSpinner } from './spinner';
 import { removeChildNodes } from '../utils';
 import { getSourceDisplayName, unicodeToString } from './helper';
 
@@ -216,9 +216,13 @@ function getImageData(imageId) {
 }
 
 export function activatePopup(imageThumbnail) {
-  elements.popup.style.opacity = 1;
-  elements.popup.style.visibility = 'visible';
-  addSpinner(elements.spinnerPlaceholderPopup, 'original');
+  // elements.popup.style.opacity = 1;
+  // elements.popup.style.visibility = 'visible';
+  // addSpinner(elements.spinnerPlaceholderPopup, 'original');
   getImageData(imageThumbnail.id);
-  attributionTabLink.click();
+  // attributionTabLink.click();
+  elements.header.classList.add('display-none');
+  // elements.bookmarksSection.classList.add('display-none');
+  elements.sectionMain.classList.add('display-none');
+  elements.imageDetailSection.classList.remove('display-none');
 }

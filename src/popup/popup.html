@@ -37,7 +37,7 @@
       </nav>
     </header>
 
-    <div class="section-main">
+    <div class="section-main container">
       <div class="section-primary">
         <section class="section-search">
           <i class="icon search"></i>
@@ -214,7 +214,7 @@
 
           <div id="spinner-placeholder--popup"></div>
           <div class="popup__main">
-            <div id="attribution" class="popup__tab-content">
+            <!-- <div id="attribution" class="popup__tab-content">
               <h6>Rich-text</h6>
               <p id="attribution-rich-text" class="margin-bottom-small"></p>
               <button
@@ -224,8 +224,8 @@
               >
                 Copy
               </button>
-              <h6 class="margin-top-normal">HTML</h6>
-              <textarea class="margin-bottom-small" id="attribution-html" id="" cols="30" rows="3" readonly>
+              <h6 class="margin-top-normal">HTML</h6> -->
+            <!-- <textarea class="margin-bottom-small" id="attribution-html" id="" cols="30" rows="3" readonly>
             text area
           </textarea
               >
@@ -235,14 +235,14 @@
                 data-clipboard-target="#attribution-html"
               >
                 Copy
-              </button>
-              <div class="download-buttons margin-top-normal">
-                <button class="button is-primary tiny margin-right-small" id="download-image">Download Image</button>
-                <button class="button is-primary tiny margin-right-small" id="download-image-attribution">
-                  Download Image and Attribution
-                </button>
-              </div>
-            </div>
+              </button> -->
+            <!-- <div class="download-buttons margin-top-normal"> -->
+            <!-- <button class="button is-primary tiny margin-right-small" id="download-image">Download Image</button> -->
+            <!-- <button class="button is-primary tiny margin-right-small" id="download-image-attribution"> -->
+            <!-- Download Image and Attribution -->
+            <!-- </button> -->
+            <!-- </div> -->
+            <!-- </div> -->
             <div id="info" class="popup__tab-content">
               <div class="info margin-bottom-normal">
                 <h6>Name</h6>
@@ -288,6 +288,23 @@
         </div>
       </div>
     </div>
+
+    <section class="section-image-detail display-none">
+      <div class="tabs is-right image-detail__nav">
+        <ul>
+          <li class="tab is-active" data-tab-no="1"><a>Reuse</a></li>
+          <li class="tab" data-tab-no="2"><a>Information</a></li>
+          <li class="tab" data-tab-no="3"><a>Share</a></li>
+        </ul>
+      </div>
+      <div class="tabs-content">
+        <div class="tabs-panel container is-active reuse-panel" data-content-no="1">
+          Reuse Content
+        </div>
+        <div class="tabs-panel" data-content-no="2">Information content</div>
+        <div class="tabs-panel" data-content-no="3">Share content</div>
+      </div>
+    </section>
 
     <script src="vendors/js/jquery.min.js"></script>
     <script src="vendors/js/imagesloaded.min.js"></script>
