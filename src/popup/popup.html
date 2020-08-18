@@ -300,7 +300,6 @@
       </div>
       <div class="tabs-content">
         <div class="tabs-panel container is-active reuse-panel" data-content-no="1">
-          Reuse Content
           <div class="image-detail__head margin-bottom-bigger">
             <button class="button is-success small margin-right-bigger download-image-attribution">
               Download Image and Attribution
@@ -360,7 +359,20 @@
             Read more about the license <a id="license-link--caption">here</a>
           </p>
         </div>
-        <div class="tabs-panel" data-content-no="2">Information content</div>
+        <div class="tabs-panel container information-panel" data-content-no="2">
+          <div class="image-detail__head margin-bottom-bigger">
+            <button class="button is-success small margin-right-bigger download-image-attribution">
+              Download Image and Attribution
+            </button>
+            <a id="image-external-link" target="_blank">Go to image's website <i class="icon external-link"></i></a>
+          </div>
+          <h5 class="b-header margin-bottom-smaller">Dimensions</h5>
+          <p id="image-dimension"></p>
+          <h5 class="b-header margin-bottom-smaller margin-top-bigger">Source</h5>
+          <p id="image-source"></p>
+          <h5 class="b-header margin-bottom-smaller  margin-top-bigger">License</h5>
+          <p id="image-license"></p>
+        </div>
         <div class="tabs-panel" data-content-no="3">Share content</div>
       </div>
     </section>

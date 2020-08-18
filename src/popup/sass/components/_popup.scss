@@ -156,11 +156,10 @@
     margin-bottom: $space-small;
     display: flex;
     align-items: center;
-
-    i {
-      color: #000;
-      font-size: $space-bigger;
-      margin-right: $space-small;
-    }
+  }
+  i.license-logo {
+    color: #000;
+    font-size: $space-bigger;
+    margin-right: $space-small;
   }
 }

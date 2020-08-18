@@ -1,7 +1,7 @@
 import { elements } from './base';
 // import { removeSpinner } from './spinner';
 // import { removeChildNodes } from '../utils';
-// import { getSourceDisplayName, unicodeToString } from './helper';
+import { getSourceDisplayName, unicodeToString } from './helper';
 
 const download = require('downloadjs');
 
@@ -169,7 +169,7 @@ function fillLicenseInfo(licenseArray) {
     const { licenseIcon, licenseDescription } = licenseInfo[license];
 
     const iconElement = document.createElement('i');
-    iconElement.classList.add('icon', licenseIcon);
+    iconElement.classList.add('icon', 'license-logo', licenseIcon);
 
     const licenseDescriptionSpanElement = document.createElement('span');
     licenseDescriptionSpanElement.innerText = licenseDescription;
@@ -181,6 +181,35 @@ function fillLicenseInfo(licenseArray) {
 
     elements.licenseDescriptionDiv.appendChild(divElement);
   });
+}
+
+function fillImageDimension(height, width) {
+  elements.imageDimensionPara.innerText = `${height} × ${width} pixels`;
+}
+
+function fillImageSource(foreignLandingUrl, source) {
+  const link = document.createElement('a');
+  link.href = foreignLandingUrl;
+  link.target = '_blank';
+  link.textContent = getSourceDisplayName(source);
+  elements.imageSourcePara.appendChild(link);
+}
+
+function fillImageLicense(licenseUrl, licenseArray) {
+  // fill license icons first
+  licenseArray.forEach(license => {
+    const { licenseIcon } = licenseInfo[license];
+    const iconElement = document.createElement('i');
+    iconElement.classList.add('icon', 'license-logo', licenseIcon);
+    elements.imageLicensePara.appendChild(iconElement);
+  });
+
+  // license link
+  const link = document.createElement('a');
+  link.href = licenseUrl;
+  link.target = '_blank';
+  link.textContent = `CC ${licenseArray.join('-').toUpperCase()}`;
+  elements.imageLicensePara.appendChild(link);
 }
 
 // function getPopupCreatorChildNode(creatorUrl, creator) {
@@ -228,16 +257,20 @@ function getImageData(imageId) {
     .then(data => data.json())
     .then(res => {
       const {
-        // source,
+        source,
         foreign_landing_url: foreignLandingUrl,
         license_url: licenseUrl,
         license_version: licenseVersion,
         license,
+        height,
+        width,
         // id,
         // url: imageUrl,
       } = res;
       // const title = unicodeToString(res.title);
-      let { creator, creator_url: creatorUrl } = res;
+      let creator = unicodeToString(res.creator);
+      let { creator_url: creatorUrl } = res;
+      const licenseArray = license.split('-');
       if (!creatorUrl) {
         creatorUrl = '#';
       }
@@ -278,7 +311,11 @@ function getImageData(imageId) {
       elements.plainTextAttributionPara.innerText = getPlainTextAttribution(res);
 
       fillLicenseLink(license, licenseVersion, licenseUrl);
-      fillLicenseInfo(license.split('-'));
+      fillLicenseInfo(licenseArray);
+
+      fillImageDimension(height, width);
+      fillImageSource(foreignLandingUrl, source);
+      fillImageLicense(licenseUrl, licenseArray);
       // elements.downloadImageButton.addEventListener('click', handleImageDownload);
       // elements.downloadImageAttributionButton.addEventListener('click', handleImageAttributionDownload);
       // share tab
