@@ -13,8 +13,8 @@ import {
 import {
   // licenseAPIQueryStrings,
   // useCaseAPIQueryStrings,
-  makeElementsDisplayNone,
-  removeClassFromElements,
+  // makeElementsDisplayNone,
+  // removeClassFromElements,
   removeLoadMoreButton,
   // imageTypeAPIQueryStrings,
   // fileTypeAPIQueryStrings,
@@ -26,7 +26,7 @@ import {
   loadUserDefaults,
   loadUserFilterPreferences,
 } from './filterModule';
-import { handleImageAttributionDownload, handleImageDownload } from './infoPopupModule';
+import { handleImageAttributionDownload } from './infoPopupModule';
 import { addSpinner } from './spinner';
 import {
   showNotification,
@@ -34,6 +34,7 @@ import {
   getLatestSources,
   allowCheckingOneTypeOfCheckbox,
   enableTabSwitching,
+  removeChildNodes,
   // activeBookmarkContainers,
 } from '../utils';
 import { loadBookmarkImages } from './bookmarkModule';
@@ -87,16 +88,16 @@ clipboard.on('success', e => {
 elements.imageDetailNav.getElementsByTagName('ul')[0].addEventListener('click', enableTabSwitching);
 elements.attributionTab.firstElementChild.getElementsByTagName('ul')[0].addEventListener('click', enableTabSwitching);
 
-elements.popupCloseButton.addEventListener('click', () => {
-  elements.popup.style.opacity = 0;
-  elements.popup.style.visibility = 'hidden';
-  elements.popupMain.style.opacity = 0;
-  elements.popupMain.style.visibility = 'hidden';
+// elements.popupCloseButton.addEventListener('click', () => {
+//   elements.popup.style.opacity = 0;
+//   elements.popup.style.visibility = 'hidden';
+//   elements.popupMain.style.opacity = 0;
+//   elements.popupMain.style.visibility = 'hidden';
 
-  // remove eventlisteners from download buttons to avoid multiple downloads.
-  elements.downloadImageButton.removeEventListener('click', handleImageDownload);
-  elements.downloadImageAttributionButton.removeEventListener('click', handleImageAttributionDownload);
-});
+//   // remove eventlisteners from download buttons to avoid multiple downloads.
+//   elements.downloadImageButton.removeEventListener('click', handleImageDownload);
+//   elements.downloadImageAttributionButton.removeEventListener('click', handleImageAttributionDownload);
+// });
 
 elements.closeImageDetailLink.addEventListener('click', () => {
   // elements.popup.style.opacity = 0;
@@ -109,32 +110,44 @@ elements.closeImageDetailLink.addEventListener('click', () => {
   for (let i = 0; i < elements.downloadImageAttributionButton.length; i += 1) {
     elements.downloadImageAttributionButton[i].removeEventListener('click', handleImageAttributionDownload);
   }
+
+  removeChildNodes(elements.richTextAttributionPara);
+  removeChildNodes(elements.htmlAttributionTextArea);
+  removeChildNodes(elements.plainTextAttributionPara);
+  removeChildNodes(elements.licenseDescriptionDiv);
+  removeChildNodes(elements.imageDimensionPara);
+  removeChildNodes(elements.imageSourcePara);
+  removeChildNodes(elements.imageLicensePara);
+  elements.imageTagsDivs.forEach(imageTagDiv => {
+    removeChildNodes(imageTagDiv);
+  });
+
   elements.header.classList.remove('display-none');
   // elements.bookmarksSection.classList.add('display-none');
   elements.sectionMain.classList.remove('display-none');
   elements.imageDetailSection.classList.add('display-none');
 });
 
-elements.popup.addEventListener('click', e => {
-  if (e.target.classList.contains('popup')) {
-    // popup.style.opacity = 0;
-    // popup.style.visibility = 'hidden';
-    elements.popupCloseButton.click();
-  }
-});
+// elements.popup.addEventListener('click', e => {
+//   if (e.target.classList.contains('popup')) {
+//     // popup.style.opacity = 0;
+//     // popup.style.visibility = 'hidden';
+//     elements.popupCloseButton.click();
+//   }
+// });
 
-Array.prototype.forEach.call(elements.popupTabLinks, element => {
-  element.addEventListener('click', e => {
-    const targetElement = e.target;
-    const targetElementText = e.target.textContent;
+// Array.prototype.forEach.call(elements.popupTabLinks, element => {
+//   element.addEventListener('click', e => {
+//     const targetElement = e.target;
+//     const targetElementText = e.target.textContent;
 
-    makeElementsDisplayNone(elements.popupTabContent);
-    removeClassFromElements(elements.popupTabLinks, 'popup__tab-links-active');
+//     makeElementsDisplayNone(elements.popupTabContent);
+//     removeClassFromElements(elements.popupTabLinks, 'popup__tab-links-active');
 
-    document.getElementById(targetElementText.toLowerCase()).style.display = 'block';
-    targetElement.classList.add('popup__tab-links-active');
-  });
-});
+//     document.getElementById(targetElementText.toLowerCase()).style.display = 'block';
+//     targetElement.classList.add('popup__tab-links-active');
+//   });
+// });
 
 // Activate the click event on pressing enter.
 elements.inputField.addEventListener('keydown', event => {
