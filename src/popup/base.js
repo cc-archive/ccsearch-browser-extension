@@ -37,6 +37,7 @@ export const elements = {
   licenseLink: document.getElementById('license-link'),
   licenseLinkCaption: document.getElementById('license-link--caption'),
   licenseDescriptionDiv: document.getElementsByClassName('license-description')[0],
+  imageTagsDivs: document.querySelectorAll('.image-tags'),
   popupCloseButton: document.querySelector('.popup__close-button'),
   imageDimensionPara: document.getElementById('image-dimension'),
   imageSourcePara: document.getElementById('image-source'),

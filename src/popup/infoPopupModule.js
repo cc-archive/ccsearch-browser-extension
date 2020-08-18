@@ -212,6 +212,28 @@ function fillImageLicense(licenseUrl, licenseArray) {
   elements.imageLicensePara.appendChild(link);
 }
 
+function fillImageTags(tagsArray) {
+  if (tagsArray) {
+    const tagButtons = [];
+    tagsArray.forEach(tag => {
+      const tagName = tag.name;
+      const tagButton = document.createElement('button');
+      tagButton.textContent = tagName;
+      tagButton.classList.add('button', 'tag');
+      tagButtons.push(tagButton);
+    });
+
+    for (let i = 0; i < elements.imageTagsDivs.length; i += 1) {
+      for (let j = 0; j < tagButtons.length; j += 1) {
+        // first making deep copy otherwise because `appendChild`
+        // moves the node from previous parent to the current one
+        const copyNode = tagButtons[j].cloneNode(true);
+        elements.imageTagsDivs[i].appendChild(copyNode);
+      }
+    }
+  }
+}
+
 // function getPopupCreatorChildNode(creatorUrl, creator) {
 //   // return a paragraph tag if creatorURL not present
 //   if (creatorUrl === '#') {
@@ -266,6 +288,7 @@ function getImageData(imageId) {
         width,
         id,
         url: imageUrl,
+        tags: tagsArray,
       } = res;
       // const title = unicodeToString(res.title);
       let creator = unicodeToString(res.creator);
@@ -312,6 +335,7 @@ function getImageData(imageId) {
 
       fillLicenseLink(license, licenseVersion, licenseUrl);
       fillLicenseInfo(licenseArray);
+      fillImageTags(tagsArray);
 
       fillImageDimension(height, width);
       fillImageSource(foreignLandingUrl, source);

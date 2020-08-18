@@ -136,6 +136,13 @@
     margin-right: $space-small;
   }
 
+  .image-tags {
+    button {
+      margin-right: $space-small;
+      margin-bottom: $space-small;
+    }
+  }
+
   // reuse tab
   .attribution-tab {
     width: 450px;
