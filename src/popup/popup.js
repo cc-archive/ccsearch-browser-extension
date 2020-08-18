@@ -98,6 +98,23 @@ elements.popupCloseButton.addEventListener('click', () => {
   elements.downloadImageAttributionButton.removeEventListener('click', handleImageAttributionDownload);
 });
 
+elements.closeImageDetailLink.addEventListener('click', () => {
+  // elements.popup.style.opacity = 0;
+  // elements.popup.style.visibility = 'hidden';
+  // elements.popupMain.style.opacity = 0;
+  // elements.popupMain.style.visibility = 'hidden';
+  // remove eventlisteners from download buttons to avoid multiple downloads.
+  // elements.downloadImageButton.removeEventListener('click', handleImageDownload);
+  // elements.downloadImageAttributionButton.removeEventListener('click', handleImageAttributionDownload);
+  for (let i = 0; i < elements.downloadImageAttributionButton.length; i += 1) {
+    elements.downloadImageAttributionButton[i].removeEventListener('click', handleImageAttributionDownload);
+  }
+  elements.header.classList.remove('display-none');
+  // elements.bookmarksSection.classList.add('display-none');
+  elements.sectionMain.classList.remove('display-none');
+  elements.imageDetailSection.classList.add('display-none');
+});
+
 elements.popup.addEventListener('click', e => {
   if (e.target.classList.contains('popup')) {
     // popup.style.opacity = 0;

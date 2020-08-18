@@ -124,6 +124,18 @@
     margin-right: $space-big;
     position: relative;
 
+    #close-image-detail {
+      font-size: 13px;
+      font-weight: 600;
+
+      position: absolute;
+      top: $space-small;
+      left: $space-bigger;
+      border-bottom: none;
+      margin: 0;
+      padding: 0;
+      color: $color-tomato;
+    }
 
     ul {
       border-bottom-color: #fff;
