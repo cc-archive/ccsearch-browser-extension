@@ -5,15 +5,6 @@ import { getSourceDisplayName, unicodeToString } from './helper';
 
 const download = require('downloadjs');
 
-export function getPlainTextAttribution(image) {
-  if (!image) {
-    return '';
-  }
-  return `"${image.title}" by ${image.creator} is licensed under CC ${image.license.toUpperCase()} ${
-    image.license_version
-  }. To view a copy of this license, visit ${image.license_url}`;
-}
-
 export function getRichTextAttribution(image) {
   if (!image) {
     return '';
@@ -331,7 +322,7 @@ function getImageData(imageId) {
       // removeChildNodes(attributionRichTextPara);
       embedRichTextAttribution(res, elements.richTextAttributionPara);
       elements.htmlAttributionTextArea.value = getHtmlAttribution(res);
-      elements.plainTextAttributionPara.innerText = getPlainTextAttribution(res);
+      elements.plainTextAttributionPara.innerText = res.attribution;
 
       fillLicenseLink(license, licenseVersion, licenseUrl);
       fillLicenseInfo(licenseArray);
