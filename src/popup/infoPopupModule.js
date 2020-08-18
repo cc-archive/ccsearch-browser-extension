@@ -2,8 +2,21 @@ import { elements } from './base';
 // import { removeSpinner } from './spinner';
 // import { removeChildNodes } from '../utils';
 import { getSourceDisplayName, unicodeToString } from './helper';
+// eslint-disable-next-line import/no-cycle
+import { addSearchThumbnailsToDOM } from './searchModule';
+
+const Masonry = require('masonry-layout');
 
 const download = require('downloadjs');
+
+const relatedImagesGridMasonryObject = new Masonry(elements.gridRelatedImages, {
+  // options
+  itemSelector: '.grid-item',
+  columnWidth: '.grid-item',
+  gutter: '.gutter-sizer',
+  percentPosition: true,
+  transitionDuration: '0',
+});
 
 export function getRichTextAttribution(image) {
   if (!image) {
@@ -225,6 +238,20 @@ function fillImageTags(tagsArray) {
   }
 }
 
+function fillRelatedImages(relatedUrl) {
+  fetch(relatedUrl)
+    .then(data => data.json())
+    .then(res => {
+      // checkValidationError(res);
+      const resultArray = res.results;
+
+      // checkResultLength(resultArray);
+      addSearchThumbnailsToDOM(relatedImagesGridMasonryObject, resultArray, elements.gridRelatedImages);
+
+      // window.appObject.pageNo += 1;
+    });
+}
+
 // function getPopupCreatorChildNode(creatorUrl, creator) {
 //   // return a paragraph tag if creatorURL not present
 //   if (creatorUrl === '#') {
@@ -274,6 +301,7 @@ function getImageData(imageId) {
         foreign_landing_url: foreignLandingUrl,
         license_url: licenseUrl,
         license_version: licenseVersion,
+        related_url: relatedUrl,
         license,
         height,
         width,
@@ -327,6 +355,7 @@ function getImageData(imageId) {
       fillLicenseLink(license, licenseVersion, licenseUrl);
       fillLicenseInfo(licenseArray);
       fillImageTags(tagsArray);
+      fillRelatedImages(relatedUrl);
 
       fillImageDimension(height, width);
       fillImageSource(foreignLandingUrl, source);

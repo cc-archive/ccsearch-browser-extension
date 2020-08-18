@@ -1,7 +1,8 @@
 import { elements } from './base';
 import { removeChildNodes } from '../utils';
 // eslint-disable-next-line import/no-cycle
-import { checkInternetConnection } from './searchModule';
+import { checkInternetConnection } from './searchModule.utils';
+// eslint-disable-next-line import/no-cycle
 import { activatePopup } from './infoPopupModule';
 
 const Masonry = require('masonry-layout');

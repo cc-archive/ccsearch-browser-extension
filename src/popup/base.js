@@ -44,6 +44,7 @@ export const elements = {
   imageLicensePara: document.getElementById('image-license'),
   gridPrimary: document.querySelector('.grid-primary'),
   gridBookmarks: document.querySelector('.grid-bookmarks'),
+  gridRelatedImages: document.querySelector('.grid-related-images'),
   filterSection: document.querySelector('.section-filter'),
   popupTabLinks: document.getElementsByClassName('popup__tab-links'),
   popupTabContent: document.getElementsByClassName('popup__tab-content'),

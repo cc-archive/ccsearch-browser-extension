@@ -7,7 +7,6 @@ import {
   search,
   addSearchThumbnailsToDOM,
   removeLoaderAnimation,
-  checkInternetConnection,
   getCollectionsUrl,
 } from './searchModule';
 import {
@@ -40,6 +39,7 @@ import {
 import { loadBookmarkImages } from './bookmarkModule';
 import migrateStorage from './popup.utils';
 import { removeActiveClassFromNavLinks } from './bookmarkModule.utils';
+import { primaryGridMasonryObject, checkInternetConnection } from './searchModule.utils';
 
 // global object to store the application variables
 window.appObject = {};
@@ -364,7 +364,7 @@ async function nextRequest(page) {
     result = json.results;
   }
   // console.log(result);
-  addSearchThumbnailsToDOM(result);
+  addSearchThumbnailsToDOM(primaryGridMasonryObject, result, elements.gridPrimary);
   window.appObject.pageNo += 1;
 }
 

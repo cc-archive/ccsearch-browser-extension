@@ -10,7 +10,7 @@ import {
 } from './bookmarkModule.utils';
 import { removeLoadMoreButton, addLoadMoreButton } from './helper';
 // eslint-disable-next-line import/no-cycle
-import { removeOldSearchResults, removeLoaderAnimation, checkInternetConnection } from './searchModule';
+import { removeOldSearchResults, removeLoaderAnimation } from './searchModule';
 import { addSpinner, removeSpinner } from './spinner';
 import {
   showNotification,
@@ -23,6 +23,7 @@ import {
 } from '../utils';
 // eslint-disable-next-line import/no-cycle
 import loadCollections from './collectionModule';
+import { checkInternetConnection } from './searchModule.utils';
 // eslint-disable-next-line import/no-cycle
 // import { loadStoredContentToUI } from './popup.utils';
 

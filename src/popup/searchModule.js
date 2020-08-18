@@ -1,20 +1,12 @@
 import { elements } from './base';
 import { addLoadMoreButton, removeLoadMoreButton } from './helper';
+// eslint-disable-next-line import/no-cycle
 import { activatePopup } from './infoPopupModule';
 import { removeSpinner } from './spinner';
 // eslint-disable-next-line import/no-cycle
 import toggleBookmark from './bookmarkModule';
+import { checkInternetConnection, primaryGridMasonryObject } from './searchModule.utils';
 import { showNotification, removeChildNodes, restoreInitialContent, activeBookmarkIdContainers } from '../utils';
-
-const Masonry = require('masonry-layout');
-
-export function checkInternetConnection() {
-  if (!navigator.onLine) {
-    removeSpinner(elements.spinnerPlaceholderPopup);
-    showNotification('No Internet Connection', 'negative', 'snackbar-bookmarks', 1500);
-    throw new Error('No Internet Connection');
-  }
-}
 
 export function checkInputError(inputText) {
   if (inputText === '') {
@@ -83,7 +75,7 @@ export function checkResultLength(resultArray) {
     showNoResultFoundMessage();
     removeLoaderAnimation();
     // eslint-disable-next-line no-use-before-define
-    msnry.layout();
+    primaryGridMasonryObject.layout();
   } else {
     // render the "Load More" button if non empty result
     addLoadMoreButton(elements.loadMoreSearchButtonWrapper);
@@ -120,17 +112,7 @@ export function checkValidationError(apiResponse) {
   }
 }
 
-// eslint-disable-next-line no-undef
-const msnry = new Masonry(elements.gridPrimary, {
-  // options
-  itemSelector: '.grid-item',
-  columnWidth: '.grid-item',
-  gutter: '.gutter-sizer',
-  percentPosition: true,
-  transitionDuration: '0',
-});
-
-export function addSearchThumbnailsToDOM(resultArray) {
+export function addSearchThumbnailsToDOM(masonryObject, resultArray, gridDiv) {
   const divs = [];
   const fragment = document.createDocumentFragment();
 
@@ -227,7 +209,7 @@ export function addSearchThumbnailsToDOM(resultArray) {
       // console.log(gridItemDiv);
     });
 
-    appendToGrid(msnry, fragment, divs, elements.gridPrimary);
+    appendToGrid(masonryObject, fragment, divs, gridDiv);
   });
 }
 
@@ -239,7 +221,7 @@ export function search(url) {
       const resultArray = res.results;
 
       checkResultLength(resultArray);
-      addSearchThumbnailsToDOM(resultArray);
+      addSearchThumbnailsToDOM(primaryGridMasonryObject, resultArray, elements.gridPrimary);
 
       window.appObject.pageNo += 1;
     });
