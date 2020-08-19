@@ -24,10 +24,6 @@ body.dark {
     color: $color-white !important;
   }
 
-  .popup__body {
-    background-color: $color-darkmode-1 !important ;
-  }
-
   #search-icon {
     color: $color-white;
   }
@@ -44,15 +40,6 @@ body.dark {
     }
   }
 
-  .popup__tab-links {
-    background-color: $color-darkmode-2;
-    color: $color-white;
-
-    &-active {
-      border-bottom: 2px solid $color-primary-dark;
-    }
-  }
-
   textarea {
     color: $color-white;
     background-color: $color-darkmode-2;
@@ -60,10 +47,6 @@ body.dark {
 
   .spinner > div {
     background-color: $color-white;
-  }
-
-  .popup__close-button {
-    color: $color-white;
   }
 
   .section-filter__source-loading-mes {

@@ -122,27 +122,6 @@ elements.closeImageDetailLink.addEventListener('click', () => {
   elements.imageDetailSection.classList.add('display-none');
 });
 
-// elements.popup.addEventListener('click', e => {
-//   if (e.target.classList.contains('popup')) {
-//     // popup.style.opacity = 0;
-//     // popup.style.visibility = 'hidden';
-//     elements.popupCloseButton.click();
-//   }
-// });
-
-// Array.prototype.forEach.call(elements.popupTabLinks, element => {
-//   element.addEventListener('click', e => {
-//     const targetElement = e.target;
-//     const targetElementText = e.target.textContent;
-
-//     makeElementsDisplayNone(elements.popupTabContent);
-//     removeClassFromElements(elements.popupTabLinks, 'popup__tab-links-active');
-
-//     document.getElementById(targetElementText.toLowerCase()).style.display = 'block';
-//     targetElement.classList.add('popup__tab-links-active');
-//   });
-// });
-
 // Activate the click event on pressing enter.
 elements.inputField.addEventListener('keydown', event => {
   if (event.keyCode === 13) {

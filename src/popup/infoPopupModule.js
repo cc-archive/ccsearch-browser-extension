@@ -1,7 +1,6 @@
 import { elements } from './base';
 // import { removeSpinner } from './spinner';
-// import { removeChildNodes } from '../utils';
-import { getSourceDisplayName, unicodeToString } from './helper';
+import { getSourceDisplayName } from './helper';
 // eslint-disable-next-line import/no-cycle
 import { addSearchThumbnailsToDOM } from './searchModule';
 
@@ -252,46 +251,14 @@ function fillRelatedImages(relatedUrl) {
     });
 }
 
-// function getPopupCreatorChildNode(creatorUrl, creator) {
-//   // return a paragraph tag if creatorURL not present
-//   if (creatorUrl === '#') {
-//     const paragraph = document.createElement('p');
-//     paragraph.textContent = creator;
-//     return paragraph;
-//   }
-//   const link = document.createElement('a');
-//   link.href = creatorUrl;
-//   link.target = '_blank';
-//   link.textContent = creator;
-//   return link;
-// }
-
-// function getPopupSourceChildNode(foreignLandingUrl, source) {
-//   const link = document.createElement('a');
-//   link.href = foreignLandingUrl;
-//   link.target = '_blank';
-//   link.textContent = getSourceDisplayName(source);
-//   return link;
-// }
-
-// function getPopupLicenseChildNode(licenseUrl, license) {
-//   const link = document.createElement('a');
-//   link.href = licenseUrl;
-//   link.target = '_blank';
-//   link.textContent = license;
-//   return link;
-// }
-
 function fillLicenseLink(license, licenseVersion, licenseUrl) {
   elements.licenseLink.innerText = `CC ${license.toUpperCase()} ${licenseVersion}`;
   elements.licenseLink.setAttribute('href', licenseUrl);
   elements.licenseLinkCaption.setAttribute('href', licenseUrl);
 }
 
-function getImageData(imageId) {
+function fillImageDetailSection(imageId) {
   const url = `https://api.creativecommons.engineering/v1/images/${imageId}`;
-  console.log('get image data called');
-  console.log(elements.downloadImageAttributionButton);
 
   fetch(url)
     .then(data => data.json())
@@ -309,75 +276,46 @@ function getImageData(imageId) {
         url: imageUrl,
         tags: tagsArray,
       } = res;
-      // const title = unicodeToString(res.title);
-      let creator = unicodeToString(res.creator);
-      let { creator_url: creatorUrl } = res;
       const licenseArray = license.split('-');
-      if (!creatorUrl) {
-        creatorUrl = '#';
-      }
-      if (!creator) {
-        creator = 'Not Available';
-      }
-      // adding arguments for event handlers to the target itself
-      // elements.downloadImageButton.imageUrl = res.url;
-      // elements.downloadImageButton.title = `${res.title}.${res.url.split('.').pop()}`;
+
+      // common head (download button and external link)
       for (let i = 0; i < elements.downloadImageAttributionButton.length; i += 1) {
-        console.log('inside the loop');
-        console.log(elements.downloadImageAttributionButton[i]);
+        // adding arguments for event handler to the target itself
         elements.downloadImageAttributionButton[i].image = res;
         elements.downloadImageAttributionButton[i].title = `${res.title}.${res.url.split('.').pop()}`;
         elements.downloadImageAttributionButton[i].addEventListener('click', handleImageAttributionDownload);
       }
-
       elements.imageExternalLink.href = foreignLandingUrl;
-      // elements.downloadImageAttributionButton.image = res;
-      // elements.downloadImageAttributionButton.title = `${res.title}.${res.url.split('.').pop()}`;
-      // const popupTitle = document.querySelector('.info__content-title');
-      // const popupCreator = document.querySelector('.info__content-creator');
-      // const popupSource = document.querySelector('.info__content-source');
-      // const popupLicense = document.querySelector('.info__content-license');
-      // const attributionRichTextPara = document.getElementById('attribution-rich-text');
-      // const attributionHtmlTextArea = document.getElementById('attribution-html');
-      // filling the info tab
-      // popupTitle.textContent = `${title}`;
-      // removeChildNodes(popupCreator);
-      // popupCreator.appendChild(getPopupCreatorChildNode(creatorUrl, creator));
-      // removeChildNodes(popupSource);
-      // popupSource.appendChild(getPopupSourceChildNode(foreignLandingUrl, source));
-      // removeChildNodes(popupLicense);
-      // popupLicense.appendChild(getPopupLicenseChildNode(licenseUrl, license.toUpperCase()));
-      // removeChildNodes(attributionRichTextPara);
+
+      // reuse tab
       embedRichTextAttribution(res, elements.richTextAttributionPara);
       elements.htmlAttributionTextArea.value = getHtmlAttribution(res);
       elements.plainTextAttributionPara.innerText = res.attribution;
-
       fillLicenseLink(license, licenseVersion, licenseUrl);
       fillLicenseInfo(licenseArray);
-      fillImageTags(tagsArray);
-      fillRelatedImages(relatedUrl);
 
+      // information tab
       fillImageDimension(height, width);
       fillImageSource(foreignLandingUrl, source);
       fillImageLicense(licenseUrl, licenseArray);
-      // elements.downloadImageButton.addEventListener('click', handleImageDownload);
-      // elements.downloadImageAttributionButton.addEventListener('click', handleImageAttributionDownload);
+
       // share tab
       elements.facebookShareButton.href = getFacebookShareLink(id);
       elements.twitterShareButton.href = getTwitterShareLink(foreignLandingUrl);
       elements.pinterestShareButton.href = getPinterestShareLink(foreignLandingUrl, imageUrl);
       elements.tumblrShareButton.href = getTumblrShareLink(foreignLandingUrl, imageUrl);
+
+      // common
+      fillImageTags(tagsArray);
+      fillRelatedImages(relatedUrl);
+
       // removeSpinner(elements.spinnerPlaceholderPopup);
-      // elements.popupMain.style.opacity = 1;
-      // elements.popupMain.style.visibility = 'visible';
     });
 }
 
 export function activatePopup(imageThumbnail) {
-  // elements.popup.style.opacity = 1;
-  // elements.popup.style.visibility = 'visible';
   // addSpinner(elements.spinnerPlaceholderPopup, 'original');
-  getImageData(imageThumbnail.id);
+  fillImageDetailSection(imageThumbnail.id);
   // attributionTabLink.click();
   elements.header.classList.add('display-none');
   // elements.bookmarksSection.classList.add('display-none');

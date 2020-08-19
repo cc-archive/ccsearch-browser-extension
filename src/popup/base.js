@@ -4,7 +4,6 @@ export const elements = {
   searchButton: document.getElementById('search-button'),
   filterButton: document.getElementById('filter-button'),
   spinnerPlaceholderGrid: document.getElementById('spinner-placeholder--grid'),
-  spinnerPlaceholderPopup: document.getElementById('spinner-placeholder--popup'),
   spinnerPlaceholderBookmarks: document.getElementById('spinner-placeholder--bookmarks'),
   spinnerPlaceholderCollections: document.getElementById('spinner-placeholder--collections'),
   closeFiltersLink: document.getElementById('close-filters-link'),
@@ -23,8 +22,6 @@ export const elements = {
   loadMoreSearchButtonWrapper: document.querySelector('.load-more-search-button-wrapper'),
   loadMoreBookmarkButton: document.querySelector('.load-more-bookmark-button'),
   loadMoreBookmarkButtonkWrapper: document.querySelector('.load-more-bookmark-button-wrapper'),
-  popup: document.getElementById('popup'),
-  popupMain: document.querySelector('.popup__main'),
   downloadImageButton: document.getElementById('download-image'),
   closeImageDetailLink: document.getElementById('close-image-detail'),
   downloadImageAttributionButton: document.getElementsByClassName('download-image-attribution'),
@@ -38,7 +35,6 @@ export const elements = {
   licenseLinkCaption: document.getElementById('license-link--caption'),
   licenseDescriptionDiv: document.getElementsByClassName('license-description')[0],
   imageTagsDivs: document.querySelectorAll('.image-tags'),
-  popupCloseButton: document.querySelector('.popup__close-button'),
   imageDimensionPara: document.getElementById('image-dimension'),
   imageSourcePara: document.getElementById('image-source'),
   imageLicensePara: document.getElementById('image-license'),
@@ -46,8 +42,6 @@ export const elements = {
   gridBookmarks: document.querySelector('.grid-bookmarks'),
   gridRelatedImages: document.querySelector('.grid-related-images'),
   filterSection: document.querySelector('.section-filter'),
-  popupTabLinks: document.getElementsByClassName('popup__tab-links'),
-  popupTabContent: document.getElementsByClassName('popup__tab-content'),
   facebookShareButton: document.querySelector('#facebook-share'),
   twitterShareButton: document.querySelector('#twitter-share'),
   pinterestShareButton: document.querySelector('#pinterest-share'),
@@ -75,7 +69,6 @@ export const elements = {
   selectAllBookmarksLink: document.getElementById('select-all-bookmarks'),
   closeEditViewLink: document.getElementById('close-edit-view'),
 };
-export const attributionTabLink = elements.popupTabLinks[0];
 
 export const constants = {
   bookmarkContainerSize: 30,
