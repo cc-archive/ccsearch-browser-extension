@@ -88,39 +88,33 @@ clipboard.on('success', e => {
 elements.imageDetailNav.getElementsByTagName('ul')[0].addEventListener('click', enableTabSwitching);
 elements.attributionTab.firstElementChild.getElementsByTagName('ul')[0].addEventListener('click', enableTabSwitching);
 
-// elements.popupCloseButton.addEventListener('click', () => {
-//   elements.popup.style.opacity = 0;
-//   elements.popup.style.visibility = 'hidden';
-//   elements.popupMain.style.opacity = 0;
-//   elements.popupMain.style.visibility = 'hidden';
-
-//   // remove eventlisteners from download buttons to avoid multiple downloads.
-//   elements.downloadImageButton.removeEventListener('click', handleImageDownload);
-//   elements.downloadImageAttributionButton.removeEventListener('click', handleImageAttributionDownload);
-// });
-
 elements.closeImageDetailLink.addEventListener('click', () => {
-  // elements.popup.style.opacity = 0;
-  // elements.popup.style.visibility = 'hidden';
-  // elements.popupMain.style.opacity = 0;
-  // elements.popupMain.style.visibility = 'hidden';
   // remove eventlisteners from download buttons to avoid multiple downloads.
-  // elements.downloadImageButton.removeEventListener('click', handleImageDownload);
-  // elements.downloadImageAttributionButton.removeEventListener('click', handleImageAttributionDownload);
   for (let i = 0; i < elements.downloadImageAttributionButton.length; i += 1) {
     elements.downloadImageAttributionButton[i].removeEventListener('click', handleImageAttributionDownload);
   }
 
+  // share tab
   removeChildNodes(elements.richTextAttributionPara);
   removeChildNodes(elements.htmlAttributionTextArea);
   removeChildNodes(elements.plainTextAttributionPara);
   removeChildNodes(elements.licenseDescriptionDiv);
+
+  // information tab
   removeChildNodes(elements.imageDimensionPara);
   removeChildNodes(elements.imageSourcePara);
   removeChildNodes(elements.imageLicensePara);
+
+  // image tags
   elements.imageTagsDivs.forEach(imageTagDiv => {
     removeChildNodes(imageTagDiv);
   });
+
+  // related images
+  const div = document.createElement('div');
+  div.classList.add('gutter-sizer');
+  removeChildNodes(elements.gridRelatedImages);
+  elements.gridRelatedImages.appendChild(div);
 
   elements.header.classList.remove('display-none');
   // elements.bookmarksSection.classList.add('display-none');
