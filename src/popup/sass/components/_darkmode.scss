@@ -7,6 +7,9 @@ body.dark {
   a:hover {
     color: $color-tomato;
   }
+  &::-webkit-scrollbar-thumb {
+    background-color: $color-white;
+  }
 
   .container {
     background-color: #000;
