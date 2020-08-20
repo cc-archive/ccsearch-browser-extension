@@ -262,20 +262,22 @@ export function loadBookmarkImages(numberOfImages) {
 document.addEventListener('DOMContentLoaded', () => {
   elements.navBookmarksLink.addEventListener('click', () => {
     if (window.appObject.activeSection !== 'bookmarks') {
+      window.appObject.activeSection = 'bookmarks';
       // visually marking bookmarks link as active
       removeActiveClassFromNavLinks();
       elements.navBookmarksLink.classList.add('active');
 
-      window.appObject.activeSection = 'bookmarks';
       window.appObject.bookmarksSectionIdx = 0;
       // elements.homeIcon.style.pointerEvents = 'none';
       // setTimeout(() => {
       //   elements.homeIcon.style.pointerEvents = 'auto';
       // }, 300);
+
       // show the bookmarks section and hide other ones
-      elements.primarySection.style.display = 'none';
-      elements.collectionsSection.style.display = 'none';
-      elements.bookmarksSection.style.display = 'block';
+      elements.primarySection.classList.add('display-none');
+      elements.collectionsSection.classList.add('display-none');
+      elements.filterSection.classList.add('display-none');
+      elements.bookmarksSection.classList.remove('display-none');
       // prepare the bookmarks section
       elements.inputField.value = '';
       checkInternetConnection();
@@ -298,18 +300,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
   elements.headerLogo.addEventListener('click', () => {
     if (window.appObject.activeSection !== 'search') {
+      window.appObject.activeSection = 'search';
+
       removeActiveClassFromNavLinks();
 
-      window.appObject.activeSection = 'search';
       // elements.navBookmarksLink.style.pointerEvents = 'none';
       // setTimeout(() => {
       //   elements.navBookmarksLink.style.pointerEvents = 'auto';
       // }, 300);
-      // show the bookmarks section and hide other ones
-      elements.primarySection.style.display = 'block';
-      elements.bookmarksSection.style.display = 'none';
-      elements.collectionsSection.style.display = 'none';
+
+      // show the primary section and hide other ones
+      elements.primarySection.classList.remove('display-none');
+      elements.bookmarksSection.classList.add('display-none');
+      elements.collectionsSection.classList.add('display-none');
+      elements.filterSection.classList.add('display-none');
       // prepare the search section
+      console.log(elements.primarySection);
       removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);
       removeBookmarkImages();
       if (window.appObject.searchByCollectionActivated === true && window.appObject.searchingNewCollection === true) {
@@ -327,14 +333,17 @@ document.addEventListener('DOMContentLoaded', () => {
   elements.navSourcesLink.addEventListener('click', () => {
     // console.log('collections clicked');
     if (window.appObject.activeSection !== 'collections') {
+      window.appObject.activeSection = 'collections';
+
       // visually marking sources link as active
       removeActiveClassFromNavLinks();
       elements.navSourcesLink.classList.add('active');
 
-      window.appObject.activeSection = 'collections';
-      elements.primarySection.style.display = 'none';
-      elements.bookmarksSection.style.display = 'none';
-      elements.collectionsSection.style.display = 'block';
+      // show the collections section and hide other ones
+      elements.primarySection.classList.add('display-none');
+      elements.bookmarksSection.classList.add('display-none');
+      elements.collectionsSection.classList.remove('display-none');
+      elements.filterSection.classList.add('display-none');
       // remove previous spinner. On low net connection, multiple spinner may appear
       // due to delay in result fetching and continous section switching
       removeSpinner(elements.spinnerPlaceholderCollections);

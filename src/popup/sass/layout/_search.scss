@@ -24,16 +24,10 @@
 
 .section-filter {
   width: 100%;
-  display: none;
   // visibility: hidden; //using this because display:none remove the elements from
   // the DOM itself, so filters were not applied till the users click the filter
   // icons and the elements were loaded to the DOM.
   // position: relative;
-
-  &--active {
-    display: block;
-    // visibility: visible;
-  }
 
   &__head {
     display: flex;

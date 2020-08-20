@@ -166,14 +166,16 @@ async function populateSourceList() {
 }
 
 elements.filterButton.onclick = () => {
+  window.appObject.activeSection = 'filter';
   elements.primarySection.classList.add('display-none');
-  elements.filterSection.classList.add('section-filter--active');
+  elements.filterSection.classList.remove('display-none');
   populateSourceList();
 };
 
 elements.closeFiltersLink.onclick = () => {
+  window.appObject.activeSection = 'search';
   elements.primarySection.classList.remove('display-none');
-  elements.filterSection.classList.remove('section-filter--active');
+  elements.filterSection.classList.add('display-none');
 };
 
 allowCheckingOneTypeOfCheckbox(elements.licenseCheckboxesWrapper, elements.useCaseCheckboxesWrapper);
