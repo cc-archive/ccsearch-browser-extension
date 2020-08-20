@@ -2,67 +2,104 @@
 
 html.dark,
 body.dark {
-  background-color: $color-darkmode-1;
   color: $color-white;
 
-  h1,
-  h2,
-  h3,
+  .container {
+    background-color: #000;
+  }
+
   h4,
-  h5,
-  h6 {
+  h5 {
     color: $color-white;
   }
 
-  .header__icons {
+  .navbar {
+    background-color: $color-dark-slate-gray;
+
+    .navbar-brand a {
+      color: #fff !important;
+    }
+
+    .navbar-end {
+      a {
+        color: $color-gray !important;
+
+        &:hover {
+          color: #fff !important;
+        }
+
+        &.active {
+          color: #fff !important;
+        }
+      }
+
+      i {
+        color: #fff !important;
+      }
+    }
+  }
+
+  .button.is-primary,
+  .load-more-button {
+    background-color: $color-gold !important;
+    color: $color-dark-slate-gray;
+
+    &:hover,
+    &:focus {
+      background-color: lighten($color: $color-gold, $amount: 10) !important;
+      color: $color-dark-slate-gray !important;
+    }
+  }
+
+  .button {
+    color: $color-dark-slate-gray;
+
+    &:hover {
+      color: $color-white;
+    }
+  }
+
+  .button.is-success {
     color: $color-white;
   }
 
   input,
   .section-search {
-    background-color: $color-darkmode-2 !important;
+    background-color: #000;
     color: $color-white !important;
   }
 
-  #search-icon {
-    color: $color-white;
+  input::placeholder {
+    color: $color-gray !important;
   }
 
-  #filter-icon {
-    color: $color-white;
-  }
-
-  #filter-icon.activate-filter {
-    color: $color-primary-light;
-
-    &:hover {
-      color: $color-primary-dark;
+  .section-bookmarks {
+    a {
+      color: $color-white;
     }
   }
 
-  textarea {
-    color: $color-white;
-    background-color: $color-darkmode-2;
+  .fixed-footer {
+    background-color: $color-dark-slate-gray;
+  }
+
+  .section-collections table {
+    & > thead {
+      background-color: $color-dark-slate-gray;
+
+      th {
+        color: $color-white;
+      }
+    }
+
+    & > tr {
+      background: $color-black;
+      color: $color-white;
+    }
   }
 
   .spinner > div {
     background-color: $color-white;
-  }
-
-  .section-filter__source-loading-mes {
-    color: $color-white;
-  }
-
-  a:hover {
-    color: $color-white;
-  }
-
-  .button.is-text {
-    color: $color-white;
-
-    &:hover {
-      color: $color-darkmode-1;
-    }
   }
 
   .notification__popup--body {

@@ -379,6 +379,7 @@ elements.navSettingsLink.addEventListener('click', () => {
 elements.navInvertColorsIcon.addEventListener('click', () => {
   document.body.classList.toggle('dark');
   document.documentElement.classList.toggle('dark');
+
   chrome.storage.sync.get('darkmode', items => {
     const value = !items.darkmode;
     chrome.storage.sync.set({

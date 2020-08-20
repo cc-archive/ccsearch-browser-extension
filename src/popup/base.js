@@ -93,6 +93,8 @@ export const elements = {
   tumblrShareButton: document.querySelector('#tumblr-share'),
   // related images
   gridRelatedImages: document.querySelector('.grid-related-images'),
+
+  /* ------Misc------ */
   buttonBackToTop: document.getElementsByClassName('button-backToTop')[0],
 };
 
