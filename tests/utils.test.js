@@ -18,9 +18,8 @@ test('testing showNotification', () => {
   expect(notificationWrapperDiv.classList).not.toContain('display-none');
   expect(notificationContainer.classList).toContain('has-background-success-light');
   setTimeout(() => {
-    // expect(notificationWrapperDiv.classList).not.toContain('show');
     expect(notificationWrapperDiv.classList).toContain('display-none');
-  }, 1200);
+  }, 1500);
   jest.runAllTimers();
 
   showNotification('test', 'negative', 'notification--extension-popup');
