@@ -3,6 +3,10 @@
 html.dark,
 body.dark {
   color: $color-white;
+  background-color: $color-dark-slate-gray;
+  a:hover {
+    color: $color-tomato;
+  }
 
   .container {
     background-color: #000;
@@ -63,6 +67,12 @@ body.dark {
     color: $color-white;
   }
 
+  .button.donate {
+    &:hover {
+      color: $color-black;
+    }
+  }
+
   input,
   .section-search {
     background-color: #000;
@@ -94,6 +104,67 @@ body.dark {
 
     & > tr {
       background: $color-black;
+      color: $color-white;
+    }
+  }
+
+  .section-image-detail {
+    .image-detail__nav {
+      #close-image-detail {
+        color: $color-white;
+      }
+
+      ul {
+        border-bottom-color: $color-dark-slate-gray;
+      }
+
+      .tab a {
+        color: $color-gray;
+
+        &:hover {
+          color: $color-white;
+          border-bottom-color: $color-white;
+        }
+      }
+
+      .tab.is-active a {
+        color: $color-white;
+        border-bottom-color: $color-white;
+      }
+    }
+
+    .reuse-panel {
+      .tabs.is-boxed {
+        li a {
+          background-color: $color-dark-slate-gray;
+          color: $color-white;
+
+          &:hover {
+            background-color: $color-white;
+            color: $color-black;
+          }
+        }
+
+        li.is-active a {
+          background-color: $color-white;
+          color: $color-black;
+        }
+      }
+      .tabs-content.is-boxed {
+        background-color: $color-black;
+
+        textarea {
+          background-color: $color-black;
+          color: $color-white;
+        }
+      }
+    }
+
+    .related-images {
+      background-color: $color-black;
+    }
+
+    i.license-logo {
       color: $color-white;
     }
   }
