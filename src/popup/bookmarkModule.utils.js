@@ -7,7 +7,7 @@ import { activatePopup } from './infoPopupModule';
 
 const Masonry = require('masonry-layout');
 
-export const msnry = new Masonry(elements.gridBookmarks, {
+export const bookmarksGridMasonryObject = new Masonry(elements.gridBookmarks, {
   // options
   itemSelector: '.grid-item',
   columnWidth: '.grid-item',

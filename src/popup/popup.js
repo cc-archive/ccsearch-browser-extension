@@ -38,7 +38,7 @@ import {
 } from '../utils';
 import { loadBookmarkImages } from './bookmarkModule';
 import migrateStorage from './popup.utils';
-import { removeActiveClassFromNavLinks } from './bookmarkModule.utils';
+import { removeActiveClassFromNavLinks, bookmarksGridMasonryObject } from './bookmarkModule.utils';
 import { primaryGridMasonryObject, checkInternetConnection } from './searchModule.utils';
 
 // global object to store the application variables
@@ -129,6 +129,10 @@ elements.closeImageDetailLink.addEventListener('click', () => {
   // elements.bookmarksSection.classList.add('display-none');
   elements.sectionMain.classList.remove('display-none');
   elements.imageDetailSection.classList.add('display-none');
+
+  // lays out images in masonry grid again
+  bookmarksGridMasonryObject.layout();
+  primaryGridMasonryObject.layout();
 });
 
 // Activate the click event on pressing enter.

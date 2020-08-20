@@ -82,13 +82,13 @@ export function checkResultLength(resultArray) {
   }
 }
 
-function appendToGrid(msnry, fragment, divs, grid) {
+function appendToGrid(msnryObject, fragment, divs, grid) {
   grid.appendChild(fragment);
-  msnry.appended(divs);
+  msnryObject.appended(divs);
   // eslint-disable-next-line no-undef
   imagesLoaded(grid).on('progress', () => {
     // layout Masonry after each image loads
-    msnry.layout();
+    msnryObject.layout();
   });
   removeLoaderAnimation();
   addLoadMoreButton(elements.loadMoreSearchButtonWrapper);

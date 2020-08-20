@@ -2,7 +2,7 @@
 import { elements, constants } from './base';
 // eslint-disable-next-line import/no-cycle
 import {
-  msnry,
+  bookmarksGridMasonryObject,
   removeBookmarkImages,
   toggleEditView,
   openInfoPopup,
@@ -205,7 +205,7 @@ function addBookmarkThumbnailsToDOM(bookmarksObject, bookmarkImageIds) {
     fragment.appendChild(gridItemDiv);
 
     removeSpinner(elements.spinnerPlaceholderBookmarks);
-    appendToGrid(msnry, fragment, gridItemDiv, elements.gridBookmarks);
+    appendToGrid(bookmarksGridMasonryObject, fragment, gridItemDiv, elements.gridBookmarks);
 
     // selectedBookmarks = 0;
   });
@@ -420,7 +420,7 @@ document.addEventListener('DOMContentLoaded', () => {
           window.appObject.bookmarksSectionIdx -= deletedBookmarks.length;
           loadBookmarkImages(deletedBookmarks.length);
           // reorganizing the layout using masonry
-          msnry.layout();
+          bookmarksGridMasonryObject.layout();
           // confirm user action
           showNotification('Bookmarks successfully removed', 'positive', 'notification--extension-popup');
           // Read default "Select all"
