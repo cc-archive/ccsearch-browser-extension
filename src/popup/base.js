@@ -66,6 +66,10 @@ export const elements = {
   imageDetailSection: document.getElementsByClassName('section-image-detail')[0],
   imageDetailNav: document.getElementsByClassName('image-detail__nav')[0],
   closeImageDetailLink: document.getElementById('close-image-detail'),
+  imageDetailNavTabs: document.getElementsByClassName('image-detail__nav')[0].getElementsByTagName('li'),
+  reuseTab: document.getElementsByClassName('reuse-tab')[0],
+  imageDetailTabsPanels: document.querySelectorAll('.section-image-detail > .tabs-content > .tabs-panel'),
+  reusePanel: document.getElementsByClassName('reuse-panel')[0],
   // common head buttons
   downloadImageAttributionButton: document.getElementsByClassName('download-image-attribution'),
   imageExternalLink: document.getElementById('image-external-link'),

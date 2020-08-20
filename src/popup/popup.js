@@ -94,6 +94,14 @@ elements.closeImageDetailLink.addEventListener('click', () => {
     elements.downloadImageAttributionButton[i].removeEventListener('click', handleImageAttributionDownload);
   }
 
+  // making reuse tab active for later
+  for (let i = 0; i < 3; i += 1) {
+    elements.imageDetailNavTabs[i].classList.remove('is-active');
+    elements.imageDetailTabsPanels[i].classList.remove('is-active');
+  }
+  elements.reuseTab.classList.add('is-active');
+  elements.reusePanel.classList.add('is-active');
+
   // share tab
   removeChildNodes(elements.richTextAttributionPara);
   removeChildNodes(elements.htmlAttributionTextArea);
