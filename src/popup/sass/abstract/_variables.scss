@@ -1,32 +1,29 @@
-$color-primary-dark: #ee5b32;
-$color-primary-light: #fb7928;
+// brand
+$color-tomato: #ed592f;
+$color-gold: #efbe00;
+$color-dark-slate-gray: #333333;
 
-$color-secondary-light: #4374b7;
-$color-secondary-dark: #214184;
+// Neutral
+$color-dark-gray: #767676;
+$color-gray: #b0b0b0;
+$color-light-gray: #d8d8d8;
+$color-lighter-gray: #f5f5f5;
 
-$color-darkmode-1: #1e2227;
-$color-darkmode-2: #373b41;
-
+// Binary
 $color-white: #fff;
 $color-black: #000;
 
-$color-tomato: #ed592f;
+// Feedback
+$color-dark-success: rgb(4, 166, 53);
+$color-dark-error: rgb(200, 59, 30);
 
-$color-lighter-gray: #f5f5f5;
-$color-gray: #b0b0b0;
-$color-dark-slate-gray: #333333;
-
-$color-context-positive-dark: #01a635;
-
-$color-context-negative: #d13814;
-
-// Spacings
-$space-smaller: 0.25rem;
-$space-small: 0.5rem;
-$space-normal: 1rem;
-$space-big: 1.5rem;
-$space-bigger: 2rem;
-$space-large: 2.5rem;
-$space-larger: 3rem;
-$space-xl: 4rem;
-$space-xxl: 6rem;
+// Spacing
+$space-smaller: 0.25rem; // 4px
+$space-small: 0.5rem; // 8px
+$space-normal: 1rem; // 16px
+$space-big: 1.5rem; // 24px
+$space-bigger: 2rem; // 32px
+$space-large: 2.5rem; // 40px
+$space-larger: 3rem; // 48px
+$space-xl: 4rem; // 64px
+$space-xxl: 6rem; // 96px
