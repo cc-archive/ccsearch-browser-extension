@@ -1,0 +1,16 @@
+.notification-wrapper {
+  min-width: 19rem;
+  position: fixed;
+  z-index: 1;
+  left: 4%;
+  bottom: $space-xl;
+
+  &.notification--options {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .notification-container {
+    margin-right: auto;
+  }
+}

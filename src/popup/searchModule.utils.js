@@ -7,7 +7,7 @@ const Masonry = require('masonry-layout');
 export function checkInternetConnection() {
   if (!navigator.onLine) {
     removeSpinner(elements.spinnerPlaceholderPopup);
-    showNotification('No Internet Connection', 'negative', 'snackbar-bookmarks', 1500);
+    showNotification('No Internet Connection', 'negative', 'notification--extension-popup');
     throw new Error('No Internet Connection');
   }
 }

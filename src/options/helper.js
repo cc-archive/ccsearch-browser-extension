@@ -56,7 +56,7 @@ function saveSingleFilter(inputElements) {
         [id]: value, // using ES6 to use variable as key of object
       },
       () => {
-        showNotification('Settings saved!', 'positive', 'snackbar-options');
+        showNotification('Settings saved!', 'positive', 'notification--options');
         // console.log(`${id} has been set to ${value}`);
       },
     );
@@ -103,7 +103,7 @@ export function addBookmarksToStorage(newBookmarksObject, showConfirmation = tru
       showNotification(
         'Error: First please open the extension popup to trigger the automatic update of bookmarks section. It will only take a few minutes',
         'negative',
-        'snackbar-options',
+        'notification--options',
       );
       throw new Error('Bookmarks data structures not updated');
     }
@@ -121,7 +121,7 @@ export function addBookmarksToStorage(newBookmarksObject, showConfirmation = tru
       showNotification(
         `Error: Cannot import because bookmark limit of ${constants.extensionBookmarkLimit} would be surpassed`,
         'negative',
-        'snackbar-options',
+        'notification--options',
         5000,
       );
       throw new Error('Cannot store bookmarks over bookmark limit');
@@ -164,7 +164,7 @@ export function addBookmarksToStorage(newBookmarksObject, showConfirmation = tru
     console.log(items);
     chrome.storage.sync.set(items);
 
-    if (showConfirmation) showNotification('Bookmarks updated!', 'positive', 'snackbar-options');
+    if (showConfirmation) showNotification('Bookmarks updated!', 'positive', 'notification--options');
   });
 }
 
@@ -186,7 +186,7 @@ async function addLegacyBookmarksToStorage(bookmarksArray) {
       showNotification(
         'Error: First please open the extension popup to trigger the automatic update of bookmarks section. It will only take a few minutes',
         'negative',
-        'snackbar-options',
+        'notification--options',
         5500,
       );
       throw new Error('Bookmarks data structures not updated');
@@ -233,18 +233,18 @@ async function addLegacyBookmarksToStorage(bookmarksArray) {
     addBookmarksToStorage(newBookmarksObject); // add left out bookmarks to storage
     document.querySelector('.notification__options--body button').disabled = false;
     document.querySelector('.notification__options--body button').classList.remove('is-loading');
-    showNotification('Bookmarks updated!', 'positive', 'snackbar-options');
+    showNotification('Bookmarks updated!', 'positive', 'notification--options');
   });
 }
 
 export function handleLegacyBookmarksFile(bookmarksArray) {
   try {
     if (!bookmarksArray.length > 0) {
-      showNotification('Error: No bookmarks found in the file', 'negative', 'snackbar-options');
+      showNotification('Error: No bookmarks found in the file', 'negative', 'notification--options');
     } else {
       addLegacyBookmarksToStorage(bookmarksArray);
     }
   } catch (error) {
-    showNotification('Error in parsing file', 'negative', 'snackbar-options');
+    showNotification('Error in parsing file', 'negative', 'notification--options');
   }
 }

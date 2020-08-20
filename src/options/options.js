@@ -11,9 +11,9 @@ allowCheckingOneTypeOfCheckbox(elements.useCaseCheckboxesWrapper, elements.licen
 elements.importBookmarksButton.addEventListener('click', () => {
   const file = elements.importBookmarksInput.files[0];
   if (!file) {
-    showNotification('No file choosen', 'negative', 'snackbar-options');
+    showNotification('No file choosen', 'negative', 'notification--options');
   } else if (file.type !== 'application/json') {
-    showNotification('Wrong file type. Choose json file', 'negative', 'snackbar-options');
+    showNotification('Wrong file type. Choose json file', 'negative', 'notification--options');
   } else {
     const reader = new FileReader();
     reader.readAsText(file, 'UTF-8');
@@ -25,15 +25,15 @@ elements.importBookmarksButton.addEventListener('click', () => {
           if (Array.isArray(bookmarksObject)) {
             handleLegacyBookmarksFile(bookmarksObject);
           } else if (!(Object.keys(bookmarksObject).length > 0))
-            showNotification('Error: No bookmarks found in the file', 'negative', 'snackbar-options');
+            showNotification('Error: No bookmarks found in the file', 'negative', 'notification--options');
           else {
             addBookmarksToStorage(bookmarksObject);
           }
         } else {
-          showNotification('Error: File contents not in the required format', 'negative', 'snackbar-options');
+          showNotification('Error: File contents not in the required format', 'negative', 'notification--options');
         }
       } catch (error) {
-        showNotification('Error in parsing file', 'negative', 'snackbar-options');
+        showNotification('Error in parsing file', 'negative', 'notification--options');
       }
     };
   }

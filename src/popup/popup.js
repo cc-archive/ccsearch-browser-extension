@@ -82,7 +82,7 @@ const clipboard = new ClipboardJS('.btn-copy');
 
 clipboard.on('success', e => {
   e.clearSelection();
-  showNotification('Copied', 'positive', 'snackbar-bookmarks');
+  showNotification('Copied', 'positive', 'notification--extension-popup');
 });
 
 elements.imageDetailNav.getElementsByTagName('ul')[0].addEventListener('click', enableTabSwitching);

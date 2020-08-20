@@ -1,17 +1,21 @@
 import { backupSourceAPIQueryStrings } from './popup/helper';
 
-export function showNotification(message, context, snackbarPlaceholderId, timeout) {
-  const snackbar = document.getElementById(snackbarPlaceholderId);
-  snackbar.innerText = message;
+export function showNotification(message, context, notificationWrapper, timeout) {
+  const notificationWrapperDiv = document.getElementsByClassName(notificationWrapper)[0];
+  const notificationContainer = notificationWrapperDiv.getElementsByClassName('notification-container')[0];
+  const notificationPara = notificationContainer.getElementsByTagName('p')[0];
 
-  snackbar.classList.add('show');
-  if (context === 'positive') snackbar.classList.add('snackbar-positive');
-  else if (context === 'negative') snackbar.classList.add('snackbar-negative');
+  notificationPara.innerText = message;
+  notificationWrapperDiv.classList.remove('display-none');
+  if (context === 'positive') notificationContainer.classList.add('has-background-success-light');
+  else if (context === 'negative') notificationContainer.classList.add('has-background-danger-light');
 
   setTimeout(() => {
-    snackbar.className = '';
-    snackbar.classList.add('snackbar');
-  }, timeout || 1100);
+    notificationPara.innerText = '';
+    notificationWrapperDiv.classList.add('display-none');
+    notificationContainer.classList.remove('has-background-success-light');
+    notificationContainer.classList.remove('has-background-danger-light');
+  }, timeout || 1500);
 }
 
 export function removeNode(className) {
@@ -60,7 +64,12 @@ export async function getLatestSources() {
     });
     return sources;
   } catch (error) {
-    showNotification('Unable to fetch sources. Using backup sources', 'negative', 'snackbar-bookmarks', 2500);
+    showNotification(
+      'Unable to fetch sources. Using backup sources',
+      'negative',
+      'notification--extension-popup',
+      2500,
+    );
     sources = backupSourceAPIQueryStrings;
     return sources;
   }

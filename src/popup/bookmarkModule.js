@@ -69,7 +69,7 @@ export default function toggleBookmark(e) {
           }
         }
         if (!validBookmarksKey) {
-          showNotification('Error: Bookmarks Limit reached', 'negative', 'snackbar-bookmarks');
+          showNotification('Error: Bookmarks Limit reached', 'negative', 'notification--extension-popup');
           throw new Error('Bookmarks Limit reached');
         }
         let validBookmarksImageIdKey;
@@ -96,7 +96,7 @@ export default function toggleBookmark(e) {
               e.target.classList.remove('bookmark-regular');
               e.target.classList.add('bookmark-solid');
               e.target.title = 'Remove Bookmark';
-              showNotification('Image Bookmarked', 'positive', 'snackbar-bookmarks');
+              showNotification('Image Bookmarked', 'positive', 'notification--extension-popup');
             },
           );
         });
@@ -124,7 +124,7 @@ export default function toggleBookmark(e) {
             e.target.classList.remove('bookmark-solid');
             e.target.classList.add('bookmark-regular');
             e.target.title = 'Bookmark Image';
-            showNotification('Bookmark removed', 'positive', 'snackbar-bookmarks');
+            showNotification('Bookmark removed', 'positive', 'notification--extension-popup');
           },
         );
       });
@@ -384,7 +384,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
     if (deletedBookmarks.length === 0) {
-      showNotification('No bookmark selected', 'negative', 'snackbar-bookmarks');
+      showNotification('No bookmark selected', 'negative', 'notification--extension-popup');
     } else {
       chrome.storage.sync.get(keyNames, items => {
         const allBookmarksImageIdsObject = {};
@@ -422,7 +422,7 @@ document.addEventListener('DOMContentLoaded', () => {
           // reorganizing the layout using masonry
           msnry.layout();
           // confirm user action
-          showNotification('Bookmarks successfully removed', 'positive', 'snackbar-bookmarks');
+          showNotification('Bookmarks successfully removed', 'positive', 'notification--extension-popup');
           // Read default "Select all"
           // elements.buttonSelectAllCheckbox[0].innerText = 'Select All';
           // selectedBookmarks = 0;
@@ -452,9 +452,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (Object.keys(bookmarksObject).length) {
         const bookmarksString = JSON.stringify(bookmarksObject);
         download(bookmarksString, 'bookmarks.json', 'text/plain');
-        showNotification('Exported all bookmarks', 'positive', 'snackbar-bookmarks');
+        showNotification('Exported all bookmarks', 'positive', 'notification--extension-popup');
       } else {
-        showNotification('No bookmarks available to export', 'negative', 'snackbar-bookmarks');
+        showNotification('No bookmarks available to export', 'negative', 'notification--extension-popup');
       }
     });
   });

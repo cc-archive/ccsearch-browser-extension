@@ -10,7 +10,7 @@ import { showNotification, removeChildNodes, restoreInitialContent, activeBookma
 
 export function checkInputError(inputText) {
   if (inputText === '') {
-    showNotification('No search query provided', 'negative', 'snackbar-bookmarks');
+    showNotification('No search query provided', 'negative', 'notification--extension-popup');
     // to stop further js execution
     throw new Error('No search query provided');
   }
@@ -103,9 +103,13 @@ export function checkValidationError(apiResponse) {
     restoreInitialContent('primary');
 
     if (apiResponse.error_type === 'InputError') {
-      showNotification('Not a valid search query.', 'negative', 'snackbar-bookmarks');
+      showNotification('Not a valid search query.', 'negative', 'notification--extension-popup');
     } else {
-      showNotification('Some error occured. Please try again after some time.', 'negative', 'snackbar-bookmarks');
+      showNotification(
+        'Some error occured. Please try again after some time.',
+        'negative',
+        'notification--extension-popup',
+      );
     }
 
     throw new Error('400 Bad Request');
