@@ -95,8 +95,9 @@ elements.closeImageDetailLink.addEventListener('click', () => {
   }
 
   // making reuse tab active for later
+  const imageDetailNavTabs = elements.imageDetailNav.getElementsByTagName('li');
   for (let i = 0; i < 3; i += 1) {
-    elements.imageDetailNavTabs[i].classList.remove('is-active');
+    imageDetailNavTabs[i].classList.remove('is-active');
     elements.imageDetailTabsPanels[i].classList.remove('is-active');
   }
   elements.reuseTab.classList.add('is-active');
