@@ -4,9 +4,12 @@ html.dark,
 body.dark {
   color: $color-white;
   background-color: $color-dark-slate-gray;
-  a:hover {
-    color: $color-tomato;
+  a,
+  a:hover,
+  a:active {
+    color: $color-dark-turquoise;
   }
+
   &::-webkit-scrollbar-thumb {
     background-color: $color-white;
   }
@@ -86,12 +89,6 @@ body.dark {
     color: $color-gray !important;
   }
 
-  .section-bookmarks {
-    a {
-      color: $color-white;
-    }
-  }
-
   .fixed-footer {
     background-color: $color-dark-slate-gray;
   }
@@ -114,7 +111,7 @@ body.dark {
   .section-image-detail {
     .image-detail__nav {
       #close-image-detail {
-        color: $color-white;
+        color: $color-dark-turquoise;
       }
 
       ul {
