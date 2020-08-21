@@ -95,7 +95,7 @@ body.dark {
 
   .section-collections table {
     & > thead {
-      background-color: $color-dark-slate-gray;
+      background-color: $color-dark-gray;
 
       th {
         color: $color-white;
@@ -103,8 +103,15 @@ body.dark {
     }
 
     & > tr {
-      background: $color-black;
       color: $color-white;
+
+      &:nth-child(even) {
+        background: $color-black;
+      }
+
+      &:nth-child(odd) {
+        background: $color-dark-slate-gray;
+      }
     }
   }
 
