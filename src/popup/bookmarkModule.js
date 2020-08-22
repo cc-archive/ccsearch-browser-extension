@@ -370,7 +370,7 @@ document.addEventListener('DOMContentLoaded', () => {
     toggleEditView(event);
   });
 
-  elements.deleteBookmarksLink.addEventListener('click', () => {
+  elements.deleteBookmarksButton.addEventListener('click', () => {
     // const bookmarkDOMArray = Object.values(bookmarkDOM);
     const images = elements.gridBookmarks.getElementsByClassName('image');
     // to store the id's of deleted bookmarks
@@ -442,7 +442,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // change export and import accordingly
-  elements.exportBookmarksButton.addEventListener('click', () => {
+  elements.exportBookmarksLink.addEventListener('click', () => {
     let bookmarksObject = {};
 
     chrome.storage.sync.get(activeBookmarkContainers, items => {

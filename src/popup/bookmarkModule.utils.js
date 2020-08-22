@@ -38,10 +38,10 @@ export function openInfoPopup(event) {
 
 export function toggleEditView() {
   elements.editBookmarksLink.classList.toggle('display-none');
+  elements.exportBookmarksLink.classList.toggle('display-none');
   elements.selectAllBookmarksLink.classList.toggle('display-none');
   elements.closeEditViewLink.classList.toggle('display-none');
 
-  elements.bookmarksSectionHead.classList.toggle('edit-view');
   elements.bookmarksSectionFooter.classList.toggle('display-none');
 
   const images = elements.gridBookmarks.getElementsByClassName('image');

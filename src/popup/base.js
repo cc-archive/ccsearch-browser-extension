@@ -53,8 +53,8 @@ export const elements = {
   spinnerPlaceholderBookmarks: document.getElementById('spinner-placeholder--bookmarks'),
   // footer
   bookmarksSectionFooter: document.getElementsByClassName('section-bookmarks__footer')[0],
-  deleteBookmarksLink: document.getElementById('delete-bookmarks'),
-  exportBookmarksButton: document.getElementById('export-bookmarks'),
+  deleteBookmarksButton: document.getElementById('delete-bookmarks'),
+  exportBookmarksLink: document.getElementById('export-bookmarks'),
 
   /* ------collections section------ */
   spinnerPlaceholderCollections: document.getElementById('spinner-placeholder--collections'),
