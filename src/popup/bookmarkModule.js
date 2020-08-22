@@ -174,8 +174,9 @@ function addBookmarkThumbnailsToDOM(bookmarksObject, bookmarkImageIds, bookmarks
     licenseArray.forEach(name => {
       const lowerCaseName = `${name}`.toLowerCase();
       licenseIconElement = document.createElement('i');
-      // for pdm, the logo name is cc-pd
+      // for pdm, the logo name is cc-pd and for cc0, the logo name is cc-zero
       if (lowerCaseName === 'pdm') licenseIconElement.classList.add('icon', 'has-background-white', 'cc-pd');
+      else if (lowerCaseName === 'cc0') licenseIconElement.classList.add('icon', 'has-background-white', 'cc-zero');
       else licenseIconElement.classList.add('icon', 'has-background-white', `cc-${lowerCaseName}`);
       licenseIconElementsArray.push(licenseIconElement);
     });

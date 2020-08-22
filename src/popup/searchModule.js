@@ -155,8 +155,9 @@ export function addSearchThumbnailsToDOM(masonryObject, resultArray, gridDiv) {
       // make and push license image elements
       licenseArray.forEach(name => {
         licenseIconElement = document.createElement('i');
-        // for pdm, the logo name is cc-pd
+        // for pdm, the logo name is cc-pd and for cc0, the logo name is cc-zero
         if (name === 'pdm') licenseIconElement.classList.add('icon', 'has-background-white', 'cc-pd');
+        else if (name === 'cc0') licenseIconElement.classList.add('icon', 'has-background-white', 'cc-zero');
         else licenseIconElement.classList.add('icon', 'has-background-white', `cc-${name}`);
         licenseIconElementsArray.push(licenseIconElement);
       });
