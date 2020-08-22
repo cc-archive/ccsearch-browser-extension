@@ -102,3 +102,37 @@ export const constants = {
   bookmarkImageIdContainerSize: 80,
   extensionBookmarkLimit: 300,
 };
+
+export function initGlobalObject() {
+  window.appObject = {}; // global object to store the application variables
+  window.appObject.inputText = '';
+  window.appObject.pageNo = 1;
+  window.appObject.bookmarksSectionIdx = 0;
+  window.appObject.enableMatureContent = false;
+
+  // List to hold  selected by the user from the drop down.
+  window.appObject.userSelectedSourcesList = [];
+
+  // List to hold user selected licenses
+  window.appObject.userSelectedLicensesList = [];
+
+  // List to hold user selected use case
+  window.appObject.userSelectedUseCaseList = [];
+
+  window.appObject.userSelectedImageTypeList = [];
+  window.appObject.userSelectedImageSizeList = [];
+  window.appObject.userSelectedFileTypeList = [];
+  window.appObject.userSelectedAspectRatioList = [];
+  // object to map source display names to valid query names.
+  window.appObject.sourceAPIQueryStrings = {};
+
+  // Search Storage
+  window.appObject.storeSearch = {};
+
+  // store the name of the current active section
+  window.appObject.activeSection = 'search';
+  window.appObject.searchByCollectionActivated = false;
+  window.appObject.collectionName = '';
+
+  window.appObject.bookmarksEditViewEnabled = false;
+}

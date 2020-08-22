@@ -1,4 +1,4 @@
-import { elements } from './base';
+import { elements, initGlobalObject } from './base';
 // eslint-disable-next-line import/no-cycle
 import {
   checkInputError,
@@ -41,41 +41,7 @@ import migrateStorage from './popup.utils';
 import { removeActiveClassFromNavLinks, bookmarksGridMasonryObject } from './bookmarkModule.utils';
 import { primaryGridMasonryObject, checkInternetConnection } from './searchModule.utils';
 
-// global object to store the application variables
-window.appObject = {};
-window.appObject.inputText = '';
-window.appObject.pageNo = 1;
-window.appObject.bookmarksSectionIdx = 0;
-window.appObject.enableMatureContent = false;
-// List to hold  selected by the user from the drop down.
-window.appObject.userSelectedSourcesList = [];
-
-// List to hold user selected licenses
-window.appObject.userSelectedLicensesList = [];
-
-// List to hold user selected use case
-window.appObject.userSelectedUseCaseList = [];
-
-window.appObject.userSelectedImageTypeList = [];
-window.appObject.userSelectedImageSizeList = [];
-window.appObject.userSelectedFileTypeList = [];
-window.appObject.userSelectedAspectRatioList = [];
-
-// window.appObject.allUserSelectedFilterLists = [
-//   'userSelectedSourcesList',
-//   'userSelectedLicensesList',
-//   'userSelectedUseCaseList',
-//   'userSelectedFileTypeList',
-//   'userSelectedImageTypeList',
-//   'userSelectedImageSizeList',
-//   'userSelectedAspectRatioList',
-// ];
-
-// object to map source display names to valid query names.
-window.appObject.sourceAPIQueryStrings = {};
-
-// Search Storage
-window.appObject.storeSearch = {};
+initGlobalObject();
 
 // eslint-disable-next-line no-undef
 const clipboard = new ClipboardJS('.btn-copy');
@@ -355,13 +321,6 @@ async function nextRequest(page) {
   addSearchThumbnailsToDOM(primaryGridMasonryObject, result, elements.gridPrimary);
   window.appObject.pageNo += 1;
 }
-
-// store the name of the current active section
-window.appObject.activeSection = 'search';
-window.appObject.searchByCollectionActivated = false;
-window.appObject.collectionName = '';
-
-window.appObject.bookmarksEditViewEnabled = false;
 
 elements.loadMoreSearchButton.addEventListener('click', () => {
   removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);
