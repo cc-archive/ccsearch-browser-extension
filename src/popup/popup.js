@@ -372,7 +372,7 @@ elements.loadMoreSearchButton.addEventListener('click', () => {
 elements.loadMoreBookmarkButton.addEventListener('click', () => {
   removeLoadMoreButton(elements.loadMoreBookmarkButtonkWrapper);
   addSpinner(elements.spinnerPlaceholderGrid, 'for-bottom');
-  loadBookmarkImages(10);
+  loadBookmarkImages(10, window.appObject.bookmarksEditViewEnabled);
 });
 
 elements.navSettingsLink.addEventListener('click', () => {

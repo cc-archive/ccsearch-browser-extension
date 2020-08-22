@@ -7,6 +7,7 @@ import {
   toggleEditView,
   openInfoPopup,
   removeActiveClassFromNavLinks,
+  selectImage,
 } from './bookmarkModule.utils';
 import { removeLoadMoreButton, addLoadMoreButton } from './helper';
 // eslint-disable-next-line import/no-cycle
@@ -144,7 +145,7 @@ function appendToGrid(msnryObject, fragment, e, grid) {
   addLoadMoreButton(elements.loadMoreBookmarkButtonkWrapper);
 }
 
-function addBookmarkThumbnailsToDOM(bookmarksObject, bookmarkImageIds) {
+function addBookmarkThumbnailsToDOM(bookmarksObject, bookmarkImageIds, bookmarksEditViewEnabled) {
   bookmarkImageIds.forEach(imageId => {
     const res = bookmarksObject[imageId];
     const fragment = document.createDocumentFragment();
@@ -191,7 +192,8 @@ function addBookmarkThumbnailsToDOM(bookmarksObject, bookmarkImageIds) {
     divElement.setAttribute('data-image-id', imageId);
 
     // adding event listener to open popup.
-    divElement.addEventListener('click', openInfoPopup);
+    if (bookmarksEditViewEnabled) divElement.addEventListener('click', selectImage);
+    else divElement.addEventListener('click', openInfoPopup);
     divElement.appendChild(imgElement);
     // divElement.appendChild(selectCheckboxElement);
     divElement.appendChild(licenseDiv);
@@ -211,7 +213,7 @@ function addBookmarkThumbnailsToDOM(bookmarksObject, bookmarkImageIds) {
   });
 }
 
-export function loadBookmarkImages(numberOfImages) {
+export function loadBookmarkImages(numberOfImages, bookmarksEditViewEnabled) {
   chrome.storage.sync.get(activeBookmarkIdContainers, items => {
     let bookmarksImageIdsObject = {};
     activeBookmarkIdContainers.forEach(bookmarkIdContainerName => {
@@ -253,7 +255,7 @@ export function loadBookmarkImages(numberOfImages) {
         }
       }
       // console.log(bookmarkObject);
-      addBookmarkThumbnailsToDOM(bookmarkObject, bookmarkImageIds);
+      addBookmarkThumbnailsToDOM(bookmarkObject, bookmarkImageIds, bookmarksEditViewEnabled);
     });
   });
 }
@@ -287,7 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
       addSpinner(elements.spinnerPlaceholderBookmarks, 'original');
       removeOldSearchResults();
       removeLoaderAnimation();
-      loadBookmarkImages(10);
+      loadBookmarkImages(10, window.appObject.bookmarksEditViewEnabled);
 
       chrome.storage.sync.get(null, it => {
         console.log(it);
@@ -418,7 +420,7 @@ document.addEventListener('DOMContentLoaded', () => {
             imageDiv.parentElement.removeChild(imageDiv);
           });
           window.appObject.bookmarksSectionIdx -= deletedBookmarks.length;
-          loadBookmarkImages(deletedBookmarks.length);
+          loadBookmarkImages(deletedBookmarks.length, window.appObject.bookmarksEditViewEnabled);
           // reorganizing the layout using masonry
           bookmarksGridMasonryObject.layout();
           // confirm user action
