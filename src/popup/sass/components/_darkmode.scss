@@ -182,6 +182,14 @@ body.dark {
       }
     }
 
+    .share-panel {
+      .share-icons {
+        i.icon.colored:before {
+          color: $color-white;
+        }
+      }
+    }
+
     .related-images {
       background-color: $color-black;
     }
