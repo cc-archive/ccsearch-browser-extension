@@ -142,26 +142,41 @@ body.dark {
 
     .reuse-panel {
       .tabs.is-boxed {
-        li a {
-          background-color: $color-dark-slate-gray;
-          color: $color-white;
+        ul {
+          border-bottom: 2px solid $color-dark-gray;
+          li {
+            a {
+              background-color: $color-black;
+              color: $color-gray;
+              border: 2px solid $color-dark-gray;
+              border-right: 0;
 
-          &:hover {
-            background-color: $color-white;
-            color: $color-black;
+              &:hover {
+                background-color: $color-dark-slate-gray;
+                color: $color-white;
+                border-bottom-color: transparent;
+              }
+            }
+
+            &:last-child a {
+              border-right: 2px solid $color-dark-gray;
+            }
+
+            &.is-active a {
+              background-color: $color-dark-slate-gray;
+              color: $color-white;
+              border-bottom-color: transparent;
+            }
           }
-        }
-
-        li.is-active a {
-          background-color: $color-white;
-          color: $color-black;
         }
       }
       .tabs-content.is-boxed {
-        background-color: $color-black;
+        background-color: $color-dark-slate-gray;
+        border: 2px solid $color-dark-gray;
+        border-top: 0;
 
-        textarea {
-          background-color: $color-black;
+        textarea#html-attribution {
+          background-color: $color-dark-slate-gray;
           color: $color-white;
         }
       }
