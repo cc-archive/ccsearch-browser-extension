@@ -5,6 +5,9 @@ export function showNotification(message, context, notificationWrapperClass, tim
   const notificationContainer = notificationWrapperDiv.getElementsByClassName('notification-container')[0];
   const notificationPara = notificationContainer.getElementsByTagName('p')[0];
 
+  notificationContainer.classList.remove('has-background-success-light');
+  notificationContainer.classList.remove('has-background-danger-light');
+
   notificationPara.innerText = message;
   notificationWrapperDiv.classList.remove('display-none');
   if (context === 'positive') notificationContainer.classList.add('has-background-success-light');

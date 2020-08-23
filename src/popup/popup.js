@@ -105,9 +105,7 @@ elements.inputField.addEventListener('keydown', event => {
   }
 });
 
-async function populateSourceList() {
-  console.log('popuplate source list called');
-
+async function addSourceFilterCheckboxes() {
   if (elements.sourceCheckboxesWrapper.children.length === 1) {
     window.appObject.sourceAPIQueryStrings = await getLatestSources();
 
@@ -129,6 +127,7 @@ async function populateSourceList() {
       elements.sourceCheckboxesWrapper.appendChild(breakElement);
     }
     loadFilterCheckboxesFromStorage(elements.sourceCheckboxesWrapper);
+    showNotification('Fetched latest sources succcessfully.', 'positive', 'notification--extension-popup');
   }
 }
 
@@ -136,8 +135,9 @@ elements.filterButton.onclick = () => {
   window.appObject.activeSection = 'filter';
   elements.primarySection.classList.add('display-none');
   elements.filterSection.classList.remove('display-none');
-  populateSourceList();
 };
+
+setTimeout(addSourceFilterCheckboxes, 2000);
 
 elements.closeFiltersLink.onclick = () => {
   window.appObject.activeSection = 'search';
@@ -249,10 +249,21 @@ elements.searchButton.addEventListener('click', () => {
   checkInputError(window.appObject.inputText);
   // checkIfSourceFilterIsRendered();
   checkInternetConnection();
+
+  if (elements.sourceCheckboxesWrapper.children.length === 1) {
+    showNotification(
+      'Extension is fetching latest sources. Please wait a sec.',
+      'negative',
+      'notification--extension-popup',
+      3000,
+    );
+    throw new Error('Sources not yet fetched');
+  }
+
   removeNode('no-image-found-mes');
   removeOldSearchResults();
   removeLoaderAnimation();
-  // applyFilters();
+  applyFilters();
 
   // enable spinner
   addSpinner(elements.spinnerPlaceholderGrid, 'original');
