@@ -27,7 +27,7 @@
         </div>
 
         <h5>I want something that (use-case)</h5>
-        <div class="use-case margin-left-normal">
+        <div class="usecase__wrapper margin-left-normal" data-storage-key-name="useCaseFilter">
           <input type="checkbox" id="commercial" />
           <label for="commercial">I can use commercially</label><br />
           <input type="checkbox" id="modification" />
@@ -35,7 +35,7 @@
         </div>
 
         <h5 class="margin-top-small">All licenses</h5>
-        <div class="license margin-left-normal">
+        <div class="license__wrapper margin-left-normal" data-storage-key-name="licenseFilter">
           <input type="checkbox" id="CC0" />
           <label for="CC0">CC0</label><br />
           <input type="checkbox" id="PDM" />
@@ -55,7 +55,7 @@
         </div>
 
         <h5 class="margin-top-small">File Type</h5>
-        <div class="fileType margin-left-normal">
+        <div class="file-type__wrapper margin-left-normal" data-storage-key-name="fileTypeFilter">
           <input type="checkbox" id="jpeg" />
           <label for="jpeg">JPEGs</label><br />
           <input type="checkbox" id="png" />
@@ -67,7 +67,7 @@
         </div>
 
         <h5 class="margin-top-small">Image Type</h5>
-        <div class="imageType margin-left-normal">
+        <div class="image-type__wrapper margin-left-normal" data-storage-key-name="imageTypeFilter">
           <input type="checkbox" id="photograph" />
           <label for="photograph">Photographs</label><br />
           <input type="checkbox" id="illustration" />
@@ -77,7 +77,7 @@
         </div>
 
         <h5 class="margin-top-small">Image Size</h5>
-        <div class="imageSize margin-left-normal">
+        <div class="image-size__wrapper margin-left-normal" data-storage-key-name="imageSizeFilter">
           <input type="checkbox" id="small" />
           <label for="small">Small</label><br />
           <input type="checkbox" id="medium" />
@@ -87,7 +87,7 @@
         </div>
 
         <h5 class="margin-top-small">Aspect Ratio</h5>
-        <div class="aspectRatio margin-left-normal">
+        <div class="aspect-ratio__wrapper margin-left-normal" data-storage-key-name="aspectRatioFilter">
           <input type="checkbox" id="tall" />
           <label for="tall">Tall</label><br />
           <input type="checkbox" id="wide" />
@@ -97,12 +97,15 @@
         </div>
 
         <h5 class="margin-top-small">All Sources</h5>
-        <div class="source margin-left-normal">
+        <div class="source__wrapper margin-left-normal" data-storage-key-name="sourceFilter">
           Fetching Latest Sources ...
         </div>
-        <div class="margin-left-normal margin-top-big">
-          <input type="checkbox" class="enable-mature-content-checkbox" id="enableMatureContent" />
-          <label for="enableMatureContent">Show Mature Content</label>
+        <div
+          class="show-mature-content__wrapper margin-left-normal margin-top-big"
+          data-storage-key-name="showMatureContentFilter"
+        >
+          <input type="checkbox" id="mature" />
+          <label for="mature">Show Mature Content</label>
         </div>
         <div class="margin-top-small">
           <button id="save-filters" class="button small is-success">

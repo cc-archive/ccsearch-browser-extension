@@ -7,22 +7,9 @@ import {
   keyNames,
   activeBookmarkIdContainers,
   activeBookmarkContainers,
+  loadFilterCheckboxesFromStorage,
 } from '../utils';
 import { constants } from '../popup/base';
-
-function restoreFilters(inputElements) {
-  for (let i = 0; i < inputElements.length; i += 1) {
-    const { id } = inputElements[i];
-    chrome.storage.sync.get({ [id]: false }, items => {
-      // default value is false
-      document.getElementById(id).checked = items[id];
-    });
-    // chrome.storage.sync.get(null, items => {
-    //   console.log('all the storage items');
-    //   console.log(items);
-    // });
-  }
-}
 
 function addSourcesToDom(sources) {
   const { sourceCheckboxesWrapper } = elements;
@@ -44,46 +31,46 @@ function addSourcesToDom(sources) {
     sourceCheckboxesWrapper.appendChild(label);
     sourceCheckboxesWrapper.appendChild(breakLine);
   });
-  restoreFilters(elements.sourceCheckboxes);
+  loadFilterCheckboxesFromStorage(elements.sourceCheckboxesWrapper);
 }
 
-function saveSingleFilter(inputElements) {
-  for (let i = 0; i < inputElements.length; i += 1) {
-    const { id } = inputElements[i];
-    const value = inputElements[i].checked;
-    chrome.storage.sync.set(
-      {
-        [id]: value, // using ES6 to use variable as key of object
-      },
-      () => {
-        showNotification('Settings saved!', 'positive', 'notification--options');
-        // console.log(`${id} has been set to ${value}`);
-      },
-    );
-  }
+function saveSingleFilter(wrapperElement) {
+  const filterStorageKey = wrapperElement.dataset.storageKeyName;
+  const filterCheckboxElements = wrapperElement.getElementsByTagName('input');
+
+  chrome.storage.sync.get(filterStorageKey, items => {
+    for (let i = 0; i < filterCheckboxElements.length; i += 1) {
+      const checkbox = filterCheckboxElements[i];
+      items[filterStorageKey][checkbox.id] = checkbox.checked;
+    }
+
+    chrome.storage.sync.set(items, () => {
+      showNotification('Settings saved!', 'positive', 'notification--options');
+    });
+  });
 }
 
 export async function init() {
-  restoreFilters(elements.useCaseCheckboxes);
-  restoreFilters(elements.licenseCheckboxes);
-  restoreFilters(elements.fileTypeCheckboxes);
-  restoreFilters(elements.imageTypeCheckboxes);
-  restoreFilters(elements.imageSizeCheckboxes);
-  restoreFilters(elements.aspectRatioCheckboxes);
-  restoreFilters(elements.enableMatureContentCheckbox);
+  loadFilterCheckboxesFromStorage(elements.useCaseCheckboxesWrapper);
+  loadFilterCheckboxesFromStorage(elements.licenseCheckboxesWrapper);
+  loadFilterCheckboxesFromStorage(elements.fileTypeCheckboxesWrapper);
+  loadFilterCheckboxesFromStorage(elements.imageTypeCheckboxesWrapper);
+  loadFilterCheckboxesFromStorage(elements.imageSizeCheckboxesWrapper);
+  loadFilterCheckboxesFromStorage(elements.aspectRatioCheckboxesWrapper);
+  loadFilterCheckboxesFromStorage(elements.showMatureContentCheckboxWrapper);
   const sources = await getLatestSources();
   addSourcesToDom(sources);
 }
 
 export function saveFiltersOptions() {
-  saveSingleFilter(elements.useCaseCheckboxes);
-  saveSingleFilter(elements.licenseCheckboxes);
-  saveSingleFilter(elements.fileTypeCheckboxes);
-  saveSingleFilter(elements.imageTypeCheckboxes);
-  saveSingleFilter(elements.imageSizeCheckboxes);
-  saveSingleFilter(elements.aspectRatioCheckboxes);
-  saveSingleFilter(elements.sourceCheckboxes);
-  saveSingleFilter(elements.enableMatureContentCheckbox);
+  saveSingleFilter(elements.useCaseCheckboxesWrapper);
+  saveSingleFilter(elements.licenseCheckboxesWrapper);
+  saveSingleFilter(elements.fileTypeCheckboxesWrapper);
+  saveSingleFilter(elements.imageTypeCheckboxesWrapper);
+  saveSingleFilter(elements.imageSizeCheckboxesWrapper);
+  saveSingleFilter(elements.aspectRatioCheckboxesWrapper);
+  saveSingleFilter(elements.sourceCheckboxesWrapper);
+  saveSingleFilter(elements.showMatureContentCheckboxWrapper);
 }
 
 export function addBookmarksToStorage(newBookmarksObject, showConfirmation = true) {
