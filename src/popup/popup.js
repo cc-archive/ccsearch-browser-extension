@@ -34,7 +34,7 @@ import {
   // activeBookmarkContainers,
 } from '../utils';
 import { loadBookmarkImages } from './bookmarkModule';
-import { migrateStorage, generateNewStorageSchemaForFilters } from './popup.utils';
+import generateNewStorageSchemaForFilters from './popup.utils';
 import { removeActiveClassFromNavLinks, bookmarksGridMasonryObject } from './bookmarkModule.utils';
 import { primaryGridMasonryObject, checkInternetConnection } from './searchModule.utils';
 
@@ -368,5 +368,4 @@ window.addEventListener('scroll', () => {
 
 elements.buttonBackToTop.addEventListener('click', () => window.scrollTo(0, 0));
 
-migrateStorage();
 generateNewStorageSchemaForFilters();
