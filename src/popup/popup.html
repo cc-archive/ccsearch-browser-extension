@@ -74,14 +74,14 @@
           <h4>Filter Results by</h4>
           <a href="#" id="close-filters-link" class="has-text-weight-bold">close filters</a>
         </div>
-        <div class="section-filter__usecase">
+        <div class="section-filter__usecase" data-storage-key-name="useCaseFilter">
           <h5 class="b-header margin-bottom-normal">Use</h5>
           <input type="checkbox" id="commercial" />
           <label for="commercial">Use for commercial purposes</label><br />
           <input type="checkbox" id="modification" />
           <label for="modification">Modify or Adapt</label>
         </div>
-        <div class="section-filter__license margin-top-big">
+        <div class="section-filter__license margin-top-big" data-storage-key-name="licenseFilter">
           <h5 class="b-header margin-bottom-normal">Licenses</h5>
           <input type="checkbox" id="CC0" />
           <label for="CC0"> <i class="icon cc-zero has-background-white margin-right-smaller"></i> CC0</label><br />
@@ -118,10 +118,10 @@
             ><i class="icon cc-nd has-background-white margin-right-smaller"></i>BY-NC-ND</label
           ><br />
         </div>
-        <div class="section-filter__source margin-top-big">
+        <div class="section-filter__source margin-top-big" data-storage-key-name="sourceFilter">
           <h5 class="b-header margin-bottom-normal">Sources</h5>
         </div>
-        <div class="section-filter__file-type margin-top-big">
+        <div class="section-filter__file-type margin-top-big" data-storage-key-name="fileTypeFilter">
           <h5 class="b-header margin-bottom-normal">File Type</h5>
           <input type="checkbox" id="jpeg" />
           <label for="jpeg">JPEGs</label><br />
@@ -132,7 +132,7 @@
           <input type="checkbox" id="svg" />
           <label for="svg">SVGs</label><br />
         </div>
-        <div class="section-filter__image-type margin-top-big">
+        <div class="section-filter__image-type margin-top-big" data-storage-key-name="imageTypeFilter">
           <h5 class="b-header margin-bottom-normal">Image Type</h5>
           <input type="checkbox" id="photograph" />
           <label for="photograph">Photographs</label><br />
@@ -141,7 +141,7 @@
           <input type="checkbox" id="digitized_artwork" />
           <label for="digitized_artwork">Digitized Artworks</label><br />
         </div>
-        <div class="section-filter__image-size margin-top-big">
+        <div class="section-filter__image-size margin-top-big" data-storage-key-name="imageSizeFilter">
           <h5 class="b-header margin-bottom-normal">Image Size</h5>
           <input type="checkbox" id="small" />
           <label for="small">Small</label><br />
@@ -150,7 +150,7 @@
           <input type="checkbox" id="large" />
           <label for="large">Large</label><br />
         </div>
-        <div class="section-filter__aspect-ratio margin-top-big">
+        <div class="section-filter__aspect-ratio margin-top-big" data-storage-key-name="aspectRatioFilter">
           <h5 class="b-header margin-bottom-normal">Aspect Ratio</h5>
           <input type="checkbox" id="tall" />
           <label for="tall">Tall</label><br />
@@ -159,9 +159,12 @@
           <input type="checkbox" id="square" />
           <label for="square">Square</label><br />
         </div>
-        <div class="section-filter__show-mature-content margin-top-big margin-bottom-xl">
-          <input type="checkbox" id="enableMatureContent" />
-          <label for="enableMatureContent">Show Mature Content</label>
+        <div
+          class="section-filter__show-mature-content margin-top-big margin-bottom-xl"
+          data-storage-key-name="showMatureContentFilter"
+        >
+          <input type="checkbox" id="mature" />
+          <label for="mature">Show Mature Content</label>
         </div>
         <div class="fixed-footer">
           <button class="button small" id="clear-filters-button">Clear Filters</button>

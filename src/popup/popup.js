@@ -20,11 +20,7 @@ import {
   // aspectRatioAPIQueryStrings,
   // imageSizeAPIQueryStrings,
 } from './helper';
-import {
-  // loadSourcesToDom,
-  loadUserDefaults,
-  loadUserFilterPreferences,
-} from './filterModule';
+import loadUserDefaults from './filterModule';
 import { handleImageAttributionDownload } from './infoPopupModule';
 import { addSpinner } from './spinner';
 import {
@@ -34,6 +30,7 @@ import {
   allowCheckingOneTypeOfCheckbox,
   enableTabSwitching,
   removeChildNodes,
+  loadFilterCheckboxesFromStorage,
   // activeBookmarkContainers,
 } from '../utils';
 import { loadBookmarkImages } from './bookmarkModule';
@@ -131,7 +128,7 @@ async function populateSourceList() {
       elements.sourceCheckboxesWrapper.appendChild(labelElement);
       elements.sourceCheckboxesWrapper.appendChild(breakElement);
     }
-    loadUserFilterPreferences(elements.sourceCheckboxesWrapper);
+    loadFilterCheckboxesFromStorage(elements.sourceCheckboxesWrapper);
   }
 }
 

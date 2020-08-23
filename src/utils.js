@@ -1,7 +1,7 @@
 import { backupSourceAPIQueryStrings } from './popup/helper';
 
-export function showNotification(message, context, notificationWrapper, timeout) {
-  const notificationWrapperDiv = document.getElementsByClassName(notificationWrapper)[0];
+export function showNotification(message, context, notificationWrapperClass, timeout) {
+  const notificationWrapperDiv = document.getElementsByClassName(notificationWrapperClass)[0];
   const notificationContainer = notificationWrapperDiv.getElementsByClassName('notification-container')[0];
   const notificationPara = notificationContainer.getElementsByTagName('p')[0];
 
@@ -141,6 +141,30 @@ export function enableTabSwitching(e) {
     // adding active class to target content div
     targetPanelDiv.classList.add('is-active');
   }
+}
+
+export function loadFilterCheckboxesFromStorage(wrapperElement) {
+  /* use case filter is stored in storage as an object, like:
+      useCaseFilter: {
+        commercial: false,
+        modification: true,
+      }
+   */
+  // for usecase, filterStorageKey is useCaseFilter
+  const filterStorageKey = wrapperElement.dataset.storageKeyName;
+
+  chrome.storage.sync.get(filterStorageKey, items => {
+    console.log(filterStorageKey);
+    const filterCheckboxIds = Object.keys(items[filterStorageKey]);
+    console.log(filterCheckboxIds);
+    // iterating over the input checkboxes of current filter (for usecase -> commercial and modification)
+    // and marking them checked if value in storage is true
+    filterCheckboxIds.forEach(filterCheckboxId => {
+      const filterCheckbox = wrapperElement.querySelector(`#${filterCheckboxId}`);
+      filterCheckbox.checked = items[filterStorageKey][filterCheckboxId];
+      // elements.filterButton.classList.add('activate-filter');
+    });
+  });
 }
 
 export const activeBookmarkIdContainers = [
