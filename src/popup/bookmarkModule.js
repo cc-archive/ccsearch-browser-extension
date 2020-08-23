@@ -24,7 +24,7 @@ import {
 } from '../utils';
 // eslint-disable-next-line import/no-cycle
 import loadCollections from './collectionModule';
-import { checkInternetConnection } from './searchModule.utils';
+import { checkInternetConnection, primaryGridMasonryObject } from './searchModule.utils';
 // eslint-disable-next-line import/no-cycle
 // import { loadStoredContentToUI } from './popup.utils';
 
@@ -281,14 +281,13 @@ document.addEventListener('DOMContentLoaded', () => {
       elements.collectionsSection.classList.add('display-none');
       elements.filterSection.classList.add('display-none');
       elements.bookmarksSection.classList.remove('display-none');
+
       // prepare the bookmarks section
-      elements.inputField.value = '';
       checkInternetConnection();
-      // remove previous spinner. On low net connection, multiple spinner may appear
-      // due to delay in result fetching and continous section switching
+      /* remove previous spinner. On low net connection, multiple spinner may appear
+         due to delay in result fetching and continous section switching */
       removeSpinner(elements.spinnerPlaceholderBookmarks);
       addSpinner(elements.spinnerPlaceholderBookmarks, 'original');
-      removeOldSearchResults();
       removeLoaderAnimation();
       loadBookmarkImages(10, window.appObject.bookmarksEditViewEnabled);
 
@@ -317,10 +316,11 @@ document.addEventListener('DOMContentLoaded', () => {
       elements.bookmarksSection.classList.add('display-none');
       elements.collectionsSection.classList.add('display-none');
       elements.filterSection.classList.add('display-none');
+
       // prepare the search section
-      console.log(elements.primarySection);
-      removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);
+      primaryGridMasonryObject.layout(); // layout the masonry grid
       removeBookmarkImages();
+
       if (window.appObject.searchByCollectionActivated === true && window.appObject.searchingNewCollection === true) {
         removeNode('no-image-found-mes');
         removeOldSearchResults();
@@ -347,11 +347,12 @@ document.addEventListener('DOMContentLoaded', () => {
       elements.bookmarksSection.classList.add('display-none');
       elements.collectionsSection.classList.remove('display-none');
       elements.filterSection.classList.add('display-none');
+
       // remove previous spinner. On low net connection, multiple spinner may appear
       // due to delay in result fetching and continous section switching
       removeSpinner(elements.spinnerPlaceholderCollections);
       addSpinner(elements.spinnerPlaceholderCollections, 'original');
-      removeOldSearchResults();
+
       removeBookmarkImages();
       removeChildNodes(elements.collectionsSection.getElementsByTagName('table')[0]);
       loadCollections();
