@@ -50,12 +50,6 @@ export function getTagsUrl(tagName, pageNo) {
   return `https://api.creativecommons.engineering/v1/images?tags=${tagName}&page=${pageNo}&page_size=20`;
 }
 
-export function removeLoaderAnimation() {
-  // elements.spinner.classList.remove('spinner');
-  removeSpinner(elements.spinnerPlaceholderGrid);
-  // TODO: use better logic
-}
-
 export function checkResultLength(resultArray) {
   if (resultArray.length === 0) {
     showNotification(
@@ -64,7 +58,7 @@ export function checkResultLength(resultArray) {
       'notification--extension-popup',
       4000,
     );
-    removeLoaderAnimation();
+    removeSpinner(elements.spinnerPlaceholderPrimary);
     removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);
     primaryGridMasonryObject.layout();
     throw new Error('No image found');
@@ -82,7 +76,7 @@ function appendToGrid(msnryObject, fragment, divs, grid) {
     // layout Masonry after each image loads
     msnryObject.layout();
   });
-  removeLoaderAnimation();
+  removeSpinner(elements.spinnerPlaceholderPrimary);
   addLoadMoreButton(elements.loadMoreSearchButtonWrapper);
 }
 
@@ -90,7 +84,7 @@ function appendToGrid(msnryObject, fragment, divs, grid) {
 export function checkValidationError(apiResponse) {
   if (Object.prototype.hasOwnProperty.call(apiResponse, 'error_type')) {
     removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);
-    removeLoaderAnimation();
+    removeSpinner(elements.spinnerPlaceholderPrimary);
 
     if (apiResponse.error_type === 'InputError') {
       showNotification('Not a valid search query.', 'negative', 'notification--extension-popup');

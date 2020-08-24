@@ -6,7 +6,6 @@ import {
   getRequestUrl,
   search,
   addSearchThumbnailsToDOM,
-  removeLoaderAnimation,
   getCollectionsUrl,
   getTagsUrl,
 } from './searchModule';
@@ -23,7 +22,7 @@ import {
 } from './helper';
 import loadUserDefaults from './filterModule';
 import { handleImageAttributionDownload } from './infoPopupModule';
-import { addSpinner } from './spinner';
+import { addSpinner, removeSpinner } from './spinner';
 import {
   showNotification,
   getLatestSources,
@@ -259,11 +258,11 @@ elements.searchButton.addEventListener('click', () => {
   }
 
   removeOldSearchResults();
-  removeLoaderAnimation();
+  removeSpinner(elements.spinnerPlaceholderPrimary);
   applyFilters();
 
   // enable spinner
-  addSpinner(elements.spinnerPlaceholderGrid, 'original');
+  addSpinner(elements.spinnerPlaceholderPrimary, 'original');
   // elements.spinner.classList.add('spinner');
 
   const url = getRequestUrl(
@@ -331,13 +330,13 @@ async function nextRequest() {
 
 elements.loadMoreSearchButton.addEventListener('click', () => {
   removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);
-  addSpinner(elements.spinnerPlaceholderGrid, 'for-bottom');
+  addSpinner(elements.spinnerPlaceholderPrimary, 'for-bottom');
   nextRequest(window.appObject.pageNo);
 });
 
 elements.loadMoreBookmarkButton.addEventListener('click', () => {
   removeLoadMoreButton(elements.loadMoreBookmarkButtonkWrapper);
-  addSpinner(elements.spinnerPlaceholderGrid, 'for-bottom');
+  addSpinner(elements.spinnerPlaceholderPrimary, 'for-bottom');
   loadBookmarkImages(10, window.appObject.bookmarksEditViewEnabled);
 });
 

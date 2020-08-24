@@ -16,7 +16,7 @@ function searchCollection(event) {
   items[window.appObject.collectionName] = true;
   elements.inputField.value = '';
   elements.headerLogo.click();
-  addSpinner(elements.spinnerPlaceholderGrid, 'original');
+  addSpinner(elements.spinnerPlaceholderPrimary, 'original');
   search(url);
 }
 

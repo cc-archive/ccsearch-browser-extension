@@ -11,7 +11,7 @@ import {
 } from './bookmarkModule.utils';
 import { removeLoadMoreButton, addLoadMoreButton } from './helper';
 // eslint-disable-next-line import/no-cycle
-import { removeOldSearchResults, removeLoaderAnimation } from './searchModule';
+import { removeOldSearchResults } from './searchModule';
 import { addSpinner, removeSpinner } from './spinner';
 import {
   showNotification,
@@ -139,7 +139,7 @@ function appendToGrid(msnryObject, fragment, e, grid) {
     // layout Masonry after each image loads
     msnryObject.layout();
   });
-  removeLoaderAnimation();
+  removeSpinner(elements.spinnerPlaceholderPrimary);
   addLoadMoreButton(elements.loadMoreBookmarkButtonkWrapper);
 }
 
@@ -285,7 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
          due to delay in result fetching and continous section switching */
       removeSpinner(elements.spinnerPlaceholderBookmarks);
       addSpinner(elements.spinnerPlaceholderBookmarks, 'original');
-      removeLoaderAnimation();
+      removeSpinner(elements.spinnerPlaceholderPrimary);
       loadBookmarkImages(10, window.appObject.bookmarksEditViewEnabled);
 
       chrome.storage.sync.get(null, it => {

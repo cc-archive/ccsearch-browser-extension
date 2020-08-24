@@ -20,7 +20,7 @@ export const elements = {
   gridPrimary: document.querySelector('.grid-primary'),
   loadMoreSearchButton: document.querySelector('.load-more-search-button'),
   loadMoreSearchButtonWrapper: document.querySelector('.load-more-search-button-wrapper'),
-  spinnerPlaceholderGrid: document.getElementById('spinner-placeholder--grid'),
+  spinnerPlaceholderPrimary: document.getElementById('spinner-placeholder--primary'),
 
   /* ------filters section------ */
   filterSection: document.querySelector('.section-filter'),

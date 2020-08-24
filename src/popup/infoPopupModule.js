@@ -226,7 +226,7 @@ function searchByTag(event) {
   removeOldSearchResults();
   elements.closeImageDetailLink.click();
   elements.headerLogo.click();
-  addSpinner(elements.spinnerPlaceholderGrid, 'original');
+  addSpinner(elements.spinnerPlaceholderPrimary, 'original');
   search(url);
 }
 
