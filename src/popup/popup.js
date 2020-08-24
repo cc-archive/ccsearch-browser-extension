@@ -25,7 +25,6 @@ import { handleImageAttributionDownload } from './infoPopupModule';
 import { addSpinner } from './spinner';
 import {
   showNotification,
-  removeNode,
   getLatestSources,
   allowCheckingOneTypeOfCheckbox,
   enableTabSwitching,
@@ -258,7 +257,6 @@ elements.searchButton.addEventListener('click', () => {
     throw new Error('Sources not yet fetched');
   }
 
-  removeNode('no-image-found-mes');
   removeOldSearchResults();
   removeLoaderAnimation();
   applyFilters();

@@ -46,22 +46,7 @@ export function getCollectionsUrl(collectionName, page) {
   return `https://api.creativecommons.engineering/v1/images?source=${collectionName}&page=${page}&page_size=20`;
 }
 
-function showNoResultFoundMessage() {
-  const sectionContentPrimary = document.querySelector('.section-content--primary');
-
-  const sectionContentInitialInfo = document.querySelector('.section-content--primary .initial-info');
-
-  if (!sectionContentInitialInfo) {
-    const paragraph = document.createElement('p');
-    paragraph.classList.add('no-image-found-mes');
-    paragraph.classList.add('initial-info');
-    paragraph.textContent = 'No Images Found. Please enter a different query.';
-
-    removeChildNodes(sectionContentPrimary.querySelector('.row'));
-    // remove the "Load More" button.
-    removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);
-    sectionContentPrimary.querySelector('.row').appendChild(paragraph);
-  }
+  return `https://api.creativecommons.engineering/v1/images?tags=${tagName}&page=${pageNo}&page_size=20`;
 }
 
 export function removeLoaderAnimation() {
@@ -72,10 +57,16 @@ export function removeLoaderAnimation() {
 
 export function checkResultLength(resultArray) {
   if (resultArray.length === 0) {
-    showNoResultFoundMessage();
+    showNotification(
+      'No Images Found. Please enter a different query.',
+      'negative',
+      'notification--extension-popup',
+      4000,
+    );
     removeLoaderAnimation();
-    // eslint-disable-next-line no-use-before-define
+    removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);
     primaryGridMasonryObject.layout();
+    throw new Error('No image found');
   } else {
     // render the "Load More" button if non empty result
     addLoadMoreButton(elements.loadMoreSearchButtonWrapper);

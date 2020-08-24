@@ -15,7 +15,6 @@ import { removeOldSearchResults, removeLoaderAnimation } from './searchModule';
 import { addSpinner, removeSpinner } from './spinner';
 import {
   showNotification,
-  removeNode,
   removeChildNodes,
   keyNames,
   activeBookmarkContainers,
@@ -320,12 +319,8 @@ document.addEventListener('DOMContentLoaded', () => {
       removeBookmarkImages();
 
       if (window.appObject.activeSearchContext === 'collection' && window.appObject.searchingNewCollection === true) {
-        removeNode('no-image-found-mes');
         removeOldSearchResults();
         window.appObject.searchingNewCollection = false;
-      } else {
-        removeNode('no-image-found-mes');
-        // elements.clearSearchButton[0].classList.add('display-none');
       }
     }
   });
