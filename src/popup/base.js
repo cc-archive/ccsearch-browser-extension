@@ -80,7 +80,7 @@ export const elements = {
   licenseLink: document.getElementById('license-link'),
   licenseDescriptionDiv: document.getElementsByClassName('license-description')[0],
   licenseLinkCaption: document.getElementById('license-link--caption'),
-  imageTagsDivs: document.querySelectorAll('.image-tags'),
+  imageTagsDiv: document.getElementsByClassName('image-tags')[0],
   // information tab
   imageDimensionPara: document.getElementById('image-dimension'),
   imageSourcePara: document.getElementById('image-source'),

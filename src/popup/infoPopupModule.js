@@ -226,13 +226,10 @@ function fillImageTags(tagsArray) {
       tagButtons.push(tagButton);
     });
 
-    for (let i = 0; i < elements.imageTagsDivs.length; i += 1) {
-      for (let j = 0; j < tagButtons.length; j += 1) {
-        // first making deep copy otherwise because `appendChild`
-        // moves the node from previous parent to the current one
-        const copyNode = tagButtons[j].cloneNode(true);
-        elements.imageTagsDivs[i].appendChild(copyNode);
-      }
+    for (let i = 0; i < tagButtons.length; i += 1) {
+      // first making deep copy otherwise because `appendChild`
+      // moves the node from previous parent to the current one
+      elements.imageTagsDiv.appendChild(tagButtons[i]);
     }
   }
 }

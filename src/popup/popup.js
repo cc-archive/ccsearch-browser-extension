@@ -78,9 +78,7 @@ elements.closeImageDetailLink.addEventListener('click', () => {
   removeChildNodes(elements.imageLicensePara);
 
   // image tags
-  elements.imageTagsDivs.forEach(imageTagDiv => {
-    removeChildNodes(imageTagDiv);
-  });
+  removeChildNodes(elements.imageTagsDiv);
 
   // related images
   const div = document.createElement('div');
