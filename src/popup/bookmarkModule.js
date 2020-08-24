@@ -225,12 +225,12 @@ export function loadBookmarkImages(numberOfImages, bookmarksEditViewEnabled) {
       window.appObject.bookmarksSectionIdx + numberOfImages,
     );
     window.appObject.bookmarksSectionIdx += numberOfImages;
-    if (bookmarkImageIds.length > 0) {
-      removeNode('bookmarks__initial-info');
-    } else {
+
+    if (bookmarkImageIds.length === 0) {
       removeSpinner(elements.spinnerPlaceholderBookmarks);
       removeLoadMoreButton(elements.loadMoreBookmarkButtonkWrapper);
     }
+
     const segBookmarkIds = {}; // object used to segregate bookmark ids
     // segregate the bookmark image ids into respective container numbers
     for (let i = 0; i < bookmarkImageIds.length; i += 1) {
