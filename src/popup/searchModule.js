@@ -6,7 +6,7 @@ import { removeSpinner } from './spinner';
 // eslint-disable-next-line import/no-cycle
 import toggleBookmark from './bookmarkModule';
 import { checkInternetConnection, primaryGridMasonryObject } from './searchModule.utils';
-import { showNotification, removeChildNodes, restoreInitialContent, activeBookmarkIdContainers } from '../utils';
+import { showNotification, removeChildNodes, activeBookmarkIdContainers } from '../utils';
 
 export function checkInputError(inputText) {
   if (inputText === '') {
@@ -98,9 +98,7 @@ function appendToGrid(msnryObject, fragment, divs, grid) {
 export function checkValidationError(apiResponse) {
   if (Object.prototype.hasOwnProperty.call(apiResponse, 'error_type')) {
     removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);
-    elements.gridPrimary.setAttribute('style', 'position: relative; height: 0px;');
     removeLoaderAnimation();
-    restoreInitialContent('primary');
 
     if (apiResponse.error_type === 'InputError') {
       showNotification('Not a valid search query.', 'negative', 'notification--extension-popup');

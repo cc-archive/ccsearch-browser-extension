@@ -28,28 +28,6 @@ export function removeNode(className) {
   }
 }
 
-export function restoreInitialContent(context) {
-  const sectionContent = document.querySelector(`.section-content--${context}`);
-
-  const sectionContentInitialInfo = document.querySelector(`.section-content--${context} .initial-info`);
-
-  if (!sectionContentInitialInfo) {
-    let initialInfoElement;
-    if (context === 'primary') {
-      initialInfoElement = `<p></p>`;
-    } else if (context === 'bookmarks') {
-      initialInfoElement = `<p class="initial-info bookmarks__initial-info has-text-tomato">
-              No Bookmarks yet
-            </p>`;
-    }
-    const parser = new DOMParser();
-    const parsed = parser.parseFromString(initialInfoElement, 'text/html');
-    const tags = parsed.getElementsByTagName('p');
-
-    sectionContent.querySelector('.row').appendChild(tags[0]);
-  }
-}
-
 export async function fetchSources() {
   const getSourceURL = 'https://api.creativecommons.engineering/v1/sources';
   const data = await fetch(getSourceURL);

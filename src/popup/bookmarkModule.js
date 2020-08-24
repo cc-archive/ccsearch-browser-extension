@@ -16,7 +16,6 @@ import { addSpinner, removeSpinner } from './spinner';
 import {
   showNotification,
   removeNode,
-  restoreInitialContent,
   removeChildNodes,
   keyNames,
   activeBookmarkContainers,
@@ -231,7 +230,6 @@ export function loadBookmarkImages(numberOfImages, bookmarksEditViewEnabled) {
     } else {
       removeSpinner(elements.spinnerPlaceholderBookmarks);
       removeLoadMoreButton(elements.loadMoreBookmarkButtonkWrapper);
-      restoreInitialContent('bookmarks');
     }
     const segBookmarkIds = {}; // object used to segregate bookmark ids
     // segregate the bookmark image ids into respective container numbers
@@ -327,7 +325,6 @@ document.addEventListener('DOMContentLoaded', () => {
         window.appObject.searchingNewCollection = false;
       } else {
         removeNode('no-image-found-mes');
-        restoreInitialContent('primary');
         // elements.clearSearchButton[0].classList.add('display-none');
       }
     }
