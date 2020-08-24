@@ -2,7 +2,8 @@ import { elements } from './base';
 // import { removeSpinner } from './spinner';
 import { getSourceDisplayName } from './helper';
 // eslint-disable-next-line import/no-cycle
-import { addSearchThumbnailsToDOM } from './searchModule';
+import { addSearchThumbnailsToDOM, getTagsUrl, search, removeOldSearchResults } from './searchModule';
+import { addSpinner } from './spinner';
 
 const Masonry = require('masonry-layout');
 
@@ -215,6 +216,20 @@ function fillImageLicense(licenseUrl, licenseArray) {
   elements.imageLicensePara.appendChild(link);
 }
 
+function searchByTag(event) {
+  window.appObject.pageNo = 1;
+  window.appObject.activeSearchContext = 'tag';
+  window.appObject.inputText = '';
+  window.appObject.tagName = event.target.innerText;
+  const url = getTagsUrl(window.appObject.tagName, window.appObject.pageNo);
+  elements.inputField.value = '';
+  removeOldSearchResults();
+  elements.closeImageDetailLink.click();
+  elements.headerLogo.click();
+  addSpinner(elements.spinnerPlaceholderGrid, 'original');
+  search(url);
+}
+
 function fillImageTags(tagsArray) {
   if (tagsArray) {
     const tagButtons = [];
@@ -223,6 +238,7 @@ function fillImageTags(tagsArray) {
       const tagButton = document.createElement('button');
       tagButton.textContent = tagName;
       tagButton.classList.add('button', 'tag');
+      tagButton.addEventListener('click', searchByTag);
       tagButtons.push(tagButton);
     });
 

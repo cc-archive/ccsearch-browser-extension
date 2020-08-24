@@ -33,19 +33,20 @@ export function getRequestUrl(
   userSelectedImageTypeList,
   userSelectedImageSizeList,
   userSelectedAspectRatioList,
-  page,
+  pageNo,
   enableMatureContent,
 ) {
   if (userSelectedUseCaseList.length > 0) {
-    return `https://api.creativecommons.engineering/v1/images?q=${searchQuery}&page=${page}&page_size=20&license_type=${userSelectedUseCaseList}&source=${userSelectedSourceList}&extension=${userSelectedFileTypeList}&categories=${userSelectedImageTypeList}&size=${userSelectedImageSizeList}&aspect_ratio=${userSelectedAspectRatioList}&mature=${enableMatureContent}`;
+    return `https://api.creativecommons.engineering/v1/images?q=${searchQuery}&page=${pageNo}&page_size=20&license_type=${userSelectedUseCaseList}&source=${userSelectedSourceList}&extension=${userSelectedFileTypeList}&categories=${userSelectedImageTypeList}&size=${userSelectedImageSizeList}&aspect_ratio=${userSelectedAspectRatioList}&mature=${enableMatureContent}`;
   }
-  return `https://api.creativecommons.engineering/v1/images?q=${searchQuery}&page=${page}&page_size=20&license=${userSelectedLicenseList}&source=${userSelectedSourceList}&extension=${userSelectedFileTypeList}&categories=${userSelectedImageTypeList}&size=${userSelectedImageSizeList}&aspect_ratio=${userSelectedAspectRatioList}&mature=${enableMatureContent}`;
+  return `https://api.creativecommons.engineering/v1/images?q=${searchQuery}&page=${pageNo}&page_size=20&license=${userSelectedLicenseList}&source=${userSelectedSourceList}&extension=${userSelectedFileTypeList}&categories=${userSelectedImageTypeList}&size=${userSelectedImageSizeList}&aspect_ratio=${userSelectedAspectRatioList}&mature=${enableMatureContent}`;
 }
 
-export function getCollectionsUrl(collectionName, page) {
-  return `https://api.creativecommons.engineering/v1/images?source=${collectionName}&page=${page}&page_size=20`;
+export function getCollectionsUrl(collectionName, pageNo) {
+  return `https://api.creativecommons.engineering/v1/images?source=${collectionName}&page=${pageNo}&page_size=20`;
 }
 
+export function getTagsUrl(tagName, pageNo) {
   return `https://api.creativecommons.engineering/v1/images?tags=${tagName}&page=${pageNo}&page_size=20`;
 }
 

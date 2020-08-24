@@ -8,6 +8,7 @@ import {
   addSearchThumbnailsToDOM,
   removeLoaderAnimation,
   getCollectionsUrl,
+  getTagsUrl,
 } from './searchModule';
 import {
   // licenseAPIQueryStrings,
@@ -302,7 +303,7 @@ async function nextRequest() {
   let url;
   if (window.appObject.activeSearchContext === 'collection') {
     url = getCollectionsUrl(window.appObject.collectionName, window.appObject.pageNo);
-  } else {
+  } else if (window.appObject.activeSearchContext === 'normal') {
     url = getRequestUrl(
       window.appObject.inputText,
       window.appObject.userSelectedUseCaseList,
@@ -315,6 +316,8 @@ async function nextRequest() {
       window.appObject.pageNo,
       window.appObject.enableMatureContent,
     );
+  } else if (window.appObject.activeSearchContext === 'tag') {
+    url = getTagsUrl(window.appObject.tagName, window.appObject.pageNo);
   }
 
   console.log(url);
