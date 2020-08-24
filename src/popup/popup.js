@@ -66,15 +66,15 @@ elements.closeImageDetailLink.addEventListener('click', () => {
   elements.reusePanel.classList.add('is-active');
 
   // share tab
-  removeChildNodes(elements.richTextAttributionPara);
-  removeChildNodes(elements.htmlAttributionTextArea);
-  removeChildNodes(elements.plainTextAttributionPara);
-  removeChildNodes(elements.licenseDescriptionDiv);
+  elements.richTextAttributionPara.innerText = 'Loading...';
+  elements.htmlAttributionTextArea.value = 'Loading...';
+  elements.plainTextAttributionPara.innerText = 'Loading...';
+  elements.licenseDescriptionDiv.innerText = 'Loading...';
 
   // information tab
-  removeChildNodes(elements.imageDimensionPara);
-  removeChildNodes(elements.imageSourcePara);
-  removeChildNodes(elements.imageLicensePara);
+  elements.imageDimensionPara.innerText = 'Loading...';
+  elements.imageSourcePara.innerText = 'Loading...';
+  elements.imageLicensePara.innerText = 'Loading...';
 
   // image tags
   removeChildNodes(elements.imageTagsDiv);

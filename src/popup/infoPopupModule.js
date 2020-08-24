@@ -36,12 +36,13 @@ export function getRichTextAttribution(image) {
   return `${imgLink}${creator}${licenseLink}`;
 }
 
-function embedRichTextAttribution(image, targetNode) {
+function embedRichTextAttribution(image) {
   const richTextAttribution = `<div>${getRichTextAttribution(image)}</div>`;
   const parser = new DOMParser();
   const parsed = parser.parseFromString(richTextAttribution, 'text/html');
   const tags = parsed.getElementsByTagName('div');
-  targetNode.appendChild(tags[0]);
+  elements.richTextAttributionPara.innerText = '';
+  elements.richTextAttributionPara.appendChild(tags[0]);
 }
 
 export function getHtmlAttribution(image) {
@@ -169,6 +170,7 @@ const licenseInfo = {
 };
 
 function fillLicenseInfo(licenseArray) {
+  elements.licenseDescriptionDiv.innerText = '';
   licenseArray.forEach(license => {
     const { licenseIcon, licenseDescription } = licenseInfo[license];
 
@@ -196,11 +198,13 @@ function fillImageSource(foreignLandingUrl, source) {
   link.href = foreignLandingUrl;
   link.target = '_blank';
   link.textContent = getSourceDisplayName(source);
+  elements.imageSourcePara.innerText = '';
   elements.imageSourcePara.appendChild(link);
 }
 
 function fillImageLicense(licenseUrl, licenseArray) {
   // fill license icons first
+  elements.imageLicensePara.innerText = '';
   licenseArray.forEach(license => {
     const { licenseIcon } = licenseInfo[license];
     const iconElement = document.createElement('i');
@@ -301,7 +305,7 @@ function fillImageDetailSection(imageId) {
       elements.imageExternalLink.href = foreignLandingUrl;
 
       // reuse tab
-      embedRichTextAttribution(res, elements.richTextAttributionPara);
+      embedRichTextAttribution(res);
       elements.htmlAttributionTextArea.value = getHtmlAttribution(res);
       elements.plainTextAttributionPara.innerText = res.attribution;
       fillLicenseLink(license, licenseVersion, licenseUrl);
