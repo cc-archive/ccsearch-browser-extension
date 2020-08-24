@@ -242,7 +242,7 @@ elements.applyFiltersButton.addEventListener('click', () => {
 elements.searchButton.addEventListener('click', () => {
   window.appObject.inputText = elements.inputField.value.trim().replace('/[ ]+/g', ' ');
   window.appObject.pageNo = 1;
-  window.appObject.searchByCollectionActivated = false;
+  window.appObject.activeSearchContext = 'normal';
 
   checkInputError(window.appObject.inputText);
   // checkIfSourceFilterIsRendered();
@@ -299,11 +299,11 @@ function restoreAppObjectVariables() {
 restoreAppObjectVariables();
 loadUserDefaults();
 
-async function nextRequest(page) {
+async function nextRequest() {
   let result = [];
   let url;
-  if (window.appObject.searchByCollectionActivated) {
-    url = getCollectionsUrl(window.appObject.collectionName, page, window.appObject.enableMatureContent);
+  if (window.appObject.activeSearchContext === 'collection') {
+    url = getCollectionsUrl(window.appObject.collectionName, window.appObject.pageNo);
   } else {
     url = getRequestUrl(
       window.appObject.inputText,
@@ -317,12 +317,12 @@ async function nextRequest(page) {
       window.appObject.pageNo,
       window.appObject.enableMatureContent,
     );
-
-    console.log(url);
-    const response = await fetch(url);
-    const json = await response.json();
-    result = json.results;
   }
+
+  console.log(url);
+  const response = await fetch(url);
+  const json = await response.json();
+  result = json.results;
   // console.log(result);
   addSearchThumbnailsToDOM(primaryGridMasonryObject, result, elements.gridPrimary);
   window.appObject.pageNo += 1;

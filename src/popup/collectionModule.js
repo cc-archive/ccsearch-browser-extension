@@ -7,15 +7,11 @@ import { addSpinner, removeSpinner } from './spinner';
 
 function searchCollection(event) {
   window.appObject.pageNo = 1;
-  window.appObject.searchByCollectionActivated = true;
+  window.appObject.activeSearchContext = 'collection';
   window.appObject.searchingNewCollection = true;
   window.appObject.inputText = '';
   window.appObject.collectionName = event.target.getAttribute('data-collection-name');
-  const url = getCollectionsUrl(
-    window.appObject.collectionName,
-    window.appObject.pageNo,
-    window.appObject.enableMatureContent,
-  );
+  const url = getCollectionsUrl(window.appObject.collectionName, window.appObject.pageNo);
   const items = {};
   items[window.appObject.collectionName] = true;
   elements.inputField.value = '';

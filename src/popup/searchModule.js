@@ -42,8 +42,8 @@ export function getRequestUrl(
   return `https://api.creativecommons.engineering/v1/images?q=${searchQuery}&page=${page}&page_size=20&license=${userSelectedLicenseList}&source=${userSelectedSourceList}&extension=${userSelectedFileTypeList}&categories=${userSelectedImageTypeList}&size=${userSelectedImageSizeList}&aspect_ratio=${userSelectedAspectRatioList}&mature=${enableMatureContent}`;
 }
 
-export function getCollectionsUrl(collectionName, page, enableMatureContent) {
-  return `https://api.creativecommons.engineering/v1/images?source=${collectionName}&page=${page}&page_size=20&mature=${enableMatureContent}`;
+export function getCollectionsUrl(collectionName, page) {
+  return `https://api.creativecommons.engineering/v1/images?source=${collectionName}&page=${page}&page_size=20`;
 }
 
 function showNoResultFoundMessage() {

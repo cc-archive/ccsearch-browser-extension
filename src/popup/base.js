@@ -131,7 +131,7 @@ export function initGlobalObject() {
 
   // store the name of the current active section
   window.appObject.activeSection = 'search';
-  window.appObject.searchByCollectionActivated = false;
+  window.appObject.activeSearchContext = 'normal'; // possible values -> normal, collection, tag
   window.appObject.collectionName = '';
 
   window.appObject.bookmarksEditViewEnabled = false;

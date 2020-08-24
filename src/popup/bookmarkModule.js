@@ -321,7 +321,7 @@ document.addEventListener('DOMContentLoaded', () => {
       primaryGridMasonryObject.layout(); // layout the masonry grid
       removeBookmarkImages();
 
-      if (window.appObject.searchByCollectionActivated === true && window.appObject.searchingNewCollection === true) {
+      if (window.appObject.activeSearchContext === 'collection' && window.appObject.searchingNewCollection === true) {
         removeNode('no-image-found-mes');
         removeOldSearchResults();
         window.appObject.searchingNewCollection = false;
