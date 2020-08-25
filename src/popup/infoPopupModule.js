@@ -4,6 +4,7 @@ import { getSourceDisplayName } from './helper';
 // eslint-disable-next-line import/no-cycle
 import { addSearchThumbnailsToDOM, getTagsUrl, search, removeOldSearchResults } from './searchModule';
 import { addSpinner } from './spinner';
+import { removeChildNodes } from '../utils';
 
 const Masonry = require('masonry-layout');
 
@@ -228,6 +229,7 @@ function searchByTag(event) {
   const url = getTagsUrl(window.appObject.tagName, window.appObject.pageNo);
   elements.inputField.value = '';
   removeOldSearchResults();
+  window.appObject.clickedImageTag = true;
   elements.closeImageDetailLink.click();
   elements.headerLogo.click();
   addSpinner(elements.spinnerPlaceholderPrimary, 'original');
@@ -254,6 +256,41 @@ function fillImageTags(tagsArray) {
   }
 }
 
+export function resetImageDetailSection() {
+  // remove eventlisteners from download buttons to avoid multiple downloads.
+  for (let i = 0; i < elements.downloadImageAttributionButton.length; i += 1) {
+    elements.downloadImageAttributionButton[i].removeEventListener('click', handleImageAttributionDownload);
+  }
+  // making reuse tab active for later
+  const imageDetailNavTabs = elements.imageDetailNav.getElementsByTagName('li');
+  for (let i = 0; i < 3; i += 1) {
+    imageDetailNavTabs[i].classList.remove('is-active');
+    elements.imageDetailTabsPanels[i].classList.remove('is-active');
+  }
+  elements.reuseTab.classList.add('is-active');
+  elements.reusePanel.classList.add('is-active');
+
+  // share tab
+  elements.richTextAttributionPara.innerText = 'Loading...';
+  elements.htmlAttributionTextArea.value = 'Loading...';
+  elements.plainTextAttributionPara.innerText = 'Loading...';
+  elements.licenseDescriptionDiv.innerText = 'Loading...';
+
+  // information tab
+  elements.imageDimensionPara.innerText = 'Loading...';
+  elements.imageSourcePara.innerText = 'Loading...';
+  elements.imageLicensePara.innerText = 'Loading...';
+
+  // image tags
+  removeChildNodes(elements.imageTagsDiv);
+
+  // related images
+  const div = document.createElement('div');
+  div.classList.add('gutter-sizer');
+  removeChildNodes(elements.gridRelatedImages);
+  elements.gridRelatedImages.appendChild(div);
+}
+
 function fillRelatedImages(relatedUrl) {
   fetch(relatedUrl)
     .then(data => data.json())
@@ -274,7 +311,7 @@ function fillLicenseLink(license, licenseVersion, licenseUrl) {
   elements.licenseLinkCaption.setAttribute('href', licenseUrl);
 }
 
-function fillImageDetailSection(imageId) {
+export function fillImageDetailSection(imageId) {
   const url = `https://api.creativecommons.engineering/v1/images/${imageId}`;
 
   fetch(url)
@@ -332,6 +369,11 @@ function fillImageDetailSection(imageId) {
 
 export function activatePopup(imageThumbnail) {
   // addSpinner(elements.spinnerPlaceholderPopup, 'original');
+  resetImageDetailSection();
+  elements.buttonBackToTop.click();
+
+  window.appObject.imageDetailStack.push(imageThumbnail.id);
+
   fillImageDetailSection(imageThumbnail.id);
   // attributionTabLink.click();
   elements.header.classList.add('display-none');

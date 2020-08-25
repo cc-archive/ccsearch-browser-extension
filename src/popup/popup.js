@@ -21,14 +21,13 @@ import {
   // imageSizeAPIQueryStrings,
 } from './helper';
 import loadUserDefaults from './filterModule';
-import { handleImageAttributionDownload } from './infoPopupModule';
+import { fillImageDetailSection, resetImageDetailSection } from './infoPopupModule';
 import { addSpinner, removeSpinner } from './spinner';
 import {
   showNotification,
   getLatestSources,
   allowCheckingOneTypeOfCheckbox,
   enableTabSwitching,
-  removeChildNodes,
   loadFilterCheckboxesFromStorage,
   // activeBookmarkContainers,
 } from '../utils';
@@ -51,44 +50,21 @@ elements.imageDetailNav.getElementsByTagName('ul')[0].addEventListener('click', 
 elements.attributionTab.firstElementChild.getElementsByTagName('ul')[0].addEventListener('click', enableTabSwitching);
 
 elements.closeImageDetailLink.addEventListener('click', () => {
-  // remove eventlisteners from download buttons to avoid multiple downloads.
-  for (let i = 0; i < elements.downloadImageAttributionButton.length; i += 1) {
-    elements.downloadImageAttributionButton[i].removeEventListener('click', handleImageAttributionDownload);
+  resetImageDetailSection();
+  if (window.appObject.clickedImageTag) {
+    window.appObject.imageDetailStack.clear();
+    window.appObject.clickedImageTag = false;
+  } else window.appObject.imageDetailStack.pop();
+
+  if (window.appObject.imageDetailStack.isEmpty()) {
+    elements.header.classList.remove('display-none');
+    // elements.bookmarksSection.classList.add('display-none');
+    elements.sectionMain.classList.remove('display-none');
+    elements.imageDetailSection.classList.add('display-none');
+  } else {
+    elements.buttonBackToTop.click();
+    fillImageDetailSection(window.appObject.imageDetailStack.top());
   }
-
-  // making reuse tab active for later
-  const imageDetailNavTabs = elements.imageDetailNav.getElementsByTagName('li');
-  for (let i = 0; i < 3; i += 1) {
-    imageDetailNavTabs[i].classList.remove('is-active');
-    elements.imageDetailTabsPanels[i].classList.remove('is-active');
-  }
-  elements.reuseTab.classList.add('is-active');
-  elements.reusePanel.classList.add('is-active');
-
-  // share tab
-  elements.richTextAttributionPara.innerText = 'Loading...';
-  elements.htmlAttributionTextArea.value = 'Loading...';
-  elements.plainTextAttributionPara.innerText = 'Loading...';
-  elements.licenseDescriptionDiv.innerText = 'Loading...';
-
-  // information tab
-  elements.imageDimensionPara.innerText = 'Loading...';
-  elements.imageSourcePara.innerText = 'Loading...';
-  elements.imageLicensePara.innerText = 'Loading...';
-
-  // image tags
-  removeChildNodes(elements.imageTagsDiv);
-
-  // related images
-  const div = document.createElement('div');
-  div.classList.add('gutter-sizer');
-  removeChildNodes(elements.gridRelatedImages);
-  elements.gridRelatedImages.appendChild(div);
-
-  elements.header.classList.remove('display-none');
-  // elements.bookmarksSection.classList.add('display-none');
-  elements.sectionMain.classList.remove('display-none');
-  elements.imageDetailSection.classList.add('display-none');
 
   // lays out images in masonry grid again
   bookmarksGridMasonryObject.layout();

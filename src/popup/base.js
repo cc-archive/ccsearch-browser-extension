@@ -103,6 +103,33 @@ export const constants = {
   extensionBookmarkLimit: 300,
 };
 
+class Stack {
+  constructor() {
+    this.stack = [];
+  }
+
+  push(element) {
+    this.stack.push(element);
+  }
+
+  pop() {
+    if (this.stack.length === 0) return 'Underflow';
+    return this.stack.pop();
+  }
+
+  top() {
+    return this.stack[this.stack.length - 1];
+  }
+
+  isEmpty() {
+    return this.stack.length === 0;
+  }
+
+  clear() {
+    this.stack = [];
+  }
+}
+
 export function initGlobalObject() {
   window.appObject = {}; // global object to store the application variables
   window.appObject.inputText = '';
@@ -133,6 +160,9 @@ export function initGlobalObject() {
   window.appObject.activeSection = 'search';
   window.appObject.activeSearchContext = 'normal'; // possible values -> normal, collection, tag
   window.appObject.collectionName = '';
+  window.appObject.clickedImageTag = false;
 
   window.appObject.bookmarksEditViewEnabled = false;
+
+  window.appObject.imageDetailStack = new Stack();
 }
