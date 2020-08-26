@@ -1,111 +1,45 @@
-.container {
-  width: 90%;
-  margin: 0 auto;
-}
-
 .section-search {
-  margin-top: 4%;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
   position: relative;
-  border: 1.2px solid $color-primary-light;
-  input[type='text'] {
-    width: 80%;
-    font-size: 130%;
-    background: $color-white;
-    padding: 2%;
-    transition: all 0.3s ease-in-out;
-    border: none;
-    &:focus {
-      outline: none;
-    }
+
+  .icon.search {
+    z-index: 2;
+    color: $color-gray;
+    position: absolute;
+    left: 0.9rem;
   }
 
-  i {
-    position: absolute;
-    padding: 0;
-    margin: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    color: $color-secondary-light;
+  input[type='text'] {
+    width: 380px;
+    margin-right: -0.5rem;
+    padding-left: 2.3rem;
+  }
 
-    &#search-icon {
-      right: 4%;
-      font-size: 1.57rem;
-    }
-
-    &#filter-icon {
-      right: 10.5%;
-    }
-
-    &.activate-filter {
-      color: $color-primary-light;
-
-      &:hover {
-        color: $color-primary-dark;
-      }
-    }
-
-    &.clear-search-button {
-      color: $color-primary-light;
-      right: 16%;
-      font-size: 20px;
-
-      &:hover {
-        color: $color-primary-dark;
-      }
-    }
-    &:hover {
-      color: $color-secondary-dark;
-      cursor: pointer;
-    }
+  #filter-button {
+    margin-left: auto;
   }
 }
 
 .section-filter {
   width: 100%;
-  height: 0rem;
-  // display: none;
-  opacity: 0;
-  visibility: hidden; //using this because display:none remove the elements from
+  // visibility: hidden; //using this because display:none remove the elements from
   // the DOM itself, so filters were not applied till the users click the filter
   // icons and the elements were loaded to the DOM.
-  position: relative;
+  // position: relative;
 
-  &--active {
-    height: auto;
-    display: block;
-    visibility: visible;
-    opacity: 1;
-    align-items: center;
-    margin-top: 0.7rem;
-  }
-
-  &__source-loading-mes {
-    font-size: $size-normal;
-    color: $color-black;
-    padding-top: 6px;
-  }
-
-  &__filter-wrapper {
-    display: grid;
-
-    grid-template-rows: 2rem 2rem;
-    grid-template-columns: 2fr 1.5fr 2fr;
-    column-gap: 1rem;
-  }
-
-  &__filter-button {
+  &__head {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+  }
 
-    &--reset-filter-container {
-      display: inline-block;
-      margin: 0.7rem 1rem 0rem;
-    }
+  input[type='checkbox'] {
+    margin-right: 5px;
+  }
 
-    &--apply-filter-container {
-      display: inline-block;
-      margin: 0.7rem 1rem 0rem;
-    }
+  label .icon {
+    color: #000;
   }
 }
 

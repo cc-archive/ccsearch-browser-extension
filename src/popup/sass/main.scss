@@ -2,19 +2,16 @@
 @import 'abstract/mixins';
 
 @import 'base/base';
-@import 'base/typography';
 @import 'base/utilities';
 
 @import 'layout/header';
 @import 'layout/search';
 @import 'layout/main';
-@import 'layout/grid';
+@import 'layout/bookmarks';
+@import 'layout/imagedetail';
+@import 'layout/collections';
 
 @import 'components/spinner';
-@import 'components/popup';
-@import 'components/bookmarks';
-@import 'components/collections';
-@import 'components/snackbar';
+@import 'components/notification';
 @import 'components/darkmode';
 @import 'components/buttons';
-@import 'components/modal';

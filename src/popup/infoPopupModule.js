@@ -1,9 +1,23 @@
-import { elements, attributionTabLink } from './base';
-import { addSpinner, removeSpinner } from './spinner';
+import { elements } from './base';
+// import { removeSpinner } from './spinner';
+import { getSourceDisplayName } from './helper';
+// eslint-disable-next-line import/no-cycle
+import { addSearchThumbnailsToDOM, getTagsUrl, search, removeOldSearchResults } from './searchModule';
+import { addSpinner } from './spinner';
 import { removeChildNodes } from '../utils';
-import { getSourceDisplayName, unicodeToString } from './helper';
+
+const Masonry = require('masonry-layout');
 
 const download = require('downloadjs');
+
+const relatedImagesGridMasonryObject = new Masonry(elements.gridRelatedImages, {
+  // options
+  itemSelector: '.grid-item',
+  columnWidth: '.grid-item',
+  gutter: '.gutter-sizer',
+  percentPosition: true,
+  transitionDuration: '0',
+});
 
 export function getRichTextAttribution(image) {
   if (!image) {
@@ -23,12 +37,13 @@ export function getRichTextAttribution(image) {
   return `${imgLink}${creator}${licenseLink}`;
 }
 
-function embedRichTextAttribution(image, targetNode) {
+function embedRichTextAttribution(image) {
   const richTextAttribution = `<div>${getRichTextAttribution(image)}</div>`;
   const parser = new DOMParser();
   const parsed = parser.parseFromString(richTextAttribution, 'text/html');
   const tags = parsed.getElementsByTagName('div');
-  targetNode.appendChild(tags[0]);
+  elements.richTextAttributionPara.innerText = '';
+  elements.richTextAttributionPara.appendChild(tags[0]);
 }
 
 export function getHtmlAttribution(image) {
@@ -62,7 +77,7 @@ export function getHtmlAttribution(image) {
   return `<p style="font-size: 0.9rem;font-style: italic;">${imgLink}${creator}${licenseLink}${licenseImgLink}</p>`;
 }
 
-export function getPlainAttribution(image) {
+export function getAttributionForTextFile(image) {
   if (!image) {
     return '';
   }
@@ -100,7 +115,7 @@ function downloadImage(imageUrl, imageName) {
 }
 
 function downloadImageAttribution(image) {
-  download(getPlainAttribution(image), `${image.title}.txt`, 'text/plain');
+  download(getAttributionForTextFile(image), `${image.title}.txt`, 'text/plain');
 }
 
 export function handleImageDownload(e) {
@@ -128,37 +143,175 @@ function getTumblrShareLink(sourceLink, imageLink) {
   return `http://tumblr.com/widgets/share/tool?canonicalUrl=${sourceLink}&posttype=photo&content=${imageLink}`;
 }
 
-function getPopupCreatorChildNode(creatorUrl, creator) {
-  // return a paragraph tag if creatorURL not present
-  if (creatorUrl === '#') {
-    const paragraph = document.createElement('p');
-    paragraph.textContent = creator;
-    return paragraph;
-  }
-  const link = document.createElement('a');
-  link.href = creatorUrl;
-  link.target = '_blank';
-  link.textContent = creator;
-  return link;
+const licenseInfo = {
+  by: {
+    licenseIcon: 'cc-by',
+    licenseDescription: 'Credit the creator.',
+  },
+  nc: {
+    licenseIcon: 'cc-nc',
+    licenseDescription: 'Commercial use not permitted',
+  },
+  sa: {
+    licenseIcon: 'cc-sa',
+    licenseDescription: 'Share adaptations under the same terms.',
+  },
+  nd: {
+    licenseIcon: 'cc-nd',
+    licenseDescription: 'No derivates or modifications permitted.',
+  },
+  pdm: {
+    licenseIcon: 'cc-pd',
+    licenseDescription: 'This work is marked as being in the public domain.',
+  },
+  cc0: {
+    licenseIcon: 'cc-zero',
+    licenseDescription: 'This work has been marked as dedicated to the public domain.',
+  },
+};
+
+function fillLicenseInfo(licenseArray) {
+  elements.licenseDescriptionDiv.innerText = '';
+  licenseArray.forEach(license => {
+    const { licenseIcon, licenseDescription } = licenseInfo[license];
+
+    const iconElement = document.createElement('i');
+    iconElement.classList.add('icon', 'license-logo', licenseIcon);
+
+    const licenseDescriptionSpanElement = document.createElement('span');
+    licenseDescriptionSpanElement.innerText = licenseDescription;
+
+    const divElement = document.createElement('div');
+
+    divElement.appendChild(iconElement);
+    divElement.appendChild(licenseDescriptionSpanElement);
+
+    elements.licenseDescriptionDiv.appendChild(divElement);
+  });
 }
 
-function getPopupSourceChildNode(foreignLandingUrl, source) {
+function fillImageDimension(height, width) {
+  elements.imageDimensionPara.innerText = `${height} × ${width} pixels`;
+}
+
+function fillImageSource(foreignLandingUrl, source) {
   const link = document.createElement('a');
   link.href = foreignLandingUrl;
   link.target = '_blank';
   link.textContent = getSourceDisplayName(source);
-  return link;
+  elements.imageSourcePara.innerText = '';
+  elements.imageSourcePara.appendChild(link);
 }
 
-function getPopupLicenseChildNode(licenseUrl, license) {
+function fillImageLicense(licenseUrl, licenseArray) {
+  // fill license icons first
+  elements.imageLicensePara.innerText = '';
+  licenseArray.forEach(license => {
+    const { licenseIcon } = licenseInfo[license];
+    const iconElement = document.createElement('i');
+    iconElement.classList.add('icon', 'license-logo', licenseIcon);
+    elements.imageLicensePara.appendChild(iconElement);
+  });
+
+  // license link
   const link = document.createElement('a');
   link.href = licenseUrl;
   link.target = '_blank';
-  link.textContent = license;
-  return link;
+  link.textContent = `CC ${licenseArray.join('-').toUpperCase()}`;
+  elements.imageLicensePara.appendChild(link);
 }
 
-function getImageData(imageId) {
+function searchByTag(event) {
+  window.appObject.pageNo = 1;
+  window.appObject.activeSearchContext = 'tag';
+  window.appObject.inputText = '';
+  window.appObject.tagName = event.target.innerText;
+  const url = getTagsUrl(window.appObject.tagName, window.appObject.pageNo);
+  elements.inputField.value = '';
+  removeOldSearchResults();
+  window.appObject.clickedImageTag = true;
+  elements.closeImageDetailLink.click();
+  elements.headerLogo.click();
+  addSpinner(elements.spinnerPlaceholderPrimary, 'original');
+  search(url);
+}
+
+function fillImageTags(tagsArray) {
+  if (tagsArray) {
+    const tagButtons = [];
+    tagsArray.forEach(tag => {
+      const tagName = tag.name;
+      const tagButton = document.createElement('button');
+      tagButton.textContent = tagName;
+      tagButton.classList.add('button', 'tag');
+      tagButton.addEventListener('click', searchByTag);
+      tagButtons.push(tagButton);
+    });
+
+    for (let i = 0; i < tagButtons.length; i += 1) {
+      // first making deep copy otherwise because `appendChild`
+      // moves the node from previous parent to the current one
+      elements.imageTagsDiv.appendChild(tagButtons[i]);
+    }
+  }
+}
+
+export function resetImageDetailSection() {
+  // remove eventlisteners from download buttons to avoid multiple downloads.
+  for (let i = 0; i < elements.downloadImageAttributionButton.length; i += 1) {
+    elements.downloadImageAttributionButton[i].removeEventListener('click', handleImageAttributionDownload);
+  }
+  // making reuse tab active for later
+  const imageDetailNavTabs = elements.imageDetailNav.getElementsByTagName('li');
+  for (let i = 0; i < 3; i += 1) {
+    imageDetailNavTabs[i].classList.remove('is-active');
+    elements.imageDetailTabsPanels[i].classList.remove('is-active');
+  }
+  elements.reuseTab.classList.add('is-active');
+  elements.reusePanel.classList.add('is-active');
+
+  // share tab
+  elements.richTextAttributionPara.innerText = 'Loading...';
+  elements.htmlAttributionTextArea.value = 'Loading...';
+  elements.plainTextAttributionPara.innerText = 'Loading...';
+  elements.licenseDescriptionDiv.innerText = 'Loading...';
+
+  // information tab
+  elements.imageDimensionPara.innerText = 'Loading...';
+  elements.imageSourcePara.innerText = 'Loading...';
+  elements.imageLicensePara.innerText = 'Loading...';
+
+  // image tags
+  removeChildNodes(elements.imageTagsDiv);
+
+  // related images
+  const div = document.createElement('div');
+  div.classList.add('gutter-sizer');
+  removeChildNodes(elements.gridRelatedImages);
+  elements.gridRelatedImages.appendChild(div);
+}
+
+function fillRelatedImages(relatedUrl) {
+  fetch(relatedUrl)
+    .then(data => data.json())
+    .then(res => {
+      // checkValidationError(res);
+      const resultArray = res.results;
+
+      // checkResultLength(resultArray);
+      addSearchThumbnailsToDOM(relatedImagesGridMasonryObject, resultArray, elements.gridRelatedImages);
+
+      // window.appObject.pageNo += 1;
+    });
+}
+
+function fillLicenseLink(license, licenseVersion, licenseUrl) {
+  elements.licenseLink.innerText = `CC ${license.toUpperCase()} ${licenseVersion}`;
+  elements.licenseLink.setAttribute('href', licenseUrl);
+  elements.licenseLinkCaption.setAttribute('href', licenseUrl);
+}
+
+export function fillImageDetailSection(imageId) {
   const url = `https://api.creativecommons.engineering/v1/images/${imageId}`;
 
   fetch(url)
@@ -168,57 +321,63 @@ function getImageData(imageId) {
         source,
         foreign_landing_url: foreignLandingUrl,
         license_url: licenseUrl,
+        license_version: licenseVersion,
+        related_url: relatedUrl,
         license,
+        height,
+        width,
         id,
         url: imageUrl,
+        tags: tagsArray,
       } = res;
-      const title = unicodeToString(res.title);
-      let { creator, creator_url: creatorUrl } = res;
-      if (!creatorUrl) {
-        creatorUrl = '#';
+      const licenseArray = license.split('-');
+
+      // common head (download button and external link)
+      for (let i = 0; i < elements.downloadImageAttributionButton.length; i += 1) {
+        // adding arguments for event handler to the target itself
+        elements.downloadImageAttributionButton[i].image = res;
+        elements.downloadImageAttributionButton[i].title = `${res.title}.${res.url.split('.').pop()}`;
+        elements.downloadImageAttributionButton[i].addEventListener('click', handleImageAttributionDownload);
       }
-      if (!creator) {
-        creator = 'Not Available';
-      }
-      // adding arguments for event handlers to the target itself
-      elements.downloadImageButton.imageUrl = res.url;
-      elements.downloadImageButton.title = `${res.title}.${res.url.split('.').pop()}`;
-      elements.downloadImageAttributionButton.image = res;
-      elements.downloadImageAttributionButton.title = `${res.title}.${res.url.split('.').pop()}`;
-      const popupTitle = document.querySelector('.info__content-title');
-      const popupCreator = document.querySelector('.info__content-creator');
-      const popupSource = document.querySelector('.info__content-source');
-      const popupLicense = document.querySelector('.info__content-license');
-      const attributionRichTextPara = document.getElementById('attribution-rich-text');
-      const attributionHtmlTextArea = document.getElementById('attribution-html');
-      // filling the info tab
-      popupTitle.textContent = `${title}`;
-      removeChildNodes(popupCreator);
-      popupCreator.appendChild(getPopupCreatorChildNode(creatorUrl, creator));
-      removeChildNodes(popupSource);
-      popupSource.appendChild(getPopupSourceChildNode(foreignLandingUrl, source));
-      removeChildNodes(popupLicense);
-      popupLicense.appendChild(getPopupLicenseChildNode(licenseUrl, license.toUpperCase()));
-      removeChildNodes(attributionRichTextPara);
-      embedRichTextAttribution(res, attributionRichTextPara);
-      attributionHtmlTextArea.value = getHtmlAttribution(res);
-      elements.downloadImageButton.addEventListener('click', handleImageDownload);
-      elements.downloadImageAttributionButton.addEventListener('click', handleImageAttributionDownload);
+      elements.imageExternalLink.href = foreignLandingUrl;
+
+      // reuse tab
+      embedRichTextAttribution(res);
+      elements.htmlAttributionTextArea.value = getHtmlAttribution(res);
+      elements.plainTextAttributionPara.innerText = res.attribution;
+      fillLicenseLink(license, licenseVersion, licenseUrl);
+      fillLicenseInfo(licenseArray);
+
+      // information tab
+      fillImageDimension(height, width);
+      fillImageSource(foreignLandingUrl, source);
+      fillImageLicense(licenseUrl, licenseArray);
+
       // share tab
       elements.facebookShareButton.href = getFacebookShareLink(id);
       elements.twitterShareButton.href = getTwitterShareLink(foreignLandingUrl);
       elements.pinterestShareButton.href = getPinterestShareLink(foreignLandingUrl, imageUrl);
       elements.tumblrShareButton.href = getTumblrShareLink(foreignLandingUrl, imageUrl);
-      removeSpinner(elements.spinnerPlaceholderPopup);
-      elements.popupMain.style.opacity = 1;
-      elements.popupMain.style.visibility = 'visible';
+
+      // common
+      fillImageTags(tagsArray);
+      fillRelatedImages(relatedUrl);
+
+      // removeSpinner(elements.spinnerPlaceholderPopup);
     });
 }
 
 export function activatePopup(imageThumbnail) {
-  elements.popup.style.opacity = 1;
-  elements.popup.style.visibility = 'visible';
-  addSpinner(elements.spinnerPlaceholderPopup, 'original');
-  getImageData(imageThumbnail.id);
-  attributionTabLink.click();
+  // addSpinner(elements.spinnerPlaceholderPopup, 'original');
+  resetImageDetailSection();
+  elements.buttonBackToTop.click();
+
+  window.appObject.imageDetailStack.push(imageThumbnail.id);
+
+  fillImageDetailSection(imageThumbnail.id);
+  // attributionTabLink.click();
+  elements.header.classList.add('display-none');
+  // elements.bookmarksSection.classList.add('display-none');
+  elements.sectionMain.classList.add('display-none');
+  elements.imageDetailSection.classList.remove('display-none');
 }

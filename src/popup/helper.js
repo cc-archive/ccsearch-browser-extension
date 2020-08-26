@@ -221,7 +221,8 @@ const displayNames = {
 };
 
 export function getSourceDisplayName(sourceName) {
-  return displayNames[sourceName];
+  if (Object.keys(displayNames).indexOf(sourceName) !== -1) return displayNames[sourceName];
+  return sourceName;
 }
 
 export function removeClassFromElements(elemArray, className) {

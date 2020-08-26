@@ -11,7 +11,11 @@ test('testing checkInputError', () => {
   }).toThrow('No search query provided');
 
   expect(utils.showNotification).toHaveBeenCalled();
-  expect(utils.showNotification).toHaveBeenCalledWith('No search query provided', 'negative', 'snackbar-bookmarks');
+  expect(utils.showNotification).toHaveBeenCalledWith(
+    'No search query provided',
+    'negative',
+    'notification--extension-popup',
+  );
 
   // testing checkInputError with a non-empty search
   expect(() => {

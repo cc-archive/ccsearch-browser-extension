@@ -7,26 +7,13 @@ import {
   keyNames,
   activeBookmarkIdContainers,
   activeBookmarkContainers,
+  loadFilterCheckboxesFromStorage,
 } from '../utils';
 import { constants } from '../popup/base';
 
-export function restoreFilters(inputElements) {
-  for (let i = 0; i < inputElements.length; i += 1) {
-    const { id } = inputElements[i];
-    chrome.storage.sync.get({ [id]: false }, items => {
-      // default value is false
-      document.getElementById(id).checked = items[id];
-    });
-    // chrome.storage.sync.get(null, items => {
-    //   console.log('all the storage items');
-    //   console.log(items);
-    // });
-  }
-}
-
 function addSourcesToDom(sources) {
-  const { sourceWrapper } = elements;
-  sourceWrapper.innerText = '';
+  const { sourceCheckboxesWrapper } = elements;
+  sourceCheckboxesWrapper.innerText = '';
 
   Object.keys(sources).forEach(key => {
     const input = document.createElement('input');
@@ -40,48 +27,50 @@ function addSourcesToDom(sources) {
 
     const breakLine = document.createElement('br');
 
-    sourceWrapper.appendChild(input);
-    sourceWrapper.appendChild(label);
-    sourceWrapper.appendChild(breakLine);
+    sourceCheckboxesWrapper.appendChild(input);
+    sourceCheckboxesWrapper.appendChild(label);
+    sourceCheckboxesWrapper.appendChild(breakLine);
   });
-  restoreFilters(elements.sourceInputs);
+  loadFilterCheckboxesFromStorage(elements.sourceCheckboxesWrapper);
+}
+
+function saveSingleFilter(wrapperElement) {
+  const filterStorageKey = wrapperElement.dataset.storageKeyName;
+  const filterCheckboxElements = wrapperElement.getElementsByTagName('input');
+
+  chrome.storage.sync.get(filterStorageKey, items => {
+    for (let i = 0; i < filterCheckboxElements.length; i += 1) {
+      const checkbox = filterCheckboxElements[i];
+      items[filterStorageKey][checkbox.id] = checkbox.checked;
+    }
+
+    chrome.storage.sync.set(items, () => {
+      showNotification('Settings saved!', 'positive', 'notification--options');
+    });
+  });
 }
 
 export async function init() {
-  restoreFilters(elements.useCaseInputs);
-  restoreFilters(elements.licenseInputs);
-  restoreFilters(elements.fileTypeInputs);
-  restoreFilters(elements.imageTypeInputs);
-  restoreFilters(elements.imageSizeInputs);
-  restoreFilters(elements.aspectRatioInputs);
+  loadFilterCheckboxesFromStorage(elements.useCaseCheckboxesWrapper);
+  loadFilterCheckboxesFromStorage(elements.licenseCheckboxesWrapper);
+  loadFilterCheckboxesFromStorage(elements.fileTypeCheckboxesWrapper);
+  loadFilterCheckboxesFromStorage(elements.imageTypeCheckboxesWrapper);
+  loadFilterCheckboxesFromStorage(elements.imageSizeCheckboxesWrapper);
+  loadFilterCheckboxesFromStorage(elements.aspectRatioCheckboxesWrapper);
+  loadFilterCheckboxesFromStorage(elements.showMatureContentCheckboxWrapper);
   const sources = await getLatestSources();
   addSourcesToDom(sources);
 }
 
-export function saveSingleFilter(inputElements) {
-  for (let i = 0; i < inputElements.length; i += 1) {
-    const { id } = inputElements[i];
-    const value = inputElements[i].checked;
-    chrome.storage.sync.set(
-      {
-        [id]: value, // using ES6 to use variable as key of object
-      },
-      () => {
-        showNotification('Settings saved!', 'positive', 'snackbar-options');
-        // console.log(`${id} has been set to ${value}`);
-      },
-    );
-  }
-}
-
 export function saveFiltersOptions() {
-  saveSingleFilter(elements.useCaseInputs);
-  saveSingleFilter(elements.licenseInputs);
-  saveSingleFilter(elements.fileTypeInputs);
-  saveSingleFilter(elements.imageTypeInputs);
-  saveSingleFilter(elements.imageSizeInputs);
-  saveSingleFilter(elements.aspectRatioInputs);
-  saveSingleFilter(elements.sourceInputs);
+  saveSingleFilter(elements.useCaseCheckboxesWrapper);
+  saveSingleFilter(elements.licenseCheckboxesWrapper);
+  saveSingleFilter(elements.fileTypeCheckboxesWrapper);
+  saveSingleFilter(elements.imageTypeCheckboxesWrapper);
+  saveSingleFilter(elements.imageSizeCheckboxesWrapper);
+  saveSingleFilter(elements.aspectRatioCheckboxesWrapper);
+  saveSingleFilter(elements.sourceCheckboxesWrapper);
+  saveSingleFilter(elements.showMatureContentCheckboxWrapper);
 }
 
 export function addBookmarksToStorage(newBookmarksObject, showConfirmation = true) {
@@ -101,7 +90,7 @@ export function addBookmarksToStorage(newBookmarksObject, showConfirmation = tru
       showNotification(
         'Error: First please open the extension popup to trigger the automatic update of bookmarks section. It will only take a few minutes',
         'negative',
-        'snackbar-options',
+        'notification--options',
       );
       throw new Error('Bookmarks data structures not updated');
     }
@@ -119,7 +108,7 @@ export function addBookmarksToStorage(newBookmarksObject, showConfirmation = tru
       showNotification(
         `Error: Cannot import because bookmark limit of ${constants.extensionBookmarkLimit} would be surpassed`,
         'negative',
-        'snackbar-options',
+        'notification--options',
         5000,
       );
       throw new Error('Cannot store bookmarks over bookmark limit');
@@ -162,11 +151,11 @@ export function addBookmarksToStorage(newBookmarksObject, showConfirmation = tru
     console.log(items);
     chrome.storage.sync.set(items);
 
-    if (showConfirmation) showNotification('Bookmarks updated!', 'positive', 'snackbar-options');
+    if (showConfirmation) showNotification('Bookmarks updated!', 'positive', 'notification--options');
   });
 }
 
-export async function addLegacyBookmarksToStorage(bookmarksArray) {
+async function addLegacyBookmarksToStorage(bookmarksArray) {
   const newKeyNames = keyNames;
   newKeyNames.push('bookmarks'); // also checking for legacy "bookmarks" key
   chrome.storage.sync.get(newKeyNames, async items => {
@@ -184,7 +173,7 @@ export async function addLegacyBookmarksToStorage(bookmarksArray) {
       showNotification(
         'Error: First please open the extension popup to trigger the automatic update of bookmarks section. It will only take a few minutes',
         'negative',
-        'snackbar-options',
+        'notification--options',
         5500,
       );
       throw new Error('Bookmarks data structures not updated');
@@ -231,11 +220,18 @@ export async function addLegacyBookmarksToStorage(bookmarksArray) {
     addBookmarksToStorage(newBookmarksObject); // add left out bookmarks to storage
     document.querySelector('.notification__options--body button').disabled = false;
     document.querySelector('.notification__options--body button').classList.remove('is-loading');
-    showNotification('Bookmarks updated!', 'positive', 'snackbar-options');
+    showNotification('Bookmarks updated!', 'positive', 'notification--options');
   });
 }
 
-export function toggleAccordion() {
-  this.classList.toggle('active');
-  this.nextElementSibling.classList.toggle('active');
+export function handleLegacyBookmarksFile(bookmarksArray) {
+  try {
+    if (!bookmarksArray.length > 0) {
+      showNotification('Error: No bookmarks found in the file', 'negative', 'notification--options');
+    } else {
+      addLegacyBookmarksToStorage(bookmarksArray);
+    }
+  } catch (error) {
+    showNotification('Error in parsing file', 'negative', 'notification--options');
+  }
 }

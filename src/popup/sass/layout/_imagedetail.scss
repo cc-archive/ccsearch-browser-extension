@@ -1,0 +1,87 @@
+.section-image-detail {
+  // section navigation
+  .tabs.image-detail__nav {
+    margin-bottom: 0 !important;
+    margin-top: $space-normal;
+    margin-right: $space-big;
+    position: relative;
+
+    #close-image-detail {
+      font-size: 13px;
+      font-weight: 600;
+
+      position: absolute;
+      top: $space-small;
+      left: $space-bigger;
+      border-bottom: none;
+      margin: 0;
+      padding: 0;
+      color: $color-tomato;
+    }
+
+    ul {
+      border-bottom-color: #fff;
+    }
+    & + .tabs-content {
+      margin-top: 0;
+      padding-top: 0;
+    }
+  }
+
+  // common
+  .image-detail__head {
+    display: flex;
+    align-items: center;
+  }
+
+  i.license-logo {
+    color: #000;
+    font-size: $space-bigger;
+    margin-right: $space-small;
+  }
+
+  .image-tags {
+    button {
+      margin-right: $space-small;
+      margin-bottom: $space-small;
+    }
+  }
+
+  // reuse tab
+  .attribution-tab {
+    width: 450px;
+  }
+
+  textarea#html-attribution {
+    width: 100%;
+    border: 0;
+    color: $color-dark-slate-gray;
+    height: 5rem;
+    font-size: $space-normal;
+    resize: none;
+  }
+
+  .license-description div {
+    margin-bottom: $space-small;
+    display: flex;
+    align-items: center;
+  }
+
+  // share tab
+  .share-icons {
+    a {
+      text-decoration: none;
+    }
+
+    .icon {
+      margin-right: 10px;
+      font-size: 55px;
+    }
+  }
+
+  // related images
+  &__bottom {
+    padding: 0 2rem;
+    background-color: #f5f5f5;
+  }
+}

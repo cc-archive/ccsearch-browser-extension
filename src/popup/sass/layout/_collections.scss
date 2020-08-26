@@ -1,0 +1,9 @@
+.section-collections {
+  table > tr:nth-child(odd) {
+    background: $color-lighter-gray;
+  }
+
+  thead th:last-child {
+    min-width: 8rem;
+  }
+}

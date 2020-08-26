@@ -1,12 +1,12 @@
 .button-backToTop {
   display: inline-block;
-  background-color: #ff7d31;
-  width: 40px;
-  height: 40px;
+  background-color: $color-gold;
+  width: 33px;
+  height: 33px;
   text-align: center;
-  border-radius: 3px;
+  border-radius: 4px;
   position: fixed;
-  bottom: 60px;
+  bottom: 70px;
   right: 20px;
   transition: background-color 0.3s, opacity 0.5s, visibility 0.5s;
   opacity: 0;
@@ -15,18 +15,16 @@
 
   &:hover {
     cursor: pointer;
-    background-color: #ff4e14;
+    background-color: lighten($color: $color-gold, $amount: 10);
   }
   &.show {
     opacity: 1;
     visibility: visible;
   }
-}
 
-.backToTop-icon {
-  font-weight: normal;
-  font-style: normal;
-  font-size: 1.5em;
-  line-height: 35px;
-  color: #fff;
+  .icon {
+    font-size: $space-normal;
+    line-height: 35px;
+    color: $color-black;
+  }
 }

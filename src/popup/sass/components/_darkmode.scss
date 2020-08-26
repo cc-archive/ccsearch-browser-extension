@@ -2,118 +2,205 @@
 
 html.dark,
 body.dark {
-  background-color: $color-darkmode-1;
   color: $color-white;
+  background-color: $color-dark-slate-gray;
+  a,
+  a:hover,
+  a:active {
+    color: $color-dark-turquoise;
+  }
 
-  h1,
-  h2,
-  h3,
+  &::-webkit-scrollbar-thumb {
+    background-color: $color-white;
+  }
+
+  .container {
+    background-color: #000;
+  }
+
   h4,
-  h5,
-  h6 {
+  h5 {
     color: $color-white;
   }
 
-  .header__icons {
+  .navbar {
+    background-color: $color-dark-slate-gray;
+
+    .navbar-brand a {
+      color: #fff !important;
+    }
+
+    .navbar-end {
+      a {
+        color: $color-gray !important;
+
+        &:hover {
+          color: #fff !important;
+        }
+
+        &.active {
+          color: #fff !important;
+        }
+      }
+
+      i {
+        color: #fff !important;
+      }
+    }
+  }
+
+  .button.is-primary,
+  .load-more-button {
+    background-color: $color-gold !important;
+    color: $color-dark-slate-gray;
+
+    &:hover,
+    &:focus {
+      background-color: lighten($color: $color-gold, $amount: 10) !important;
+      color: $color-dark-slate-gray !important;
+    }
+  }
+
+  .button {
+    color: $color-dark-slate-gray;
+
+    &:hover {
+      color: $color-white;
+    }
+  }
+
+  .button.is-success {
     color: $color-white;
+  }
+
+  .button.donate {
+    &:hover {
+      color: $color-black;
+    }
   }
 
   input,
   .section-search {
-    background-color: $color-darkmode-2 !important;
+    background-color: #000;
     color: $color-white !important;
   }
 
-  .popup__body {
-    background-color: $color-darkmode-1 !important ;
+  input::placeholder {
+    color: $color-gray !important;
   }
 
-  // dropdown input placeholder
-  .comboTreeInputBox::placeholder {
-    color: $color-white;
+  .fixed-footer {
+    background-color: $color-dark-slate-gray;
   }
 
-  // dropdown input
-  .comboTreeInputBox {
-    color: transparent !important;
-    text-shadow: 0 0 0 #2196f3 !important;
-  }
+  .section-collections table {
+    & > thead {
+      background-color: $color-dark-gray;
 
-  // dropdown colors
-  .ComboTreeItemChlid {
-    background-color: $color-darkmode-2 !important;
-    color: $color-white !important;
-  }
+      th {
+        color: $color-white;
+      }
+    }
 
-  // dropdown arrow icon
-  .comboTreeArrowBtnImg {
-    color: white;
-  }
+    & > tr {
+      color: $color-white;
 
-  #search-icon {
-    color: $color-white;
-  }
+      &:nth-child(even) {
+        background: $color-black;
+      }
 
-  #filter-icon {
-    color: $color-white;
-  }
-
-  #filter-icon.activate-filter {
-    color: $color-primary-light;
-
-    &:hover {
-      color: $color-primary-dark;
+      &:nth-child(odd) {
+        background: $color-dark-slate-gray;
+      }
     }
   }
 
-  .popup__tab-links {
-    background-color: $color-darkmode-2;
-    color: $color-white;
+  .section-image-detail {
+    .image-detail__nav {
+      #close-image-detail {
+        color: $color-dark-turquoise;
+      }
 
-    &-active {
-      border-bottom: 2px solid $color-primary-dark;
+      ul {
+        border-bottom-color: $color-dark-slate-gray;
+      }
+
+      .tab a {
+        color: $color-gray;
+
+        &:hover {
+          color: $color-white;
+          border-bottom-color: $color-white;
+        }
+      }
+
+      .tab.is-active a {
+        color: $color-white;
+        border-bottom-color: $color-white;
+      }
     }
-  }
 
-  textarea {
-    color: $color-white;
-    background-color: $color-darkmode-2;
+    .reuse-panel {
+      .tabs.is-boxed {
+        ul {
+          border-bottom: 2px solid $color-dark-gray;
+          li {
+            a {
+              background-color: $color-black;
+              color: $color-gray;
+              border: 2px solid $color-dark-gray;
+              border-right: 0;
+
+              &:hover {
+                background-color: $color-dark-slate-gray;
+                color: $color-white;
+                border-bottom-color: transparent;
+              }
+            }
+
+            &:last-child a {
+              border-right: 2px solid $color-dark-gray;
+            }
+
+            &.is-active a {
+              background-color: $color-dark-slate-gray;
+              color: $color-white;
+              border-bottom-color: transparent;
+            }
+          }
+        }
+      }
+      .tabs-content.is-boxed {
+        background-color: $color-dark-slate-gray;
+        border: 2px solid $color-dark-gray;
+        border-top: 0;
+
+        textarea#html-attribution {
+          background-color: $color-dark-slate-gray;
+          color: $color-white;
+        }
+      }
+    }
+
+    .share-panel {
+      .share-icons {
+        i.icon.colored:before {
+          color: $color-white;
+        }
+      }
+    }
+
+    .section-image-detail__bottom {
+      background-color: $color-black;
+    }
+
+    i.license-logo {
+      color: $color-white;
+    }
   }
 
   .spinner > div {
     background-color: $color-white;
-  }
-
-  .popup__close-button {
-    color: $color-white;
-  }
-
-  .section-filter__source-loading-mes {
-    color: $color-white;
-  }
-
-  .modal-content {
-    background-color: $color-darkmode-1 !important ;
-  }
-
-  .modal-close {
-    color: $color-white;
-  }
-
-  .modal-header {
-    color: $color-white;
-  }
-
-  a:hover {
-    color: $color-white;
-  }
-
-  .button.is-text {
-    color: $color-white;
-
-    &:hover {
-      color: $color-darkmode-1;
-    }
   }
 
   .notification__popup--body {

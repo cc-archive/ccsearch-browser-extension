@@ -1,9 +1,21 @@
-.tabs-panel {
-  padding: 0rem 1rem 1rem;
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  color: $color-dark-slate-gray;
+}
+
+.tabs ul {
+  margin-top: $space-small;
 }
 
 .tabs-panel {
-  padding-right: 21rem;
+  padding: 0rem 21rem 1rem 1rem;
 }
 
 .notification__options {
@@ -16,10 +28,6 @@
     top: 0;
     width: 100%;
     z-index: 10000;
-
-    // display: flex;
-    align-items: center;
-    justify-content: center;
   }
   &--body {
     font-size: 1.6rem;
@@ -28,8 +36,17 @@
     display: inline-block;
     height: auto;
     width: 70%;
-    // position: relative;
     border-radius: 3px;
     padding: 2px;
   }
+}
+
+.highlight {
+  font-family: monospace;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.display-none {
+  display: none !important;
 }

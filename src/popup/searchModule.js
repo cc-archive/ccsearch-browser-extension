@@ -1,24 +1,16 @@
 import { elements } from './base';
 import { addLoadMoreButton, removeLoadMoreButton } from './helper';
+// eslint-disable-next-line import/no-cycle
 import { activatePopup } from './infoPopupModule';
 import { removeSpinner } from './spinner';
 // eslint-disable-next-line import/no-cycle
 import toggleBookmark from './bookmarkModule';
-import { showNotification, removeChildNodes, restoreInitialContent, activeBookmarkIdContainers } from '../utils';
-
-const Masonry = require('masonry-layout');
-
-export function checkInternetConnection() {
-  if (!navigator.onLine) {
-    removeSpinner(elements.spinnerPlaceholderPopup);
-    showNotification('No Internet Connection', 'negative', 'snackbar-bookmarks', 1500);
-    throw new Error('No Internet Connection');
-  }
-}
+import { checkInternetConnection, primaryGridMasonryObject } from './searchModule.utils';
+import { showNotification, removeChildNodes, activeBookmarkIdContainers } from '../utils';
 
 export function checkInputError(inputText) {
   if (inputText === '') {
-    showNotification('No search query provided', 'negative', 'snackbar-bookmarks');
+    showNotification('No search query provided', 'negative', 'notification--extension-popup');
     // to stop further js execution
     throw new Error('No search query provided');
   }
@@ -41,64 +33,50 @@ export function getRequestUrl(
   userSelectedImageTypeList,
   userSelectedImageSizeList,
   userSelectedAspectRatioList,
-  page,
+  pageNo,
   enableMatureContent,
 ) {
   if (userSelectedUseCaseList.length > 0) {
-    return `https://api.creativecommons.engineering/v1/images?q=${searchQuery}&page=${page}&page_size=20&license_type=${userSelectedUseCaseList}&source=${userSelectedSourceList}&extension=${userSelectedFileTypeList}&categories=${userSelectedImageTypeList}&size=${userSelectedImageSizeList}&aspect_ratio=${userSelectedAspectRatioList}&mature=${enableMatureContent}`;
+    return `https://api.creativecommons.engineering/v1/images?q=${searchQuery}&page=${pageNo}&page_size=20&license_type=${userSelectedUseCaseList}&source=${userSelectedSourceList}&extension=${userSelectedFileTypeList}&categories=${userSelectedImageTypeList}&size=${userSelectedImageSizeList}&aspect_ratio=${userSelectedAspectRatioList}&mature=${enableMatureContent}`;
   }
-  return `https://api.creativecommons.engineering/v1/images?q=${searchQuery}&page=${page}&page_size=20&license=${userSelectedLicenseList}&source=${userSelectedSourceList}&extension=${userSelectedFileTypeList}&categories=${userSelectedImageTypeList}&size=${userSelectedImageSizeList}&aspect_ratio=${userSelectedAspectRatioList}&mature=${enableMatureContent}`;
+  return `https://api.creativecommons.engineering/v1/images?q=${searchQuery}&page=${pageNo}&page_size=20&license=${userSelectedLicenseList}&source=${userSelectedSourceList}&extension=${userSelectedFileTypeList}&categories=${userSelectedImageTypeList}&size=${userSelectedImageSizeList}&aspect_ratio=${userSelectedAspectRatioList}&mature=${enableMatureContent}`;
 }
 
-export function getCollectionsUrl(collectionName, page, enableMatureContent) {
-  return `https://api.creativecommons.engineering/v1/images?source=${collectionName}&page=${page}&page_size=20&mature=${enableMatureContent}`;
+export function getCollectionsUrl(collectionName, pageNo) {
+  return `https://api.creativecommons.engineering/v1/images?source=${collectionName}&page=${pageNo}&page_size=20`;
 }
 
-function showNoResultFoundMessage() {
-  const sectionContentPrimary = document.querySelector('.section-content--primary');
-
-  const sectionContentInitialInfo = document.querySelector('.section-content--primary .initial-info');
-
-  if (!sectionContentInitialInfo) {
-    const paragraph = document.createElement('p');
-    paragraph.classList.add('no-image-found-mes');
-    paragraph.classList.add('initial-info');
-    paragraph.textContent = 'No Images Found. Please enter a different query.';
-
-    removeChildNodes(sectionContentPrimary.querySelector('.row'));
-    // remove the "Load More" button.
-    removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);
-    sectionContentPrimary.querySelector('.row').appendChild(paragraph);
-  }
-}
-
-export function removeLoaderAnimation() {
-  // elements.spinner.classList.remove('spinner');
-  removeSpinner(elements.spinnerPlaceholderGrid);
-  // TODO: use better logic
+export function getTagsUrl(tagName, pageNo) {
+  return `https://api.creativecommons.engineering/v1/images?tags=${tagName}&page=${pageNo}&page_size=20`;
 }
 
 export function checkResultLength(resultArray) {
   if (resultArray.length === 0) {
-    showNoResultFoundMessage();
-    removeLoaderAnimation();
-    // eslint-disable-next-line no-use-before-define
-    msnry.layout();
+    showNotification(
+      'No Images Found. Please enter a different query.',
+      'negative',
+      'notification--extension-popup',
+      4000,
+    );
+    removeSpinner(elements.spinnerPlaceholderPrimary);
+    removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);
+    primaryGridMasonryObject.layout();
+    throw new Error('No image found');
   } else {
     // render the "Load More" button if non empty result
     addLoadMoreButton(elements.loadMoreSearchButtonWrapper);
   }
 }
 
-function appendToGrid(msnry, fragment, divs, grid) {
+function appendToGrid(msnryObject, fragment, divs, grid) {
   grid.appendChild(fragment);
-  msnry.appended(divs);
+  msnryObject.appended(divs);
   // eslint-disable-next-line no-undef
   imagesLoaded(grid).on('progress', () => {
     // layout Masonry after each image loads
-    msnry.layout();
+    msnryObject.layout();
   });
-  removeLoaderAnimation();
+  removeSpinner(elements.spinnerPlaceholderPrimary);
   addLoadMoreButton(elements.loadMoreSearchButtonWrapper);
 }
 
@@ -106,31 +84,23 @@ function appendToGrid(msnry, fragment, divs, grid) {
 export function checkValidationError(apiResponse) {
   if (Object.prototype.hasOwnProperty.call(apiResponse, 'error_type')) {
     removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);
-    elements.gridPrimary.setAttribute('style', 'position: relative; height: 0px;');
-    removeLoaderAnimation();
-    restoreInitialContent('primary');
+    removeSpinner(elements.spinnerPlaceholderPrimary);
 
     if (apiResponse.error_type === 'InputError') {
-      showNotification('Not a valid search query.', 'negative', 'snackbar-bookmarks');
+      showNotification('Not a valid search query.', 'negative', 'notification--extension-popup');
     } else {
-      showNotification('Some error occured. Please try again after some time.', 'negative', 'snackbar-bookmarks');
+      showNotification(
+        'Some error occured. Please try again after some time.',
+        'negative',
+        'notification--extension-popup',
+      );
     }
 
     throw new Error('400 Bad Request');
   }
 }
 
-// eslint-disable-next-line no-undef
-const msnry = new Masonry(elements.gridPrimary, {
-  // options
-  itemSelector: '.grid-item',
-  columnWidth: '.grid-item',
-  gutter: '.gutter-sizer',
-  percentPosition: true,
-  transitionDuration: '0',
-});
-
-export function addSearchThumbnailsToDOM(resultArray) {
+export function addSearchThumbnailsToDOM(masonryObject, resultArray, gridDiv) {
   const divs = [];
   const fragment = document.createDocumentFragment();
 
@@ -149,77 +119,72 @@ export function addSearchThumbnailsToDOM(resultArray) {
       // make an image element
       const imgElement = document.createElement('img');
       imgElement.setAttribute('src', thumbnail);
-      imgElement.setAttribute('class', 'image-thumbnails');
+      imgElement.setAttribute('class', 'image-thumbnail');
       imgElement.setAttribute('id', id);
 
-      // make a span to hold the license icons
-      const spanLicenseElement = document.createElement('span');
-      spanLicenseElement.setAttribute('class', 'image-license');
+      const bookmarkIconDiv = document.createElement('div');
+      bookmarkIconDiv.classList.add('bookmark-icon');
 
-      // make a link to license description
-      const licenseLinkElement = document.createElement('a');
-      licenseLinkElement.setAttribute('href', `https://creativecommons.org/licenses/${license}/2.0/`);
-      licenseLinkElement.setAttribute('target', '_blank'); // open link in new tab
-      licenseLinkElement.setAttribute('title', license); // open link in new tab
+      const licenseDiv = document.createElement('div');
+      licenseDiv.classList.add('image-icons');
 
       // Array to hold license image elements
       const licenseIconElementsArray = [];
 
       // Add the default cc icon
-      let licenseIconElement = document.createElement('img');
-      licenseIconElement.setAttribute('src', 'img/license_logos/cc_icon.svg');
-      licenseIconElement.setAttribute('alt', 'cc_icon');
+      let licenseIconElement = document.createElement('i');
+      licenseIconElement.classList.add('icon', 'has-background-white', 'cc-logo');
       licenseIconElementsArray.push(licenseIconElement);
 
       // make and push license image elements
       licenseArray.forEach(name => {
-        licenseIconElement = document.createElement('img');
-        licenseIconElement.setAttribute('src', `img/license_logos/cc-${name}_icon.svg`);
-        licenseIconElement.setAttribute('alt', `cc-${name}_icon`);
+        licenseIconElement = document.createElement('i');
+        // for pdm, the logo name is cc-pd and for cc0, the logo name is cc-zero
+        if (name === 'pdm') licenseIconElement.classList.add('icon', 'has-background-white', 'cc-pd');
+        else if (name === 'cc0') licenseIconElement.classList.add('icon', 'has-background-white', 'cc-zero');
+        else licenseIconElement.classList.add('icon', 'has-background-white', `cc-${name}`);
         licenseIconElementsArray.push(licenseIconElement);
       });
 
       licenseIconElementsArray.forEach(licenseIcon => {
-        licenseLinkElement.appendChild(licenseIcon);
+        licenseDiv.appendChild(licenseIcon);
       });
 
       const bookmarkIcon = document.createElement('i');
-      bookmarkIcon.classList.add('fa');
-      bookmarkIcon.classList.add('bookmark-icon');
+      bookmarkIcon.classList.add('icon');
       bookmarkIcon.id = 'bookmark-icon';
       bookmarkIcon.setAttribute('data-image-id', id);
       bookmarkIcon.setAttribute('data-image-thumbnail', thumbnail);
       bookmarkIcon.setAttribute('data-image-license', license);
       bookmarkIcon.addEventListener('click', toggleBookmark);
 
+      bookmarkIconDiv.appendChild(bookmarkIcon);
+
       // console.log(allBookmarksImageIds);
       // console.log(id);
       if (allBookmarksImageIds.indexOf(id) === -1) {
-        bookmarkIcon.classList.add('fa-bookmark-o');
+        bookmarkIcon.classList.add('bookmark-regular');
         bookmarkIcon.title = 'Bookmark image';
       } else {
-        bookmarkIcon.classList.add('fa-bookmark');
+        bookmarkIcon.classList.add('bookmark-solid');
         bookmarkIcon.title = 'Remove Bookmark';
       }
 
-      spanLicenseElement.appendChild(licenseLinkElement);
-      spanLicenseElement.appendChild(bookmarkIcon);
-
       // make a div element to encapsulate image element
       const divElement = document.createElement('div');
-      divElement.setAttribute('class', 'image');
+      divElement.classList.add('image', 'is-compact');
 
       // adding event listener to open popup.
       divElement.addEventListener('click', e => {
-        if (e.target.classList.contains('image')) {
+        if (e.target.classList.contains('image-thumbnail')) {
           checkInternetConnection();
-          const imageThumbnail = e.target.querySelector('.image-thumbnails');
-          activatePopup(imageThumbnail);
+          activatePopup(e.target);
         }
       });
 
       divElement.appendChild(imgElement);
-      divElement.appendChild(spanLicenseElement);
+      divElement.appendChild(bookmarkIconDiv);
+      divElement.appendChild(licenseDiv);
 
       // div to act as grid itemj
       const gridItemDiv = document.createElement('div');
@@ -233,7 +198,7 @@ export function addSearchThumbnailsToDOM(resultArray) {
       // console.log(gridItemDiv);
     });
 
-    appendToGrid(msnry, fragment, divs, elements.gridPrimary);
+    appendToGrid(masonryObject, fragment, divs, gridDiv);
   });
 }
 
@@ -245,31 +210,7 @@ export function search(url) {
       const resultArray = res.results;
 
       checkResultLength(resultArray);
-      addSearchThumbnailsToDOM(resultArray);
-
-      // Store Data to local storage
-      if (resultArray.length !== 0) {
-        localStorage.clear(); // clear the old results
-        if (window.appObject.searchByCollectionActivated) {
-          localStorage.setItem('searchByCollectionActivated', true);
-          localStorage.setItem('collectionName', window.appObject.collectionName);
-        } else {
-          localStorage.setItem('searchByCollectionActivated', false);
-        }
-        window.appObject.storeSearch.title = window.appObject.inputText;
-        localStorage.setItem('usecaseDropdownValues', elements.useCaseChooser.value);
-        localStorage.setItem('sourceDropdownValues', elements.sourceChooser.value);
-        localStorage.setItem('licenseDropdownValues', elements.licenseChooser.value);
-        localStorage.setItem('fileTypeDropdownValues', elements.fileTypeChooser.value);
-        localStorage.setItem('imageTypeDropdownValues', elements.imageTypeChooser.value);
-        localStorage.setItem('imageSizeDropdownValues', elements.imageSizeChooser.value);
-        localStorage.setItem('aspectRatioDropdownValues', elements.aspectRatioChooser.value);
-        window.appObject.storeSearch.page = { ...resultArray };
-        localStorage.setItem('title', window.appObject.storeSearch.title);
-        localStorage.setItem(window.appObject.pageNo, JSON.stringify(window.appObject.storeSearch.page));
-
-        // console.log(localStorage);
-      }
+      addSearchThumbnailsToDOM(primaryGridMasonryObject, resultArray, elements.gridPrimary);
 
       window.appObject.pageNo += 1;
     });

@@ -1,29 +1,16 @@
 header {
-  width: 100%;
-  background-image: linear-gradient(to right, #ff4e14, #ff7d31);
-  position: relative;
-
-  img {
-    display: inline-block;
-    padding: 5px 0;
-    height: $size-gigantic;
-    margin-left: 10%;
+  .navbar-end > a {
+    color: $color-tomato !important;
   }
 
-  .header__icons {
-    position: absolute;
-    right: $size-big;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 25%;
+  .navbar-end > a:hover,
+  .navbar-end > a.active {
+    color: $color-dark-slate-gray !important;
+  }
 
-    display: flex;
-    justify-content: space-between;
-    color: rgb(20, 20, 20);
-
-    i {
-      font-size: 25px;
-      cursor: pointer;
-    }
+  .icon,
+  .icon:hover {
+    cursor: pointer;
+    color: #000 !important;
   }
 }

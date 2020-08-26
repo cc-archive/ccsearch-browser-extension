@@ -1,15 +1,20 @@
 /* eslint-disable no-param-reassign */
 import { elements, constants } from './base';
-import { activatePopup } from './infoPopupModule';
-import { msnry, removeBookmarkImages } from './bookmarkModule.utils';
+// eslint-disable-next-line import/no-cycle
+import {
+  bookmarksGridMasonryObject,
+  removeBookmarkImages,
+  toggleEditView,
+  openInfoPopup,
+  removeActiveClassFromNavLinks,
+  selectImage,
+} from './bookmarkModule.utils';
 import { removeLoadMoreButton, addLoadMoreButton } from './helper';
 // eslint-disable-next-line import/no-cycle
-import { removeOldSearchResults, removeLoaderAnimation, checkInternetConnection } from './searchModule';
+import { removeOldSearchResults } from './searchModule';
 import { addSpinner, removeSpinner } from './spinner';
 import {
   showNotification,
-  removeNode,
-  restoreInitialContent,
   removeChildNodes,
   keyNames,
   activeBookmarkContainers,
@@ -17,8 +22,9 @@ import {
 } from '../utils';
 // eslint-disable-next-line import/no-cycle
 import loadCollections from './collectionModule';
+import { checkInternetConnection, primaryGridMasonryObject } from './searchModule.utils';
 // eslint-disable-next-line import/no-cycle
-import { loadStoredContentToUI } from './popup.utils';
+// import { loadStoredContentToUI } from './popup.utils';
 
 const download = require('downloadjs');
 
@@ -26,7 +32,7 @@ const download = require('downloadjs');
 const bookmarkDOM = {};
 
 // Store number of selected bookmarks for export
-let selectedBookmarks = 0;
+// let selectedBookmarks = 0;
 
 function getImageDetail(eventTarget) {
   const imageObject = {};
@@ -62,7 +68,7 @@ export default function toggleBookmark(e) {
           }
         }
         if (!validBookmarksKey) {
-          showNotification('Error: Bookmarks Limit reached', 'negative', 'snackbar-bookmarks');
+          showNotification('Error: Bookmarks Limit reached', 'negative', 'notification--extension-popup');
           throw new Error('Bookmarks Limit reached');
         }
         let validBookmarksImageIdKey;
@@ -86,10 +92,10 @@ export default function toggleBookmark(e) {
               bookmarksLength,
             },
             () => {
-              e.target.classList.remove('fa-bookmark-o');
-              e.target.classList.add('fa-bookmark');
+              e.target.classList.remove('bookmark-regular');
+              e.target.classList.add('bookmark-solid');
               e.target.title = 'Remove Bookmark';
-              showNotification('Image Bookmarked', 'positive', 'snackbar-bookmarks');
+              showNotification('Image Bookmarked', 'positive', 'notification--extension-popup');
             },
           );
         });
@@ -114,10 +120,10 @@ export default function toggleBookmark(e) {
             bookmarksLength: updatedBookmarksLength,
           },
           () => {
-            e.target.classList.remove('fa-bookmark');
-            e.target.classList.add('fa-bookmark-o');
+            e.target.classList.remove('bookmark-solid');
+            e.target.classList.add('bookmark-regular');
             e.target.title = 'Bookmark Image';
-            showNotification('Bookmark removed', 'positive', 'snackbar-bookmarks');
+            showNotification('Bookmark removed', 'positive', 'notification--extension-popup');
           },
         );
       });
@@ -133,11 +139,11 @@ function appendToGrid(msnryObject, fragment, e, grid) {
     // layout Masonry after each image loads
     msnryObject.layout();
   });
-  removeLoaderAnimation();
+  removeSpinner(elements.spinnerPlaceholderPrimary);
   addLoadMoreButton(elements.loadMoreBookmarkButtonkWrapper);
 }
 
-function addBookmarkThumbnailsToDOM(bookmarksObject, bookmarkImageIds) {
+function addBookmarkThumbnailsToDOM(bookmarksObject, bookmarkImageIds, bookmarksEditViewEnabled) {
   bookmarkImageIds.forEach(imageId => {
     const res = bookmarksObject[imageId];
     const fragment = document.createDocumentFragment();
@@ -148,73 +154,48 @@ function addBookmarkThumbnailsToDOM(bookmarksObject, bookmarkImageIds) {
     // make an image element
     const imgElement = document.createElement('img');
     imgElement.setAttribute('src', thumbnail);
-    imgElement.setAttribute('class', 'image-thumbnails');
+    imgElement.setAttribute('class', 'image-thumbnail');
     imgElement.setAttribute('id', imageId);
 
-    // make select button
-    const selectCheckboxElement = document.createElement('span');
-    selectCheckboxElement.setAttribute('class', 'bookmark-select');
-    const selectCheckbox = document.createElement('input');
-    selectCheckbox.setAttribute('type', 'checkbox');
-    selectCheckbox.setAttribute('data-image-id', imageId);
-    selectCheckbox.setAttribute('title', 'Select Image');
-    selectCheckbox.setAttribute('data-image-thumbnail', thumbnail);
-    selectCheckbox.setAttribute('data-image-license', license);
-    selectCheckbox.classList.add('select-checkbox');
-    selectCheckbox.classList.add('margin-right-smaller');
-    selectCheckboxElement.appendChild(selectCheckbox);
-
-    // make a span to hold the license icons
-    const spanLicenseElement = document.createElement('span');
-    spanLicenseElement.setAttribute('class', 'image-license');
-
-    // make a link to license description
-    const licenseLinkElement = document.createElement('a');
-    licenseLinkElement.setAttribute('href', `https://creativecommons.org/licenses/${license}/2.0/`);
-    licenseLinkElement.setAttribute('target', '_blank'); // open link in new tab
-    licenseLinkElement.setAttribute('title', license); // open link in new tab
+    const licenseDiv = document.createElement('div');
+    licenseDiv.classList.add('image-icons');
 
     // Array to hold license image elements
     const licenseIconElementsArray = [];
 
     // Add the default cc icon
-    let licenseIconElement = document.createElement('img');
-    licenseIconElement.setAttribute('src', 'img/license_logos/cc_icon.svg');
-    licenseIconElement.setAttribute('alt', 'cc_icon');
+    let licenseIconElement = document.createElement('i');
+    licenseIconElement.classList.add('icon', 'has-background-white', 'cc-logo');
     licenseIconElementsArray.push(licenseIconElement);
 
     // make and push license image elements
     licenseArray.forEach(name => {
       const lowerCaseName = `${name}`.toLowerCase();
-      licenseIconElement = document.createElement('img');
-      licenseIconElement.setAttribute('src', `img/license_logos/cc-${lowerCaseName}_icon.svg`);
-      licenseIconElement.setAttribute('alt', `cc-${lowerCaseName}_icon`);
+      licenseIconElement = document.createElement('i');
+      // for pdm, the logo name is cc-pd and for cc0, the logo name is cc-zero
+      if (lowerCaseName === 'pdm') licenseIconElement.classList.add('icon', 'has-background-white', 'cc-pd');
+      else if (lowerCaseName === 'cc0') licenseIconElement.classList.add('icon', 'has-background-white', 'cc-zero');
+      else licenseIconElement.classList.add('icon', 'has-background-white', `cc-${lowerCaseName}`);
       licenseIconElementsArray.push(licenseIconElement);
     });
 
     licenseIconElementsArray.forEach(licenseIcon => {
-      licenseLinkElement.appendChild(licenseIcon);
+      licenseDiv.appendChild(licenseIcon);
     });
-
-    spanLicenseElement.appendChild(licenseLinkElement);
 
     // make a div element to encapsulate image element
     const divElement = document.createElement('div');
-    divElement.setAttribute('class', 'image');
+    divElement.classList.add('image', 'is-compact');
     divElement.id = `id_${imageId}`; // used for searching image div element
 
-    // adding event listener to open popup.
-    divElement.addEventListener('click', e => {
-      if (e.target.classList.contains('image')) {
-        checkInternetConnection();
-        const imageThumbnail = e.target.querySelector('.image-thumbnails');
-        activatePopup(imageThumbnail);
-      }
-    });
+    divElement.setAttribute('data-image-id', imageId);
 
+    // adding event listener to open popup.
+    if (bookmarksEditViewEnabled) divElement.addEventListener('click', selectImage);
+    else divElement.addEventListener('click', openInfoPopup);
     divElement.appendChild(imgElement);
-    divElement.appendChild(selectCheckboxElement);
-    divElement.appendChild(spanLicenseElement);
+    // divElement.appendChild(selectCheckboxElement);
+    divElement.appendChild(licenseDiv);
 
     // div to act as grid itemj
     const gridItemDiv = document.createElement('div');
@@ -225,43 +206,13 @@ function addBookmarkThumbnailsToDOM(bookmarksObject, bookmarkImageIds) {
     fragment.appendChild(gridItemDiv);
 
     removeSpinner(elements.spinnerPlaceholderBookmarks);
-    appendToGrid(msnry, fragment, gridItemDiv, elements.gridBookmarks);
-    // Add onClick event to all the checkboxes
+    appendToGrid(bookmarksGridMasonryObject, fragment, gridItemDiv, elements.gridBookmarks);
 
-    // Get checkbox data from DOM
-    const checkbox = elements.selectCheckboxes[elements.selectCheckboxes.length - 1];
-
-    // Initiate isChecked property of checkbox and update bookmarkDOM
-    checkbox.isChecked = false;
-    bookmarkDOM[checkbox.dataset.imageId] = checkbox;
-    // console.log(bookmarkDOM);
-
-    selectedBookmarks = 0;
-    elements.buttonSelectAllCheckbox[0].innerText = 'Select All';
-
-    // Add click function to keep checkbox data in sync with DOM
-    checkbox.addEventListener('click', () => {
-      // Check wheather the checkbox is already checked or not
-      if (checkbox.isChecked) {
-        checkbox.parentElement.removeAttribute('style');
-        selectedBookmarks -= 1;
-      } else {
-        checkbox.parentElement.setAttribute('style', 'opacity : 1');
-        selectedBookmarks += 1;
-      }
-      checkbox.isChecked = !checkbox.isChecked; // Update isChecked Property in checkbox
-
-      // Update SelectAll Button
-      if (selectedBookmarks === 0) {
-        elements.buttonSelectAllCheckbox[0].innerText = 'Select All';
-      } else if (selectedBookmarks > 0) {
-        elements.buttonSelectAllCheckbox[0].innerText = 'Deselect All';
-      }
-    });
+    // selectedBookmarks = 0;
   });
 }
 
-export function loadBookmarkImages(numberOfImages) {
+export function loadBookmarkImages(numberOfImages, bookmarksEditViewEnabled) {
   chrome.storage.sync.get(activeBookmarkIdContainers, items => {
     let bookmarksImageIdsObject = {};
     activeBookmarkIdContainers.forEach(bookmarkIdContainerName => {
@@ -273,13 +224,12 @@ export function loadBookmarkImages(numberOfImages) {
       window.appObject.bookmarksSectionIdx + numberOfImages,
     );
     window.appObject.bookmarksSectionIdx += numberOfImages;
-    if (bookmarkImageIds.length > 0) {
-      removeNode('bookmarks__initial-info');
-    } else {
+
+    if (bookmarkImageIds.length === 0) {
       removeSpinner(elements.spinnerPlaceholderBookmarks);
       removeLoadMoreButton(elements.loadMoreBookmarkButtonkWrapper);
-      restoreInitialContent('bookmarks');
     }
+
     const segBookmarkIds = {}; // object used to segregate bookmark ids
     // segregate the bookmark image ids into respective container numbers
     for (let i = 0; i < bookmarkImageIds.length; i += 1) {
@@ -303,35 +253,40 @@ export function loadBookmarkImages(numberOfImages) {
         }
       }
       // console.log(bookmarkObject);
-      addBookmarkThumbnailsToDOM(bookmarkObject, bookmarkImageIds);
+      addBookmarkThumbnailsToDOM(bookmarkObject, bookmarkImageIds, bookmarksEditViewEnabled);
     });
   });
 }
 
 // EventListeners
 document.addEventListener('DOMContentLoaded', () => {
-  elements.bookmarksIcon.addEventListener('click', () => {
+  elements.navBookmarksLink.addEventListener('click', () => {
     if (window.appObject.activeSection !== 'bookmarks') {
       window.appObject.activeSection = 'bookmarks';
+      // visually marking bookmarks link as active
+      removeActiveClassFromNavLinks();
+      elements.navBookmarksLink.classList.add('active');
+
       window.appObject.bookmarksSectionIdx = 0;
-      elements.homeIcon.style.pointerEvents = 'none';
-      setTimeout(() => {
-        elements.homeIcon.style.pointerEvents = 'auto';
-      }, 300);
+      // elements.homeIcon.style.pointerEvents = 'none';
+      // setTimeout(() => {
+      //   elements.homeIcon.style.pointerEvents = 'auto';
+      // }, 300);
+
       // show the bookmarks section and hide other ones
-      elements.primarySection.style.display = 'none';
-      elements.collectionsSection.style.display = 'none';
-      elements.bookmarksSection.style.display = 'block';
+      elements.primarySection.classList.add('display-none');
+      elements.collectionsSection.classList.add('display-none');
+      elements.filterSection.classList.add('display-none');
+      elements.bookmarksSection.classList.remove('display-none');
+
       // prepare the bookmarks section
-      elements.inputField.value = '';
       checkInternetConnection();
-      // remove previous spinner. On low net connection, multiple spinner may appear
-      // due to delay in result fetching and continous section switching
+      /* remove previous spinner. On low net connection, multiple spinner may appear
+         due to delay in result fetching and continous section switching */
       removeSpinner(elements.spinnerPlaceholderBookmarks);
       addSpinner(elements.spinnerPlaceholderBookmarks, 'original');
-      removeOldSearchResults();
-      removeLoaderAnimation();
-      loadBookmarkImages(10);
+      removeSpinner(elements.spinnerPlaceholderPrimary);
+      loadBookmarkImages(10, window.appObject.bookmarksEditViewEnabled);
 
       chrome.storage.sync.get(null, it => {
         console.log(it);
@@ -342,65 +297,90 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  elements.homeIcon.addEventListener('click', () => {
+  elements.headerLogo.addEventListener('click', () => {
     if (window.appObject.activeSection !== 'search') {
       window.appObject.activeSection = 'search';
-      elements.bookmarksIcon.style.pointerEvents = 'none';
-      setTimeout(() => {
-        elements.bookmarksIcon.style.pointerEvents = 'auto';
-      }, 300);
-      // show the bookmarks section and hide other ones
-      elements.primarySection.style.display = 'block';
-      elements.bookmarksSection.style.display = 'none';
-      elements.collectionsSection.style.display = 'none';
+
+      removeActiveClassFromNavLinks();
+
+      // elements.navBookmarksLink.style.pointerEvents = 'none';
+      // setTimeout(() => {
+      //   elements.navBookmarksLink.style.pointerEvents = 'auto';
+      // }, 300);
+
+      // show the primary section and hide other ones
+      elements.primarySection.classList.remove('display-none');
+      elements.bookmarksSection.classList.add('display-none');
+      elements.collectionsSection.classList.add('display-none');
+      elements.filterSection.classList.add('display-none');
+
       // prepare the search section
-      removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);
+      primaryGridMasonryObject.layout(); // layout the masonry grid
       removeBookmarkImages();
-      if (window.appObject.searchByCollectionActivated === true && window.appObject.searchingNewCollection === true) {
-        removeNode('no-image-found-mes');
+
+      if (window.appObject.activeSearchContext === 'collection' && window.appObject.searchingNewCollection === true) {
         removeOldSearchResults();
         window.appObject.searchingNewCollection = false;
-      } else if (localStorage.length !== 0) {
-        loadStoredContentToUI();
-      } else {
-        removeNode('no-image-found-mes');
-        restoreInitialContent('primary');
-        elements.clearSearchButton[0].classList.add('display-none');
       }
     }
   });
 
-  elements.collectionsIcon.addEventListener('click', () => {
+  elements.navSourcesLink.addEventListener('click', () => {
     // console.log('collections clicked');
     if (window.appObject.activeSection !== 'collections') {
       window.appObject.activeSection = 'collections';
-      elements.primarySection.style.display = 'none';
-      elements.bookmarksSection.style.display = 'none';
-      elements.collectionsSection.style.display = 'block';
+
+      // visually marking sources link as active
+      removeActiveClassFromNavLinks();
+      elements.navSourcesLink.classList.add('active');
+
+      // show the collections section and hide other ones
+      elements.primarySection.classList.add('display-none');
+      elements.bookmarksSection.classList.add('display-none');
+      elements.collectionsSection.classList.remove('display-none');
+      elements.filterSection.classList.add('display-none');
+
       // remove previous spinner. On low net connection, multiple spinner may appear
       // due to delay in result fetching and continous section switching
       removeSpinner(elements.spinnerPlaceholderCollections);
       addSpinner(elements.spinnerPlaceholderCollections, 'original');
-      removeOldSearchResults();
+
       removeBookmarkImages();
-      removeChildNodes(elements.collectionsSectionBody);
+      removeChildNodes(elements.collectionsSection.getElementsByTagName('table')[0]);
       loadCollections();
     }
   });
 
+  elements.closeEditViewLink.addEventListener('click', event => {
+    // using querySelectorAll instead of getElementsByClassName because we do not want live nodelist
+    const selectedImages = elements.gridBookmarks.querySelectorAll('.is-selected');
+    for (let i = 0; i < selectedImages.length; i += 1) {
+      selectedImages[i].classList.remove('is-selected');
+    }
+    window.appObject.bookmarksEditViewEnabled = false;
+    toggleEditView(event);
+  });
+
+  elements.editBookmarksLink.addEventListener('click', event => {
+    window.appObject.bookmarksEditViewEnabled = true;
+    toggleEditView(event);
+  });
+
   elements.deleteBookmarksButton.addEventListener('click', () => {
-    const bookmarkDOMArray = Object.values(bookmarkDOM);
+    // const bookmarkDOMArray = Object.values(bookmarkDOM);
+    const images = elements.gridBookmarks.getElementsByClassName('image');
     // to store the id's of deleted bookmarks
     const deletedBookmarks = [];
-    bookmarkDOMArray.forEach(checkbox => {
-      if (checkbox.checked) {
-        const { imageId } = checkbox.dataset;
+    for (let i = 0; i < images.length; i += 1) {
+      const image = images[i];
+      if (image.classList.contains('is-selected')) {
+        const { imageId } = image.dataset;
         delete bookmarkDOM[imageId]; // remove the selected bookmark from bookmarkDOM object
         deletedBookmarks.push(imageId);
       }
-    });
+    }
     if (deletedBookmarks.length === 0) {
-      showNotification('No bookmark selected', 'negative', 'snackbar-bookmarks');
+      showNotification('No bookmark selected', 'negative', 'notification--extension-popup');
     } else {
       chrome.storage.sync.get(keyNames, items => {
         const allBookmarksImageIdsObject = {};
@@ -434,37 +414,31 @@ document.addEventListener('DOMContentLoaded', () => {
             imageDiv.parentElement.removeChild(imageDiv);
           });
           window.appObject.bookmarksSectionIdx -= deletedBookmarks.length;
-          loadBookmarkImages(deletedBookmarks.length);
+          loadBookmarkImages(deletedBookmarks.length, window.appObject.bookmarksEditViewEnabled);
           // reorganizing the layout using masonry
-          msnry.layout();
+          bookmarksGridMasonryObject.layout();
           // confirm user action
-          showNotification('Bookmarks successfully removed', 'positive', 'snackbar-bookmarks');
+          showNotification('Bookmarks successfully removed', 'positive', 'notification--extension-popup');
           // Read default "Select all"
-          elements.buttonSelectAllCheckbox[0].innerText = 'Select All';
-          selectedBookmarks = 0;
+          // elements.buttonSelectAllCheckbox[0].innerText = 'Select All';
+          // selectedBookmarks = 0;
         });
       });
     }
   });
 
-  elements.buttonSelectAllCheckbox[0].addEventListener('click', () => {
+  elements.selectAllBookmarksLink.addEventListener('click', () => {
     // Stores data of Checkboxes for exporting
-    const bookmarkDOMArray = Object.values(bookmarkDOM);
+    // const bookmarkDOMArray = Object.values(bookmarkDOM);
+    const images = elements.gridBookmarks.getElementsByClassName('image');
 
-    if (selectedBookmarks > 0) {
-      bookmarkDOMArray.forEach(checkbox => {
-        if (checkbox.checked) checkbox.click();
-      });
-      selectedBookmarks = 0;
-    } else if (selectedBookmarks === 0) {
-      bookmarkDOMArray.forEach(checkbox => {
-        if (!checkbox.checked) checkbox.click();
-      });
+    for (let i = 0; i < images.length; i += 1) {
+      images[i].classList.add('is-selected');
     }
   });
 
   // change export and import accordingly
-  elements.exportBookmarksButton.addEventListener('click', () => {
+  elements.exportBookmarksLink.addEventListener('click', () => {
     let bookmarksObject = {};
 
     chrome.storage.sync.get(activeBookmarkContainers, items => {
@@ -474,9 +448,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (Object.keys(bookmarksObject).length) {
         const bookmarksString = JSON.stringify(bookmarksObject);
         download(bookmarksString, 'bookmarks.json', 'text/plain');
-        showNotification('Exported all bookmarks', 'negative', 'snackbar-bookmarks');
+        showNotification('Exported all bookmarks', 'positive', 'notification--extension-popup');
       } else {
-        showNotification('No bookmarks available to export', 'negative', 'snackbar-bookmarks');
+        showNotification('No bookmarks available to export', 'negative', 'notification--extension-popup');
       }
     });
   });
