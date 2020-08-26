@@ -162,6 +162,7 @@ export function initGlobalObject() {
   window.appObject.collectionName = '';
   window.appObject.clickedImageTag = false;
 
+  window.appObject.collectionSectionFilled = false;
   window.appObject.bookmarksEditViewEnabled = false;
 
   window.appObject.imageDetailStack = new Stack();

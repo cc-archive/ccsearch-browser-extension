@@ -13,13 +13,7 @@ import { removeLoadMoreButton, addLoadMoreButton } from './helper';
 // eslint-disable-next-line import/no-cycle
 import { removeOldSearchResults } from './searchModule';
 import { addSpinner, removeSpinner } from './spinner';
-import {
-  showNotification,
-  removeChildNodes,
-  keyNames,
-  activeBookmarkContainers,
-  activeBookmarkIdContainers,
-} from '../utils';
+import { showNotification, keyNames, activeBookmarkContainers, activeBookmarkIdContainers } from '../utils';
 // eslint-disable-next-line import/no-cycle
 import loadCollections from './collectionModule';
 import { checkInternetConnection, primaryGridMasonryObject } from './searchModule.utils';
@@ -317,9 +311,11 @@ document.addEventListener('DOMContentLoaded', () => {
       // prepare the search section
       primaryGridMasonryObject.layout(); // layout the masonry grid
       removeBookmarkImages();
+      removeSpinner(elements.spinnerPlaceholderPrimary);
 
       if (window.appObject.activeSearchContext === 'collection' && window.appObject.searchingNewCollection === true) {
         removeOldSearchResults();
+        primaryGridMasonryObject.layout();
         window.appObject.searchingNewCollection = false;
       }
     }
@@ -333,6 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // visually marking sources link as active
       removeActiveClassFromNavLinks();
       elements.navSourcesLink.classList.add('active');
+      elements.buttonBackToTop.click();
 
       // show the collections section and hide other ones
       elements.primarySection.classList.add('display-none');
@@ -346,7 +343,6 @@ document.addEventListener('DOMContentLoaded', () => {
       addSpinner(elements.spinnerPlaceholderCollections, 'original');
 
       removeBookmarkImages();
-      removeChildNodes(elements.collectionsSection.getElementsByTagName('table')[0]);
       loadCollections();
     }
   });
