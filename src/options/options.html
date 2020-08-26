@@ -10,7 +10,7 @@
   <body>
     <div class="tabs">
       <ul>
-        <li class="tab is-active" data-tab-no="1"><a> Filters </a></li>
+        <li class="tab is-active" data-tab-no="1"><a>Default Filters </a></li>
         <li class="tab" data-tab-no="2"><a> Bookmarks </a></li>
         <li class="tab" data-tab-no="3"><a> Syntax Guide </a></li>
         <li class="tab" data-tab-no="4"><a> Feedback </a></li>
@@ -52,6 +52,11 @@
           <label for="BY-NC-SA">BY-NC-SA</label><br />
           <input type="checkbox" id="BY-NC-ND" />
           <label for="BY-NC-ND">BY-NC-ND</label><br />
+        </div>
+
+        <h5 class="margin-top-small">All Sources</h5>
+        <div class="source__wrapper margin-left-normal" data-storage-key-name="sourceFilter">
+          Fetching Latest Sources ...
         </div>
 
         <h5 class="margin-top-small">File Type</h5>
@@ -96,10 +101,6 @@
           <label for="square">Square</label><br />
         </div>
 
-        <h5 class="margin-top-small">All Sources</h5>
-        <div class="source__wrapper margin-left-normal" data-storage-key-name="sourceFilter">
-          Fetching Latest Sources ...
-        </div>
         <div
           class="show-mature-content__wrapper margin-left-normal margin-top-big"
           data-storage-key-name="showMatureContentFilter"
@@ -107,6 +108,7 @@
           <input type="checkbox" id="mature" />
           <label for="mature">Show Mature Content</label>
         </div>
+
         <div class="margin-top-small">
           <button id="save-filters" class="button small is-success">
             Save
