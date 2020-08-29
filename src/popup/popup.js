@@ -167,6 +167,7 @@ elements.clearFiltersButton.addEventListener('click', () => {
   // clearAllUserSelectedFilterLists();
   // console.log(window.appObject.userSelectedUseCaseList);
 
+  primaryGridMasonryObject.layout();
   elements.closeFiltersLink.click();
   elements.searchButton.click();
 });
@@ -210,6 +211,7 @@ function applyFilters() {
 
 elements.applyFiltersButton.addEventListener('click', () => {
   applyFilters();
+  primaryGridMasonryObject.layout();
   elements.closeFiltersLink.click();
   elements.searchButton.click();
 });
