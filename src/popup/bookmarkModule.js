@@ -199,7 +199,6 @@ function addBookmarkThumbnailsToDOM(bookmarksObject, bookmarkImageIds, bookmarks
 
     fragment.appendChild(gridItemDiv);
 
-    removeSpinner(elements.spinnerPlaceholderBookmarks);
     appendToGrid(bookmarksGridMasonryObject, fragment, gridItemDiv, elements.gridBookmarks);
 
     // selectedBookmarks = 0;
@@ -220,7 +219,6 @@ export function loadBookmarkImages(numberOfImages, bookmarksEditViewEnabled) {
     window.appObject.bookmarksSectionIdx += numberOfImages;
 
     if (bookmarkImageIds.length === 0) {
-      removeSpinner(elements.spinnerPlaceholderBookmarks);
       removeLoadMoreButton(elements.loadMoreBookmarkButtonkWrapper);
     }
 
@@ -275,10 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // prepare the bookmarks section
       checkInternetConnection();
-      /* remove previous spinner. On low net connection, multiple spinner may appear
-         due to delay in result fetching and continous section switching */
-      removeSpinner(elements.spinnerPlaceholderBookmarks);
-      addSpinner(elements.spinnerPlaceholderBookmarks, 'original');
+
       removeSpinner(elements.spinnerPlaceholderPrimary);
       loadBookmarkImages(10, window.appObject.bookmarksEditViewEnabled);
 

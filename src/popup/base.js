@@ -50,7 +50,6 @@ export const elements = {
   gridBookmarks: document.querySelector('.grid-bookmarks'),
   loadMoreBookmarkButton: document.querySelector('.load-more-bookmark-button'),
   loadMoreBookmarkButtonkWrapper: document.querySelector('.load-more-bookmark-button-wrapper'),
-  spinnerPlaceholderBookmarks: document.getElementById('spinner-placeholder--bookmarks'),
   // footer
   bookmarksSectionFooter: document.getElementsByClassName('section-bookmarks__footer')[0],
   deleteBookmarksButton: document.getElementById('delete-bookmarks'),
