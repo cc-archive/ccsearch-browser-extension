@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>CC Search Extension Options</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/@creativecommons/vocabulary@2020.8.7/css/vocabulary.css" />
+    <link rel="stylesheet" href="options.css" />
+  </head>
+  <body>
+    <div class="tabs">
+      <ul>
+        <li class="tab is-active" data-tab-no="1"><a>Default Filters </a></li>
+        <li class="tab" data-tab-no="2"><a> Bookmarks </a></li>
+        <li class="tab" data-tab-no="3"><a> Syntax Guide </a></li>
+        <li class="tab" data-tab-no="4"><a> Feedback </a></li>
+        <li class="tab" data-tab-no="5"><a> FAQ </a></li>
+        <li class="tab" data-tab-no="6"><a> About </a></li>
+      </ul>
+    </div>
+    <div id="tabs-content" class="tabs-content">
+      <div class="tabs-panel is-active" data-content-no="1">
+        <div class="note">
+          <p class="margin-bottom-normal has-text-tomato">
+            <strong>Note: </strong>Changes will take effect after you click the save button at the bottom.
+          </p>
+        </div>
+
+        <h5>I want something that (use-case)</h5>
+        <div class="usecase__wrapper margin-left-normal" data-storage-key-name="useCaseFilter">
+          <input type="checkbox" id="commercial" />
+          <label for="commercial">I can use commercially</label><br />
+          <input type="checkbox" id="modification" />
+          <label for="modification">I can modify or adapt</label><br />
+        </div>
+
+        <h5 class="margin-top-small">All licenses</h5>
+        <div class="license__wrapper margin-left-normal" data-storage-key-name="licenseFilter">
+          <input type="checkbox" id="CC0" />
+          <label for="CC0">CC0</label><br />
+          <input type="checkbox" id="PDM" />
+          <label for="PDM">Public Domain Mark</label><br />
+          <input type="checkbox" id="BY" />
+          <label for="BY">BY</label><br />
+          <input type="checkbox" id="BY-SA" />
+          <label for="BY-SA">BY-SA</label><br />
+          <input type="checkbox" id="BY-NC" />
+          <label for="BY-NC">BY-NC</label><br />
+          <input type="checkbox" id="BY-ND" />
+          <label for="BY-ND">BY-ND</label><br />
+          <input type="checkbox" id="BY-NC-SA" />
+          <label for="BY-NC-SA">BY-NC-SA</label><br />
+          <input type="checkbox" id="BY-NC-ND" />
+          <label for="BY-NC-ND">BY-NC-ND</label><br />
+        </div>
+
+        <h5 class="margin-top-small">All Sources</h5>
+        <div class="source__wrapper margin-left-normal" data-storage-key-name="sourceFilter">
+          Fetching Latest Sources ...
+        </div>
+
+        <h5 class="margin-top-small">File Type</h5>
+        <div class="file-type__wrapper margin-left-normal" data-storage-key-name="fileTypeFilter">
+          <input type="checkbox" id="jpeg" />
+          <label for="jpeg">JPEGs</label><br />
+          <input type="checkbox" id="png" />
+          <label for="png">PNGs</label><br />
+          <input type="checkbox" id="gif" />
+          <label for="gif">GIFs</label><br />
+          <input type="checkbox" id="svg" />
+          <label for="svg">SVGs</label><br />
+        </div>
+
+        <h5 class="margin-top-small">Image Type</h5>
+        <div class="image-type__wrapper margin-left-normal" data-storage-key-name="imageTypeFilter">
+          <input type="checkbox" id="photograph" />
+          <label for="photograph">Photographs</label><br />
+          <input type="checkbox" id="illustration" />
+          <label for="illustration">Illustrations</label><br />
+          <input type="checkbox" id="digitized_artwork" />
+          <label for="digitized_artwork">Digitized Artworks</label><br />
+        </div>
+
+        <h5 class="margin-top-small">Image Size</h5>
+        <div class="image-size__wrapper margin-left-normal" data-storage-key-name="imageSizeFilter">
+          <input type="checkbox" id="small" />
+          <label for="small">Small</label><br />
+          <input type="checkbox" id="medium" />
+          <label for="medium">Medium</label><br />
+          <input type="checkbox" id="large" />
+          <label for="large">Large</label><br />
+        </div>
+
+        <h5 class="margin-top-small">Aspect Ratio</h5>
+        <div class="aspect-ratio__wrapper margin-left-normal" data-storage-key-name="aspectRatioFilter">
+          <input type="checkbox" id="tall" />
+          <label for="tall">Tall</label><br />
+          <input type="checkbox" id="wide" />
+          <label for="wide">Wide</label><br />
+          <input type="checkbox" id="square" />
+          <label for="square">Square</label><br />
+        </div>
+
+        <div
+          class="show-mature-content__wrapper margin-left-normal margin-top-big"
+          data-storage-key-name="showMatureContentFilter"
+        >
+          <input type="checkbox" id="mature" />
+          <label for="mature">Show Mature Content</label>
+        </div>
+
+        <div class="margin-top-small">
+          <button id="save-filters" class="button small is-success">
+            Save
+          </button>
+        </div>
+      </div>
+      <div class="tabs-panel" data-content-no="2">
+        <div>
+          <input type="file" class="field" id="import-bookmarks-input" />
+        </div>
+        <div class="margin-top-smaller">
+          <button id="import-bookmarks-button" class="button small is-primary">
+            Import Bookmarks
+          </button>
+        </div>
+        <div class="margin-top-normal">
+          <p><strong>Note</strong>: To know more about how you can sync your settings and bookmarks, read the FAQ.</p>
+        </div>
+      </div>
+      <div class="tabs-panel" data-content-no="6">
+        <h3 class="margin-bottom-normal">CC Search Browser Extension</h3>
+        <p>
+          This extension provides a new interface to
+          <a href="https://search.creativecommons.org/">CC Search</a> to help you search for free content in the public
+          domain and under Creative Commons licenses.
+        </p>
+        <p>
+          This project is Open-Source. Your participation in the form of bug reports, feature requests or code
+          contributions is very much appreciated.
+        </p>
+        <ul class="margin-top-small">
+          <li>
+            <a href="https://github.com/creativecommons/ccsearch-browser-extension">Source Code (MIT)</a>
+          </li>
+          <li>
+            <a href="https://github.com/creativecommons/ccsearch-browser-extension/releases">Changelog</a>
+          </li>
+          <li>
+            <a href="https://github.com/creativecommons/ccsearch-browser-extension/issues">Issue Tracker</a>
+          </li>
+          <li>
+            <a href="https://github.com/creativecommons/ccsearch-browser-extension/blob/master/CONTRIBUTING.md"
+              >Contributing</a
+            >
+          </li>
+          <li>
+            <a href="https://github.com/creativecommons/ccsearch-browser-extension/wiki/Privacy-Notice">Privacy</a>
+          </li>
+          <li>
+            <a href="https://creativecommons.org/donate/other-ways-to-give/">Donate</a>
+          </li>
+          <li>
+            <a href="https://creativecommons.org/policies/">Policies</a>
+          </li>
+          <li>
+            <a href="https://creativecommons.org/terms/">Terms</a>
+          </li>
+        </ul>
+      </div>
+      <div class="tabs-panel" data-content-no="4">
+        <p>
+          We welcome your ideas for improving the tool below. To provide regular user feedback, join the
+          <a href="https://creativecommons.slack.com/messages/cc-dev-browser-exension">#cc-dev-browser-extension</a>
+          channel on <a href="https://opensource.creativecommons.org/community/#slack">CC Slack</a>.
+        </p>
+        <p class="margin-bottom-normal">
+          If you would like to report a bug you are encountering when using the tool,
+          <a href="https://github.com/creativecommons/ccsearch-browser-extension/issues/new?template=bug_report.md"
+            >log the issue at Github</a
+          >
+          .
+        </p>
+        <iframe
+          src="https://docs.google.com/forms/d/e/1FAIpQLSftU03z5XItJGYi-UZlSqvIB2BV-IoDIOIZEvgTBH2nwwMkbQ/viewform?embedded=true"
+          width="640"
+          height="913"
+          frameborder="0"
+          marginheight="0"
+          marginwidth="0"
+          >Loading…</iframe
+        >
+      </div>
+
+      <div class="tabs-panel" data-content-no="5">
+        <h3 class="b-header margin-normal-normal">What is the sync feature of the extension?</h3>
+        <p>
+          Microsoft Edge have a built-in feature that syncs browser settings and preferences across your logged-in
+          devices. The extension leverages this feature to sync your custom settings and bookmarks. This guarantees that
+          the content you have bookmarked on your work computer will be present on your personal computer.
+        </p>
+        <h3 class="b-header margin-vertical-normal">How do I activate the sync feature in Microsoft Edge?</h3>
+        <ul>
+          <li>Open the Edge browser.</li>
+          <li>Paste &quot;<em>edge://settings/profiles/sync</em>&quot; in the address bar and press enter.</li>
+          <li>Turn on sync by pressing the &quot;<em>Turn on sync</em>&quot; button.</li>
+          <li>Toggle on the &quot;<em>Extensions</em>&quot; option if not already turned on.</li>
+        </ul>
+        <h3 class="b-header margin-vertical-normal">How do I update the extension?</h3>
+        <p>
+          We constantly push new versions of the extension with bug fixes and new features. By default, the extension is
+          updated to the new version automatically by your browser, but this may not happen immediately. To update the
+          extension manually you can perform the following steps:
+        </p>
+        <h4 class="margin-top-normal margin-bottom-small">Microsoft Edge</h4>
+        <ul>
+          <li>Open the Edge browser.</li>
+          <li>In the address bar, type &quot;<em>edge://extensions</em>&quot; and press enter.</li>
+          <li>At the top of the extensions page, toggle on the &quot;<em>Developer mode</em>&quot; option.</li>
+          <li>Press the &quot;<em>Update&quot;</em> button</li>
+        </ul>
+        <h3 class="b-header margin-vertical-normal">How can I contribute to this project?</h3>
+        <p>
+          Community contribution and feedback is an essential part of the development process, so we encourage you to
+          contact us if you have feedback or a specific suggestion. This is an
+          <a href="https://github.com/creativecommons/ccsearch-browser-extension">open source project</a>, you can
+          contribute in the form of
+          <a
+            href="https://github.com/creativecommons/ccsearch-browser-extension/blob/master/INSTRUCTIONS.md#reporting-bugs"
+            >bug reports</a
+          >,
+          <a
+            href="https://github.com/creativecommons/ccsearch-browser-extension/blob/master/INSTRUCTIONS.md#feature-requests"
+            >feature requests</a
+          >, or
+          <a
+            href="https://github.com/creativecommons/ccsearch-browser-extension/blob/master/INSTRUCTIONS.md#contributing-code"
+            >code contributions</a
+          >. To install the development version of the extension, read the
+          <a href="https://github.com/creativecommons/ccsearch-browser-extension#installation-from-source"
+            >installation guide on GitHub</a
+          >.
+        </p>
+      </div>
+      <div class="tabs-panel" data-content-no="3">
+        <p class="margin-bottom-normal">
+          When you search, you can enter special symbols or words to your search term to make your search results more
+          precise.
+        </p>
+
+        <h4 class="margin-vertical-normal">Search for an exact match</h4>
+        <p>
+          Put a word or phrase inside quotes. For example, <em class="highlight has-text-tomato">"Claude Monet"</em>
+        </p>
+
+        <h5 class="margin-vertical-normal">Combining Terms</h5>
+        <p class="margin-vertical-normal">
+          If you want to combine terms, you can use the following operators to perform more complex queries
+        </p>
+
+        <ul>
+          <li><em class="highlight has-text-forest-green">+</em> signifies AND operation</li>
+          <li><em class="highlight has-text-forest-green">|</em> signifies OR operation</li>
+          <li><em class="highlight has-text-forest-green">-</em> negates a single token</li>
+          <li><em class="highlight has-text-forest-green">*</em> at the end of a term signifies a prefix query</li>
+          <li>
+            <em class="highlight has-text-forest-green">(</em> and
+            <em class="highlight has-text-forest-green">)</em> signify precedence
+          </li>
+          <li><em class="highlight has-text-forest-green">~N</em> after a word signifies edit distance (fuzziness)</li>
+        </ul>
+
+        <p class="margin-vertical-normal">
+          Example: <em class="highlight has-text-tomato">dog+cat</em><br />
+          This will search for images related to both dog and cat.
+        </p>
+
+        <p class="margin-vertical-normal">
+          Example: <em class="highlight has-text-tomato">dog|cat</em><br />
+          This will search for images related to dog or cat, but not necessarily both.
+        </p>
+
+        <p class="margin-vertical-normal">
+          You can use the <em class="highlight has-text-forest-green">- operator (signifies NOT)</em>
+          to exclude a search term from the results.
+        </p>
+        <p class="margin-vertical-normal">
+          Example: <em class="highlight has-text-tomato">dog -cat</em><br />
+          This will search for images related to dog but won't include results related to "pug"
+        </p>
+
+        <p class="margin-vertical-normal">
+          You can use the <em class="highlight has-text-forest-green">* operator (wildcard)</em>
+          to mark a prefix term. This will match anything after the *.
+        </p>
+        <p class="margin-vertical-normal">
+          Example: <em class="highlight has-text-tomato">net*</em><br />
+          This will search for images matching anything with "net". This might include "network", "Netflix",
+          "Netherlands", etc..
+        </p>
+
+        <p class="margin-vertical-normal">
+          You can use parentheses <em class="highlight has-text-forest-green">( and )</em>
+          to specify precedence of terms or combine more complex queries.
+        </p>
+        <p class="margin-vertical-normal">
+          Example: <em class="highlight has-text-tomato">dogs + (corgis | labrador)</em><br />
+          This will search for images that match dogs that are either corgis or labrador.
+        </p>
+
+        <p class="margin-vertical-normal">
+          You can use <em class="highlight has-text-forest-green">~N</em>
+          to specify some fuzzy logic to the term according to the
+          <a href="http://en.wikipedia.org/wiki/Levenshtein_distance">Levenshtein Edit Distance</a>
+          — the number of one character changes that need to be made to one string to make it the same as another
+          string.
+        </p>
+        <p class="margin-vertical-normal">
+          Example: <em class="highlight has-text-tomato">theatre~1</em><br />
+          This will search for images that match strings close to the term "theatre" with a difference of one character.
+          Results might include terms with different spellings like "theater".
+        </p>
+      </div>
+    </div>
+
+    <div class="notification__options--background">
+      <div class="notification__options--body">
+        <p>
+          You have uploaded an old bookmarks file. We are fetching more information about the bookmarks from the API.
+          This will take a few minutes depending on your internet connection. Also, it is recommended to export the
+          bookmarks again so that you have the new version of the bookmarks file which does not require to connect to
+          the API through internet every time you import.
+        </p>
+        <button class="notification__popup--button button small is-primary margin-top-small is-loading" disabled>
+          Done
+        </button>
+      </div>
+    </div>
+
+    <div class="notification-wrapper notification--options display-none">
+      <div class="notification is-compact">
+        <span class="notification-container">
+          <p></p>
+        </span>
+      </div>
+    </div>
+
+    <script src="options.js"></script>
+  </body>
+</html>

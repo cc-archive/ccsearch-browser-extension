@@ -46,7 +46,23 @@ module.exports = {
         from: './options/*',
         to: './options/',
         flatten: true,
-        ignore: ['*.js'],
+        ignore: ['*.js', '*.html'],
+      },
+      {
+        from: './options/options.html',
+        to: './options/options.html',
+        filter: () => {
+          if (process.env.TARGET !== 'edge') return true;
+          return false;
+        },
+      },
+      {
+        from: './options/options.edge.html',
+        to: './options/options.html',
+        filter: () => {
+          if (process.env.TARGET === 'edge') return true;
+          return false;
+        },
       },
       {
         from: './popup/*',
