@@ -1,4 +1,59 @@
-export default function generateNewStorageSchemaForFilters() {
+const bookmarkKeyLengths = {
+  bookmarks0: 0,
+  bookmarks1: 0,
+  bookmarks2: 0,
+  bookmarks3: 0,
+  bookmarks4: 0,
+  bookmarks5: 0,
+  bookmarks6: 0,
+  bookmarks7: 0,
+  bookmarks8: 0,
+  bookmarks9: 0,
+  bookmarks10: 0,
+  bookmarks11: 0,
+  bookmarks12: 0,
+  bookmarks13: 0,
+  bookmarks14: 0,
+  bookmarks15: 0,
+};
+
+export function confirmBookmarkSchemaInSync() {
+  const bookmarksSchema = {
+    bookmarks0: {},
+    bookmarks1: {},
+    bookmarks2: {},
+    bookmarks3: {},
+    bookmarks4: {},
+    bookmarks5: {},
+    bookmarks6: {},
+    bookmarks7: {},
+    bookmarks8: {},
+    bookmarks9: {},
+    bookmarks10: {},
+    bookmarks11: {},
+    bookmarks12: {},
+    bookmarks13: {},
+    bookmarks14: {},
+    bookmarks15: {},
+    bookmarksLength: bookmarkKeyLengths,
+    bookmarksImageIds0: {},
+    bookmarksImageIds1: {},
+    bookmarksImageIds2: {},
+    bookmarksImageIds3: {},
+    bookmarksImageIds4: {},
+    bookmarksImageIds5: {},
+  };
+
+  chrome.storage.sync.get(['bookmarks0', 'bookmarksLength', 'bookmarksImageIds0'], items => {
+    if (!(items.bookmarks0 && items.bookmarksLength && items.bookmarksImageIds0)) {
+      chrome.storage.sync.set(bookmarksSchema, () => {
+        console.log('bookmarks schema set');
+      });
+    }
+  });
+}
+
+export function confirmFilterSchemaInSync() {
   chrome.storage.sync.get({ filterMigration: false }, items => {
     if (!items.filterMigration) {
       const aspectRatioFilter = {
@@ -68,7 +123,6 @@ export default function generateNewStorageSchemaForFilters() {
       chrome.storage.sync.remove(
         [
           'commercial',
-          'lol',
           'modification',
           'BY-SA',
           'BY-NC',

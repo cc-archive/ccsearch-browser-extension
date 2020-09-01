@@ -32,7 +32,7 @@ import {
   // activeBookmarkContainers,
 } from '../utils';
 import { loadBookmarkImages } from './bookmarkModule';
-import generateNewStorageSchemaForFilters from './popup.utils';
+import { confirmBookmarkSchemaInSync, confirmFilterSchemaInSync } from './popup.utils';
 import { removeActiveClassFromNavLinks, bookmarksGridMasonryObject } from './bookmarkModule.utils';
 import { primaryGridMasonryObject, checkInternetConnection } from './searchModule.utils';
 
@@ -355,4 +355,5 @@ window.addEventListener('scroll', () => {
 
 elements.buttonBackToTop.addEventListener('click', () => window.scrollTo(0, 0));
 
-generateNewStorageSchemaForFilters();
+confirmBookmarkSchemaInSync();
+confirmFilterSchemaInSync();
