@@ -120,19 +120,6 @@ elements.closeFiltersLink.onclick = () => {
 
 allowCheckingOneTypeOfCheckbox(elements.licenseCheckboxesWrapper, elements.useCaseCheckboxesWrapper);
 
-// function clearAllUserSelectedFilterLists() {
-//   window.appObject.allUserSelectedFilterLists.forEach(element => {
-//     console.log(`element name ${element}`);
-//     console.log(`it's value ${window.appObject.element}`);
-//     console.log(
-//       `usersselesourcelist window.appObject.userSelectedSourcesList ${window.appObject.userSelectedSourcesList}`,
-//     );
-//     window.appObject.element = [];
-//   });
-//   // console.log(window.appObject.allUserSelectedFilterLists);
-// }
-
-// TODO: divide the steps into functions
 elements.clearFiltersButton.addEventListener('click', () => {
   // the filter is not activated anymore
   // elements.filterButton.classList.remove('activate-filter');
@@ -145,8 +132,10 @@ elements.clearFiltersButton.addEventListener('click', () => {
     elements.imageTypeCheckboxesWrapper,
     elements.imageSizeCheckboxesWrapper,
     elements.aspectRatioCheckboxesWrapper,
+    elements.showMatureContentCheckboxWrapper,
   ];
 
+  // unchecking all the filter checkboxes
   checkboxesWrappers.forEach(checkboxesWrapper => {
     const checkboxes = checkboxesWrapper.querySelectorAll('input[type=checkbox]');
 
@@ -155,7 +144,7 @@ elements.clearFiltersButton.addEventListener('click', () => {
     }
   });
 
-  // clear the datastructures and make a fresh search
+  // clear the filter datastructures
   window.appObject.userSelectedUseCaseList = [];
   window.appObject.userSelectedLicensesList = [];
   window.appObject.userSelectedSourcesList = [];
@@ -163,10 +152,9 @@ elements.clearFiltersButton.addEventListener('click', () => {
   window.appObject.userSelectedImageTypeList = [];
   window.appObject.userSelectedImageSizeList = [];
   window.appObject.userSelectedAspectRatioList = [];
-  // console.log(window.appObject.userSelectedUseCaseList);
-  // clearAllUserSelectedFilterLists();
-  // console.log(window.appObject.userSelectedUseCaseList);
+  window.appObject.enableMatureContent = false;
 
+  // close the filters section and make a search
   primaryGridMasonryObject.layout();
   elements.closeFiltersLink.click();
   elements.searchButton.click();
