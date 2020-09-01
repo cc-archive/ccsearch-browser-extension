@@ -11,7 +11,11 @@ body {
 }
 
 .tabs ul {
-  margin-top: $space-small;
+  margin-top: $space-normal;
+
+  & li:first-child {
+    margin-left: $space-small;
+  }
 }
 
 .tabs-panel {
