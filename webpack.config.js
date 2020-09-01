@@ -49,22 +49,6 @@ module.exports = {
         ignore: ['*.js', '*.html'],
       },
       {
-        from: './options/options.html',
-        to: './options/options.html',
-        filter: () => {
-          if (process.env.TARGET !== 'edge') return true;
-          return false;
-        },
-      },
-      {
-        from: './options/options.edge.html',
-        to: './options/options.html',
-        filter: () => {
-          if (process.env.TARGET === 'edge') return true;
-          return false;
-        },
-      },
-      {
         from: './popup/*',
         to: './popup/',
         flatten: true,
@@ -96,3 +80,23 @@ module.exports = {
     }),
   ],
 };
+
+if (process.env.TARGET === 'edge') {
+  module.exports.plugins.push(
+    new CopyPlugin([
+      {
+        from: './options/options.edge.html',
+        to: './options/options.html',
+      },
+    ]),
+  );
+} else {
+  module.exports.plugins.push(
+    new CopyPlugin([
+      {
+        from: './options/options.html',
+        to: './options/options.html',
+      },
+    ]),
+  );
+}
