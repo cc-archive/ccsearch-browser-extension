@@ -5,8 +5,8 @@ import { activatePopup } from './infoPopupModule';
 import { removeSpinner } from './spinner';
 // eslint-disable-next-line import/no-cycle
 import toggleBookmark from './bookmarkModule';
-import { checkInternetConnection, primaryGridMasonryObject } from './searchModule.utils';
-import { showNotification, removeChildNodes, activeBookmarkIdContainers } from '../utils';
+import primaryGridMasonryObject from './searchModule.utils';
+import { showNotification, removeChildNodes, activeBookmarkIdContainers, checkInternetConnection } from '../utils';
 
 export function checkInputError(inputText) {
   if (inputText === '') {

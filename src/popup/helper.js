@@ -164,34 +164,6 @@ export const imageSizeAPIQueryStrings = {
   Large: 'large',
 };
 
-// backup object in case we cannot fetch source names from the API.
-export const backupSourceAPIQueryStrings = {
-  'Animal Diversity Web': 'animaldiversity',
-  'Brooklyn Museum': 'brooklynmuseum',
-  Behance: 'behance',
-  DeviantArt: 'deviantart',
-  'Culturally Authentic Pictorial Lexicon': 'CAPL',
-  'Cleveland Museum of Art': 'clevelandmuseum',
-  'Digitalt Museum': 'digitaltmuseum',
-  Flickr: 'flickr',
-  'Geograph Britain and Ireland': 'geographorguk',
-  'Flora-On': 'floraon',
-  'Metropolitan Museum of Art': 'met',
-  'Museums Victoria': 'museumsvictoria',
-  'McCord Museum': 'mccordmuseum',
-  PhyloPic: 'phylopic',
-  'Science Museum - UK': 'sciencemuseum',
-  Rijksmuseum: 'rijksmuseum',
-  Rawpixel: 'rawpixel',
-  'SVG Silh': 'svgsilh',
-  Thingiverse: 'thingiverse',
-  'Thorvaldsens Museum': 'thorvaldsensmuseum',
-  'World Register of Marine Species': 'WoRMS',
-  'Wikimedia Commons': 'wikimedia',
-  Sketchfab: 'sketchfab',
-  'Smithsonian Institution': 'smithsonian',
-};
-
 // object that maps source_name to display_name
 const displayNames = {
   animaldiversity: 'Animal Diversity Web',

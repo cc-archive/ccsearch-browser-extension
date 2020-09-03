@@ -13,10 +13,17 @@ import { removeLoadMoreButton, addLoadMoreButton } from './helper';
 // eslint-disable-next-line import/no-cycle
 import { removeOldSearchResults } from './searchModule';
 import { addSpinner, removeSpinner } from './spinner';
-import { showNotification, keyNames, activeBookmarkContainers, activeBookmarkIdContainers } from '../utils';
+import {
+  showNotification,
+  keyNames,
+  activeBookmarkContainers,
+  activeBookmarkIdContainers,
+  checkInternetConnection,
+} from '../utils';
 // eslint-disable-next-line import/no-cycle
 import loadCollections from './collectionModule';
-import { checkInternetConnection, primaryGridMasonryObject } from './searchModule.utils';
+import primaryGridMasonryObject from './searchModule.utils';
+
 // eslint-disable-next-line import/no-cycle
 // import { loadStoredContentToUI } from './popup.utils';
 

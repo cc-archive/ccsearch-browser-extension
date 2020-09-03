@@ -29,12 +29,13 @@ import {
   allowCheckingOneTypeOfCheckbox,
   enableTabSwitching,
   loadFilterCheckboxesFromStorage,
+  checkInternetConnection,
   // activeBookmarkContainers,
 } from '../utils';
 import { loadBookmarkImages } from './bookmarkModule';
 import { confirmBookmarkSchemaInSync, confirmFilterSchemaInSync } from './popup.utils';
 import { removeActiveClassFromNavLinks, bookmarksGridMasonryObject } from './bookmarkModule.utils';
-import { primaryGridMasonryObject, checkInternetConnection } from './searchModule.utils';
+import primaryGridMasonryObject from './searchModule.utils';
 
 initGlobalObject();
 
