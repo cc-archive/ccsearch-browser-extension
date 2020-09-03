@@ -4,8 +4,15 @@ const webpack = require('webpack');
 
 if (!process.env.TARGET) {
   throw Error("Please specify env var TARGET, 'chrome', 'firefox' or 'opera'.");
-} else if (!(process.env.TARGET === 'chrome' || process.env.TARGET === 'firefox' || process.env.TARGET === 'opera')) {
-  throw Error("TARGET can only be 'chrome', 'firefox' or 'opera'.");
+} else if (
+  !(
+    process.env.TARGET === 'chrome' ||
+    process.env.TARGET === 'firefox' ||
+    process.env.TARGET === 'opera' ||
+    process.env.TARGET === 'edge'
+  )
+) {
+  throw Error("TARGET can only be 'chrome', 'firefox', 'opera' or 'edge'.");
 } else {
   console.info(`\x1b[1;32mBuilding for ${process.env.TARGET}...\x1b[m`);
 }
@@ -39,7 +46,7 @@ module.exports = {
         from: './options/*',
         to: './options/',
         flatten: true,
-        ignore: ['*.js'],
+        ignore: ['*.js', '*.html'],
       },
       {
         from: './popup/*',
@@ -73,3 +80,23 @@ module.exports = {
     }),
   ],
 };
+
+if (process.env.TARGET === 'edge') {
+  module.exports.plugins.push(
+    new CopyPlugin([
+      {
+        from: './options/options.edge.html',
+        to: './options/options.html',
+      },
+    ]),
+  );
+} else {
+  module.exports.plugins.push(
+    new CopyPlugin([
+      {
+        from: './options/options.html',
+        to: './options/options.html',
+      },
+    ]),
+  );
+}

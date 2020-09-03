@@ -4,6 +4,8 @@ html.dark,
 body.dark {
   color: $color-white;
   background-color: $color-dark-slate-gray;
+
+  /**** general components ****/
   a,
   a:hover,
   a:active {
@@ -14,15 +16,60 @@ body.dark {
     background-color: $color-white;
   }
 
-  .container {
-    background-color: #000;
-  }
-
+  h3,
   h4,
   h5 {
     color: $color-white;
   }
 
+  .container {
+    background-color: #000;
+  }
+
+  .spinner > div {
+    background-color: $color-white;
+  }
+
+  .notification__popup--body {
+    color: rgb(34, 34, 34);
+  }
+
+  .fixed-footer {
+    background-color: $color-dark-slate-gray;
+  }
+
+  /**** Buttons ****/
+  .button.is-primary,
+  .load-more-button {
+    background-color: $color-gold !important;
+    color: $color-dark-slate-gray;
+
+    &:hover,
+    &:focus {
+      background-color: lighten($color: $color-gold, $amount: 10) !important;
+      color: $color-dark-slate-gray !important;
+    }
+  }
+
+  .button {
+    color: $color-dark-slate-gray;
+
+    &:hover {
+      color: $color-white;
+    }
+
+    &.is-success {
+      color: $color-white !important;
+    }
+
+    &.donate {
+      &:hover {
+        color: $color-black;
+      }
+    }
+  }
+
+  /**** Header ****/
   .navbar {
     background-color: $color-dark-slate-gray;
 
@@ -49,36 +96,7 @@ body.dark {
     }
   }
 
-  .button.is-primary,
-  .load-more-button {
-    background-color: $color-gold !important;
-    color: $color-dark-slate-gray;
-
-    &:hover,
-    &:focus {
-      background-color: lighten($color: $color-gold, $amount: 10) !important;
-      color: $color-dark-slate-gray !important;
-    }
-  }
-
-  .button {
-    color: $color-dark-slate-gray;
-
-    &:hover {
-      color: $color-white;
-    }
-  }
-
-  .button.is-success {
-    color: $color-white;
-  }
-
-  .button.donate {
-    &:hover {
-      color: $color-black;
-    }
-  }
-
+  /**** Search Section ****/
   input,
   .section-search {
     background-color: #000;
@@ -89,10 +107,7 @@ body.dark {
     color: $color-gray !important;
   }
 
-  .fixed-footer {
-    background-color: $color-dark-slate-gray;
-  }
-
+  /**** Sources section ****/
   .section-collections table {
     & > thead {
       background-color: $color-dark-gray;
@@ -115,6 +130,7 @@ body.dark {
     }
   }
 
+  /**** Image Detail section ****/
   .section-image-detail {
     .image-detail__nav {
       #close-image-detail {
@@ -197,13 +213,5 @@ body.dark {
     i.license-logo {
       color: $color-white;
     }
-  }
-
-  .spinner > div {
-    background-color: $color-white;
-  }
-
-  .notification__popup--body {
-    color: rgb(34, 34, 34);
   }
 }

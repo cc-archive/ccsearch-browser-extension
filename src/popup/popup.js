@@ -9,17 +9,7 @@ import {
   getCollectionsUrl,
   getTagsUrl,
 } from './searchModule';
-import {
-  // licenseAPIQueryStrings,
-  // useCaseAPIQueryStrings,
-  // makeElementsDisplayNone,
-  // removeClassFromElements,
-  removeLoadMoreButton,
-  // imageTypeAPIQueryStrings,
-  // fileTypeAPIQueryStrings,
-  // aspectRatioAPIQueryStrings,
-  // imageSizeAPIQueryStrings,
-} from './helper';
+import { removeLoadMoreButton, clearFilters } from './helper';
 import loadUserDefaults from './filterModule';
 import { fillImageDetailSection, resetImageDetailSection } from './infoPopupModule';
 import { addSpinner, removeSpinner } from './spinner';
@@ -29,12 +19,13 @@ import {
   allowCheckingOneTypeOfCheckbox,
   enableTabSwitching,
   loadFilterCheckboxesFromStorage,
+  checkInternetConnection,
   // activeBookmarkContainers,
 } from '../utils';
 import { loadBookmarkImages } from './bookmarkModule';
-import generateNewStorageSchemaForFilters from './popup.utils';
+import { confirmBookmarkSchemaInSync, confirmFilterSchemaInSync } from './popup.utils';
 import { removeActiveClassFromNavLinks, bookmarksGridMasonryObject } from './bookmarkModule.utils';
-import { primaryGridMasonryObject, checkInternetConnection } from './searchModule.utils';
+import primaryGridMasonryObject from './searchModule.utils';
 
 initGlobalObject();
 
@@ -80,18 +71,18 @@ elements.inputField.addEventListener('keydown', event => {
 
 async function addSourceFilterCheckboxes() {
   if (elements.sourceCheckboxesWrapper.children.length === 1) {
-    window.appObject.sourceAPIQueryStrings = await getLatestSources();
+    window.appObject.sourcesFromAPI = await getLatestSources();
 
-    const sourceDisplayNames = Object.keys(window.appObject.sourceAPIQueryStrings);
+    const sourceNames = Object.keys(window.appObject.sourcesFromAPI);
 
-    for (let i = 0; i < sourceDisplayNames.length; i += 1) {
+    for (let i = 0; i < sourceNames.length; i += 1) {
       const checkboxElement = document.createElement('input');
       checkboxElement.type = 'checkbox';
-      checkboxElement.id = window.appObject.sourceAPIQueryStrings[sourceDisplayNames[i]];
+      checkboxElement.id = sourceNames[i];
 
       const labelElement = document.createElement('label');
       labelElement.setAttribute('for', checkboxElement.id);
-      labelElement.innerText = sourceDisplayNames[i];
+      labelElement.innerText = window.appObject.sourcesFromAPI[sourceNames[i]];
 
       const breakElement = document.createElement('br');
 
@@ -120,53 +111,13 @@ elements.closeFiltersLink.onclick = () => {
 
 allowCheckingOneTypeOfCheckbox(elements.licenseCheckboxesWrapper, elements.useCaseCheckboxesWrapper);
 
-// function clearAllUserSelectedFilterLists() {
-//   window.appObject.allUserSelectedFilterLists.forEach(element => {
-//     console.log(`element name ${element}`);
-//     console.log(`it's value ${window.appObject.element}`);
-//     console.log(
-//       `usersselesourcelist window.appObject.userSelectedSourcesList ${window.appObject.userSelectedSourcesList}`,
-//     );
-//     window.appObject.element = [];
-//   });
-//   // console.log(window.appObject.allUserSelectedFilterLists);
-// }
-
-// TODO: divide the steps into functions
 elements.clearFiltersButton.addEventListener('click', () => {
   // the filter is not activated anymore
   // elements.filterButton.classList.remove('activate-filter');
 
-  const checkboxesWrappers = [
-    elements.useCaseCheckboxesWrapper,
-    elements.licenseCheckboxesWrapper,
-    elements.sourceCheckboxesWrapper,
-    elements.fileTypeCheckboxesWrapper,
-    elements.imageTypeCheckboxesWrapper,
-    elements.imageSizeCheckboxesWrapper,
-    elements.aspectRatioCheckboxesWrapper,
-  ];
-
-  checkboxesWrappers.forEach(checkboxesWrapper => {
-    const checkboxes = checkboxesWrapper.querySelectorAll('input[type=checkbox]');
-
-    for (let i = 0; i < checkboxes.length; i += 1) {
-      checkboxes[i].checked = false;
-    }
-  });
-
-  // clear the datastructures and make a fresh search
-  window.appObject.userSelectedUseCaseList = [];
-  window.appObject.userSelectedLicensesList = [];
-  window.appObject.userSelectedSourcesList = [];
-  window.appObject.userSelectedFileTypeList = [];
-  window.appObject.userSelectedImageTypeList = [];
-  window.appObject.userSelectedImageSizeList = [];
-  window.appObject.userSelectedAspectRatioList = [];
-  // console.log(window.appObject.userSelectedUseCaseList);
-  // clearAllUserSelectedFilterLists();
-  // console.log(window.appObject.userSelectedUseCaseList);
-
+  clearFilters();
+  // close the filters section and make a search
+  primaryGridMasonryObject.layout();
   elements.closeFiltersLink.click();
   elements.searchButton.click();
 });
@@ -210,6 +161,7 @@ function applyFilters() {
 
 elements.applyFiltersButton.addEventListener('click', () => {
   applyFilters();
+  primaryGridMasonryObject.layout();
   elements.closeFiltersLink.click();
   elements.searchButton.click();
 });
@@ -254,12 +206,9 @@ elements.searchButton.addEventListener('click', () => {
     window.appObject.enableMatureContent,
   );
 
-  console.log(url);
-
-  // console.log(window.appObject.userSelectedUseCaseList);
-  // console.log(window.appObject.userSelectedSourcesList);
-  search(url);
   // console.log(url);
+
+  search(url);
   // pageNo += 1;
   // elements.clearSearchButton[0].classList.remove('display-none');
 });
@@ -353,4 +302,5 @@ window.addEventListener('scroll', () => {
 
 elements.buttonBackToTop.addEventListener('click', () => window.scrollTo(0, 0));
 
-generateNewStorageSchemaForFilters();
+confirmBookmarkSchemaInSync();
+confirmFilterSchemaInSync();

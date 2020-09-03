@@ -1,5 +1,3 @@
-import { backupSourceAPIQueryStrings } from './popup/helper';
-
 export function showNotification(message, context, notificationWrapperClass, timeout) {
   const notificationWrapperDiv = document.getElementsByClassName(notificationWrapperClass)[0];
   const notificationContainer = notificationWrapperDiv.getElementsByClassName('notification-container')[0];
@@ -28,6 +26,13 @@ export function removeNode(className) {
   }
 }
 
+export function checkInternetConnection() {
+  if (!navigator.onLine) {
+    showNotification('No Internet Connection', 'negative', 'notification--extension-popup');
+    throw new Error('No Internet Connection');
+  }
+}
+
 export async function fetchSources() {
   const getSourceURL = 'https://api.creativecommons.engineering/v1/sources';
   const data = await fetch(getSourceURL);
@@ -37,22 +42,26 @@ export async function fetchSources() {
 }
 
 export async function getLatestSources() {
-  let sources = {};
   try {
+    // get raw data from the API
     const result = await fetchSources();
+
+    // store key-value pairs : <source_name, display_name>
+    const sources = {};
     result.forEach(source => {
-      sources[source.display_name] = source.source_name;
+      sources[source.source_name] = source.display_name;
     });
+
     return sources;
   } catch (error) {
+    checkInternetConnection();
     showNotification(
-      'Unable to fetch sources. Using backup sources',
+      'Unable to fetch sources. Please try again after some time.',
       'negative',
       'notification--extension-popup',
-      2500,
+      3500,
     );
-    sources = backupSourceAPIQueryStrings;
-    return sources;
+    throw new Error('Error connecting to the API');
   }
 }
 
@@ -135,9 +144,7 @@ export function loadFilterCheckboxesFromStorage(wrapperElement) {
   const filterStorageKey = wrapperElement.dataset.storageKeyName;
 
   chrome.storage.sync.get(filterStorageKey, items => {
-    console.log(filterStorageKey);
     const filterCheckboxIds = Object.keys(items[filterStorageKey]);
-    console.log(filterCheckboxIds);
     // iterating over the input checkboxes of current filter (for usecase -> commercial and modification)
     // and marking them checked if value in storage is true
     filterCheckboxIds.forEach(filterCheckboxId => {

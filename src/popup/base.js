@@ -50,7 +50,6 @@ export const elements = {
   gridBookmarks: document.querySelector('.grid-bookmarks'),
   loadMoreBookmarkButton: document.querySelector('.load-more-bookmark-button'),
   loadMoreBookmarkButtonkWrapper: document.querySelector('.load-more-bookmark-button-wrapper'),
-  spinnerPlaceholderBookmarks: document.getElementById('spinner-placeholder--bookmarks'),
   // footer
   bookmarksSectionFooter: document.getElementsByClassName('section-bookmarks__footer')[0],
   deleteBookmarksButton: document.getElementById('delete-bookmarks'),
@@ -150,8 +149,9 @@ export function initGlobalObject() {
   window.appObject.userSelectedImageSizeList = [];
   window.appObject.userSelectedFileTypeList = [];
   window.appObject.userSelectedAspectRatioList = [];
-  // object to map source display names to valid query names.
-  window.appObject.sourceAPIQueryStrings = {};
+
+  // object to store latest sources as <source_name, display_name>
+  window.appObject.sourcesFromAPI = {};
 
   // Search Storage
   window.appObject.storeSearch = {};
@@ -162,6 +162,7 @@ export function initGlobalObject() {
   window.appObject.collectionName = '';
   window.appObject.clickedImageTag = false;
 
+  window.appObject.collectionSectionFilled = false;
   window.appObject.bookmarksEditViewEnabled = false;
 
   window.appObject.imageDetailStack = new Stack();
