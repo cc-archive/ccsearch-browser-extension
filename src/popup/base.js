@@ -149,8 +149,9 @@ export function initGlobalObject() {
   window.appObject.userSelectedImageSizeList = [];
   window.appObject.userSelectedFileTypeList = [];
   window.appObject.userSelectedAspectRatioList = [];
-  // object to map source display names to valid query names.
-  window.appObject.sourceAPIQueryStrings = {};
+
+  // object to store latest sources as <source_name, display_name>
+  window.appObject.sourcesFromAPI = {};
 
   // Search Storage
   window.appObject.storeSearch = {};

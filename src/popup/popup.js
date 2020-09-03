@@ -71,18 +71,18 @@ elements.inputField.addEventListener('keydown', event => {
 
 async function addSourceFilterCheckboxes() {
   if (elements.sourceCheckboxesWrapper.children.length === 1) {
-    window.appObject.sourceAPIQueryStrings = await getLatestSources();
+    window.appObject.sourcesFromAPI = await getLatestSources();
 
-    const sourceDisplayNames = Object.keys(window.appObject.sourceAPIQueryStrings);
+    const sourceNames = Object.keys(window.appObject.sourcesFromAPI);
 
-    for (let i = 0; i < sourceDisplayNames.length; i += 1) {
+    for (let i = 0; i < sourceNames.length; i += 1) {
       const checkboxElement = document.createElement('input');
       checkboxElement.type = 'checkbox';
-      checkboxElement.id = window.appObject.sourceAPIQueryStrings[sourceDisplayNames[i]];
+      checkboxElement.id = sourceNames[i];
 
       const labelElement = document.createElement('label');
       labelElement.setAttribute('for', checkboxElement.id);
-      labelElement.innerText = sourceDisplayNames[i];
+      labelElement.innerText = window.appObject.sourcesFromAPI[sourceNames[i]];
 
       const breakElement = document.createElement('br');
 

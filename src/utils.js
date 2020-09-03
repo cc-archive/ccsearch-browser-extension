@@ -46,10 +46,10 @@ export async function getLatestSources() {
     // get raw data from the API
     const result = await fetchSources();
 
-    // store key-value pairs : <display_name, source_name>
+    // store key-value pairs : <source_name, display_name>
     const sources = {};
     result.forEach(source => {
-      sources[source.display_name] = source.source_name;
+      sources[source.source_name] = source.display_name;
     });
 
     return sources;

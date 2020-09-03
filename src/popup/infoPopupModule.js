@@ -1,6 +1,5 @@
 import { elements } from './base';
 // import { removeSpinner } from './spinner';
-import { getSourceDisplayName } from './helper';
 // eslint-disable-next-line import/no-cycle
 import { addSearchThumbnailsToDOM, getTagsUrl, search, removeOldSearchResults } from './searchModule';
 import { addSpinner } from './spinner';
@@ -198,7 +197,7 @@ function fillImageSource(foreignLandingUrl, source) {
   const link = document.createElement('a');
   link.href = foreignLandingUrl;
   link.target = '_blank';
-  link.textContent = getSourceDisplayName(source);
+  link.textContent = window.appObject.sourcesFromAPI[source];
   elements.imageSourcePara.innerText = '';
   elements.imageSourcePara.appendChild(link);
 }
