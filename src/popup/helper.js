@@ -1,3 +1,37 @@
+import { elements } from './base';
+
+export function clearFilters() {
+  const checkboxesWrappers = [
+    elements.useCaseCheckboxesWrapper,
+    elements.licenseCheckboxesWrapper,
+    elements.sourceCheckboxesWrapper,
+    elements.fileTypeCheckboxesWrapper,
+    elements.imageTypeCheckboxesWrapper,
+    elements.imageSizeCheckboxesWrapper,
+    elements.aspectRatioCheckboxesWrapper,
+    elements.showMatureContentCheckboxWrapper,
+  ];
+
+  // unchecking all the filter checkboxes
+  checkboxesWrappers.forEach(checkboxesWrapper => {
+    const checkboxes = checkboxesWrapper.querySelectorAll('input[type=checkbox]');
+
+    for (let i = 0; i < checkboxes.length; i += 1) {
+      checkboxes[i].checked = false;
+    }
+  });
+
+  // clear the filter datastructures
+  window.appObject.userSelectedUseCaseList = [];
+  window.appObject.userSelectedLicensesList = [];
+  window.appObject.userSelectedSourcesList = [];
+  window.appObject.userSelectedFileTypeList = [];
+  window.appObject.userSelectedImageTypeList = [];
+  window.appObject.userSelectedImageSizeList = [];
+  window.appObject.userSelectedAspectRatioList = [];
+  window.appObject.enableMatureContent = false;
+}
+
 // convert Unicode sequence To String. credit: https://stackoverflow.com/a/22021709/10425980
 export function unicodeToString(string) {
   if (typeof string === 'string') {

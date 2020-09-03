@@ -9,7 +9,7 @@ import {
   getCollectionsUrl,
   getTagsUrl,
 } from './searchModule';
-import { removeLoadMoreButton } from './helper';
+import { removeLoadMoreButton, clearFilters } from './helper';
 import loadUserDefaults from './filterModule';
 import { fillImageDetailSection, resetImageDetailSection } from './infoPopupModule';
 import { addSpinner, removeSpinner } from './spinner';
@@ -115,36 +115,7 @@ elements.clearFiltersButton.addEventListener('click', () => {
   // the filter is not activated anymore
   // elements.filterButton.classList.remove('activate-filter');
 
-  const checkboxesWrappers = [
-    elements.useCaseCheckboxesWrapper,
-    elements.licenseCheckboxesWrapper,
-    elements.sourceCheckboxesWrapper,
-    elements.fileTypeCheckboxesWrapper,
-    elements.imageTypeCheckboxesWrapper,
-    elements.imageSizeCheckboxesWrapper,
-    elements.aspectRatioCheckboxesWrapper,
-    elements.showMatureContentCheckboxWrapper,
-  ];
-
-  // unchecking all the filter checkboxes
-  checkboxesWrappers.forEach(checkboxesWrapper => {
-    const checkboxes = checkboxesWrapper.querySelectorAll('input[type=checkbox]');
-
-    for (let i = 0; i < checkboxes.length; i += 1) {
-      checkboxes[i].checked = false;
-    }
-  });
-
-  // clear the filter datastructures
-  window.appObject.userSelectedUseCaseList = [];
-  window.appObject.userSelectedLicensesList = [];
-  window.appObject.userSelectedSourcesList = [];
-  window.appObject.userSelectedFileTypeList = [];
-  window.appObject.userSelectedImageTypeList = [];
-  window.appObject.userSelectedImageSizeList = [];
-  window.appObject.userSelectedAspectRatioList = [];
-  window.appObject.enableMatureContent = false;
-
+  clearFilters();
   // close the filters section and make a search
   primaryGridMasonryObject.layout();
   elements.closeFiltersLink.click();

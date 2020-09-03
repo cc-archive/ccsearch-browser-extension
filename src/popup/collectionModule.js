@@ -4,6 +4,7 @@ import { elements } from './base';
 import { getCollectionsUrl, search } from './searchModule';
 // eslint-disable-next-line import/no-cycle
 import { addSpinner, removeSpinner } from './spinner';
+import { clearFilters } from './helper';
 
 function searchCollection(event) {
   window.appObject.pageNo = 1;
@@ -11,13 +12,17 @@ function searchCollection(event) {
   window.appObject.searchingNewCollection = true;
   window.appObject.inputText = '';
   window.appObject.collectionName = event.target.getAttribute('data-collection-name');
-  const url = getCollectionsUrl(window.appObject.collectionName, window.appObject.pageNo);
+
+  elements.inputField.value = '';
+  elements.headerLogo.click();
+  elements.buttonBackToTop.click();
+
   const items = {};
   items[window.appObject.collectionName] = true;
-  elements.inputField.value = '';
-  elements.buttonBackToTop.click();
-  elements.headerLogo.click();
+  clearFilters();
   addSpinner(elements.spinnerPlaceholderPrimary, 'original');
+
+  const url = getCollectionsUrl(window.appObject.collectionName, window.appObject.pageNo);
   search(url);
 }
 

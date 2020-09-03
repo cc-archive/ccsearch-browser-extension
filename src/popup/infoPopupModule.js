@@ -4,6 +4,7 @@ import { elements } from './base';
 import { addSearchThumbnailsToDOM, getTagsUrl, search, removeOldSearchResults } from './searchModule';
 import { addSpinner } from './spinner';
 import { removeChildNodes } from '../utils';
+import { clearFilters } from './helper';
 
 const Masonry = require('masonry-layout');
 
@@ -221,17 +222,23 @@ function fillImageLicense(licenseUrl, licenseArray) {
 }
 
 function searchByTag(event) {
+  // set some app objects
   window.appObject.pageNo = 1;
   window.appObject.activeSearchContext = 'tag';
   window.appObject.inputText = '';
   window.appObject.tagName = event.target.innerText;
-  const url = getTagsUrl(window.appObject.tagName, window.appObject.pageNo);
-  elements.inputField.value = '';
-  removeOldSearchResults();
   window.appObject.clickedImageTag = true;
+
+  elements.inputField.value = '';
   elements.closeImageDetailLink.click();
   elements.headerLogo.click();
+
+  clearFilters();
+  removeOldSearchResults();
   addSpinner(elements.spinnerPlaceholderPrimary, 'original');
+
+  // search by tag
+  const url = getTagsUrl(window.appObject.tagName, window.appObject.pageNo);
   search(url);
 }
 
