@@ -9,17 +9,7 @@ import {
   getCollectionsUrl,
   getTagsUrl,
 } from './searchModule';
-import {
-  // licenseAPIQueryStrings,
-  // useCaseAPIQueryStrings,
-  // makeElementsDisplayNone,
-  // removeClassFromElements,
-  removeLoadMoreButton,
-  // imageTypeAPIQueryStrings,
-  // fileTypeAPIQueryStrings,
-  // aspectRatioAPIQueryStrings,
-  // imageSizeAPIQueryStrings,
-} from './helper';
+import { removeLoadMoreButton } from './helper';
 import loadUserDefaults from './filterModule';
 import { fillImageDetailSection, resetImageDetailSection } from './infoPopupModule';
 import { addSpinner, removeSpinner } from './spinner';
