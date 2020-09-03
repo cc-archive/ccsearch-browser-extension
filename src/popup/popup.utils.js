@@ -116,7 +116,7 @@ export function confirmFilterSchemaInSync() {
           filterMigration: true,
         },
         () => {
-          console.log('done');
+          console.log('filter migration done');
         },
       );
 
@@ -200,7 +200,7 @@ export function confirmFilterSchemaInSync() {
           'bio_diversity',
         ],
         () => {
-          console.log('deleted');
+          console.log('redundant keys deleted');
         },
       );
     }

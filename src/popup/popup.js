@@ -206,12 +206,9 @@ elements.searchButton.addEventListener('click', () => {
     window.appObject.enableMatureContent,
   );
 
-  console.log(url);
-
-  // console.log(window.appObject.userSelectedUseCaseList);
-  // console.log(window.appObject.userSelectedSourcesList);
-  search(url);
   // console.log(url);
+
+  search(url);
   // pageNo += 1;
   // elements.clearSearchButton[0].classList.remove('display-none');
 });

@@ -144,9 +144,7 @@ export function loadFilterCheckboxesFromStorage(wrapperElement) {
   const filterStorageKey = wrapperElement.dataset.storageKeyName;
 
   chrome.storage.sync.get(filterStorageKey, items => {
-    console.log(filterStorageKey);
     const filterCheckboxIds = Object.keys(items[filterStorageKey]);
-    console.log(filterCheckboxIds);
     // iterating over the input checkboxes of current filter (for usecase -> commercial and modification)
     // and marking them checked if value in storage is true
     filterCheckboxIds.forEach(filterCheckboxId => {
