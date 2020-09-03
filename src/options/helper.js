@@ -15,14 +15,14 @@ function addSourcesToDom(sources) {
   const { sourceCheckboxesWrapper } = elements;
   sourceCheckboxesWrapper.innerText = '';
 
-  Object.keys(sources).forEach(key => {
+  Object.keys(sources).forEach(source => {
     const input = document.createElement('input');
     input.type = 'checkbox';
-    input.id = sources[key];
+    input.id = source;
 
     const label = document.createElement('label');
     label.setAttribute('for', input.id);
-    label.innerText = key;
+    label.innerText = source;
     label.classList = 'padding-left-smaller';
 
     const breakLine = document.createElement('br');
