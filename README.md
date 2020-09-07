@@ -13,6 +13,10 @@
     <a href="https://addons.opera.com/en/extensions/details/cc-search/">
       Opera
     </a>
+    <span> | </span>
+    <a href="https://microsoftedge.microsoft.com/addons/detail/cc-search/djolilnbndifmlfmcdnifdfjfbglipgc">
+      Edge
+    </a>
   </h4>
   <p align="center">A Cross-Browser Extension which lets you search and filter content in the public domain and under Creative Commons licenses.<p>
   <p align="center">
@@ -28,35 +32,28 @@
   </p>
 </p>
 
-<p align="center">
-  <img src="https://i.imgur.com/KOgFgWU.png" width="900px">
-</p>
-
 ## Install
 
 <!-- prettier-ignore-start -->
-| [Firefox addon store](https://addons.mozilla.org/en-US/firefox/addon/cc-search-extension/) | [Chrome web store](https://chrome.google.com/webstore/detail/cc-search/agohkbfananbebiaphblgcfhcclklfnh) | [Opera addon store](https://addons.opera.com/en/extensions/details/cc-search/) |
-|---------|--------|-------|
+| [Firefox addon store](https://addons.mozilla.org/en-US/firefox/addon/cc-search-extension/) | [Chrome web store](https://chrome.google.com/webstore/detail/cc-search/agohkbfananbebiaphblgcfhcclklfnh) | [Opera addon store](https://addons.opera.com/en/extensions/details/cc-search/) | [Edge addon store](https://microsoftedge.microsoft.com/addons/detail/cc-search/djolilnbndifmlfmcdnifdfjfbglipgc) |
+|---------|--------|-------|-------|
 <!-- prettier-ignore-end -->
 
 ## Features
 
 <!-- prettier-ignore-start -->
-| Feature | <img src="https://i.imgur.com/tVOpDmP.png" width="16" height="16"> Firefox | <img src="https://i.imgur.com/r33ZXs4.png" height="16" width="16"> Chrome | <img src="https://i.imgur.com/CBgAqSl.png" heigth="16" width="16"> Opera |
-|--------------------------------------------------------|---------|--------|-------|
-| Search and filter CC Licensed content. | Yes | Yes | Yes  |
-| One click attribution. | Yes | Yes | Yes |
-| Download images (and attribution). | Yes | Yes | Yes |
-| Bookmark images. | Yes | Yes | Yes |
-| Export and import bookmarks. | Yes | Yes | Yes |
-| Sync your custom setting and bookmarks across devices. | Yes | Yes | No |
-| Options-UI for custom settings. | Yes | Yes | Yes |
-| Dark Mode. | Yes | Yes | Yes |
+| Feature | <img src="https://i.imgur.com/tVOpDmP.png" width="16" height="16"> Firefox | <img src="https://i.imgur.com/r33ZXs4.png" height="16" width="16"> Chrome | <img src="https://i.imgur.com/CBgAqSl.png" heigth="16" width="16"> Opera | <img src="https://i.imgur.com/0Qyfktv.png" heigth="16" width="16"> Edge |
+|--------------------------------------------------------|---------|--------|-------|-------|
+| Search and filter CC Licensed images. | Yes | Yes | Yes | Yes|
+| One click easy attribution. | Yes | Yes | Yes | Yes |
+| Image tags and recommendations. | Yes| Yes | Yes | Yes |
+| Download images (and attribution). | Yes | Yes | Yes | Yes |
+| Bookmark images. | Yes | Yes | Yes | Yes |
+| Export and import bookmarks. | Yes | Yes | Yes | Yes |
+| Options page for custom settings. | Yes | Yes | Yes | Yes |
+| Sync your custom setting and bookmarks across devices. | Yes | Yes | No | Yes |
+| Dark Mode. | Yes | Yes | Yes | Yes |
 <!-- prettier-ignore-end -->
-
-<p align="center">
-  <img src="https://i.imgur.com/Dh7wczv.png">
-</p>
 
 ## Installation from source
 
@@ -66,7 +63,7 @@ You can install the extension directly from the source. Follow the following ste
 
 2. Run: `npm install`.
 
-3. Run: `npm run dev`. This would compile SASS to CSS and bundle JS. The compiled version will be in dist folder.
+3. Run: `npm run dev`. This would compile SASS to CSS and bundle JS. The compiled version will be in `dist` folder.
 
 4. Load the extension to the browser:
    - **Mozilla Firefox**
@@ -81,6 +78,10 @@ You can install the extension directly from the source. Follow the following ste
      - Navigate to _about://extensions_.
      - Click on "Load Unpacked" button (make sure you have enabled the _Developer mode_).
      - From the file explorer, choose `ccsearch-browser-extension/dist/opera`.
+   - **Edge**
+     - Navigate to _edge://extensions_.
+     - Click on "Load Unpacked" button (make sure you have enabled the _Developer mode_).
+     - From the file explorer, choose `ccsearch-browser-extension/dist/edge`.
 
 ## Debugging in Development Mode
 
