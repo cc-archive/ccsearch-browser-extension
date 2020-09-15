@@ -1,16 +1,3 @@
-.center-align {
-  text-align: center;
-}
-.left-align {
-  text-align: left;
-}
-.right-align {
-  text-align: right;
-}
-.bg-color-orange {
-  background: rgb(237, 89, 47) !important;
-}
-
 body {
   color: rgb(51, 51, 51);
 }
