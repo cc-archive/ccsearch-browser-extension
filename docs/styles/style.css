@@ -10,100 +10,61 @@
 .bg-color-orange {
   background: rgb(237, 89, 47) !important;
 }
-.browser-info {
-  text-transform: capitalize;
+
+body {
+  color: rgb(51, 51, 51);
 }
-.icon {
-  font-size: 1rem;
-}
-.responsive-img {
-  height: auto;
-  width: 100%;
-  max-width: 500px;
-  min-width: 150px;
-}
-.extension-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  justify-items: start;
+
+section.section-main {
   background: rgb(245, 245, 245);
 }
-.extension-grid > div {
-  padding: 2em;
-  margin: 0.5em;
+
+.cc-search-logo svg {
+  height: 40px;
 }
-.feature-grid {
-  padding-left: 2em;
-  padding-right: 2em;
+
+.extension-store-links {
+  display: flex;
+}
+
+.extension-store-links a {
+  margin-right: 1rem;
+}
+
+.feature {
+  padding: 2rem;
   display: grid;
-  grid-template-columns: 2fr 3fr;
+
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  justify-items: end;
+  justify-items: center;
 }
-.feature-grid > div {
-  padding: 2em;
-  margin: 0.5em;
+
+.feature-desc-wrapper {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
 }
 
 hr {
-  width: 50%;
+  width: 60%;
   margin: auto;
 }
 
 .feature-table {
   margin: auto;
 }
-.extension-intro {
-  font-size: 3em;
-}
-@media all and (max-width: 600px) {
-  .logo {
-    margin-left: 3em !important;
+
+@media all and (max-width: 700px) {
+  .extension-store-links {
+    height: 20rem;
+
+    flex-direction: column;
+    justify-content: space-between;
   }
-  .extension-grid {
-    padding-left: 0em !important;
-    padding-right: 0em !important;
-  }
-  .extension-grid > div {
-    padding: 1em !important;
-  }
-  .responsive-img {
-    height: auto;
-    width: 100%;
-    max-width: 260px;
-    min-width: 150px;
-  }
-  .feature-content {
-    padding-left: 0em !important;
-    padding-right: 0em !important;
-  }
-  .feature-grid {
-    padding-left: 0em !important;
-    padding-right: 0em !important;
-  }
-  .feature-grid > div {
-    padding: 0em !important;
-    margin: 0.2em !important;
-  }
-  .feature-heading {
-    font-size: 3.2em;
-    padding-left: 0.2em !important;
-  }
-  .extension-intro {
-    font-size: 3em;
-    text-align: left;
-    padding-left: 0.2em !important;
-  }
-  .extension-detail {
-    width: 90%;
-    text-align: justify !important;
-    padding-left: 1em !important;
-  }
-  .download-extension {
-    width: 90%;
-  }
-  .extension-summary {
-    width: 78%;
+
+  .extension-store-links a {
+    margin-right: 0;
   }
 }
