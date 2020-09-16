@@ -10,6 +10,10 @@ section.section-main {
   height: 40px;
 }
 
+.extension-detail {
+  width: 50%;
+}
+
 .extension-store-links {
   display: flex;
 }
@@ -43,15 +47,21 @@ hr {
   margin: auto;
 }
 
-@media all and (max-width: 700px) {
+@media all and (max-width: 736px) {
   .extension-store-links {
     height: 20rem;
 
     flex-direction: column;
     justify-content: space-between;
+    align-items: flex-start;
   }
 
   .extension-store-links a {
     margin-right: 0;
+    min-width: 12rem;
+  }
+
+  .extension-detail {
+    width: 100%;
   }
 }
