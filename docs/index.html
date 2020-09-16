@@ -3,36 +3,42 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://unpkg.com/@creativecommons/vocabulary@1.0.0-beta.8/css/vocabulary.css" />
+    <link rel="stylesheet" href="https://unpkg.com/@creativecommons/vocabulary@2020.8.7/css/vocabulary.css" />
     <link rel="stylesheet" href="styles/style.css" />
     <script src="scripts/loadassets.js"></script>
-    <meta property="og:site_name" content="Creative Commons" />
+    <meta name="description" content="CC Search Browser Extension" />
+    <meta name="author" content="Creative Commons" />
+
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="CC Search Browser Extension" />
     <meta property="og:title" content="CC Search Browser extension" />
     <meta
       property="og:description"
-      content="A Cross-Browser Extension which lets you search and filter content in the public domain and under Creative Commons licenses."
+      content="A Cross-Browser extension which lets you search, filter, and use images in the public domain and under Creative Commons licenses"
     />
-    <meta
-      property="og:image"
-      content="https://camo.githubusercontent.com/b63d8c62890f989fbaea449021a6b1b59e39e026/68747470733a2f2f692e696d6775722e636f6d2f4b4f67466757552e706e67"
-    />
+    <meta property="og:image" content="https://i.imgur.com/gwhNFen.png" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="CC Search Browser extension" />
     <meta
       name="twitter:description"
-      content="A Cross-Browser Extension which lets you search and filter content in the public domain and under Creative Commons licenses."
+      content="A Cross-Browser extension which lets you search, filter, and use images in the public domain and under Creative Commons licenses."
     />
-    <meta
-      name="twitter:image"
-      content="https://camo.githubusercontent.com/b63d8c62890f989fbaea449021a6b1b59e39e026/68747470733a2f2f692e696d6775722e636f6d2f4b4f67466757552e706e67"
-    />
+    <meta name="twitter:image" content="https://i.imgur.com/gwhNFen.png" />
+    <meta property="og:url" content="https://opensource.creativecommons.org/ccsearch-browser-extension/" />
+
     <title>CC Search Browser Extension</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png" />
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
+    <link rel="manifest" href="assets/site.webmanifest" />
   </head>
 
   <body>
     <header>
       <nav class="navbar padding-vertical-big">
-        <h5 class="b-header padding-left-xl">
+        <h5 class="b-header padding-left-large">
           <a
             class="has-text-brighter-tomato"
             href="https://ccsearch.creativecommons.org/"
@@ -50,163 +56,164 @@
       </nav>
     </header>
 
-    <div class="extension-grid padding-horizontal-xl">
-      <div class="extension-summary">
-        <div class="navbar-brand">
-          <a class="has-text-black">
-            <svg
-              class="logo"
-              xmlns="http://www.w3.org/2000/svg"
-              preserveAspectRatio="xMidyMid meet"
-              viewBox="0 0 304 73"
-              width="50%"
-              height="120px"
-            >
-              <use href="#search"></use>
-            </svg>
-          </a>
-        </div>
-        <h1 class="extension-intro">CC Search Extension</h1>
-        <p class="body-big extension-detail">
-          A cross-browser extension, which lets you search for and filter content that is under Creative Commons
-          licenses.
-        </p>
-        <br /><br />
-        <h4 class="browser-info margin-bottom-normal">Use on your favorite browser</h4>
+    <section class="section-main padding-horizontal-xl padding-vertical-xl">
+      <div class="cc-search-logo has-text-black">
+        <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" viewBox="0 0 145 40">
+          <use href="#search"></use>
+        </svg>
+      </div>
 
-        <div class="download-extension">
-          <a
-            class="button is-primary margin-horizontal-small margin-vertical-smaller"
-            href="https://chrome.google.com/webstore/detail/cc-search/agohkbfananbebiaphblgcfhcclklfnh"
-            >Chrome</a
-          >
-          <a
-            class="button is-primary margin-horizontal-small margin-vertical-smaller"
-            href="https://addons.mozilla.org/en-US/firefox/addon/cc-search-extension/"
-            >Firefox</a
-          >
-          <a
-            class="button is-primary margin-horizontal-small margin-vertical-smaller"
-            href="https://addons.opera.com/en/extensions/details/cc-search/"
-            >Opera</a
-          >
-        </div>
+      <h1>CC Search Extension</h1>
+      <p class="extension-detail body-bigger margin-bottom-xl">
+        A Cross-Browser extension which lets you search, filter, and use images in the public domain and under Creative
+        Commons licenses.
+      </p>
+
+      <h4 class="margin-bottom-normal">Install on your favorite browser</h4>
+      <div class="extension-store-links">
+        <a
+          class="button is-primary"
+          href="https://chrome.google.com/webstore/detail/cc-search/agohkbfananbebiaphblgcfhcclklfnh"
+          >Chrome</a
+        >
+        <a class="button is-primary" href="https://addons.mozilla.org/en-US/firefox/addon/cc-search-extension/"
+          >Firefox</a
+        >
+        <a class="button is-primary" href="https://addons.opera.com/en/extensions/details/cc-search/">Opera</a>
+        <a
+          class="button is-primary"
+          href="https://microsoftedge.microsoft.com/addons/detail/cc-search/djolilnbndifmlfmcdnifdfjfbglipgc"
+          >Edge</a
+        >
       </div>
-      <div>
-        <img src="images/cc-search-extension.gif" alt="CC browser search extension" class="responsive-img" />
-      </div>
-    </div>
-    <!--Feature section started-->
-    <div class="padding-horizontal-xxl">
-      <h1 class="padding-left-larger margin-top-xxl margin-bottom-large feature-heading">Features</h1>
-      <div class="feature-grid">
-        <div>
+    </section>
+
+    <section class="padding-horizontal-larger margin-top-xxl">
+      <div class="feature">
+        <div class="feature-gif">
           <img
-            src="images/cc-browser-extension-search-filter.png"
-            alt="CC search browser extension"
-            class="responsive-img"
+            src="assets/extension-search-filter.gif"
+            alt="GIF demonstrating searching and filters in CC Search Extension"
           />
         </div>
-        <div>
-          <h3 class="center-align">SEARCH AND FILTER CC-LICENSED CONTENT</h3>
-          <br />
-          <p class="body-big left-align">
-            Search through millions of CC-licensed images and use filters to find the content that best meets your
-            needs.
-          </p>
-        </div>
-      </div>
-      <br />
-      <hr />
-      <br />
-      <div class="feature-grid">
-        <div>
-          <h3 class="center-align">ONE-CLICK DOWNLOAD WITH EASY ATTRIBUTION</h3>
-          <br />
-          <p class="body-big right-align">
-            Crediting the creator of CC-licensed content found using the extension is easy with one-click attribution.
-          </p>
-        </div>
-        <div>
-          <img
-            src="images/cc-browser-extension-easy-attribution.png"
-            alt="CC Search Browser Extension download image with attribution"
-            class="responsive-img"
-          />
-        </div>
-      </div>
-      <br />
-      <hr />
-      <br />
-      <div class="feature-grid">
-        <div>
-          <img
-            src="images/cc-browser-extension-bookmark.png"
-            alt="CC Search Browser Extension Bookmark"
-            class="responsive-img"
-          />
-        </div>
-        <div>
-          <h3 class="center-align">BOOKMARK YOUR FAVORITE IMAGES</h3>
-          <br />
-          <p class="body-big left-align">
-            Bookmarking images will save them in the extension. You can view and remove your bookmarks from the
-            Bookmarks section.
-          </p>
-        </div>
-      </div>
-      <br />
-      <hr />
-      <br />
-      <div class="feature-grid">
-        <div>
-          <h3 class="center-align">Dark Mode</h3>
-          <br />
-          <p class="body-big right-align">
-            Dark Mode! Because everyone loves it. Good for your eyes and saves battery.
-          </p>
-        </div>
-        <div>
-          <img
-            src="images/cc-browser-extension-dark-mode.png"
-            alt="CC Search Browser Extension Dark Mode"
-            class="responsive-img"
-          />
-        </div>
-      </div>
-      <hr />
-      <br />
-      <div>
-        <div class="padding-horizontal-xxl margin-top-normal">
-          <h3 class="margin-vertical-small center-align">More features for more productivity</h3>
-          <br />
-          <div class="padding-horizontal-small">
-            <table class="feature-table table is-bordered  is-striped">
-              <td class="padding-vertical-normal padding-right-xl padding-left-normal">
-                <div class="text-bigger has-text-weight-bold padding-bottom-smaller">
-                  Export and import bookmarks
-                </div>
-              </td>
-              <tr>
-                <td class="padding-vertical-normal padding-right-xl padding-left-normal">
-                  <div class="text-bigger has-text-weight-bold padding-bottom-smaller">
-                    User-interface (UI) options available for custom settings
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="padding-vertical-normal padding-right-xl padding-left-normal">
-                  <div class="text-bigger has-text-weight-bold padding-bottom-smaller">
-                    Sync your custom settings and bookmarks across devices
-                  </div>
-                </td>
-              </tr>
-            </table>
+        <div class="feature-desc-wrapper">
+          <div class="feature-desc">
+            <h3 class="padding-bottom-normal">search and filter cc-licensed content</h3>
+            <p class="body-big">
+              Search through millions of CC-licensed images and use filters to find the content that best meets your
+              needs. You can filter by use-case, licenses, sources, file-type, image-type, image-size, and aspect-ratio.
+            </p>
           </div>
         </div>
       </div>
-      <br /><br />
-    </div>
+
+      <hr />
+
+      <div class="feature">
+        <div class="feature-desc-wrapper">
+          <div class="feature-desc">
+            <h3 class="padding-bottom-normal">bookmark your favorite images</h3>
+            <p class="body-big">
+              While searching if you find images that you will be using later, you can bookmark and save them in the
+              extension.
+            </p>
+          </div>
+        </div>
+        <div class="feature-gif">
+          <img src="assets/extension-bookmarks.gif" alt="GIF demonstrating bookmarks section in CC Search Extension" />
+        </div>
+      </div>
+
+      <hr />
+
+      <div class="feature">
+        <div class="feature-gif">
+          <img
+            src="assets/extension-workflow-integration.gif"
+            alt="GIF demonstrating image insertion from extension into a wordpress blog post"
+          />
+        </div>
+        <div class="feature-desc-wrapper">
+          <div class="feature-desc">
+            <h3 class="padding-bottom-normal">It's super easy to add images in your works</h3>
+            <p class="body-big">
+              Using the extension you can easily add images in your works without disturbing your workflow. After you
+              have found the images that you want to use, it a matter of few clicks. In the GIF, we have demonstrated
+              this by adding an image to a dummy blog post on wordpress.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <hr />
+
+      <div class="feature">
+        <div class="feature-desc-wrapper">
+          <div class="feature-desc">
+            <h3 class="padding-bottom-normal">40+ Sources</h3>
+            <p class="body-big">
+              You will find sources that have digital art, museum collections, svg images and icons, personal
+              photography, stock images, and much more.
+            </p>
+          </div>
+        </div>
+        <div class="feature-gif">
+          <img src="assets/extension-sources.gif" alt="GIF demonstrating the sources section of CC Search Extension" />
+        </div>
+      </div>
+
+      <hr />
+
+      <div>
+        <div class="margin-vertical-larger">
+          <h2 class="margin-bottom-normal has-text-centered">More features</h2>
+
+          <table class="feature-table table is-bordered is-striped">
+            <td>
+              <p class="body-big has-text-weight-bold">
+                Exporting/importing bookmarks enables easy sharing and archiving
+              </p>
+            </td>
+            <tr>
+              <td>
+                <p class="body-big has-text-weight-bold">
+                  Get relevant Image tags and recommendations
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p class="body-big has-text-weight-bold">
+                  One-click easy attribution
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p class="body-big has-text-weight-bold">
+                  Options page for custom settings
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p class="body-big has-text-weight-bold">
+                  Auto-sync custom settings and bookmarks
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p class="body-big has-text-weight-bold">
+                  Dark mode
+                </p>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
     <footer class="main-footer">
       <div class="container">
         <div class="columns">
