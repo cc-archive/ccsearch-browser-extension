@@ -2,12 +2,12 @@
   <img src="https://mirrors.creativecommons.org/presskit/icons/cc.xlarge.png" height="150">
   <h2 align="center">CC Search Browser Extension</h2>
     <h4 align="center">
-    <a href="https://addons.mozilla.org/en-US/firefox/addon/cc-search-extension/">
-      Firefox
-    </a>
-    <span> | </span>
     <a href="https://chrome.google.com/webstore/detail/cc-search/agohkbfananbebiaphblgcfhcclklfnh">
       Chrome
+    </a>
+    <span> | </span>
+    <a href="https://addons.mozilla.org/en-US/firefox/addon/cc-search-extension/">
+      Firefox
     </a>
     <span> | </span>
     <a href="https://addons.opera.com/en/extensions/details/cc-search/">
@@ -18,7 +18,8 @@
       Edge
     </a>
   </h4>
-  <p align="center">A Cross-Browser Extension which lets you search and filter content in the public domain and under Creative Commons licenses.<p>
+  <p align="center">A Cross-Browser extension that lets you search, filter, and use images in the public domain and under Creative Commons licenses.<p>
+  
   <p align="center">
     <a href="https://github.com/creativecommons/ccsearch-browser-extension/blob/master/LICENSE">
       <img alt="MIT License" src="https://img.shields.io/github/license/creativecommons/ccsearch-browser-extension.svg?color=brightgreen" />
@@ -32,14 +33,18 @@
   </p>
 </p>
 
-## Install
+<p align="center">
+  <img src="https://i.imgur.com/3Bi5PNc.png" width=600>
+</p>
+<p align="center">
+  <img src="https://i.imgur.com/5ulA95E.png" width=600>
+</p>
 
-<!-- prettier-ignore-start -->
-| [Firefox addon store](https://addons.mozilla.org/en-US/firefox/addon/cc-search-extension/) | [Chrome web store](https://chrome.google.com/webstore/detail/cc-search/agohkbfananbebiaphblgcfhcclklfnh) | [Opera addon store](https://addons.opera.com/en/extensions/details/cc-search/) | [Edge addon store](https://microsoftedge.microsoft.com/addons/detail/cc-search/djolilnbndifmlfmcdnifdfjfbglipgc) |
-|---------|--------|-------|-------|
-<!-- prettier-ignore-end -->
 
 ## Features
+
+Please visit https://opensource.creativecommons.org/ccsearch-browser-extension/ to preview a few features in action.
+
 
 <!-- prettier-ignore-start -->
 | Feature | <img src="https://i.imgur.com/tVOpDmP.png" width="16" height="16"> Firefox | <img src="https://i.imgur.com/r33ZXs4.png" height="16" width="16"> Chrome | <img src="https://i.imgur.com/CBgAqSl.png" heigth="16" width="16"> Opera | <img src="https://i.imgur.com/0Qyfktv.png" heigth="16" width="16"> Edge |
