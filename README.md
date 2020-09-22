@@ -1,4 +1,4 @@
-<p align="center">
+  <p align="center">
   <img src="https://mirrors.creativecommons.org/presskit/icons/cc.xlarge.png" height="150">
   <h2 align="center">CC Search Browser Extension</h2>
     <h4 align="center">
@@ -19,7 +19,7 @@
     </a>
   </h4>
   <p align="center">A Cross-Browser extension that lets you search, filter, and use images in the public domain and under Creative Commons licenses.<p>
-  
+
   <p align="center">
     <a href="https://github.com/creativecommons/ccsearch-browser-extension/blob/master/LICENSE">
       <img alt="MIT License" src="https://img.shields.io/github/license/creativecommons/ccsearch-browser-extension.svg?color=brightgreen" />
@@ -40,11 +40,9 @@
   <img src="https://i.imgur.com/5ulA95E.png" width=600>
 </p>
 
-
 ## Features
 
 Please visit https://opensource.creativecommons.org/ccsearch-browser-extension/ to preview a few features in action.
-
 
 <!-- prettier-ignore-start -->
 | Feature | <img src="https://i.imgur.com/tVOpDmP.png" width="16" height="16"> Firefox | <img src="https://i.imgur.com/r33ZXs4.png" height="16" width="16"> Chrome | <img src="https://i.imgur.com/CBgAqSl.png" heigth="16" width="16"> Opera | <img src="https://i.imgur.com/0Qyfktv.png" heigth="16" width="16"> Edge |
@@ -65,26 +63,28 @@ Please visit https://opensource.creativecommons.org/ccsearch-browser-extension/ 
 You can install the extension directly from the source. Follow the following steps:
 
 1. Clone the repository
+
 ```
 git clone https://github.com/creativecommons/ccsearch-browser-extension.git
 ```
 
 2. Install project dependencies
+
 ```
 npm install
 ```
 
 3. Run the following command to compile SASS to CSS and bundle JS. The compiled files will be in `dist` folder.
+
 ```
 npm run build
 ```
 
 _Note_: If you want to install the extension for development, you should run `npm run dev`.
 
-
 ## Troubleshooting build failures
 
-1. If you get following error:
+1. If you get the following error:
 
 ```shell
 'TARGET' is not recognized as an internal or external command
@@ -99,7 +99,7 @@ then most likely webpack-cli is not installed on your dev machine.
   npm install --save-dev webpack-cli
 ```
 
-- if reinstalling node modules do not solve the issue then run following to install webpack-cli globally.
+- if reinstalling node modules do not solve the issue then run thefollowing to install webpack-cli globally.
 
 ```shell
 npm install -g webpack-cli
@@ -107,26 +107,33 @@ npm install -g webpack-cli
 
 ## Loading the extension in the browser
 
-   - **Mozilla Firefox**
-     - Navigate to _about:debugging_.
-     - Click on "Load Temporary Add-on" button.
-     - From the file explorer, choose `ccsearch-browser-extension/dist/firefox/manifest.json`.
-   - **Google Chrome**
-     - Navigate to _chrome://extensions_.
-     - Click on "Load Unpacked" button (make sure you have enabled the _Developer mode_).
-     - From the file explorer, choose `ccsearch-browser-extension/dist/chrome`.
-   - **Opera**
-     - Navigate to _about://extensions_.
-     - Click on "Load Unpacked" button (make sure you have enabled the _Developer mode_).
-     - From the file explorer, choose `ccsearch-browser-extension/dist/opera`.
-   - **Edge**
-     - Navigate to _edge://extensions_.
-     - Click on "Load Unpacked" button (make sure you have enabled the _Developer mode_).
-     - From the file explorer, choose `ccsearch-browser-extension/dist/edge`.
+- **Mozilla Firefox**
+  - Navigate to _about:debugging_.
+  - Click on "Load Temporary Add-on" button.
+  - From the file explorer, choose `ccsearch-browser-extension/dist/firefox/manifest.json`.
+- **Google Chrome**
+  - Navigate to _chrome://extensions_.
+  - Click on "Load Unpacked" button (make sure you have enabled the _Developer mode_).
+  - From the file explorer, choose `ccsearch-browser-extension/dist/chrome`.
+- **Opera**
+  - Navigate to _about://extensions_.
+  - Click on "Load Unpacked" button (make sure you have enabled the _Developer mode_).
+  - From the file explorer, choose `ccsearch-browser-extension/dist/opera`.
+- **Edge**
+  - Navigate to _edge://extensions_.
+  - Click on "Load Unpacked" button (make sure you have enabled the _Developer mode_).
+  - From the file explorer, choose `ccsearch-browser-extension/dist/edge`.
+
+## Contribution
+
+Checkout [CONTRIBUTING.md](https://github.com/creativecommons/ccsearch-browser-extension/blob/master/CONTRIBUTING.md) for general guidelines for contributing code to CC Open Source.
+
+For contribution guidelines and development instructions **specific to this particular project**, please checkout [INSTRUCTIONS.md](https://github.com/creativecommons/ccsearch-browser-extension/blob/master/INSTRUCTIONS.md).
 
 ## Debugging in Development Mode
 
 - **Mozilla Firefox**
+
   - Navigate to _about:debugging_ and from sidebar select _This Firefox_.
   - Click on "Load Temporary Add-on" button.
     <p align="center">
@@ -142,28 +149,23 @@ npm install -g webpack-cli
       <img src="https://i.imgur.com/K7HRBPj.jpg">
     </p>
   - Now click on the browser extension from top right corner and the DOM will be loaded with the content to debug.
+
     <p align="center">
       <img src="https://i.imgur.com/9Jryt1i.jpg">
     </p>
-    
+
 - **Google Chrome, Opera, Microsoft Edge**
 
-After you have [loaded the extension](#loading-the-extension-to-the-browser), the steps are pretty straight forward.
-  - Right click in extension area and select "Inspect element".
-    <p align="center">
-      <img src="https://i.imgur.com/Z30eKGD.jpg">
-    </p>
-  - Developer tool will now open loaded with the content to debug.
-    <p align="center">
-      <img src="https://i.imgur.com/ZALNzJ2.jpg">
-    </p>
+After you have [loaded the extension](#loading-the-extension-in-the-browser), the steps are pretty straight forward.
 
-
-## Contribution
-
-Checkout [CONTRIBUTING.md](https://github.com/creativecommons/ccsearch-browser-extension/blob/master/CONTRIBUTING.md) for general guidelines for contributing code to CC Open Source.
-
-For contribution guidelines and development instructions specific to this particular project, please checkout [INSTRUCTIONS.md](https://github.com/creativecommons/ccsearch-browser-extension/blob/master/INSTRUCTIONS.md).
+- Right-click in extension area and select "Inspect element".
+  <p align="center">
+    <img src="https://i.imgur.com/Z30eKGD.jpg">
+  </p>
+- Developer tool will now open loaded with the content to debug.
+  <p align="center">
+    <img src="https://i.imgur.com/ZALNzJ2.jpg">
+  </p>
 
 ## License
 
