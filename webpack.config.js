@@ -64,16 +64,6 @@ module.exports = {
         to: './popup/img/',
         flatten: true,
       },
-      {
-        from: './popup/img/license_logos/*',
-        to: './popup/img/license_logos/',
-        flatten: true,
-      },
-      {
-        from: './popup/img/source_logos/*',
-        to: './popup/img/source_logos/',
-        flatten: true,
-      },
     ]),
     new webpack.DefinePlugin({
       global: 'window', // Placeholder for global used in any node_modules
