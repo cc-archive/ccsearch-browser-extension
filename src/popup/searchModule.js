@@ -77,7 +77,10 @@ function appendToGrid(msnryObject, fragment, divs, grid) {
     msnryObject.layout();
   });
   removeSpinner(elements.spinnerPlaceholderPrimary);
-  addLoadMoreButton(elements.loadMoreSearchButtonWrapper);
+  // Don't show "load more results" button for empty searches
+  if (msnryObject.cols) {
+    addLoadMoreButton(elements.loadMoreSearchButtonWrapper);
+  }
 }
 
 // TODO: be more specific
