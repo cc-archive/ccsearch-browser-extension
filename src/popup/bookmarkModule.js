@@ -24,16 +24,10 @@ import {
 import loadCollections from './collectionModule';
 import primaryGridMasonryObject from './searchModule.utils';
 
-// eslint-disable-next-line import/no-cycle
-// import { loadStoredContentToUI } from './popup.utils';
-
 const download = require('downloadjs');
 
 // Store Select Button for All bookmarks, with their properties
 const bookmarkDOM = {};
-
-// Store number of selected bookmarks for export
-// let selectedBookmarks = 0;
 
 function getImageDetail(eventTarget) {
   const imageObject = {};
@@ -57,8 +51,6 @@ export default function toggleBookmark(e) {
     const { imageId } = e.target.dataset;
     if (allBookmarksImageIds.indexOf(imageId) === -1) {
       const imageDetail = getImageDetail(e.target);
-      // bookmarksArray.push(imageId);
-      // bookmarksObject[imageId] = imageDetail;
       chrome.storage.sync.get('bookmarksLength', items2 => {
         const { bookmarksLength } = items2;
         let validBookmarksKey = null;
@@ -106,7 +98,6 @@ export default function toggleBookmark(e) {
       const bookmarkImageIdContainerNo = allBookmarksImageIdsObject[imageId][1];
       const bookmarkContainerName = `bookmarks${bookmarkContainerNo}`;
       const bookmarkImageIdContainerName = `bookmarksImageIds${bookmarkImageIdContainerNo}`;
-      // delete bookmarksObject[imageId];
       chrome.storage.sync.get([bookmarkContainerName, bookmarkImageIdContainerName, 'bookmarksLength'], items4 => {
         const bookmarkContainer = items4[bookmarkContainerName];
         const bookmarkImageIdContainer = items4[bookmarkImageIdContainerName];
@@ -195,7 +186,6 @@ function addBookmarkThumbnailsToDOM(bookmarksObject, bookmarkImageIds, bookmarks
     if (bookmarksEditViewEnabled) divElement.addEventListener('click', selectImage);
     else divElement.addEventListener('click', openInfoPopup);
     divElement.appendChild(imgElement);
-    // divElement.appendChild(selectCheckboxElement);
     divElement.appendChild(licenseDiv);
 
     // div to act as grid itemj
@@ -207,8 +197,6 @@ function addBookmarkThumbnailsToDOM(bookmarksObject, bookmarkImageIds, bookmarks
     fragment.appendChild(gridItemDiv);
 
     appendToGrid(bookmarksGridMasonryObject, fragment, gridItemDiv, elements.gridBookmarks);
-
-    // selectedBookmarks = 0;
   });
 }
 
@@ -267,10 +255,6 @@ document.addEventListener('DOMContentLoaded', () => {
       elements.navBookmarksLink.classList.add('active');
 
       window.appObject.bookmarksSectionIdx = 0;
-      // elements.homeIcon.style.pointerEvents = 'none';
-      // setTimeout(() => {
-      //   elements.homeIcon.style.pointerEvents = 'auto';
-      // }, 300);
 
       // show the bookmarks section and hide other ones
       elements.primarySection.classList.add('display-none');
@@ -299,11 +283,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       removeActiveClassFromNavLinks();
 
-      // elements.navBookmarksLink.style.pointerEvents = 'none';
-      // setTimeout(() => {
-      //   elements.navBookmarksLink.style.pointerEvents = 'auto';
-      // }, 300);
-
       // show the primary section and hide other ones
       elements.primarySection.classList.remove('display-none');
       elements.bookmarksSection.classList.add('display-none');
@@ -324,7 +303,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   elements.navSourcesLink.addEventListener('click', () => {
-    // console.log('collections clicked');
     if (window.appObject.activeSection !== 'collections') {
       window.appObject.activeSection = 'collections';
 
@@ -365,7 +343,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   elements.deleteBookmarksButton.addEventListener('click', () => {
-    // const bookmarkDOMArray = Object.values(bookmarkDOM);
     const images = elements.gridBookmarks.getElementsByClassName('image');
     // to store the id's of deleted bookmarks
     const deletedBookmarks = [];
@@ -397,11 +374,8 @@ document.addEventListener('DOMContentLoaded', () => {
           const bookmarkImageIdContainerNo = allBookmarksImageIdsObject[imageId][1];
           const bookmarkContainerName = `bookmarks${bookmarkContainerNo}`;
           const bookmarkImageIdContainerName = `bookmarksImageIds${bookmarkImageIdContainerNo}`;
-          // const bookmarkContainer = items4[bookmarkContainerName];
-          // const bookmarkImageIdContainer = items4[bookmarkImageIdContainerName];
           delete items[bookmarkContainerName][imageId];
           delete items[bookmarkImageIdContainerName][imageId];
-          // const updatedbookmarksLength = items4.bookmarksLength;
           items.bookmarksLength[bookmarkContainerName] -= 1;
         });
 
@@ -417,9 +391,6 @@ document.addEventListener('DOMContentLoaded', () => {
           bookmarksGridMasonryObject.layout();
           // confirm user action
           showNotification('Bookmarks successfully removed', 'positive', 'notification--extension-popup');
-          // Read default "Select all"
-          // elements.buttonSelectAllCheckbox[0].innerText = 'Select All';
-          // selectedBookmarks = 0;
         });
       });
     }
@@ -427,7 +398,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   elements.selectAllBookmarksLink.addEventListener('click', () => {
     // Stores data of Checkboxes for exporting
-    // const bookmarkDOMArray = Object.values(bookmarkDOM);
     const images = elements.gridBookmarks.getElementsByClassName('image');
 
     for (let i = 0; i < images.length; i += 1) {

@@ -83,7 +83,6 @@ function appendToGrid(msnryObject, fragment, divs, grid) {
   }
 }
 
-// TODO: be more specific
 export function checkValidationError(apiResponse) {
   if (Object.prototype.hasOwnProperty.call(apiResponse, 'error_type')) {
     removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);
@@ -163,8 +162,6 @@ export function addSearchThumbnailsToDOM(masonryObject, resultArray, gridDiv) {
 
       bookmarkIconDiv.appendChild(bookmarkIcon);
 
-      // console.log(allBookmarksImageIds);
-      // console.log(id);
       if (allBookmarksImageIds.indexOf(id) === -1) {
         bookmarkIcon.classList.add('bookmark-regular');
         bookmarkIcon.title = 'Bookmark image';
@@ -197,8 +194,6 @@ export function addSearchThumbnailsToDOM(masonryObject, resultArray, gridDiv) {
 
       fragment.appendChild(gridItemDiv);
       divs.push(gridItemDiv);
-
-      // console.log(gridItemDiv);
     });
 
     appendToGrid(masonryObject, fragment, divs, gridDiv);

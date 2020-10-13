@@ -23,6 +23,7 @@ elements.importBookmarksButton.addEventListener('click', () => {
         const bookmarksObject = JSON.parse(fileContents);
         if (typeof bookmarksObject === 'object') {
           if (Array.isArray(bookmarksObject)) {
+            // the legacy bookmark files had an array of image ids
             handleLegacyBookmarksFile(bookmarksObject);
           } else if (!(Object.keys(bookmarksObject).length > 0))
             showNotification('Error: No bookmarks found in the file', 'negative', 'notification--options');

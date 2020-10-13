@@ -2,7 +2,6 @@ import { fetchSources } from '../utils';
 import { elements } from './base';
 // eslint-disable-next-line import/no-cycle
 import { getCollectionsUrl, search } from './searchModule';
-// eslint-disable-next-line import/no-cycle
 import { addSpinner, removeSpinner } from './spinner';
 import { clearFilters } from './helper';
 

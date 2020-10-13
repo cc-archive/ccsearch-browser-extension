@@ -148,7 +148,6 @@ export function addBookmarksToStorage(newBookmarksObject, showConfirmation = tru
       }
     }
 
-    // console.log(items);
     chrome.storage.sync.set(items);
 
     if (showConfirmation) showNotification('Bookmarks updated!', 'positive', 'notification--options');
@@ -167,7 +166,6 @@ async function addLegacyBookmarksToStorage(bookmarksArray) {
       });
     });
     const bookmarksImageIds = Object.keys(bookmarksImageIdsObject);
-    // const bookmarksObject = items.bookmarks;
     // if user tries to import bookmarks before the bookmarks storage data is updated
     if (Array.isArray(items.bookmarks)) {
       showNotification(
@@ -204,7 +202,6 @@ async function addLegacyBookmarksToStorage(bookmarksArray) {
             ? imageDetailResponse.thumbnail
             : imageDetailResponse.url;
           imageObject.license = imageDetailResponse.license;
-          // console.log(imageObject);
           newBookmarksObject[bookmarkId] = imageObject;
           bookmarkBatchCount += 1;
           // add bookmarks in the batch of 5 to storage
@@ -216,7 +213,6 @@ async function addLegacyBookmarksToStorage(bookmarksArray) {
         }
       }
     }
-    // console.log(newBookmarksObject);
     addBookmarksToStorage(newBookmarksObject); // add left out bookmarks to storage
     document.querySelector('.notification__options--body button').disabled = false;
     document.querySelector('.notification__options--body button').classList.remove('is-loading');

@@ -36,7 +36,6 @@ export function checkInternetConnection() {
 export async function fetchSources() {
   const getSourceURL = 'https://api.creativecommons.engineering/v1/sources';
   const data = await fetch(getSourceURL);
-  // console.log(data);
 
   return data.json();
 }
@@ -119,7 +118,6 @@ export function enableTabSwitching(e) {
     let targetPanelDiv;
 
     // removing active class from any tab content div
-    // Array.prototype.forEach.call(document.getElementById('tabs-content').children, element => {
     Array.prototype.forEach.call(tabsContentDiv.children, element => {
       element.classList.remove('is-active');
       if (element.getAttribute('data-content-no') === tabNo) {
@@ -150,7 +148,6 @@ export function loadFilterCheckboxesFromStorage(wrapperElement) {
     filterCheckboxIds.forEach(filterCheckboxId => {
       const filterCheckbox = wrapperElement.querySelector(`#${filterCheckboxId}`);
       filterCheckbox.checked = items[filterStorageKey][filterCheckboxId];
-      // elements.filterButton.classList.add('activate-filter');
     });
   });
 }

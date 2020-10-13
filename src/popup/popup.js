@@ -1,5 +1,4 @@
 import { elements, initGlobalObject } from './base';
-// eslint-disable-next-line import/no-cycle
 import {
   checkInputError,
   removeOldSearchResults,
@@ -20,7 +19,6 @@ import {
   enableTabSwitching,
   loadFilterCheckboxesFromStorage,
   checkInternetConnection,
-  // activeBookmarkContainers,
 } from '../utils';
 import { loadBookmarkImages } from './bookmarkModule';
 import { confirmBookmarkSchemaInSync, confirmFilterSchemaInSync } from './popup.utils';
@@ -49,7 +47,6 @@ elements.closeImageDetailLink.addEventListener('click', () => {
 
   if (window.appObject.imageDetailStack.isEmpty()) {
     elements.header.classList.remove('display-none');
-    // elements.bookmarksSection.classList.add('display-none');
     elements.sectionMain.classList.remove('display-none');
     elements.imageDetailSection.classList.add('display-none');
   } else {
@@ -112,9 +109,6 @@ elements.closeFiltersLink.onclick = () => {
 allowCheckingOneTypeOfCheckbox(elements.licenseCheckboxesWrapper, elements.useCaseCheckboxesWrapper);
 
 elements.clearFiltersButton.addEventListener('click', () => {
-  // the filter is not activated anymore
-  // elements.filterButton.classList.remove('activate-filter');
-
   clearFilters();
   // close the filters section and make a search
   primaryGridMasonryObject.layout();
@@ -142,21 +136,6 @@ function applyFilters() {
   window.appObject.userSelectedImageSizeList = getCheckedCheckboxes(elements.imageSizeCheckboxesWrapper);
   window.appObject.userSelectedAspectRatioList = getCheckedCheckboxes(elements.aspectRatioCheckboxesWrapper);
   window.appObject.enableMatureContent = getCheckedCheckboxes(elements.showMatureContentCheckboxWrapper).length > 0;
-
-  // "activate" filter icon if some filters are applied
-  // if (
-  //   window.appObject.userSelectedSourcesList.length > 0 ||
-  //   window.appObject.userSelectedLicensesList.length > 0 ||
-  //   window.appObject.userSelectedUseCaseList.length > 0 ||
-  //   window.appObject.userSelectedFileTypeList.length > 0 ||
-  //   window.appObject.userSelectedImageTypeList.length > 0 ||
-  //   window.appObject.userSelectedImageSizeList.length > 0 ||
-  //   window.appObject.userSelectedAspectRatioList.length > 0
-  // ) {
-  //   elements.filterButton.classList.add('activate-filter');
-  // } else {
-  //   elements.filterButton.classList.remove('activate-filter');
-  // }
 }
 
 elements.applyFiltersButton.addEventListener('click', () => {
@@ -172,7 +151,6 @@ elements.searchButton.addEventListener('click', () => {
   window.appObject.activeSearchContext = 'normal';
 
   checkInputError(window.appObject.inputText);
-  // checkIfSourceFilterIsRendered();
   checkInternetConnection();
 
   if (elements.sourceCheckboxesWrapper.children.length === 1) {
@@ -191,7 +169,6 @@ elements.searchButton.addEventListener('click', () => {
 
   // enable spinner
   addSpinner(elements.spinnerPlaceholderPrimary, 'original');
-  // elements.spinner.classList.add('spinner');
 
   const url = getRequestUrl(
     window.appObject.inputText,
@@ -206,11 +183,7 @@ elements.searchButton.addEventListener('click', () => {
     window.appObject.enableMatureContent,
   );
 
-  // console.log(url);
-
   search(url);
-  // pageNo += 1;
-  // elements.clearSearchButton[0].classList.remove('display-none');
 });
 
 function restoreAppObjectVariables() {
@@ -248,7 +221,6 @@ async function nextRequest() {
   const response = await fetch(url);
   const json = await response.json();
   result = json.results;
-  // console.log(result);
   addSearchThumbnailsToDOM(primaryGridMasonryObject, result, elements.gridPrimary);
   window.appObject.pageNo += 1;
 }

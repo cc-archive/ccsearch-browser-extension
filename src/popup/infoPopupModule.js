@@ -1,5 +1,4 @@
 import { elements } from './base';
-// import { removeSpinner } from './spinner';
 // eslint-disable-next-line import/no-cycle
 import { addSearchThumbnailsToDOM, getTagsUrl, search, removeOldSearchResults } from './searchModule';
 import { addSpinner } from './spinner';
@@ -111,7 +110,6 @@ function downloadImage(imageUrl, imageName) {
     download(x.response, imageName, 'image/gif'); // using download.js (http://danml.com/download.html)
   };
   x.send();
-  // eventHandlerTarget.removeEventListener('click', eventHandlerFunction);
 }
 
 function downloadImageAttribution(image) {
@@ -301,13 +299,9 @@ function fillRelatedImages(relatedUrl) {
   fetch(relatedUrl)
     .then(data => data.json())
     .then(res => {
-      // checkValidationError(res);
       const resultArray = res.results;
 
-      // checkResultLength(resultArray);
       addSearchThumbnailsToDOM(relatedImagesGridMasonryObject, resultArray, elements.gridRelatedImages);
-
-      // window.appObject.pageNo += 1;
     });
 }
 
@@ -368,22 +362,17 @@ export function fillImageDetailSection(imageId) {
       // common
       fillImageTags(tagsArray);
       fillRelatedImages(relatedUrl);
-
-      // removeSpinner(elements.spinnerPlaceholderPopup);
     });
 }
 
 export function activatePopup(imageThumbnail) {
-  // addSpinner(elements.spinnerPlaceholderPopup, 'original');
   resetImageDetailSection();
   elements.buttonBackToTop.click();
 
   window.appObject.imageDetailStack.push(imageThumbnail.id);
 
   fillImageDetailSection(imageThumbnail.id);
-  // attributionTabLink.click();
   elements.header.classList.add('display-none');
-  // elements.bookmarksSection.classList.add('display-none');
   elements.sectionMain.classList.add('display-none');
   elements.imageDetailSection.classList.remove('display-none');
 }
