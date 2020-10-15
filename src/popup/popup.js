@@ -146,18 +146,7 @@ elements.searchButton.addEventListener('click', () => {
   // enable spinner
   addSpinner(elements.spinnerPlaceholderPrimary, 'original');
 
-  const url = getRequestUrl(
-    appObject.inputText,
-    appObject.useCaseFilters,
-    appObject.userSelectedLicensesList,
-    appObject.userSelectedSourcesList,
-    appObject.fileTypeFilters,
-    appObject.imageTypeFilters,
-    appObject.imageSizeFilters,
-    appObject.aspectRatioFilters,
-    appObject.pageNo,
-    appObject.enableMatureContent,
-  );
+  const url = getRequestUrl();
 
   search(url);
 });
@@ -175,22 +164,11 @@ async function nextRequest() {
   let result = [];
   let url;
   if (appObject.searchContext === 'collection') {
-    url = getCollectionsUrl(appObject.collectionName, appObject.pageNo);
+    url = getCollectionsUrl();
   } else if (appObject.searchContext === 'default') {
-    url = getRequestUrl(
-      appObject.inputText,
-      appObject.useCaseFilters,
-      appObject.userSelectedLicensesList,
-      appObject.userSelectedSourcesList,
-      appObject.fileTypeFilters,
-      appObject.imageTypeFilters,
-      appObject.imageSizeFilters,
-      appObject.aspectRatioFilters,
-      appObject.pageNo,
-      appObject.enableMatureContent,
-    );
+    url = getRequestUrl();
   } else if (appObject.searchContext === 'image-tag') {
-    url = getTagsUrl(appObject.tagName, appObject.pageNo);
+    url = getTagsUrl();
   }
 
   console.log(url);

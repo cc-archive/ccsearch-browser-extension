@@ -24,29 +24,47 @@ export function removeOldSearchResults() {
   elements.gridPrimary.appendChild(div);
 }
 
-export function getRequestUrl(
-  searchQuery,
-  useCaseFilters,
-  licenseFilters,
-  sourceFilters,
-  fileTypeFilters,
-  imageTypeFilters,
-  imageSizeFilters,
-  aspectRatioFilters,
-  pageNo,
-  enableMatureContent,
-) {
+/**
+ * @desc Returns the url that will be used to fetch images during default search
+ * @return {string}
+ */
+export function getRequestUrl() {
+  const {
+    inputText,
+    useCaseFilters,
+    licenseFilters,
+    sourceFilters,
+    fileTypeFilters,
+    imageTypeFilters,
+    imageSizeFilters,
+    aspectRatioFilters,
+    enableMatureContent,
+    pageNo,
+  } = appObject;
+
   if (useCaseFilters.length > 0) {
-    return `https://api.creativecommons.engineering/v1/images?q=${searchQuery}&page=${pageNo}&page_size=20&license_type=${useCaseFilters}&source=${sourceFilters}&extension=${fileTypeFilters}&categories=${imageTypeFilters}&size=${imageSizeFilters}&aspect_ratio=${aspectRatioFilters}&mature=${enableMatureContent}`;
+    return `https://api.creativecommons.engineering/v1/images?q=${inputText}&page=${pageNo}&page_size=20&license_type=${useCaseFilters}&source=${sourceFilters}&extension=${fileTypeFilters}&categories=${imageTypeFilters}&size=${imageSizeFilters}&aspect_ratio=${aspectRatioFilters}&mature=${enableMatureContent}`;
   }
-  return `https://api.creativecommons.engineering/v1/images?q=${searchQuery}&page=${pageNo}&page_size=20&license=${licenseFilters}&source=${sourceFilters}&extension=${fileTypeFilters}&categories=${imageTypeFilters}&size=${imageSizeFilters}&aspect_ratio=${aspectRatioFilters}&mature=${enableMatureContent}`;
+  return `https://api.creativecommons.engineering/v1/images?q=${inputText}&page=${pageNo}&page_size=20&license=${licenseFilters}&source=${sourceFilters}&extension=${fileTypeFilters}&categories=${imageTypeFilters}&size=${imageSizeFilters}&aspect_ratio=${aspectRatioFilters}&mature=${enableMatureContent}`;
 }
 
-export function getCollectionsUrl(collectionName, pageNo) {
+/**
+ * @desc Returns the url that will be used to fetch images during "search by sources"
+ * @return {string}
+ */
+export function getCollectionsUrl() {
+  const { collectionName, pageNo } = appObject;
+
   return `https://api.creativecommons.engineering/v1/images?source=${collectionName}&page=${pageNo}&page_size=20`;
 }
 
-export function getTagsUrl(tagName, pageNo) {
+/**
+ * @desc Returns the url that will be used to fetch images during "search by image-tag"
+ * @return {string}
+ */
+export function getTagsUrl() {
+  const { tagName, pageNo } = appObject;
+
   return `https://api.creativecommons.engineering/v1/images?tags=${tagName}&page=${pageNo}&page_size=20`;
 }
 

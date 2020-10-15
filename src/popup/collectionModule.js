@@ -19,7 +19,7 @@ function searchCollection(event) {
   clearFilters();
   addSpinner(elements.spinnerPlaceholderPrimary, 'original');
 
-  const url = getCollectionsUrl(appObject.collectionName, appObject.pageNo);
+  const url = getCollectionsUrl();
   search(url);
 }
 

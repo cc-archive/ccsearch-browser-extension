@@ -235,8 +235,7 @@ function searchByTag(event) {
   removeOldSearchResults();
   addSpinner(elements.spinnerPlaceholderPrimary, 'original');
 
-  // search by tag
-  const url = getTagsUrl(appObject.tagName, appObject.pageNo);
+  const url = getTagsUrl();
   search(url);
 }
 
