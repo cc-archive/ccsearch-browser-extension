@@ -1,4 +1,4 @@
-import { elements } from './base';
+import { elements, appObject } from './base';
 // eslint-disable-next-line import/no-cycle
 import { addSearchThumbnailsToDOM, getTagsUrl, search, removeOldSearchResults } from './searchModule';
 import { addSpinner } from './spinner';
@@ -196,7 +196,7 @@ function fillImageSource(foreignLandingUrl, source) {
   const link = document.createElement('a');
   link.href = foreignLandingUrl;
   link.target = '_blank';
-  link.textContent = window.appObject.sourcesFromAPI[source];
+  link.textContent = appObject.sourcesFromAPI[source];
   elements.imageSourcePara.innerText = '';
   elements.imageSourcePara.appendChild(link);
 }
@@ -221,11 +221,11 @@ function fillImageLicense(licenseUrl, licenseArray) {
 
 function searchByTag(event) {
   // set some app objects
-  window.appObject.pageNo = 1;
-  window.appObject.activeSearchContext = 'tag';
-  window.appObject.inputText = '';
-  window.appObject.tagName = event.target.innerText;
-  window.appObject.clickedImageTag = true;
+  appObject.pageNo = 1;
+  appObject.searchContext = 'image-tag';
+  appObject.inputText = '';
+  appObject.tagName = event.target.innerText;
+  appObject.clickedImageTag = true;
 
   elements.inputField.value = '';
   elements.closeImageDetailLink.click();
@@ -236,7 +236,7 @@ function searchByTag(event) {
   addSpinner(elements.spinnerPlaceholderPrimary, 'original');
 
   // search by tag
-  const url = getTagsUrl(window.appObject.tagName, window.appObject.pageNo);
+  const url = getTagsUrl(appObject.tagName, appObject.pageNo);
   search(url);
 }
 
@@ -369,7 +369,7 @@ export function activatePopup(imageThumbnail) {
   resetImageDetailSection();
   elements.buttonBackToTop.click();
 
-  window.appObject.imageDetailStack.push(imageThumbnail.id);
+  appObject.imageDetailStack.push(imageThumbnail.id);
 
   fillImageDetailSection(imageThumbnail.id);
   elements.header.classList.add('display-none');

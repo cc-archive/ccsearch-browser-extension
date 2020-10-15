@@ -1,4 +1,4 @@
-import { elements, initGlobalObject } from './base';
+import { elements, appObject } from './base';
 import {
   checkInputError,
   removeOldSearchResults,
@@ -25,8 +25,6 @@ import { confirmBookmarkSchemaInSync, confirmFilterSchemaInSync } from './popup.
 import { removeActiveClassFromNavLinks, bookmarksGridMasonryObject } from './bookmarkModule.utils';
 import primaryGridMasonryObject from './searchModule.utils';
 
-initGlobalObject();
-
 // eslint-disable-next-line no-undef
 const clipboard = new ClipboardJS('.btn-copy');
 
@@ -40,18 +38,18 @@ elements.attributionTab.firstElementChild.getElementsByTagName('ul')[0].addEvent
 
 elements.closeImageDetailLink.addEventListener('click', () => {
   resetImageDetailSection();
-  if (window.appObject.clickedImageTag) {
-    window.appObject.imageDetailStack.clear();
-    window.appObject.clickedImageTag = false;
-  } else window.appObject.imageDetailStack.pop();
+  if (appObject.clickedImageTag) {
+    appObject.imageDetailStack.clear();
+    appObject.clickedImageTag = false;
+  } else appObject.imageDetailStack.pop();
 
-  if (window.appObject.imageDetailStack.isEmpty()) {
+  if (appObject.imageDetailStack.isEmpty()) {
     elements.header.classList.remove('display-none');
     elements.sectionMain.classList.remove('display-none');
     elements.imageDetailSection.classList.add('display-none');
   } else {
     elements.buttonBackToTop.click();
-    fillImageDetailSection(window.appObject.imageDetailStack.top());
+    fillImageDetailSection(appObject.imageDetailStack.top());
   }
 
   // lays out images in masonry grid again
@@ -68,9 +66,9 @@ elements.inputField.addEventListener('keydown', event => {
 
 async function addSourceFilterCheckboxes() {
   if (elements.sourceCheckboxesWrapper.children.length === 1) {
-    window.appObject.sourcesFromAPI = await getLatestSources();
+    appObject.sourcesFromAPI = await getLatestSources();
 
-    const sourceNames = Object.keys(window.appObject.sourcesFromAPI);
+    const sourceNames = Object.keys(appObject.sourcesFromAPI);
 
     for (let i = 0; i < sourceNames.length; i += 1) {
       const checkboxElement = document.createElement('input');
@@ -79,7 +77,7 @@ async function addSourceFilterCheckboxes() {
 
       const labelElement = document.createElement('label');
       labelElement.setAttribute('for', checkboxElement.id);
-      labelElement.innerText = window.appObject.sourcesFromAPI[sourceNames[i]];
+      labelElement.innerText = appObject.sourcesFromAPI[sourceNames[i]];
 
       const breakElement = document.createElement('br');
 
@@ -93,7 +91,7 @@ async function addSourceFilterCheckboxes() {
 }
 
 elements.filterButton.onclick = () => {
-  window.appObject.activeSection = 'filter';
+  appObject.activeSection = 'filter';
   elements.primarySection.classList.add('display-none');
   elements.filterSection.classList.remove('display-none');
 };
@@ -101,7 +99,7 @@ elements.filterButton.onclick = () => {
 setTimeout(addSourceFilterCheckboxes, 2000);
 
 elements.closeFiltersLink.onclick = () => {
-  window.appObject.activeSection = 'search';
+  appObject.activeSection = 'search';
   elements.primarySection.classList.remove('display-none');
   elements.filterSection.classList.add('display-none');
 };
@@ -128,14 +126,14 @@ function getCheckedCheckboxes(checkboxesWrapper) {
 }
 
 function applyFilters() {
-  window.appObject.userSelectedUseCaseList = getCheckedCheckboxes(elements.useCaseCheckboxesWrapper);
-  window.appObject.userSelectedLicensesList = getCheckedCheckboxes(elements.licenseCheckboxesWrapper);
-  window.appObject.userSelectedSourcesList = getCheckedCheckboxes(elements.sourceCheckboxesWrapper);
-  window.appObject.userSelectedFileTypeList = getCheckedCheckboxes(elements.fileTypeCheckboxesWrapper);
-  window.appObject.userSelectedImageTypeList = getCheckedCheckboxes(elements.imageTypeCheckboxesWrapper);
-  window.appObject.userSelectedImageSizeList = getCheckedCheckboxes(elements.imageSizeCheckboxesWrapper);
-  window.appObject.userSelectedAspectRatioList = getCheckedCheckboxes(elements.aspectRatioCheckboxesWrapper);
-  window.appObject.enableMatureContent = getCheckedCheckboxes(elements.showMatureContentCheckboxWrapper).length > 0;
+  appObject.useCaseFilters = getCheckedCheckboxes(elements.useCaseCheckboxesWrapper);
+  appObject.userSelectedLicensesList = getCheckedCheckboxes(elements.licenseCheckboxesWrapper);
+  appObject.userSelectedSourcesList = getCheckedCheckboxes(elements.sourceCheckboxesWrapper);
+  appObject.fileTypeFilters = getCheckedCheckboxes(elements.fileTypeCheckboxesWrapper);
+  appObject.imageTypeFilters = getCheckedCheckboxes(elements.imageTypeCheckboxesWrapper);
+  appObject.imageSizeFilters = getCheckedCheckboxes(elements.imageSizeCheckboxesWrapper);
+  appObject.aspectRatioFilters = getCheckedCheckboxes(elements.aspectRatioCheckboxesWrapper);
+  appObject.enableMatureContent = getCheckedCheckboxes(elements.showMatureContentCheckboxWrapper).length > 0;
 }
 
 elements.applyFiltersButton.addEventListener('click', () => {
@@ -146,11 +144,11 @@ elements.applyFiltersButton.addEventListener('click', () => {
 });
 
 elements.searchButton.addEventListener('click', () => {
-  window.appObject.inputText = elements.inputField.value.trim().replace('/[ ]+/g', ' ');
-  window.appObject.pageNo = 1;
-  window.appObject.activeSearchContext = 'normal';
+  appObject.inputText = elements.inputField.value.trim().replace('/[ ]+/g', ' ');
+  appObject.pageNo = 1;
+  appObject.searchContext = 'default';
 
-  checkInputError(window.appObject.inputText);
+  checkInputError(appObject.inputText);
   checkInternetConnection();
 
   if (elements.sourceCheckboxesWrapper.children.length === 1) {
@@ -171,16 +169,16 @@ elements.searchButton.addEventListener('click', () => {
   addSpinner(elements.spinnerPlaceholderPrimary, 'original');
 
   const url = getRequestUrl(
-    window.appObject.inputText,
-    window.appObject.userSelectedUseCaseList,
-    window.appObject.userSelectedLicensesList,
-    window.appObject.userSelectedSourcesList,
-    window.appObject.userSelectedFileTypeList,
-    window.appObject.userSelectedImageTypeList,
-    window.appObject.userSelectedImageSizeList,
-    window.appObject.userSelectedAspectRatioList,
-    window.appObject.pageNo,
-    window.appObject.enableMatureContent,
+    appObject.inputText,
+    appObject.useCaseFilters,
+    appObject.userSelectedLicensesList,
+    appObject.userSelectedSourcesList,
+    appObject.fileTypeFilters,
+    appObject.imageTypeFilters,
+    appObject.imageSizeFilters,
+    appObject.aspectRatioFilters,
+    appObject.pageNo,
+    appObject.enableMatureContent,
   );
 
   search(url);
@@ -188,7 +186,7 @@ elements.searchButton.addEventListener('click', () => {
 
 function restoreAppObjectVariables() {
   chrome.storage.sync.get(['enableMatureContent'], res => {
-    window.appObject.enableMatureContent = res.enableMatureContent === true;
+    appObject.enableMatureContent = res.enableMatureContent === true;
   });
 }
 
@@ -198,23 +196,23 @@ loadUserDefaults();
 async function nextRequest() {
   let result = [];
   let url;
-  if (window.appObject.activeSearchContext === 'collection') {
-    url = getCollectionsUrl(window.appObject.collectionName, window.appObject.pageNo);
-  } else if (window.appObject.activeSearchContext === 'normal') {
+  if (appObject.searchContext === 'collection') {
+    url = getCollectionsUrl(appObject.collectionName, appObject.pageNo);
+  } else if (appObject.searchContext === 'default') {
     url = getRequestUrl(
-      window.appObject.inputText,
-      window.appObject.userSelectedUseCaseList,
-      window.appObject.userSelectedLicensesList,
-      window.appObject.userSelectedSourcesList,
-      window.appObject.userSelectedFileTypeList,
-      window.appObject.userSelectedImageTypeList,
-      window.appObject.userSelectedImageSizeList,
-      window.appObject.userSelectedAspectRatioList,
-      window.appObject.pageNo,
-      window.appObject.enableMatureContent,
+      appObject.inputText,
+      appObject.useCaseFilters,
+      appObject.userSelectedLicensesList,
+      appObject.userSelectedSourcesList,
+      appObject.fileTypeFilters,
+      appObject.imageTypeFilters,
+      appObject.imageSizeFilters,
+      appObject.aspectRatioFilters,
+      appObject.pageNo,
+      appObject.enableMatureContent,
     );
-  } else if (window.appObject.activeSearchContext === 'tag') {
-    url = getTagsUrl(window.appObject.tagName, window.appObject.pageNo);
+  } else if (appObject.searchContext === 'image-tag') {
+    url = getTagsUrl(appObject.tagName, appObject.pageNo);
   }
 
   console.log(url);
@@ -222,19 +220,19 @@ async function nextRequest() {
   const json = await response.json();
   result = json.results;
   addSearchThumbnailsToDOM(primaryGridMasonryObject, result, elements.gridPrimary);
-  window.appObject.pageNo += 1;
+  appObject.pageNo += 1;
 }
 
 elements.loadMoreSearchButton.addEventListener('click', () => {
   removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);
   addSpinner(elements.spinnerPlaceholderPrimary, 'for-bottom');
-  nextRequest(window.appObject.pageNo);
+  nextRequest(appObject.pageNo);
 });
 
 elements.loadMoreBookmarkButton.addEventListener('click', () => {
   removeLoadMoreButton(elements.loadMoreBookmarkButtonkWrapper);
   addSpinner(elements.spinnerPlaceholderPrimary, 'for-bottom');
-  loadBookmarkImages(10, window.appObject.bookmarksEditViewEnabled);
+  loadBookmarkImages(10, appObject.isEditViewEnabled);
 });
 
 elements.navSettingsLink.addEventListener('click', () => {

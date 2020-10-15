@@ -1,4 +1,4 @@
-import { elements } from './base';
+import { elements, appObject } from './base';
 
 export function clearFilters() {
   const checkboxesWrappers = [
@@ -22,14 +22,14 @@ export function clearFilters() {
   });
 
   // clear the filter datastructures
-  window.appObject.userSelectedUseCaseList = [];
-  window.appObject.userSelectedLicensesList = [];
-  window.appObject.userSelectedSourcesList = [];
-  window.appObject.userSelectedFileTypeList = [];
-  window.appObject.userSelectedImageTypeList = [];
-  window.appObject.userSelectedImageSizeList = [];
-  window.appObject.userSelectedAspectRatioList = [];
-  window.appObject.enableMatureContent = false;
+  appObject.useCaseFilters = [];
+  appObject.userSelectedLicensesList = [];
+  appObject.userSelectedSourcesList = [];
+  appObject.fileTypeFilters = [];
+  appObject.imageTypeFilters = [];
+  appObject.imageSizeFilters = [];
+  appObject.aspectRatioFilters = [];
+  appObject.enableMatureContent = false;
 }
 
 // convert Unicode sequence To String. credit: https://stackoverflow.com/a/22021709/10425980

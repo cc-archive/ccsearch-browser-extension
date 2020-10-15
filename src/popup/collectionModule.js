@@ -1,32 +1,30 @@
 import { fetchSources } from '../utils';
-import { elements } from './base';
+import { elements, appObject } from './base';
 // eslint-disable-next-line import/no-cycle
 import { getCollectionsUrl, search } from './searchModule';
 import { addSpinner, removeSpinner } from './spinner';
 import { clearFilters } from './helper';
 
 function searchCollection(event) {
-  window.appObject.pageNo = 1;
-  window.appObject.activeSearchContext = 'collection';
-  window.appObject.searchingNewCollection = true;
-  window.appObject.inputText = '';
-  window.appObject.collectionName = event.target.getAttribute('data-collection-name');
+  appObject.pageNo = 1;
+  appObject.searchContext = 'collection';
+  appObject.searchingNewCollection = true;
+  appObject.inputText = '';
+  appObject.collectionName = event.target.getAttribute('data-collection-name');
 
   elements.inputField.value = '';
   elements.headerLogo.click();
   elements.buttonBackToTop.click();
 
-  const items = {};
-  items[window.appObject.collectionName] = true;
   clearFilters();
   addSpinner(elements.spinnerPlaceholderPrimary, 'original');
 
-  const url = getCollectionsUrl(window.appObject.collectionName, window.appObject.pageNo);
+  const url = getCollectionsUrl(appObject.collectionName, appObject.pageNo);
   search(url);
 }
 
 export default async function loadCollections() {
-  if (!window.appObject.collectionSectionFilled) {
+  if (!appObject.isCollectionSectionRendered) {
     const sources = await fetchSources();
     removeSpinner(elements.spinnerPlaceholderCollections);
     const table = elements.collectionsSection.getElementsByTagName('table')[0];
@@ -70,7 +68,7 @@ export default async function loadCollections() {
       table.appendChild(tRow);
     });
 
-    window.appObject.collectionSectionFilled = true;
+    appObject.isCollectionSectionRendered = true;
   } else {
     removeSpinner(elements.spinnerPlaceholderCollections);
   }

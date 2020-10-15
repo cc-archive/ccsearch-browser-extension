@@ -1,4 +1,4 @@
-import { elements } from './base';
+import { elements, appObject } from './base';
 import { removeChildNodes, checkInternetConnection } from '../utils';
 // eslint-disable-next-line import/no-cycle
 import { activatePopup } from './infoPopupModule';
@@ -46,7 +46,7 @@ export function toggleEditView() {
   for (let i = 0; i < images.length; i += 1) {
     const image = images[i];
 
-    if (window.appObject.bookmarksEditViewEnabled) {
+    if (appObject.isEditViewEnabled) {
       image.removeEventListener('click', openInfoPopup);
       image.addEventListener('click', selectImage);
     } else {

@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { elements, constants } from './base';
+import { elements, constants, appObject } from './base';
 // eslint-disable-next-line import/no-cycle
 import {
   bookmarksGridMasonryObject,
@@ -135,7 +135,7 @@ function appendToGrid(msnryObject, fragment, e, grid) {
   addLoadMoreButton(elements.loadMoreBookmarkButtonkWrapper);
 }
 
-function addBookmarkThumbnailsToDOM(bookmarksObject, bookmarkImageIds, bookmarksEditViewEnabled) {
+function addBookmarkThumbnailsToDOM(bookmarksObject, bookmarkImageIds, isEditViewEnabled) {
   bookmarkImageIds.forEach(imageId => {
     const res = bookmarksObject[imageId];
     const fragment = document.createDocumentFragment();
@@ -183,7 +183,7 @@ function addBookmarkThumbnailsToDOM(bookmarksObject, bookmarkImageIds, bookmarks
     divElement.setAttribute('data-image-id', imageId);
 
     // adding event listener to open popup.
-    if (bookmarksEditViewEnabled) divElement.addEventListener('click', selectImage);
+    if (isEditViewEnabled) divElement.addEventListener('click', selectImage);
     else divElement.addEventListener('click', openInfoPopup);
     divElement.appendChild(imgElement);
     divElement.appendChild(licenseDiv);
@@ -200,7 +200,7 @@ function addBookmarkThumbnailsToDOM(bookmarksObject, bookmarkImageIds, bookmarks
   });
 }
 
-export function loadBookmarkImages(numberOfImages, bookmarksEditViewEnabled) {
+export function loadBookmarkImages(numberOfImages, isEditViewEnabled) {
   chrome.storage.sync.get(activeBookmarkIdContainers, items => {
     let bookmarksImageIdsObject = {};
     activeBookmarkIdContainers.forEach(bookmarkIdContainerName => {
@@ -208,10 +208,10 @@ export function loadBookmarkImages(numberOfImages, bookmarksEditViewEnabled) {
     });
 
     const bookmarkImageIds = Object.keys(bookmarksImageIdsObject).slice(
-      window.appObject.bookmarksSectionIdx,
-      window.appObject.bookmarksSectionIdx + numberOfImages,
+      appObject.bookmarksSectionIdx,
+      appObject.bookmarksSectionIdx + numberOfImages,
     );
-    window.appObject.bookmarksSectionIdx += numberOfImages;
+    appObject.bookmarksSectionIdx += numberOfImages;
 
     if (bookmarkImageIds.length === 0) {
       removeLoadMoreButton(elements.loadMoreBookmarkButtonkWrapper);
@@ -240,7 +240,7 @@ export function loadBookmarkImages(numberOfImages, bookmarksEditViewEnabled) {
         }
       }
       // console.log(bookmarkObject);
-      addBookmarkThumbnailsToDOM(bookmarkObject, bookmarkImageIds, bookmarksEditViewEnabled);
+      addBookmarkThumbnailsToDOM(bookmarkObject, bookmarkImageIds, isEditViewEnabled);
     });
   });
 }
@@ -248,13 +248,13 @@ export function loadBookmarkImages(numberOfImages, bookmarksEditViewEnabled) {
 // EventListeners
 document.addEventListener('DOMContentLoaded', () => {
   elements.navBookmarksLink.addEventListener('click', () => {
-    if (window.appObject.activeSection !== 'bookmarks') {
-      window.appObject.activeSection = 'bookmarks';
+    if (appObject.activeSection !== 'bookmarks') {
+      appObject.activeSection = 'bookmarks';
       // visually marking bookmarks link as active
       removeActiveClassFromNavLinks();
       elements.navBookmarksLink.classList.add('active');
 
-      window.appObject.bookmarksSectionIdx = 0;
+      appObject.bookmarksSectionIdx = 0;
 
       // show the bookmarks section and hide other ones
       elements.primarySection.classList.add('display-none');
@@ -266,7 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
       checkInternetConnection();
 
       removeSpinner(elements.spinnerPlaceholderPrimary);
-      loadBookmarkImages(10, window.appObject.bookmarksEditViewEnabled);
+      loadBookmarkImages(10, appObject.isEditViewEnabled);
 
       chrome.storage.sync.get(null, it => {
         console.log(it);
@@ -278,8 +278,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   elements.headerLogo.addEventListener('click', () => {
-    if (window.appObject.activeSection !== 'search') {
-      window.appObject.activeSection = 'search';
+    if (appObject.activeSection !== 'search') {
+      appObject.activeSection = 'search';
 
       removeActiveClassFromNavLinks();
 
@@ -294,17 +294,17 @@ document.addEventListener('DOMContentLoaded', () => {
       removeBookmarkImages();
       removeSpinner(elements.spinnerPlaceholderPrimary);
 
-      if (window.appObject.activeSearchContext === 'collection' && window.appObject.searchingNewCollection === true) {
+      if (appObject.searchContext === 'collection' && appObject.searchingNewCollection === true) {
         removeOldSearchResults();
         primaryGridMasonryObject.layout();
-        window.appObject.searchingNewCollection = false;
+        appObject.searchingNewCollection = false;
       }
     }
   });
 
   elements.navSourcesLink.addEventListener('click', () => {
-    if (window.appObject.activeSection !== 'collections') {
-      window.appObject.activeSection = 'collections';
+    if (appObject.activeSection !== 'collections') {
+      appObject.activeSection = 'collections';
 
       // visually marking sources link as active
       removeActiveClassFromNavLinks();
@@ -333,12 +333,12 @@ document.addEventListener('DOMContentLoaded', () => {
     for (let i = 0; i < selectedImages.length; i += 1) {
       selectedImages[i].classList.remove('is-selected');
     }
-    window.appObject.bookmarksEditViewEnabled = false;
+    appObject.isEditViewEnabled = false;
     toggleEditView(event);
   });
 
   elements.editBookmarksLink.addEventListener('click', event => {
-    window.appObject.bookmarksEditViewEnabled = true;
+    appObject.isEditViewEnabled = true;
     toggleEditView(event);
   });
 
@@ -385,8 +385,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const imageDiv = document.getElementById(`id_${bookmarkdId}`);
             imageDiv.parentElement.removeChild(imageDiv);
           });
-          window.appObject.bookmarksSectionIdx -= deletedBookmarks.length;
-          loadBookmarkImages(deletedBookmarks.length, window.appObject.bookmarksEditViewEnabled);
+          appObject.bookmarksSectionIdx -= deletedBookmarks.length;
+          loadBookmarkImages(deletedBookmarks.length, appObject.isEditViewEnabled);
           // reorganizing the layout using masonry
           bookmarksGridMasonryObject.layout();
           // confirm user action

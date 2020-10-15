@@ -129,41 +129,45 @@ class Stack {
   }
 }
 
-export function initGlobalObject() {
-  window.appObject = {}; // global object to store the application variables
-  window.appObject.inputText = '';
-  window.appObject.pageNo = 1;
-  window.appObject.bookmarksSectionIdx = 0;
-  window.appObject.enableMatureContent = false;
+/**
+ * @desc Factory Function: creates and returns an object which is used to manage the application state
+ * @return object
+ */
+function createApplicationObject() {
+  return {
+    inputText: '',
+    pageNo: 1,
+    // holds the current active section of the
+    // extension: filter, search, collections, bookmarks
+    activeSection: 'search',
+    // holds the context in which the search will
+    // happen: default, collection(search by sources), image-tag(search by image-tag)
+    searchContext: 'default',
 
-  // List to hold  selected by the user from the drop down.
-  window.appObject.userSelectedSourcesList = [];
+    // data structures to hold active filters
+    useCaseFilters: [],
+    licenseFilters: [],
+    sourceFilters: [],
+    fileTypeFilters: [],
+    imageTypeFilters: [],
+    imageSizeFilters: [],
+    aspectRatioFilters: [],
+    enableMatureContent: false,
 
-  // List to hold user selected licenses
-  window.appObject.userSelectedLicensesList = [];
+    // holds latest sources fetched from API as <source_name, display_name>
+    sourcesFromAPI: {},
 
-  // List to hold user selected use case
-  window.appObject.userSelectedUseCaseList = [];
+    // holds the active collection/source name. Used when "searching by sources"
+    collectionName: '',
+    isCollectionSectionRendered: false,
+    bookmarksSectionIdx: 0,
+    isEditViewEnabled: false,
+    clickedImageTag: false,
+    imageDetailStack: new Stack(),
+  };
+}
 
-  window.appObject.userSelectedImageTypeList = [];
-  window.appObject.userSelectedImageSizeList = [];
-  window.appObject.userSelectedFileTypeList = [];
-  window.appObject.userSelectedAspectRatioList = [];
-
-  // object to store latest sources as <source_name, display_name>
-  window.appObject.sourcesFromAPI = {};
-
-  // Search Storage
-  window.appObject.storeSearch = {};
-
-  // store the name of the current active section
-  window.appObject.activeSection = 'search';
-  window.appObject.activeSearchContext = 'normal'; // possible values -> normal, collection, tag
-  window.appObject.collectionName = '';
-  window.appObject.clickedImageTag = false;
-
-  window.appObject.collectionSectionFilled = false;
-  window.appObject.bookmarksEditViewEnabled = false;
+export const appObject = createApplicationObject();
 
   window.appObject.imageDetailStack = new Stack();
 }

@@ -1,4 +1,4 @@
-import { elements } from './base';
+import { elements, appObject } from './base';
 import { addLoadMoreButton, removeLoadMoreButton } from './helper';
 // eslint-disable-next-line import/no-cycle
 import { activatePopup } from './infoPopupModule';
@@ -26,20 +26,20 @@ export function removeOldSearchResults() {
 
 export function getRequestUrl(
   searchQuery,
-  userSelectedUseCaseList,
-  userSelectedLicenseList,
-  userSelectedSourceList,
-  userSelectedFileTypeList,
-  userSelectedImageTypeList,
-  userSelectedImageSizeList,
-  userSelectedAspectRatioList,
+  useCaseFilters,
+  licenseFilters,
+  sourceFilters,
+  fileTypeFilters,
+  imageTypeFilters,
+  imageSizeFilters,
+  aspectRatioFilters,
   pageNo,
   enableMatureContent,
 ) {
-  if (userSelectedUseCaseList.length > 0) {
-    return `https://api.creativecommons.engineering/v1/images?q=${searchQuery}&page=${pageNo}&page_size=20&license_type=${userSelectedUseCaseList}&source=${userSelectedSourceList}&extension=${userSelectedFileTypeList}&categories=${userSelectedImageTypeList}&size=${userSelectedImageSizeList}&aspect_ratio=${userSelectedAspectRatioList}&mature=${enableMatureContent}`;
+  if (useCaseFilters.length > 0) {
+    return `https://api.creativecommons.engineering/v1/images?q=${searchQuery}&page=${pageNo}&page_size=20&license_type=${useCaseFilters}&source=${sourceFilters}&extension=${fileTypeFilters}&categories=${imageTypeFilters}&size=${imageSizeFilters}&aspect_ratio=${aspectRatioFilters}&mature=${enableMatureContent}`;
   }
-  return `https://api.creativecommons.engineering/v1/images?q=${searchQuery}&page=${pageNo}&page_size=20&license=${userSelectedLicenseList}&source=${userSelectedSourceList}&extension=${userSelectedFileTypeList}&categories=${userSelectedImageTypeList}&size=${userSelectedImageSizeList}&aspect_ratio=${userSelectedAspectRatioList}&mature=${enableMatureContent}`;
+  return `https://api.creativecommons.engineering/v1/images?q=${searchQuery}&page=${pageNo}&page_size=20&license=${licenseFilters}&source=${sourceFilters}&extension=${fileTypeFilters}&categories=${imageTypeFilters}&size=${imageSizeFilters}&aspect_ratio=${aspectRatioFilters}&mature=${enableMatureContent}`;
 }
 
 export function getCollectionsUrl(collectionName, pageNo) {
@@ -210,6 +210,6 @@ export function search(url) {
       checkResultLength(resultArray);
       addSearchThumbnailsToDOM(primaryGridMasonryObject, resultArray, elements.gridPrimary);
 
-      window.appObject.pageNo += 1;
+      appObject.pageNo += 1;
     });
 }
