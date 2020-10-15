@@ -21,15 +21,7 @@ export function clearFilters() {
     }
   });
 
-  // clear the filter datastructures
-  appObject.useCaseFilters = [];
-  appObject.userSelectedLicensesList = [];
-  appObject.userSelectedSourcesList = [];
-  appObject.fileTypeFilters = [];
-  appObject.imageTypeFilters = [];
-  appObject.imageSizeFilters = [];
-  appObject.aspectRatioFilters = [];
-  appObject.enableMatureContent = false;
+  appObject.resetFilters();
 }
 
 // convert Unicode sequence To String. credit: https://stackoverflow.com/a/22021709/10425980

@@ -114,30 +114,8 @@ elements.clearFiltersButton.addEventListener('click', () => {
   elements.searchButton.click();
 });
 
-function getCheckedCheckboxes(checkboxesWrapper) {
-  const checkboxes = checkboxesWrapper.querySelectorAll('input[type=checkbox]');
-
-  const checkedCheckboxes = [];
-  checkboxes.forEach(checkbox => {
-    if (checkbox.checked) checkedCheckboxes.push(checkbox.id);
-  });
-
-  return checkedCheckboxes;
-}
-
-function applyFilters() {
-  appObject.useCaseFilters = getCheckedCheckboxes(elements.useCaseCheckboxesWrapper);
-  appObject.userSelectedLicensesList = getCheckedCheckboxes(elements.licenseCheckboxesWrapper);
-  appObject.userSelectedSourcesList = getCheckedCheckboxes(elements.sourceCheckboxesWrapper);
-  appObject.fileTypeFilters = getCheckedCheckboxes(elements.fileTypeCheckboxesWrapper);
-  appObject.imageTypeFilters = getCheckedCheckboxes(elements.imageTypeCheckboxesWrapper);
-  appObject.imageSizeFilters = getCheckedCheckboxes(elements.imageSizeCheckboxesWrapper);
-  appObject.aspectRatioFilters = getCheckedCheckboxes(elements.aspectRatioCheckboxesWrapper);
-  appObject.enableMatureContent = getCheckedCheckboxes(elements.showMatureContentCheckboxWrapper).length > 0;
-}
-
 elements.applyFiltersButton.addEventListener('click', () => {
-  applyFilters();
+  appObject.updateFilters();
   primaryGridMasonryObject.layout();
   elements.closeFiltersLink.click();
   elements.searchButton.click();
@@ -163,7 +141,7 @@ elements.searchButton.addEventListener('click', () => {
 
   removeOldSearchResults();
   removeSpinner(elements.spinnerPlaceholderPrimary);
-  applyFilters();
+  appObject.updateFilters();
 
   // enable spinner
   addSpinner(elements.spinnerPlaceholderPrimary, 'original');

@@ -130,8 +130,24 @@ class Stack {
 }
 
 /**
+ * @desc Returns the ids of all the checked checkboxes inside the passed DOM element
+ * @param {HTMLElement} checkboxesWrapper
+ * @return {HTMLElement[]}
+ */
+function getCheckedCheckboxes(checkboxesWrapper) {
+  const checkboxes = checkboxesWrapper.querySelectorAll('input[type=checkbox]');
+
+  const checkedCheckboxes = [];
+  checkboxes.forEach(checkbox => {
+    if (checkbox.checked) checkedCheckboxes.push(checkbox.id);
+  });
+
+  return checkedCheckboxes;
+}
+
+/**
  * @desc Factory Function: creates and returns an object which is used to manage the application state
- * @return object
+ * @return {Object}
  */
 function createApplicationObject() {
   return {
@@ -161,13 +177,34 @@ function createApplicationObject() {
     collectionName: '',
     isCollectionSectionRendered: false,
     bookmarksSectionIdx: 0,
+    // holds the active collection/source name. Used when "searching by image-tag"
+    tagName: '',
     isEditViewEnabled: false,
     clickedImageTag: false,
     imageDetailStack: new Stack(),
+
+    resetFilters() {
+      this.useCaseFilters = [];
+      this.licenseFilters = [];
+      this.sourceFilters = [];
+      this.fileTypeFilters = [];
+      this.imageTypeFilters = [];
+      this.imageSizeFilters = [];
+      this.aspectRatioFilters = [];
+      this.enableMatureContent = false;
+    },
+
+    updateFilters() {
+      this.useCaseFilters = getCheckedCheckboxes(elements.useCaseCheckboxesWrapper);
+      this.userSelectedLicensesList = getCheckedCheckboxes(elements.licenseCheckboxesWrapper);
+      this.userSelectedSourcesList = getCheckedCheckboxes(elements.sourceCheckboxesWrapper);
+      this.fileTypeFilters = getCheckedCheckboxes(elements.fileTypeCheckboxesWrapper);
+      this.imageTypeFilters = getCheckedCheckboxes(elements.imageTypeCheckboxesWrapper);
+      this.imageSizeFilters = getCheckedCheckboxes(elements.imageSizeCheckboxesWrapper);
+      this.aspectRatioFilters = getCheckedCheckboxes(elements.aspectRatioCheckboxesWrapper);
+      this.enableMatureContent = getCheckedCheckboxes(elements.showMatureContentCheckboxWrapper).length > 0;
+    },
   };
 }
 
 export const appObject = createApplicationObject();
-
-  window.appObject.imageDetailStack = new Stack();
-}
