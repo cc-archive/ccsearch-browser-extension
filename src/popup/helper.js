@@ -1,5 +1,6 @@
-import { elements, appObject } from './base';
-import { removeChildNodes } from '../utils';
+import { elements, appObject, primaryGridMasonryObject } from './base';
+import { removeChildNodes, showNotification } from '../utils';
+import { removeSpinner } from './spinner';
 
 export function clearFilters() {
   const checkboxesWrappers = [
@@ -46,6 +47,16 @@ export function removeImagesFromGrid(gridDiv) {
 }
 
 /**
+ * @desc Returns the url that will be used to fetch images during "search by image-tag"
+ * @return {string}
+ */
+export function getTagsUrl() {
+  const { tagName, pageNo } = appObject;
+
+  return `https://api.creativecommons.engineering/v1/images?tags=${tagName}&page=${pageNo}&page_size=20`;
+}
+
+/**
  * @desc Returns true if the given object is empty.
  * @param {Object} obj
  * @returns {bool}
@@ -60,4 +71,51 @@ export function addLoadMoreButton(loadMoreButtonWrapper) {
 
 export function removeLoadMoreButton(loadMoreButtonWrapper) {
   loadMoreButtonWrapper.classList.add('display-none');
+}
+
+/**
+ * @desc Checks if the result-array(the response from the API) is empty or not. If it's empty, then
+ * notify the user, and throw Error.
+ * @param {Object[]} resultArray
+ */
+export function checkResultLength(resultArray) {
+  if (resultArray.length === 0) {
+    showNotification(
+      'No Images Found. Please enter a different query.',
+      'negative',
+      'notification--extension-popup',
+      4000,
+    );
+    removeSpinner(elements.spinnerPlaceholderPrimary);
+    removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);
+    primaryGridMasonryObject.layout();
+    throw new Error('No image found');
+  } else {
+    // render the "Load More" button if non empty result
+    addLoadMoreButton(elements.loadMoreSearchButtonWrapper);
+  }
+}
+
+/**
+ * @desc Checks if API sent a HTTP 400 Bad Request. If yes, then notfiy the user, and throw Error.
+ * @param {Object} apiResponse
+ */
+export function checkHTTP400(apiResponse) {
+  console.log('check validation error called');
+  if (Object.prototype.hasOwnProperty.call(apiResponse, 'error')) {
+    removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);
+    removeSpinner(elements.spinnerPlaceholderPrimary);
+
+    if (apiResponse.error === 'InputError') {
+      showNotification('Not a valid search query.', 'negative', 'notification--extension-popup');
+    } else {
+      showNotification(
+        'Some error occured. Please try again after some time.',
+        'negative',
+        'notification--extension-popup',
+      );
+    }
+
+    throw new Error('400 Bad Request');
+  }
 }

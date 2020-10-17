@@ -1,6 +1,5 @@
 import { removeSpinner } from './spinner';
-import { elements, appObject } from './base';
-import { addLoadMoreButton } from './helper';
+import { addLoadMoreButton, checkHTTP400, checkResultLength } from './helper';
 import { activeBookmarkIdContainers, checkInternetConnection } from '../utils';
 import { toggleBookmark } from './bookmarkModule.utils';
 // eslint-disable-next-line import/no-cycle
@@ -199,4 +198,24 @@ export function addImagesToDOM(masonryObject, imageObjects, gridDiv, forBookmark
     gridDiv.appendChild(fragment);
     appendToGrid(masonryObject, imageComponents, gridDiv, forBookmarksSection);
   });
+}
+
+/**
+ * @desc Fetches the data from the API and and after processing, calls "addImagesToDOM" (which makes
+ * image-components and add them to the DOM).
+ * @param {string} url
+ */
+export function search(url) {
+  fetch(url)
+    .then(data => data.json())
+    .then(res => {
+      checkHTTP400(res);
+
+      const resultArray = res.results;
+      checkResultLength(resultArray);
+
+      addImagesToDOM(primaryGridMasonryObject, resultArray, elements.gridPrimary);
+
+      appObject.pageNo += 1;
+    });
 }

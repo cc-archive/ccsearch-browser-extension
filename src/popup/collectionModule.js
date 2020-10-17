@@ -1,9 +1,9 @@
 import { fetchSources } from '../utils';
 import { elements, appObject } from './base';
-// eslint-disable-next-line import/no-cycle
-import { getCollectionsUrl, search } from './searchModule';
+import { getCollectionsUrl } from './searchModule';
 import { addSpinner, removeSpinner } from './spinner';
 import { clearFilters } from './helper';
+import { search } from './localUtils';
 
 function searchCollection(event) {
   appObject.pageNo = 1;

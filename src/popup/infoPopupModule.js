@@ -1,13 +1,9 @@
-import { elements, appObject } from './base';
-// eslint-disable-next-line import/no-cycle
-import { getTagsUrl, search } from './searchModule';
+import { elements, appObject, relatedImagesGridMasonryObject } from './base';
 import { addSpinner } from './spinner';
 import { removeChildNodes } from '../utils';
-import { clearFilters, removeImagesFromGrid } from './helper';
+import { clearFilters, removeImagesFromGrid, getTagsUrl } from './helper';
 // eslint-disable-next-line import/no-cycle
-import { addImagesToDOM } from './localUtils';
-
-const Masonry = require('masonry-layout');
+import { addImagesToDOM, search } from './localUtils';
 
 const download = require('downloadjs');
 

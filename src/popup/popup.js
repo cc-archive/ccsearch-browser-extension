@@ -1,6 +1,5 @@
-import { elements, appObject } from './base';
-import { checkInputError, getRequestUrl, search, getCollectionsUrl, getTagsUrl } from './searchModule';
-import { removeLoadMoreButton, clearFilters, removeImagesFromGrid } from './helper';
+import { checkInputError, getRequestUrl, getCollectionsUrl } from './searchModule';
+import { removeLoadMoreButton, clearFilters, removeImagesFromGrid, getTagsUrl } from './helper';
 import loadUserDefaults from './filterModule';
 import { fillImageDetailSection, resetImageDetailSection } from './infoPopupModule';
 import { addSpinner, removeSpinner } from './spinner';
@@ -14,9 +13,8 @@ import {
 } from '../utils';
 import loadBookmarkImages from './bookmarkModule';
 import { confirmBookmarkSchemaInSync, confirmFilterSchemaInSync } from './popup.utils';
-import { removeActiveClassFromNavLinks, bookmarksGridMasonryObject } from './bookmarkModule.utils';
-import primaryGridMasonryObject from './searchModule.utils';
-import { addImagesToDOM } from './localUtils';
+import { removeActiveClassFromNavLinks } from './bookmarkModule.utils';
+import { addImagesToDOM, search } from './localUtils';
 
 // eslint-disable-next-line no-undef
 const clipboard = new ClipboardJS('.btn-copy');
