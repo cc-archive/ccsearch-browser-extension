@@ -1,9 +1,11 @@
 import { elements, appObject } from './base';
 // eslint-disable-next-line import/no-cycle
-import { addSearchThumbnailsToDOM, getTagsUrl, search, removeOldSearchResults } from './searchModule';
+import { getTagsUrl, search, removeOldSearchResults } from './searchModule';
 import { addSpinner } from './spinner';
 import { removeChildNodes } from '../utils';
 import { clearFilters } from './helper';
+// eslint-disable-next-line import/no-cycle
+import { addImagesToDOM } from './localUtils';
 
 const Masonry = require('masonry-layout');
 
@@ -300,7 +302,7 @@ function fillRelatedImages(relatedUrl) {
     .then(res => {
       const resultArray = res.results;
 
-      addSearchThumbnailsToDOM(relatedImagesGridMasonryObject, resultArray, elements.gridRelatedImages);
+      addImagesToDOM(relatedImagesGridMasonryObject, resultArray, elements.gridRelatedImages);
     });
 }
 

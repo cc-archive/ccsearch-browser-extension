@@ -4,7 +4,6 @@ import {
   removeOldSearchResults,
   getRequestUrl,
   search,
-  addSearchThumbnailsToDOM,
   getCollectionsUrl,
   getTagsUrl,
 } from './searchModule';
@@ -20,10 +19,11 @@ import {
   loadFilterCheckboxesFromStorage,
   checkInternetConnection,
 } from '../utils';
-import { loadBookmarkImages } from './bookmarkModule';
+import loadBookmarkImages from './bookmarkModule';
 import { confirmBookmarkSchemaInSync, confirmFilterSchemaInSync } from './popup.utils';
 import { removeActiveClassFromNavLinks, bookmarksGridMasonryObject } from './bookmarkModule.utils';
 import primaryGridMasonryObject from './searchModule.utils';
+import { addImagesToDOM } from './localUtils';
 
 // eslint-disable-next-line no-undef
 const clipboard = new ClipboardJS('.btn-copy');
@@ -175,7 +175,7 @@ async function nextRequest() {
   const response = await fetch(url);
   const json = await response.json();
   result = json.results;
-  addSearchThumbnailsToDOM(primaryGridMasonryObject, result, elements.gridPrimary);
+  addImagesToDOM(primaryGridMasonryObject, result, elements.gridPrimary);
   appObject.pageNo += 1;
 }
 

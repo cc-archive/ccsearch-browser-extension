@@ -1,16 +1,10 @@
-/* eslint-disable no-param-reassign */
-import { elements, constants, appObject } from './base';
-// eslint-disable-next-line import/no-cycle
+import { elements, appObject } from './base';
 import {
   bookmarksGridMasonryObject,
   removeBookmarkImages,
-  toggleEditView,
-  openInfoPopup,
   removeActiveClassFromNavLinks,
-  selectImage,
 } from './bookmarkModule.utils';
-import { removeLoadMoreButton, addLoadMoreButton } from './helper';
-// eslint-disable-next-line import/no-cycle
+import { removeLoadMoreButton } from './helper';
 import { removeOldSearchResults } from './searchModule';
 import { addSpinner, removeSpinner } from './spinner';
 import {
@@ -20,228 +14,73 @@ import {
   activeBookmarkIdContainers,
   checkInternetConnection,
 } from '../utils';
-// eslint-disable-next-line import/no-cycle
 import loadCollections from './collectionModule';
 import primaryGridMasonryObject from './searchModule.utils';
+import { addImagesToDOM, toggleEditView } from './localUtils';
 
 const download = require('downloadjs');
 
-// Store Select Button for All bookmarks, with their properties
-const bookmarkDOM = {};
-
-function getImageDetail(eventTarget) {
-  const imageObject = {};
-  imageObject.thumbnail = eventTarget.dataset.imageThumbnail;
-  imageObject.license = eventTarget.dataset.imageLicense;
-
-  return imageObject;
-}
-
-export default function toggleBookmark(e) {
+/**
+ * @desc Segregates and prepares the data of the images that needs to be loaded in the bookmarks
+ * section and then calls "addImagesToDOM".
+ * @param {number} numberOfImages - the number of images that we want to load at once.
+ */
+export default function loadBookmarkImages(numberOfImages) {
   chrome.storage.sync.get(activeBookmarkIdContainers, items => {
-    const allBookmarksImageIdsObject = {};
-    Object.keys(items).forEach(bookmarksImageIdContainerName => {
-      const bookmarksImageIdContainer = items[bookmarksImageIdContainerName];
-      Object.keys(bookmarksImageIdContainer).forEach(id => {
-        // 0th idx -> bookmark container number, 1st idx -> bookmark image id container number
-        allBookmarksImageIdsObject[id] = [bookmarksImageIdContainer[id], bookmarksImageIdContainerName.substring(17)];
-      });
-    });
-    const allBookmarksImageIds = Object.keys(allBookmarksImageIdsObject);
-    const { imageId } = e.target.dataset;
-    if (allBookmarksImageIds.indexOf(imageId) === -1) {
-      const imageDetail = getImageDetail(e.target);
-      chrome.storage.sync.get('bookmarksLength', items2 => {
-        const { bookmarksLength } = items2;
-        let validBookmarksKey = null;
-        for (let i = 0; i < activeBookmarkContainers.length; i += 1) {
-          if (bookmarksLength[activeBookmarkContainers[i]] < constants.bookmarkContainerSize) {
-            validBookmarksKey = activeBookmarkContainers[i];
-            break;
-          }
-        }
-        if (!validBookmarksKey) {
-          showNotification('Error: Bookmarks Limit reached', 'negative', 'notification--extension-popup');
-          throw new Error('Bookmarks Limit reached');
-        }
-        let validBookmarksImageIdKey;
-        for (let i = 0; i < activeBookmarkIdContainers.length; i += 1) {
-          if (Object.keys(items[activeBookmarkIdContainers[i]]).length < constants.bookmarkImageIdContainerSize) {
-            validBookmarksImageIdKey = activeBookmarkIdContainers[i];
-            break;
-          }
-        }
-
-        Object.assign(items[validBookmarksImageIdKey], { [imageId]: validBookmarksKey.substring(9) });
-
-        chrome.storage.sync.get(validBookmarksKey, items3 => {
-          const bookmarksObject = items3[validBookmarksKey];
-          bookmarksObject[imageId] = imageDetail;
-          bookmarksLength[validBookmarksKey] += 1;
-          chrome.storage.sync.set(
-            {
-              [validBookmarksKey]: bookmarksObject,
-              [validBookmarksImageIdKey]: items[validBookmarksImageIdKey],
-              bookmarksLength,
-            },
-            () => {
-              e.target.classList.remove('bookmark-regular');
-              e.target.classList.add('bookmark-solid');
-              e.target.title = 'Remove Bookmark';
-              showNotification('Image Bookmarked', 'positive', 'notification--extension-popup');
-            },
-          );
-        });
-      });
-    } else {
-      const bookmarkContainerNo = allBookmarksImageIdsObject[imageId][0];
-      const bookmarkImageIdContainerNo = allBookmarksImageIdsObject[imageId][1];
-      const bookmarkContainerName = `bookmarks${bookmarkContainerNo}`;
-      const bookmarkImageIdContainerName = `bookmarksImageIds${bookmarkImageIdContainerNo}`;
-      chrome.storage.sync.get([bookmarkContainerName, bookmarkImageIdContainerName, 'bookmarksLength'], items4 => {
-        const bookmarkContainer = items4[bookmarkContainerName];
-        const bookmarkImageIdContainer = items4[bookmarkImageIdContainerName];
-        delete bookmarkContainer[imageId];
-        delete bookmarkImageIdContainer[imageId];
-        const updatedBookmarksLength = items4.bookmarksLength;
-        updatedBookmarksLength[bookmarkContainerName] -= 1;
-        chrome.storage.sync.set(
-          {
-            [bookmarkContainerName]: bookmarkContainer,
-            [bookmarkImageIdContainerName]: bookmarkImageIdContainer,
-            bookmarksLength: updatedBookmarksLength,
-          },
-          () => {
-            e.target.classList.remove('bookmark-solid');
-            e.target.classList.add('bookmark-regular');
-            e.target.title = 'Bookmark Image';
-            showNotification('Bookmark removed', 'positive', 'notification--extension-popup');
-          },
-        );
-      });
-    }
-  });
-}
-
-function appendToGrid(msnryObject, fragment, e, grid) {
-  grid.appendChild(fragment);
-  msnryObject.appended(e);
-  // eslint-disable-next-line no-undef
-  imagesLoaded(grid).on('progress', () => {
-    // layout Masonry after each image loads
-    msnryObject.layout();
-  });
-  removeSpinner(elements.spinnerPlaceholderPrimary);
-  addLoadMoreButton(elements.loadMoreBookmarkButtonkWrapper);
-}
-
-function addBookmarkThumbnailsToDOM(bookmarksObject, bookmarkImageIds, isEditViewEnabled) {
-  bookmarkImageIds.forEach(imageId => {
-    const res = bookmarksObject[imageId];
-    const fragment = document.createDocumentFragment();
-
-    const { thumbnail, license } = res;
-    const licenseArray = license.split('-'); // split license in individual characteristics
-
-    // make an image element
-    const imgElement = document.createElement('img');
-    imgElement.setAttribute('src', thumbnail);
-    imgElement.setAttribute('class', 'image-thumbnail');
-    imgElement.setAttribute('id', imageId);
-
-    const licenseDiv = document.createElement('div');
-    licenseDiv.classList.add('image-icons');
-
-    // Array to hold license image elements
-    const licenseIconElementsArray = [];
-
-    // Add the default cc icon
-    let licenseIconElement = document.createElement('i');
-    licenseIconElement.classList.add('icon', 'has-background-white', 'cc-logo');
-    licenseIconElementsArray.push(licenseIconElement);
-
-    // make and push license image elements
-    licenseArray.forEach(name => {
-      const lowerCaseName = `${name}`.toLowerCase();
-      licenseIconElement = document.createElement('i');
-      // for pdm, the logo name is cc-pd and for cc0, the logo name is cc-zero
-      if (lowerCaseName === 'pdm') licenseIconElement.classList.add('icon', 'has-background-white', 'cc-pd');
-      else if (lowerCaseName === 'cc0') licenseIconElement.classList.add('icon', 'has-background-white', 'cc-zero');
-      else licenseIconElement.classList.add('icon', 'has-background-white', `cc-${lowerCaseName}`);
-      licenseIconElementsArray.push(licenseIconElement);
-    });
-
-    licenseIconElementsArray.forEach(licenseIcon => {
-      licenseDiv.appendChild(licenseIcon);
-    });
-
-    // make a div element to encapsulate image element
-    const divElement = document.createElement('div');
-    divElement.classList.add('image', 'is-compact');
-    divElement.id = `id_${imageId}`; // used for searching image div element
-
-    divElement.setAttribute('data-image-id', imageId);
-
-    // adding event listener to open popup.
-    if (isEditViewEnabled) divElement.addEventListener('click', selectImage);
-    else divElement.addEventListener('click', openInfoPopup);
-    divElement.appendChild(imgElement);
-    divElement.appendChild(licenseDiv);
-
-    // div to act as grid itemj
-    const gridItemDiv = document.createElement('div');
-    gridItemDiv.setAttribute('class', 'grid-item');
-
-    gridItemDiv.appendChild(divElement);
-
-    fragment.appendChild(gridItemDiv);
-
-    appendToGrid(bookmarksGridMasonryObject, fragment, gridItemDiv, elements.gridBookmarks);
-  });
-}
-
-export function loadBookmarkImages(numberOfImages, isEditViewEnabled) {
-  chrome.storage.sync.get(activeBookmarkIdContainers, items => {
-    let bookmarksImageIdsObject = {};
+    // for storing <image-ids, bookmark container number> of all bookmarks
+    let allImageIds = {};
     activeBookmarkIdContainers.forEach(bookmarkIdContainerName => {
-      bookmarksImageIdsObject = { ...bookmarksImageIdsObject, ...items[bookmarkIdContainerName] };
+      allImageIds = { ...allImageIds, ...items[bookmarkIdContainerName] };
     });
 
-    const bookmarkImageIds = Object.keys(bookmarksImageIdsObject).slice(
+    // stores the image-ids of required bookmarks(only those bookmarks that we need
+    // to load onto the DOM)
+    const bookmarkImageIds = Object.keys(allImageIds).slice(
       appObject.bookmarksSectionIdx,
       appObject.bookmarksSectionIdx + numberOfImages,
     );
+
+    // increment the starting point for next bunch of images
     appObject.bookmarksSectionIdx += numberOfImages;
 
     if (bookmarkImageIds.length === 0) {
       removeLoadMoreButton(elements.loadMoreBookmarkButtonkWrapper);
-    }
+    } else {
+      // for storing <bookmark container number, image ids> of the required bookmarks
+      const segBookmarkIds = {};
 
-    const segBookmarkIds = {}; // object used to segregate bookmark ids
-    // segregate the bookmark image ids into respective container numbers
-    for (let i = 0; i < bookmarkImageIds.length; i += 1) {
-      const num = bookmarksImageIdsObject[bookmarkImageIds[i]];
-      if (!Object.prototype.hasOwnProperty.call(segBookmarkIds, num)) {
-        segBookmarkIds[num] = [];
-      }
-      segBookmarkIds[num].push(bookmarkImageIds[i]);
-    }
-    // this will contain only the bookmark data which will be rendered
-    const bookmarkObject = {};
-    // all the required bookmark containers that are to be fetched from the storage
-    const requiredBookmarkContainer = Object.keys(segBookmarkIds).map(item => `bookmarks${item}`);
-    // filling up bookmarkObject
-    chrome.storage.sync.get(requiredBookmarkContainer, items2 => {
-      for (let i = 0; i < requiredBookmarkContainer.length; i += 1) {
-        const containerNum = requiredBookmarkContainer[i].substring(9);
-        for (let j = 0; j < segBookmarkIds[containerNum].length; j += 1) {
-          bookmarkObject[segBookmarkIds[containerNum][j]] =
-            items2[requiredBookmarkContainer[i]][segBookmarkIds[containerNum][j]];
+      // segregate the bookmark image ids into respective container numbers
+      for (let i = 0; i < bookmarkImageIds.length; i += 1) {
+        const containerNum = allImageIds[bookmarkImageIds[i]];
+        if (!Object.prototype.hasOwnProperty.call(segBookmarkIds, containerNum)) {
+          segBookmarkIds[containerNum] = [];
         }
+        segBookmarkIds[containerNum].push(bookmarkImageIds[i]);
       }
-      // console.log(bookmarkObject);
-      addBookmarkThumbnailsToDOM(bookmarkObject, bookmarkImageIds, isEditViewEnabled);
-    });
+
+      // the bookmark containers that are to be fetched from the sync storage
+      const requiredBookmarkContainer = Object.keys(segBookmarkIds).map(containerNum => `bookmarks${containerNum}`);
+
+      chrome.storage.sync.get(requiredBookmarkContainer, items2 => {
+        // for storing the "image object". A single object will have the data that is needed
+        // to create an image-component (image-id, license, thumbnail-url)
+        const imageObjects = [];
+
+        // fill imageObjects
+        for (let i = 0; i < requiredBookmarkContainer.length; i += 1) {
+          const containerNum = requiredBookmarkContainer[i].substring(9);
+          for (let j = 0; j < segBookmarkIds[containerNum].length; j += 1) {
+            const imageId = segBookmarkIds[containerNum][j];
+            imageObjects.push({
+              id: imageId,
+              ...items2[requiredBookmarkContainer[i]][segBookmarkIds[containerNum][j]],
+            });
+          }
+        }
+
+        addImagesToDOM(bookmarksGridMasonryObject, imageObjects, elements.gridBookmarks, true);
+      });
+    }
   });
 }
 
@@ -266,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
       checkInternetConnection();
 
       removeSpinner(elements.spinnerPlaceholderPrimary);
-      loadBookmarkImages(10, appObject.isEditViewEnabled);
+      loadBookmarkImages(10);
 
       chrome.storage.sync.get(null, it => {
         console.log(it);
@@ -350,7 +189,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const image = images[i];
       if (image.classList.contains('is-selected')) {
         const { imageId } = image.dataset;
-        delete bookmarkDOM[imageId]; // remove the selected bookmark from bookmarkDOM object
         deletedBookmarks.push(imageId);
       }
     }
@@ -369,6 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ];
           });
         });
+        /* eslint-disable no-param-reassign */
         deletedBookmarks.forEach(imageId => {
           const bookmarkContainerNo = allBookmarksImageIdsObject[imageId][0];
           const bookmarkImageIdContainerNo = allBookmarksImageIdsObject[imageId][1];
