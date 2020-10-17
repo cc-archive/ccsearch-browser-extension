@@ -17,14 +17,6 @@ import { confirmBookmarkSchemaInSync, confirmFilterSchemaInSync } from './popup.
 import { removeActiveClassFromNavLinks } from './bookmarkModule.utils';
 import { addImagesToDOM, search } from './localUtils';
 
-// eslint-disable-next-line no-undef
-const clipboard = new ClipboardJS('.btn-copy');
-
-clipboard.on('success', e => {
-  e.clearSelection();
-  showNotification('Copied', 'positive', 'notification--extension-popup');
-});
-
 elements.imageDetailNav.getElementsByTagName('ul')[0].addEventListener('click', enableTabSwitching);
 elements.attributionTab.firstElementChild.getElementsByTagName('ul')[0].addEventListener('click', enableTabSwitching);
 

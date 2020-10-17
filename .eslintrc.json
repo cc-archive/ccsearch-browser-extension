@@ -2,7 +2,6 @@
   "env": {
     "browser": true,
     "es6": true,
-    "jquery": true,
     "webextensions": true
   },
   "extends": ["airbnb-base", "prettier"],

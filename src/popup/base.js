@@ -1,4 +1,7 @@
 import Masonry from 'masonry-layout';
+import ClipboardJS from 'clipboard';
+
+import { showNotification } from '../utils';
 
 export const elements = {
   /* ------header------ */
@@ -98,6 +101,19 @@ export const elements = {
   buttonBackToTop: document.getElementsByClassName('button-backToTop')[0],
 };
 
+// setting up clipboardjs https://github.com/zenorocha/clipboard.js
+const clipboard = new ClipboardJS('.btn-copy');
+
+clipboard.on('success', e => {
+  e.clearSelection();
+  showNotification('Copied', 'positive', 'notification--extension-popup');
+});
+
+clipboard.on('error', () => {
+  showNotification('Some error occured while copying', 'negative', 'notification--extension-popup');
+});
+
+// setting up masonry https://github.com/desandro/masonry
 const msnryOptions = {
   itemSelector: '.grid-item',
   columnWidth: '.grid-item',
