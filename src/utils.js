@@ -19,13 +19,6 @@ export function showNotification(message, context, notificationWrapperClass, tim
   }, timeout || 1500);
 }
 
-export function removeNode(className) {
-  const sectionContentParagraph = document.querySelector(`.${className}`);
-  if (sectionContentParagraph) {
-    sectionContentParagraph.parentNode.removeChild(sectionContentParagraph);
-  }
-}
-
 export function checkInternetConnection() {
   if (!navigator.onLine) {
     showNotification('No Internet Connection', 'negative', 'notification--extension-popup');
