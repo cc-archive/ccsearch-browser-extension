@@ -1,3 +1,4 @@
+import { elements, appObject, primaryGridMasonryObject, bookmarksGridMasonryObject } from './base';
 import { checkInputError, getRequestUrl, getCollectionsUrl } from './searchModule';
 import { removeLoadMoreButton, clearFilters, removeImagesFromGrid, getTagsUrl } from './helper';
 import loadUserDefaults from './filterModule';

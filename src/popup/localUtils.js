@@ -1,4 +1,5 @@
 import { removeSpinner } from './spinner';
+import { elements, appObject, primaryGridMasonryObject } from './base';
 import { addLoadMoreButton, checkHTTP400, checkResultLength } from './helper';
 import { activeBookmarkIdContainers, checkInternetConnection } from '../utils';
 import { toggleBookmark } from './bookmarkModule.utils';

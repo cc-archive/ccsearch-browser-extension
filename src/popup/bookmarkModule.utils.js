@@ -1,17 +1,6 @@
 import { elements, constants } from './base';
 import { activeBookmarkIdContainers, activeBookmarkContainers, showNotification } from '../utils';
 
-const Masonry = require('masonry-layout');
-
-export const bookmarksGridMasonryObject = new Masonry(elements.gridBookmarks, {
-  // options
-  itemSelector: '.grid-item',
-  columnWidth: '.grid-item',
-  gutter: '.gutter-sizer',
-  percentPosition: true,
-  transitionDuration: '0',
-});
-
 export function removeActiveClassFromNavLinks() {
   elements.navBookmarksLink.classList.remove('active');
   elements.navSourcesLink.classList.remove('active');

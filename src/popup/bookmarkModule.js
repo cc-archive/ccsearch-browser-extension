@@ -1,5 +1,5 @@
-import { elements, appObject } from './base';
-import { bookmarksGridMasonryObject, removeActiveClassFromNavLinks } from './bookmarkModule.utils';
+import { elements, appObject, bookmarksGridMasonryObject, primaryGridMasonryObject } from './base';
+import { removeActiveClassFromNavLinks } from './bookmarkModule.utils';
 import { removeLoadMoreButton, removeImagesFromGrid } from './helper';
 import { addSpinner, removeSpinner } from './spinner';
 import {
@@ -10,7 +10,6 @@ import {
   checkInternetConnection,
 } from '../utils';
 import loadCollections from './collectionModule';
-import primaryGridMasonryObject from './searchModule.utils';
 import { addImagesToDOM, toggleEditView } from './localUtils';
 
 const download = require('downloadjs');

@@ -1,3 +1,5 @@
+import Masonry from 'masonry-layout';
+
 export const elements = {
   /* ------header------ */
   header: document.getElementsByTagName('header')[0],
@@ -95,6 +97,18 @@ export const elements = {
   /* ------Misc------ */
   buttonBackToTop: document.getElementsByClassName('button-backToTop')[0],
 };
+
+const msnryOptions = {
+  itemSelector: '.grid-item',
+  columnWidth: '.grid-item',
+  gutter: '.gutter-sizer',
+  percentPosition: true,
+  transitionDuration: '0',
+};
+
+export const primaryGridMasonryObject = new Masonry(elements.gridPrimary, msnryOptions);
+export const bookmarksGridMasonryObject = new Masonry(elements.gridBookmarks, msnryOptions);
+export const relatedImagesGridMasonryObject = new Masonry(elements.gridRelatedImages, msnryOptions);
 
 export const constants = {
   bookmarkContainerSize: 30,

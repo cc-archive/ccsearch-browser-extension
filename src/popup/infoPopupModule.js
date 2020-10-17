@@ -7,15 +7,6 @@ import { addImagesToDOM, search } from './localUtils';
 
 const download = require('downloadjs');
 
-const relatedImagesGridMasonryObject = new Masonry(elements.gridRelatedImages, {
-  // options
-  itemSelector: '.grid-item',
-  columnWidth: '.grid-item',
-  gutter: '.gutter-sizer',
-  percentPosition: true,
-  transitionDuration: '0',
-});
-
 export function getRichTextAttribution(image) {
   if (!image) {
     return '';
