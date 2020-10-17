@@ -1,11 +1,6 @@
 import { elements, appObject } from './base';
-import {
-  bookmarksGridMasonryObject,
-  removeBookmarkImages,
-  removeActiveClassFromNavLinks,
-} from './bookmarkModule.utils';
-import { removeLoadMoreButton } from './helper';
-import { removeOldSearchResults } from './searchModule';
+import { bookmarksGridMasonryObject, removeActiveClassFromNavLinks } from './bookmarkModule.utils';
+import { removeLoadMoreButton, removeImagesFromGrid } from './helper';
 import { addSpinner, removeSpinner } from './spinner';
 import {
   showNotification,
@@ -130,11 +125,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // prepare the search section
       primaryGridMasonryObject.layout(); // layout the masonry grid
-      removeBookmarkImages();
+      removeImagesFromGrid(elements.gridBookmarks);
       removeSpinner(elements.spinnerPlaceholderPrimary);
 
       if (appObject.searchContext === 'collection' && appObject.searchingNewCollection === true) {
-        removeOldSearchResults();
+        removeImagesFromGrid(elements.gridPrimary);
         primaryGridMasonryObject.layout();
         appObject.searchingNewCollection = false;
       }
@@ -161,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
       removeSpinner(elements.spinnerPlaceholderCollections);
       addSpinner(elements.spinnerPlaceholderCollections, 'original');
 
-      removeBookmarkImages();
+      removeImagesFromGrid(elements.gridBookmarks);
       loadCollections();
     }
   });

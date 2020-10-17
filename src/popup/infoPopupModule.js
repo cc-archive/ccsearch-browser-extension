@@ -1,9 +1,9 @@
 import { elements, appObject } from './base';
 // eslint-disable-next-line import/no-cycle
-import { getTagsUrl, search, removeOldSearchResults } from './searchModule';
+import { getTagsUrl, search } from './searchModule';
 import { addSpinner } from './spinner';
 import { removeChildNodes } from '../utils';
-import { clearFilters } from './helper';
+import { clearFilters, removeImagesFromGrid } from './helper';
 // eslint-disable-next-line import/no-cycle
 import { addImagesToDOM } from './localUtils';
 
@@ -234,7 +234,7 @@ function searchByTag(event) {
   elements.headerLogo.click();
 
   clearFilters();
-  removeOldSearchResults();
+  removeImagesFromGrid(elements.gridPrimary);
   addSpinner(elements.spinnerPlaceholderPrimary, 'original');
 
   const url = getTagsUrl();
@@ -290,10 +290,7 @@ export function resetImageDetailSection() {
   removeChildNodes(elements.imageTagsDiv);
 
   // related images
-  const div = document.createElement('div');
-  div.classList.add('gutter-sizer');
-  removeChildNodes(elements.gridRelatedImages);
-  elements.gridRelatedImages.appendChild(div);
+  removeImagesFromGrid(elements.gridRelatedImages);
 }
 
 function fillRelatedImages(relatedUrl) {

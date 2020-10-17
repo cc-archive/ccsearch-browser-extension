@@ -2,7 +2,7 @@ import { elements, appObject } from './base';
 import { addLoadMoreButton, removeLoadMoreButton } from './helper';
 import { removeSpinner } from './spinner';
 import primaryGridMasonryObject from './searchModule.utils';
-import { showNotification, removeChildNodes } from '../utils';
+import { showNotification } from '../utils';
 // eslint-disable-next-line import/no-cycle
 import { addImagesToDOM } from './localUtils';
 
@@ -12,14 +12,6 @@ export function checkInputError(inputText) {
     // to stop further js execution
     throw new Error('No search query provided');
   }
-}
-
-export function removeOldSearchResults() {
-  // remove old images for a new search
-  const div = document.createElement('div');
-  div.classList.add('gutter-sizer');
-  removeChildNodes(elements.gridPrimary);
-  elements.gridPrimary.appendChild(div);
 }
 
 /**

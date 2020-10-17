@@ -1,13 +1,6 @@
 import { elements, appObject } from './base';
-import {
-  checkInputError,
-  removeOldSearchResults,
-  getRequestUrl,
-  search,
-  getCollectionsUrl,
-  getTagsUrl,
-} from './searchModule';
-import { removeLoadMoreButton, clearFilters } from './helper';
+import { checkInputError, getRequestUrl, search, getCollectionsUrl, getTagsUrl } from './searchModule';
+import { removeLoadMoreButton, clearFilters, removeImagesFromGrid } from './helper';
 import loadUserDefaults from './filterModule';
 import { fillImageDetailSection, resetImageDetailSection } from './infoPopupModule';
 import { addSpinner, removeSpinner } from './spinner';
@@ -139,7 +132,7 @@ elements.searchButton.addEventListener('click', () => {
     throw new Error('Sources not yet fetched');
   }
 
-  removeOldSearchResults();
+  removeImagesFromGrid(elements.gridPrimary);
   removeSpinner(elements.spinnerPlaceholderPrimary);
   appObject.updateFilters();
 

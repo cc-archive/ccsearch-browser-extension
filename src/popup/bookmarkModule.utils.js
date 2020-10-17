@@ -1,5 +1,5 @@
 import { elements, constants } from './base';
-import { removeChildNodes, activeBookmarkIdContainers, activeBookmarkContainers, showNotification } from '../utils';
+import { activeBookmarkIdContainers, activeBookmarkContainers, showNotification } from '../utils';
 
 const Masonry = require('masonry-layout');
 
@@ -11,13 +11,6 @@ export const bookmarksGridMasonryObject = new Masonry(elements.gridBookmarks, {
   percentPosition: true,
   transitionDuration: '0',
 });
-
-export function removeBookmarkImages() {
-  const div = document.createElement('div');
-  div.classList.add('gutter-sizer');
-  removeChildNodes(elements.gridBookmarks);
-  elements.gridBookmarks.appendChild(div);
-}
 
 export function removeActiveClassFromNavLinks() {
   elements.navBookmarksLink.classList.remove('active');
