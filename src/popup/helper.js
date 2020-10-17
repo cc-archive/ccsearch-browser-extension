@@ -32,8 +32,13 @@ export function unicodeToString(string) {
   return '';
 }
 
+/**
+ * @desc Returns true if the given object is empty.
+ * @param {Object} obj
+ * @returns {bool}
+ */
 export function isObjectEmpty(obj) {
-  return Object.keys(obj).length === 0 && obj.constructor === Object;
+  return obj && Object.keys(obj).length === 0 && obj.constructor === Object;
 }
 
 export function addLoadMoreButton(loadMoreButtonWrapper) {
