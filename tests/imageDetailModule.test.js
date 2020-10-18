@@ -1,4 +1,4 @@
-import { getRichTextAttribution, getHtmlAttribution, getAttributionForTextFile } from '../src/popup/infoPopupModule';
+import { getRichTextAttribution, getHtmlAttribution, getAttributionForTextFile } from '../src/popup/imageDetailModule';
 
 // sample image response used for testing
 const image = {

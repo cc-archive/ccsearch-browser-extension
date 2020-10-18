@@ -2,7 +2,7 @@ import { elements, appObject, primaryGridMasonryObject, bookmarksGridMasonryObje
 import { checkInputError, getRequestUrl, getCollectionsUrl } from './searchModule';
 import { removeLoadMoreButton, clearFilters, removeImagesFromGrid, getTagsUrl } from './helper';
 import loadUserDefaults from './filterModule';
-import { fillImageDetailSection, resetImageDetailSection } from './infoPopupModule';
+import { fillImageDetailSection, resetImageDetailSection } from './imageDetailModule';
 import { addSpinner, removeSpinner } from './spinner';
 import {
   showNotification,

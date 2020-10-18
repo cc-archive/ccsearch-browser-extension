@@ -101,7 +101,6 @@ export function checkResultLength(resultArray) {
  * @param {Object} apiResponse
  */
 export function checkHTTP400(apiResponse) {
-  console.log('check validation error called');
   if (Object.prototype.hasOwnProperty.call(apiResponse, 'error')) {
     removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);
     removeSpinner(elements.spinnerPlaceholderPrimary);
@@ -119,3 +118,31 @@ export function checkHTTP400(apiResponse) {
     throw new Error('400 Bad Request');
   }
 }
+
+/* Object that holds license icon class name(according to cc-vocabulary) and brief description about each license. */
+export const licenseInfo = {
+  by: {
+    licenseIcon: 'cc-by',
+    licenseDescription: 'Credit the creator.',
+  },
+  nc: {
+    licenseIcon: 'cc-nc',
+    licenseDescription: 'Commercial use not permitted',
+  },
+  sa: {
+    licenseIcon: 'cc-sa',
+    licenseDescription: 'Share adaptations under the same terms.',
+  },
+  nd: {
+    licenseIcon: 'cc-nd',
+    licenseDescription: 'No derivates or modifications permitted.',
+  },
+  pdm: {
+    licenseIcon: 'cc-pd',
+    licenseDescription: 'This work is marked as being in the public domain.',
+  },
+  cc0: {
+    licenseIcon: 'cc-zero',
+    licenseDescription: 'This work has been marked as dedicated to the public domain.',
+  },
+};

@@ -1,12 +1,19 @@
+import download from 'downloadjs';
+
 import { elements, appObject, relatedImagesGridMasonryObject } from './base';
 import { addSpinner } from './spinner';
 import { removeChildNodes } from '../utils';
-import { clearFilters, removeImagesFromGrid, getTagsUrl } from './helper';
+import { clearFilters, removeImagesFromGrid, getTagsUrl, licenseInfo } from './helper';
 // eslint-disable-next-line import/no-cycle
 import { addImagesToDOM, search } from './localUtils';
 
-const download = require('downloadjs');
+/* *********************** Reuse tab *********************** */
 
+/**
+ * @desc Creates and returns "Rich Text Attribution" for an image.
+ * @param {Object} image - The image object.
+ * @returns {string}
+ */
 export function getRichTextAttribution(image) {
   if (!image) {
     return '';
@@ -25,6 +32,10 @@ export function getRichTextAttribution(image) {
   return `${imgLink}${creator}${licenseLink}`;
 }
 
+/**
+ * @desc Inserts "rich-text-attribution" for an image in the "share" tab.
+ * @param {Object} image - The image object.
+ */
 function embedRichTextAttribution(image) {
   const richTextAttribution = `<div>${getRichTextAttribution(image)}</div>`;
   const parser = new DOMParser();
@@ -34,6 +45,11 @@ function embedRichTextAttribution(image) {
   elements.richTextAttributionPara.appendChild(tags[0]);
 }
 
+/**
+ * @desc Creates and returns "HTML Attribution" for an image.
+ * @param {Object} image - The image object.
+ * @returns {string}
+ */
 export function getHtmlAttribution(image) {
   if (!image) {
     return '';
@@ -65,6 +81,12 @@ export function getHtmlAttribution(image) {
   return `<p style="font-size: 0.9rem;font-style: italic;">${imgLink}${creator}${licenseLink}${licenseImgLink}</p>`;
 }
 
+/**
+ * @desc Creates and returns the attribution that needs to be put in the attribution text file. The
+ * file has plain text attribution, links(for image, creator, and license), and HTML attribution.
+ * @param {Object} image - The image object.
+ * @returns {string}
+ */
 export function getAttributionForTextFile(image) {
   if (!image) {
     return '';
@@ -91,12 +113,18 @@ Creator Link: ${creatorUrl}\n\n
 ${HtmlAttribution}`;
 }
 
+/**
+ * @desc Helper function to download an image provided it's address on the
+ * web. credit: http://danml.com/download.html
+ * @param {string} imageUrl
+ * @param {string} imageName
+ */
 function downloadImage(imageUrl, imageName) {
   const x = new XMLHttpRequest();
   x.open('GET', imageUrl, true);
   x.responseType = 'blob';
   x.onload = () => {
-    download(x.response, imageName, 'image/gif'); // using download.js (http://danml.com/download.html)
+    download(x.response, imageName, 'image/gif');
   };
   x.send();
 }
@@ -105,61 +133,32 @@ function downloadImageAttribution(image) {
   download(getAttributionForTextFile(image), `${image.title}.txt`, 'text/plain');
 }
 
-export function handleImageDownload(e) {
-  downloadImage(e.currentTarget.imageUrl, e.currentTarget.title);
-}
-export function handleImageAttributionDownload(e) {
+function handleImageAndAttributionDownload(e) {
   downloadImage(e.currentTarget.image.url, e.currentTarget.title);
   downloadImageAttribution(e.currentTarget.image);
 }
 
-function getFacebookShareLink(imageId) {
-  // needs to be changed if CC Search domain changes.
-  return `https://www.facebook.com/sharer/sharer.php?u=https://search.creativecommons.org/photos/${imageId}`;
+/**
+ * @desc Fills the license link present in the reuse tab of image-detail section
+ * @param {string} licenseName
+ * @param {string} licenseVersion
+ * @param {string} licenseUrl
+ */
+function fillLicenseLink(licenseName, licenseVersion, licenseUrl) {
+  elements.licenseLink.innerText = `CC ${licenseName.toUpperCase()} ${licenseVersion}`;
+  elements.licenseLink.setAttribute('href', licenseUrl);
+  elements.licenseLinkCaption.setAttribute('href', licenseUrl);
 }
 
-function getTwitterShareLink(sourceLink) {
-  return `https://twitter.com/intent/tweet?text=I%20found%20an%20image%20through%20CC%20Search%20%40creativecommons%3A%20${sourceLink}`;
-}
-
-function getPinterestShareLink(sourceLink, imageLink) {
-  return `https://pinterest.com/pin/create/button/?url=${sourceLink}&media=${imageLink}&description=I%20found%20an%20image%20through%20CC%20search%20%40creativecommons%3A%20${sourceLink}`;
-}
-// Shares the image to Tumblt
-function getTumblrShareLink(sourceLink, imageLink) {
-  return `http://tumblr.com/widgets/share/tool?canonicalUrl=${sourceLink}&posttype=photo&content=${imageLink}`;
-}
-
-const licenseInfo = {
-  by: {
-    licenseIcon: 'cc-by',
-    licenseDescription: 'Credit the creator.',
-  },
-  nc: {
-    licenseIcon: 'cc-nc',
-    licenseDescription: 'Commercial use not permitted',
-  },
-  sa: {
-    licenseIcon: 'cc-sa',
-    licenseDescription: 'Share adaptations under the same terms.',
-  },
-  nd: {
-    licenseIcon: 'cc-nd',
-    licenseDescription: 'No derivates or modifications permitted.',
-  },
-  pdm: {
-    licenseIcon: 'cc-pd',
-    licenseDescription: 'This work is marked as being in the public domain.',
-  },
-  cc0: {
-    licenseIcon: 'cc-zero',
-    licenseDescription: 'This work has been marked as dedicated to the public domain.',
-  },
-};
-
+/**
+ * @desc Adds brief description about the license in the "share" tab of image-detail section.
+ * @param {string[]} licenseArray
+ */
 function fillLicenseInfo(licenseArray) {
   elements.licenseDescriptionDiv.innerText = '';
+
   licenseArray.forEach(license => {
+    // get the information and icon to use from `licenseInfo` object
     const { licenseIcon, licenseDescription } = licenseInfo[license];
 
     const iconElement = document.createElement('i');
@@ -169,7 +168,6 @@ function fillLicenseInfo(licenseArray) {
     licenseDescriptionSpanElement.innerText = licenseDescription;
 
     const divElement = document.createElement('div');
-
     divElement.appendChild(iconElement);
     divElement.appendChild(licenseDescriptionSpanElement);
 
@@ -177,21 +175,38 @@ function fillLicenseInfo(licenseArray) {
   });
 }
 
-function fillImageDimension(height, width) {
-  elements.imageDimensionPara.innerText = `${height} × ${width} pixels`;
+/* *********************** Information tab *********************** */
+
+/**
+ * @desc Fills "Dimensions" section of the "information" tab.
+ * @param {string} imgHeight
+ * @param {string} imgWidth
+ */
+function fillImageDimension(imgHeight, imgWidth) {
+  elements.imageDimensionPara.innerText = `${imgHeight} × ${imgWidth} pixels`;
 }
 
-function fillImageSource(foreignLandingUrl, source) {
+/**
+ * @desc Fills "Source" section of the "information" tab.
+ * @param {string} foreignLandingUrl - The link to the original source of image.
+ * @param {string} sourceName
+ */
+function fillImageSource(foreignLandingUrl, sourceName) {
   const link = document.createElement('a');
   link.href = foreignLandingUrl;
   link.target = '_blank';
-  link.textContent = appObject.sourcesFromAPI[source];
+  link.textContent = appObject.sourcesFromAPI[sourceName];
   elements.imageSourcePara.innerText = '';
   elements.imageSourcePara.appendChild(link);
 }
 
+/**
+ * @desc Fills "License" section of the "information" tab.
+ * @param {string} licenseUrl
+ * @param {string[]} licenseArray
+ */
 function fillImageLicense(licenseUrl, licenseArray) {
-  // fill license icons first
+  // add the license icons first
   elements.imageLicensePara.innerText = '';
   licenseArray.forEach(license => {
     const { licenseIcon } = licenseInfo[license];
@@ -208,8 +223,34 @@ function fillImageLicense(licenseUrl, licenseArray) {
   elements.imageLicensePara.appendChild(link);
 }
 
+/* *********************** Share tab *********************** */
+
+function getFacebookShareLink(imageId) {
+  // needs to be changed if CC Search domain changes.
+  return `https://www.facebook.com/sharer/sharer.php?u=https://search.creativecommons.org/photos/${imageId}`;
+}
+
+function getTwitterShareLink(sourceLink) {
+  return `https://twitter.com/intent/tweet?text=I%20found%20an%20image%20through%20CC%20Search%20%40creativecommons%3A%20${sourceLink}`;
+}
+
+function getPinterestShareLink(sourceLink, imageLink) {
+  return `https://pinterest.com/pin/create/button/?url=${sourceLink}&media=${imageLink}&description=I%20found%20an%20image%20through%20CC%20search%20%40creativecommons%3A%20${sourceLink}`;
+}
+
+function getTumblrShareLink(sourceLink, imageLink) {
+  return `http://tumblr.com/widgets/share/tool?canonicalUrl=${sourceLink}&posttype=photo&content=${imageLink}`;
+}
+
+/* *********************** Common (tags and related images) *********************** */
+
+/**
+ * @callback searchByTag
+ * @desc Triggered when an image-tag is clicked. Instantiates "search by tag".
+ * @param {Object} event
+ */
 function searchByTag(event) {
-  // set some app objects
+  // set application state to reflect "searching by tag"
   appObject.pageNo = 1;
   appObject.searchContext = 'image-tag';
   appObject.inputText = '';
@@ -228,9 +269,15 @@ function searchByTag(event) {
   search(url);
 }
 
+/**
+ * @desc Creates image-tags(if present for the current image) and adds
+ * them to the image-detail secton.
+ * @param {Object[]} tagsArray - Array of objects that contains tag names.
+ */
 function fillImageTags(tagsArray) {
   if (tagsArray) {
     const tagButtons = [];
+
     tagsArray.forEach(tag => {
       const tagName = tag.name;
       const tagButton = document.createElement('button');
@@ -241,17 +288,35 @@ function fillImageTags(tagsArray) {
     });
 
     for (let i = 0; i < tagButtons.length; i += 1) {
-      // first making deep copy otherwise because `appendChild`
-      // moves the node from previous parent to the current one
       elements.imageTagsDiv.appendChild(tagButtons[i]);
     }
   }
 }
 
+/**
+ * @desc Fetches "related-images" from the API and calls "addImagesToDOM" for making image
+ * components and adding them in the image-detail section.
+ */
+function fillRelatedImages(relatedUrl) {
+  fetch(relatedUrl)
+    .then(data => data.json())
+    .then(res => {
+      const resultArray = res.results;
+
+      addImagesToDOM(relatedImagesGridMasonryObject, resultArray, elements.gridRelatedImages);
+    });
+}
+
+/* *********************** Meta *********************** */
+
+/**
+ * @desc Remove information and instances about the current image from the image-detail
+ * section. Makes it a clean slate and prepares it for the next probable image.
+ */
 export function resetImageDetailSection() {
   // remove eventlisteners from download buttons to avoid multiple downloads.
   for (let i = 0; i < elements.downloadImageAttributionButton.length; i += 1) {
-    elements.downloadImageAttributionButton[i].removeEventListener('click', handleImageAttributionDownload);
+    elements.downloadImageAttributionButton[i].removeEventListener('click', handleImageAndAttributionDownload);
   }
   // making reuse tab active for later
   const imageDetailNavTabs = elements.imageDetailNav.getElementsByTagName('li');
@@ -280,22 +345,11 @@ export function resetImageDetailSection() {
   removeImagesFromGrid(elements.gridRelatedImages);
 }
 
-function fillRelatedImages(relatedUrl) {
-  fetch(relatedUrl)
-    .then(data => data.json())
-    .then(res => {
-      const resultArray = res.results;
-
-      addImagesToDOM(relatedImagesGridMasonryObject, resultArray, elements.gridRelatedImages);
-    });
-}
-
-function fillLicenseLink(license, licenseVersion, licenseUrl) {
-  elements.licenseLink.innerText = `CC ${license.toUpperCase()} ${licenseVersion}`;
-  elements.licenseLink.setAttribute('href', licenseUrl);
-  elements.licenseLinkCaption.setAttribute('href', licenseUrl);
-}
-
+/**
+ * @desc Fetches the image data from the API and calls various helper functions to
+ * fill the image detail section (reuse, information, and share tab).
+ * @param {string} imageId
+ */
 export function fillImageDetailSection(imageId) {
   const url = `https://api.creativecommons.engineering/v1/images/${imageId}`;
 
@@ -303,17 +357,17 @@ export function fillImageDetailSection(imageId) {
     .then(data => data.json())
     .then(res => {
       const {
-        source,
-        foreign_landing_url: foreignLandingUrl,
-        license_url: licenseUrl,
-        license_version: licenseVersion,
-        related_url: relatedUrl,
-        license,
-        height,
-        width,
         id,
+        width,
+        height,
+        source,
+        license,
         url: imageUrl,
         tags: tagsArray,
+        related_url: relatedUrl,
+        license_url: licenseUrl,
+        license_version: licenseVersion,
+        foreign_landing_url: foreignLandingUrl,
       } = res;
       const licenseArray = license.split('-');
 
@@ -322,7 +376,7 @@ export function fillImageDetailSection(imageId) {
         // adding arguments for event handler to the target itself
         elements.downloadImageAttributionButton[i].image = res;
         elements.downloadImageAttributionButton[i].title = `${res.title}.${res.url.split('.').pop()}`;
-        elements.downloadImageAttributionButton[i].addEventListener('click', handleImageAttributionDownload);
+        elements.downloadImageAttributionButton[i].addEventListener('click', handleImageAndAttributionDownload);
       }
       elements.imageExternalLink.href = foreignLandingUrl;
 
@@ -350,13 +404,22 @@ export function fillImageDetailSection(imageId) {
     });
 }
 
-export function activatePopup(imageThumbnail) {
+/**
+ * @desc Opens the image detail section for the provided image element.
+ * @param {HTMLElement} imageElement - The image DOM element that the user has clicked.
+ */
+export function openImageDetailSection(imageElement) {
   resetImageDetailSection();
   elements.buttonBackToTop.click();
 
-  appObject.imageDetailStack.push(imageThumbnail.id);
+  /* push the instance of current image onto the imageDetailStack. The stack
+  helps keep track of the images when the user subsequently opens more image detail
+  sections throught related-images
+   */
+  appObject.imageDetailStack.push(imageElement.id);
 
-  fillImageDetailSection(imageThumbnail.id);
+  fillImageDetailSection(imageElement.id);
+
   elements.header.classList.add('display-none');
   elements.sectionMain.classList.add('display-none');
   elements.imageDetailSection.classList.remove('display-none');

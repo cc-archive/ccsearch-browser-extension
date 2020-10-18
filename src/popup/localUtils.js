@@ -6,7 +6,7 @@ import { addLoadMoreButton, checkHTTP400, checkResultLength } from './helper';
 import { activeBookmarkIdContainers, checkInternetConnection } from '../utils';
 import { toggleBookmark } from './bookmarkModule.utils';
 // eslint-disable-next-line import/no-cycle
-import { activatePopup } from './infoPopupModule';
+import { openImageDetailSection } from './imageDetailModule';
 
 /**
  * @desc adds image components to the masonry grid.
@@ -28,13 +28,24 @@ function appendToGrid(msnryObject, imageComponents, gridDiv, forBookmarksSection
   else if (msnryObject.cols) addLoadMoreButton(elements.loadMoreSearchButtonWrapper);
 }
 
-export function openInfoPopup(event) {
+/**
+ * @callback initImageDetailSection
+ * @desc Triggered when an image is clicked. Instantiates the opening of image-detail section.
+ * @param {Object} event
+ */
+export function initImageDetailSection(event) {
   if (event.target.classList.contains('image-thumbnail')) {
     checkInternetConnection();
-    activatePopup(event.target);
+    openImageDetailSection(event.target);
   }
 }
 
+/**
+ * @callback selectImage
+ * @desc Triggered when an image is clicked(while the edit-view is enabled). Toggles the
+ * selected/deselected state of the image.
+ * @param {Object} event
+ */
 export function selectImage(event) {
   if (event.target.classList.contains('image-thumbnail')) {
     event.target.parentNode.classList.toggle('is-selected');
@@ -62,11 +73,11 @@ export function toggleEditView() {
      * else, we want the image-detail section for that image to open.
      */
     if (appObject.isEditViewEnabled) {
-      image.removeEventListener('click', openInfoPopup);
+      image.removeEventListener('click', initImageDetailSection);
       image.addEventListener('click', selectImage);
     } else {
       image.removeEventListener('click', selectImage);
-      image.addEventListener('click', openInfoPopup);
+      image.addEventListener('click', initImageDetailSection);
     }
   }
 }
@@ -142,7 +153,7 @@ export function addImagesToDOM(masonryObject, imageObjects, gridDiv, forBookmark
         // adding event listener to open popup or select image based depending on whether the
         // edit view is enabled or not
         if (appObject.isEditViewEnabled) divElement.addEventListener('click', selectImage);
-        else divElement.addEventListener('click', openInfoPopup);
+        else divElement.addEventListener('click', initImageDetailSection);
       }
 
       divElement.appendChild(imgElement);
@@ -153,7 +164,7 @@ export function addImagesToDOM(masonryObject, imageObjects, gridDiv, forBookmark
         divElement.addEventListener('click', e => {
           if (e.target.classList.contains('image-thumbnail')) {
             checkInternetConnection();
-            activatePopup(e.target);
+            openImageDetailSection(e.target);
           }
         });
 
