@@ -101,6 +101,17 @@ export const elements = {
   buttonBackToTop: document.getElementsByClassName('button-backToTop')[0],
 };
 
+export const filterCheckboxWrappers = [
+  elements.useCaseCheckboxesWrapper,
+  elements.licenseCheckboxesWrapper,
+  elements.sourceCheckboxesWrapper,
+  elements.fileTypeCheckboxesWrapper,
+  elements.imageTypeCheckboxesWrapper,
+  elements.imageSizeCheckboxesWrapper,
+  elements.aspectRatioCheckboxesWrapper,
+  elements.showMatureContentCheckboxWrapper,
+];
+
 // setting up clipboardjs https://github.com/zenorocha/clipboard.js
 const clipboard = new ClipboardJS('.btn-copy');
 
@@ -126,9 +137,9 @@ export const primaryGridMasonryObject = new Masonry(elements.gridPrimary, msnryO
 export const bookmarksGridMasonryObject = new Masonry(elements.gridBookmarks, msnryOptions);
 export const relatedImagesGridMasonryObject = new Masonry(elements.gridRelatedImages, msnryOptions);
 
-export const constants = {
+export const appConfig = {
   bookmarkContainerSize: 30,
-  bookmarkImageIdContainerSize: 80,
+  bookmarkIdContainerSize: 80,
   extensionBookmarkLimit: 300,
 };
 
@@ -206,6 +217,8 @@ function createApplicationObject() {
     // holds the active collection/source name. Used when "searching by sources"
     collectionName: '',
     isCollectionSectionRendered: false,
+    // All the images in the bookmark section are not rendered at once. This variable holds the
+    // starting position of the next batch of images to load.
     bookmarksSectionIdx: 0,
     // holds the active collection/source name. Used when "searching by image-tag"
     tagName: '',

@@ -4,9 +4,9 @@ import { removeLoadMoreButton, removeImagesFromGrid } from './helper';
 import { addSpinner, removeSpinner } from './spinner';
 import {
   showNotification,
-  keyNames,
-  activeBookmarkContainers,
-  activeBookmarkIdContainers,
+  allBookmarkKeyNames,
+  bookmarkContainers,
+  bookmarkIdContainers,
   checkInternetConnection,
 } from '../utils';
 import loadCollections from './collectionModule';
@@ -20,15 +20,15 @@ const download = require('downloadjs');
  * @param {number} numberOfImages - the number of images that we want to load at once.
  */
 export default function loadBookmarkImages(numberOfImages) {
-  chrome.storage.sync.get(activeBookmarkIdContainers, items => {
+  chrome.storage.sync.get(bookmarkIdContainers, items => {
     // for storing <image-ids, bookmark container number> of all bookmarks
     let allImageIds = {};
-    activeBookmarkIdContainers.forEach(bookmarkIdContainerName => {
+    bookmarkIdContainers.forEach(bookmarkIdContainerName => {
       allImageIds = { ...allImageIds, ...items[bookmarkIdContainerName] };
     });
 
-    // stores the image-ids of required bookmarks(only those bookmarks that we need
-    // to load onto the DOM)
+    // Stores the image-ids of required bookmarks(only those bookmarks that we need
+    // to load onto the DOM).
     const bookmarkImageIds = Object.keys(allImageIds).slice(
       appObject.bookmarksSectionIdx,
       appObject.bookmarksSectionIdx + numberOfImages,
@@ -56,8 +56,8 @@ export default function loadBookmarkImages(numberOfImages) {
       const requiredBookmarkContainer = Object.keys(segBookmarkIds).map(containerNum => `bookmarks${containerNum}`);
 
       chrome.storage.sync.get(requiredBookmarkContainer, items2 => {
-        // for storing the "image object". A single object will have the data that is needed
-        // to create an image-component (image-id, license, thumbnail-url)
+        // For storing the "image object". A single object will have the data that is needed
+        // to create an image-component (image-id, license, thumbnail-url).
         const imageObjects = [];
 
         // fill imageObjects
@@ -83,10 +83,12 @@ document.addEventListener('DOMContentLoaded', () => {
   elements.navBookmarksLink.addEventListener('click', () => {
     if (appObject.activeSection !== 'bookmarks') {
       appObject.activeSection = 'bookmarks';
-      // visually marking bookmarks link as active
+
+      // visually marking bookmarks nav link as active
       removeActiveClassFromNavLinks();
       elements.navBookmarksLink.classList.add('active');
 
+      // resetting the index
       appObject.bookmarksSectionIdx = 0;
 
       // show the bookmarks section and hide other ones
@@ -95,17 +97,17 @@ document.addEventListener('DOMContentLoaded', () => {
       elements.filterSection.classList.add('display-none');
       elements.bookmarksSection.classList.remove('display-none');
 
-      // prepare the bookmarks section
       checkInternetConnection();
-
       removeSpinner(elements.spinnerPlaceholderPrimary);
       loadBookmarkImages(10);
 
+      // logging the sync storage
       chrome.storage.sync.get(null, it => {
         console.log(it);
       });
+      // logging the storage bytes usage
       chrome.storage.sync.getBytesInUse(null, it => {
-        console.log(it); // storage bytes usage
+        console.log(it);
       });
     }
   });
@@ -117,10 +119,10 @@ document.addEventListener('DOMContentLoaded', () => {
       removeActiveClassFromNavLinks();
 
       // show the primary section and hide other ones
-      elements.primarySection.classList.remove('display-none');
       elements.bookmarksSection.classList.add('display-none');
       elements.collectionsSection.classList.add('display-none');
       elements.filterSection.classList.add('display-none');
+      elements.primarySection.classList.remove('display-none');
 
       // prepare the search section
       primaryGridMasonryObject.layout(); // layout the masonry grid
@@ -142,16 +144,17 @@ document.addEventListener('DOMContentLoaded', () => {
       // visually marking sources link as active
       removeActiveClassFromNavLinks();
       elements.navSourcesLink.classList.add('active');
+
       elements.buttonBackToTop.click();
 
       // show the collections section and hide other ones
       elements.primarySection.classList.add('display-none');
       elements.bookmarksSection.classList.add('display-none');
-      elements.collectionsSection.classList.remove('display-none');
       elements.filterSection.classList.add('display-none');
+      elements.collectionsSection.classList.remove('display-none');
 
-      // remove previous spinner. On low net connection, multiple spinner may appear
-      // due to delay in result fetching and continous section switching
+      // Remove previous spinner. On low net connection, multiple spinner may appear
+      // due to delay in result fetching and continous section switching.
       removeSpinner(elements.spinnerPlaceholderCollections);
       addSpinner(elements.spinnerPlaceholderCollections, 'original');
 
@@ -160,9 +163,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  elements.editBookmarksLink.addEventListener('click', event => {
+    appObject.isEditViewEnabled = true;
+    toggleEditView(event);
+  });
+
   elements.closeEditViewLink.addEventListener('click', event => {
     // using querySelectorAll instead of getElementsByClassName because we do not want live nodelist
     const selectedImages = elements.gridBookmarks.querySelectorAll('.is-selected');
+    // "de-selecting" all the selected images
     for (let i = 0; i < selectedImages.length; i += 1) {
       selectedImages[i].classList.remove('is-selected');
     }
@@ -170,55 +179,57 @@ document.addEventListener('DOMContentLoaded', () => {
     toggleEditView(event);
   });
 
-  elements.editBookmarksLink.addEventListener('click', event => {
-    appObject.isEditViewEnabled = true;
-    toggleEditView(event);
-  });
-
   elements.deleteBookmarksButton.addEventListener('click', () => {
-    const images = elements.gridBookmarks.getElementsByClassName('image');
-    // to store the id's of deleted bookmarks
+    const images = elements.gridBookmarks.querySelectorAll('.image');
+
+    // stores the id's of bookmarks to be deleted
     const deletedBookmarks = [];
-    for (let i = 0; i < images.length; i += 1) {
-      const image = images[i];
+
+    // filling deletedBookmarks
+    images.forEach(image => {
       if (image.classList.contains('is-selected')) {
         const { imageId } = image.dataset;
         deletedBookmarks.push(imageId);
       }
-    }
+    });
+
     if (deletedBookmarks.length === 0) {
       showNotification('No bookmark selected', 'negative', 'notification--extension-popup');
     } else {
-      chrome.storage.sync.get(keyNames, items => {
-        const allBookmarksImageIdsObject = {};
-        activeBookmarkIdContainers.forEach(bookmarksImageIdContainerName => {
-          const bookmarksImageIdContainer = items[bookmarksImageIdContainerName];
-          Object.keys(bookmarksImageIdContainer).forEach(id => {
-            // 0th idx -> bookmark container number, 1st idx -> bookmark image id container number
-            allBookmarksImageIdsObject[id] = [
-              bookmarksImageIdContainer[id],
-              bookmarksImageIdContainerName.substring(17),
-            ];
+      chrome.storage.sync.get(allBookmarkKeyNames, items => {
+        // for storing <image-ids, [bookmark container no., bookmark-id container no.]> of all bookmarks
+        const allImageIds = {};
+
+        // filling allImageIds
+        bookmarkIdContainers.forEach(bookmarkIdContainerName => {
+          const bookmarkIdContainer = items[bookmarkIdContainerName];
+          Object.keys(bookmarkIdContainer).forEach(id => {
+            // 0th idx -> bookmark container number, 1st idx -> bookmark-id container number
+            allImageIds[id] = [bookmarkIdContainer[id], bookmarkIdContainerName.substring(17)];
           });
         });
+
         /* eslint-disable no-param-reassign */
         deletedBookmarks.forEach(imageId => {
-          const bookmarkContainerNo = allBookmarksImageIdsObject[imageId][0];
-          const bookmarkImageIdContainerNo = allBookmarksImageIdsObject[imageId][1];
-          const bookmarkContainerName = `bookmarks${bookmarkContainerNo}`;
-          const bookmarkImageIdContainerName = `bookmarksImageIds${bookmarkImageIdContainerNo}`;
+          const bookmarkContainerName = `bookmarks${allImageIds[imageId][0]}`;
+          const bookmarkImageIdContainerName = `bookmarksImageIds${allImageIds[imageId][1]}`;
           delete items[bookmarkContainerName][imageId];
           delete items[bookmarkImageIdContainerName][imageId];
           items.bookmarksLength[bookmarkContainerName] -= 1;
         });
 
+        /* Writing the updated items object to the sync storage. Callback handles providing visual
+           cues to the user - replacing the deleted bookmarks in the grid and showing notification. */
         chrome.storage.sync.set(items, () => {
           // removing the selected bookmarks from the grid
           deletedBookmarks.forEach(bookmarkdId => {
             const imageDiv = document.getElementById(`id_${bookmarkdId}`);
             imageDiv.parentElement.removeChild(imageDiv);
           });
+
+          // adjusting the index because some bookmarks are now deleted
           appObject.bookmarksSectionIdx -= deletedBookmarks.length;
+          // load new bookmarks to take place of the once that were deleted
           loadBookmarkImages(deletedBookmarks.length, appObject.isEditViewEnabled);
           // reorganizing the layout using masonry
           bookmarksGridMasonryObject.layout();
@@ -230,24 +241,24 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   elements.selectAllBookmarksLink.addEventListener('click', () => {
-    // Stores data of Checkboxes for exporting
     const images = elements.gridBookmarks.getElementsByClassName('image');
-
-    for (let i = 0; i < images.length; i += 1) {
-      images[i].classList.add('is-selected');
-    }
+    images.forEach(image => {
+      image.classList.add('is-selected');
+    });
   });
 
-  // change export and import accordingly
   elements.exportBookmarksLink.addEventListener('click', () => {
-    let bookmarksObject = {};
+    // for storing all the bookmarks present in sync storage
+    let allBookmarks = {};
 
-    chrome.storage.sync.get(activeBookmarkContainers, items => {
-      activeBookmarkContainers.forEach(containerName => {
-        bookmarksObject = { ...bookmarksObject, ...items[containerName] };
+    chrome.storage.sync.get(bookmarkContainers, items => {
+      // filling allBookmarks
+      bookmarkContainers.forEach(containerName => {
+        allBookmarks = { ...allBookmarks, ...items[containerName] };
       });
-      if (Object.keys(bookmarksObject).length) {
-        const bookmarksString = JSON.stringify(bookmarksObject);
+
+      if (Object.keys(allBookmarks).length) {
+        const bookmarksString = JSON.stringify(allBookmarks);
         download(bookmarksString, 'bookmarks.json', 'text/plain');
         showNotification('Exported all bookmarks', 'positive', 'notification--extension-popup');
       } else {

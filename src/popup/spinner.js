@@ -1,13 +1,7 @@
 export function getSpinnerDiv(context) {
   const divWrapper = document.createElement('div');
   divWrapper.classList.add('spinner');
-
-  if (context === 'for-bottom') {
-    divWrapper.classList.add('spinner-for-bottom');
-  } else {
-    // if context != 'for-bottom' (==original)
-    divWrapper.classList.add('spinner-original');
-  }
+  divWrapper.classList.add(`spinner-${context}`);
 
   for (let i = 1; i <= 3; i += 1) {
     const divBounce = document.createElement('div');

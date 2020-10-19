@@ -1,24 +1,130 @@
-import { elements, appObject, primaryGridMasonryObject, bookmarksGridMasonryObject } from './base';
+import {
+  elements,
+  appObject,
+  primaryGridMasonryObject,
+  bookmarksGridMasonryObject,
+  filterCheckboxWrappers,
+} from './base';
 import { checkInputError, getRequestUrl, getCollectionsUrl } from './searchModule';
 import { removeLoadMoreButton, clearFilters, removeImagesFromGrid, getTagsUrl } from './helper';
-import loadUserDefaults from './filterModule';
 import { fillImageDetailSection, resetImageDetailSection } from './imageDetailModule';
 import { addSpinner, removeSpinner } from './spinner';
 import {
   showNotification,
-  getLatestSources,
   allowCheckingOneTypeOfCheckbox,
   enableTabSwitching,
-  loadFilterCheckboxesFromStorage,
+  markDefaultFilters,
   checkInternetConnection,
+  fetchImages,
 } from '../utils';
 import loadBookmarkImages from './bookmarkModule';
-import { confirmBookmarkSchemaInSync, confirmFilterSchemaInSync } from './popup.utils';
+import checkSyncStorageSchema from './popup.utils';
 import { removeActiveClassFromNavLinks } from './bookmarkModule.utils';
 import { addImagesToDOM, search } from './localUtils';
+import { addSourceFilterCheckboxes, toggleFilterSection } from './filterModule';
 
-elements.imageDetailNav.getElementsByTagName('ul')[0].addEventListener('click', enableTabSwitching);
-elements.attributionTab.firstElementChild.getElementsByTagName('ul')[0].addEventListener('click', enableTabSwitching);
+/* *********************** Search Section *********************** */
+
+elements.searchButton.addEventListener('click', () => {
+  appObject.inputText = elements.inputField.value.trim().replace('/[ ]+/g', ' ');
+  appObject.pageNo = 1;
+  appObject.searchContext = 'default';
+
+  checkInputError(appObject.inputText);
+  checkInternetConnection();
+
+  // If the latest sources are still not fetched from the API and loaded in the
+  // filters section, notify the user and terminate search.
+  if (elements.sourceCheckboxesWrapper.children.length === 1) {
+    showNotification(
+      'Extension is fetching latest sources. Please wait a sec.',
+      'negative',
+      'notification--extension-popup',
+      3000,
+    );
+    throw new Error('Sources not yet fetched');
+  }
+
+  removeImagesFromGrid(elements.gridPrimary);
+  removeSpinner(elements.spinnerPlaceholderPrimary);
+  appObject.updateFilters();
+  addSpinner(elements.spinnerPlaceholderPrimary, 'original');
+
+  const url = getRequestUrl();
+  search(url);
+});
+
+elements.inputField.addEventListener('keydown', event => {
+  // "Click" the Search Button when pressing "Enter".
+  if (event.keyCode === 13) {
+    elements.searchButton.click();
+  }
+});
+
+/**
+ * @desc Fetches next bunch of images from the API and calls "addImagesToDOM" to make
+ * image-components and render them on the search grid.
+ */
+async function nextRequest() {
+  // deciding the API request url based on the current search-context
+  let url;
+  const { searchContext } = appObject;
+  if (searchContext === 'collection') {
+    url = getCollectionsUrl();
+  } else if (searchContext === 'default') {
+    url = getRequestUrl();
+  } else if (searchContext === 'image-tag') {
+    url = getTagsUrl();
+  }
+  console.log(url);
+
+  const images = await fetchImages(url);
+  addImagesToDOM(primaryGridMasonryObject, images, elements.gridPrimary);
+  appObject.pageNo += 1;
+}
+
+elements.loadMoreSearchButton.addEventListener('click', () => {
+  removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);
+  addSpinner(elements.spinnerPlaceholderPrimary, 'for-bottom');
+  nextRequest();
+});
+
+/* *********************** Filters Section *********************** */
+
+elements.filterButton.addEventListener('click', toggleFilterSection);
+elements.closeFiltersLink.addEventListener('click', toggleFilterSection);
+
+allowCheckingOneTypeOfCheckbox(elements.licenseCheckboxesWrapper, elements.useCaseCheckboxesWrapper);
+setTimeout(addSourceFilterCheckboxes, 2000);
+
+filterCheckboxWrappers.forEach(wrapper => {
+  if (wrapper !== elements.sourceCheckboxesWrapper) markDefaultFilters(wrapper);
+});
+
+elements.clearFiltersButton.addEventListener('click', () => {
+  clearFilters();
+
+  // close the filters section and make a search
+  primaryGridMasonryObject.layout();
+  elements.closeFiltersLink.click();
+  elements.searchButton.click();
+});
+
+elements.applyFiltersButton.addEventListener('click', () => {
+  appObject.updateFilters();
+  primaryGridMasonryObject.layout();
+  elements.closeFiltersLink.click();
+  elements.searchButton.click();
+});
+
+/* *********************** Bookmarks Section *********************** */
+elements.loadMoreBookmarkButton.addEventListener('click', () => {
+  removeLoadMoreButton(elements.loadMoreBookmarkButtonkWrapper);
+  addSpinner(elements.spinnerPlaceholderPrimary, 'for-bottom');
+  loadBookmarkImages(10, appObject.isEditViewEnabled);
+});
+
+/* *********************** Image Detail Section *********************** */
 
 elements.closeImageDetailLink.addEventListener('click', () => {
   resetImageDetailSection();
@@ -41,139 +147,11 @@ elements.closeImageDetailLink.addEventListener('click', () => {
   primaryGridMasonryObject.layout();
 });
 
-// Activate the click event on pressing enter.
-elements.inputField.addEventListener('keydown', event => {
-  if (event.keyCode === 13) {
-    elements.searchButton.click();
-  }
-});
+// add tab switching functionality to image-detail nav and attribution tab.
+elements.imageDetailNav.getElementsByTagName('ul')[0].addEventListener('click', enableTabSwitching);
+elements.attributionTab.firstElementChild.getElementsByTagName('ul')[0].addEventListener('click', enableTabSwitching);
 
-async function addSourceFilterCheckboxes() {
-  if (elements.sourceCheckboxesWrapper.children.length === 1) {
-    appObject.sourcesFromAPI = await getLatestSources();
-
-    const sourceNames = Object.keys(appObject.sourcesFromAPI);
-
-    for (let i = 0; i < sourceNames.length; i += 1) {
-      const checkboxElement = document.createElement('input');
-      checkboxElement.type = 'checkbox';
-      checkboxElement.id = sourceNames[i];
-
-      const labelElement = document.createElement('label');
-      labelElement.setAttribute('for', checkboxElement.id);
-      labelElement.innerText = appObject.sourcesFromAPI[sourceNames[i]];
-
-      const breakElement = document.createElement('br');
-
-      elements.sourceCheckboxesWrapper.appendChild(checkboxElement);
-      elements.sourceCheckboxesWrapper.appendChild(labelElement);
-      elements.sourceCheckboxesWrapper.appendChild(breakElement);
-    }
-    loadFilterCheckboxesFromStorage(elements.sourceCheckboxesWrapper);
-    showNotification('Fetched latest sources succcessfully.', 'positive', 'notification--extension-popup');
-  }
-}
-
-elements.filterButton.onclick = () => {
-  appObject.activeSection = 'filter';
-  elements.primarySection.classList.add('display-none');
-  elements.filterSection.classList.remove('display-none');
-};
-
-setTimeout(addSourceFilterCheckboxes, 2000);
-
-elements.closeFiltersLink.onclick = () => {
-  appObject.activeSection = 'search';
-  elements.primarySection.classList.remove('display-none');
-  elements.filterSection.classList.add('display-none');
-};
-
-allowCheckingOneTypeOfCheckbox(elements.licenseCheckboxesWrapper, elements.useCaseCheckboxesWrapper);
-
-elements.clearFiltersButton.addEventListener('click', () => {
-  clearFilters();
-  // close the filters section and make a search
-  primaryGridMasonryObject.layout();
-  elements.closeFiltersLink.click();
-  elements.searchButton.click();
-});
-
-elements.applyFiltersButton.addEventListener('click', () => {
-  appObject.updateFilters();
-  primaryGridMasonryObject.layout();
-  elements.closeFiltersLink.click();
-  elements.searchButton.click();
-});
-
-elements.searchButton.addEventListener('click', () => {
-  appObject.inputText = elements.inputField.value.trim().replace('/[ ]+/g', ' ');
-  appObject.pageNo = 1;
-  appObject.searchContext = 'default';
-
-  checkInputError(appObject.inputText);
-  checkInternetConnection();
-
-  if (elements.sourceCheckboxesWrapper.children.length === 1) {
-    showNotification(
-      'Extension is fetching latest sources. Please wait a sec.',
-      'negative',
-      'notification--extension-popup',
-      3000,
-    );
-    throw new Error('Sources not yet fetched');
-  }
-
-  removeImagesFromGrid(elements.gridPrimary);
-  removeSpinner(elements.spinnerPlaceholderPrimary);
-  appObject.updateFilters();
-
-  // enable spinner
-  addSpinner(elements.spinnerPlaceholderPrimary, 'original');
-
-  const url = getRequestUrl();
-
-  search(url);
-});
-
-function restoreAppObjectVariables() {
-  chrome.storage.sync.get(['enableMatureContent'], res => {
-    appObject.enableMatureContent = res.enableMatureContent === true;
-  });
-}
-
-restoreAppObjectVariables();
-loadUserDefaults();
-
-async function nextRequest() {
-  let result = [];
-  let url;
-  if (appObject.searchContext === 'collection') {
-    url = getCollectionsUrl();
-  } else if (appObject.searchContext === 'default') {
-    url = getRequestUrl();
-  } else if (appObject.searchContext === 'image-tag') {
-    url = getTagsUrl();
-  }
-
-  console.log(url);
-  const response = await fetch(url);
-  const json = await response.json();
-  result = json.results;
-  addImagesToDOM(primaryGridMasonryObject, result, elements.gridPrimary);
-  appObject.pageNo += 1;
-}
-
-elements.loadMoreSearchButton.addEventListener('click', () => {
-  removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);
-  addSpinner(elements.spinnerPlaceholderPrimary, 'for-bottom');
-  nextRequest(appObject.pageNo);
-});
-
-elements.loadMoreBookmarkButton.addEventListener('click', () => {
-  removeLoadMoreButton(elements.loadMoreBookmarkButtonkWrapper);
-  addSpinner(elements.spinnerPlaceholderPrimary, 'for-bottom');
-  loadBookmarkImages(10, appObject.isEditViewEnabled);
-});
+/* *********************** Misc *********************** */
 
 elements.navSettingsLink.addEventListener('click', () => {
   // visually marking settings link as active
@@ -184,17 +162,20 @@ elements.navSettingsLink.addEventListener('click', () => {
 });
 
 elements.navInvertColorsIcon.addEventListener('click', () => {
+  // toggling dark-mode
   document.body.classList.toggle('dark');
   document.documentElement.classList.toggle('dark');
 
+  // saving the user preferrence in sync storage.
   chrome.storage.sync.get('darkmode', items => {
     const value = !items.darkmode;
     chrome.storage.sync.set({
-      darkmode: value, // using ES6 to use variable as key of object
+      darkmode: value,
     });
   });
 });
 
+// Set the user preferrence of dark mode.
 chrome.storage.sync.get('darkmode', items => {
   if (items.darkmode) {
     document.body.classList.add('dark');
@@ -202,6 +183,7 @@ chrome.storage.sync.get('darkmode', items => {
   }
 });
 
+// back to top button
 window.addEventListener('scroll', () => {
   if (window.scrollY > 400) {
     elements.buttonBackToTop.classList.add('show');
@@ -209,8 +191,6 @@ window.addEventListener('scroll', () => {
     elements.buttonBackToTop.classList.remove('show');
   }
 });
-
 elements.buttonBackToTop.addEventListener('click', () => window.scrollTo(0, 0));
 
-confirmBookmarkSchemaInSync();
-confirmFilterSchemaInSync();
+checkSyncStorageSchema();

@@ -1,5 +1,5 @@
-import { elements, constants } from './base';
-import { activeBookmarkIdContainers, activeBookmarkContainers, showNotification } from '../utils';
+import { elements, appConfig } from './base';
+import { bookmarkIdContainers, bookmarkContainers, showNotification } from '../utils';
 
 export function removeActiveClassFromNavLinks() {
   elements.navBookmarksLink.classList.remove('active');
@@ -29,7 +29,7 @@ function getImageData(element) {
 export function toggleBookmark(event) {
   const bookmarkIcon = event.target;
 
-  chrome.storage.sync.get(activeBookmarkIdContainers, items => {
+  chrome.storage.sync.get(bookmarkIdContainers, items => {
     // for storing <image-id, [bookmark container no., bookmark image-id container no.]>
     // for all the bookmarked images in the sync storage
     const allImageIds = {};
@@ -55,8 +55,8 @@ export function toggleBookmark(event) {
         let validBookmarkContainer = null;
 
         // finding the first bookmark container which has space for one more bookmark.
-        activeBookmarkContainers.every(bookmarkContainer => {
-          if (bookmarksLength[bookmarkContainer] < constants.bookmarkContainerSize) {
+        bookmarkContainers.every(bookmarkContainer => {
+          if (bookmarksLength[bookmarkContainer] < appConfig.bookmarkContainerSize) {
             validBookmarkContainer = bookmarkContainer;
             return false; // analogous to breaking out of loop.
           }
@@ -70,8 +70,8 @@ export function toggleBookmark(event) {
 
         let validBookmarkIdContainer = null;
         // finding the first bookmark id container which has space for one more bookmark.
-        activeBookmarkIdContainers.every(bookmarkIdContainer => {
-          if (Object.keys(items[bookmarkIdContainer]).length < constants.bookmarkImageIdContainerSize) {
+        bookmarkIdContainers.every(bookmarkIdContainer => {
+          if (Object.keys(items[bookmarkIdContainer]).length < appConfig.bookmarkIdContainerSize) {
             validBookmarkIdContainer = bookmarkIdContainer;
             return false;
           }

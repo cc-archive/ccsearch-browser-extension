@@ -2,8 +2,8 @@ import imagesLoaded from 'imagesloaded';
 
 import { removeSpinner } from './spinner';
 import { elements, appObject, primaryGridMasonryObject } from './base';
-import { addLoadMoreButton, checkHTTP400, checkResultLength } from './helper';
-import { activeBookmarkIdContainers, checkInternetConnection } from '../utils';
+import { addLoadMoreButton, checkResultLength } from './helper';
+import { bookmarkIdContainers, checkInternetConnection, fetchImages } from '../utils';
 import { toggleBookmark } from './bookmarkModule.utils';
 // eslint-disable-next-line import/no-cycle
 import { openImageDetailSection } from './imageDetailModule';
@@ -53,7 +53,7 @@ export function selectImage(event) {
 }
 
 /**
- * @desc visually prepares the bookmarks section when edit view is toggled
+ * @desc Visually prepares the bookmarks section when edit view is toggled
  * and applies the appropriate event listener to the images present in the grid.
  */
 export function toggleEditView() {
@@ -88,16 +88,16 @@ export function toggleEditView() {
  * @param {Object} msnryObject
  * @param {HTMLElement[]} imageObjects - an array of image Objects.
  * @param {HTMLElement} gridDiv - the DOM element inside which the images components will be inserted.
- * @param {bool} forBookmarksSection - true if filling the images in bookmarks section
+ * @param {bool} forBookmarksSection - true, if filling the images in bookmarks section.
  */
 export function addImagesToDOM(masonryObject, imageObjects, gridDiv, forBookmarksSection) {
   const imageComponents = [];
   const fragment = document.createDocumentFragment();
 
-  chrome.storage.sync.get(activeBookmarkIdContainers, items => {
+  chrome.storage.sync.get(bookmarkIdContainers, items => {
     // for storing image-ids of all bookmarks
     let allImageIds = [];
-    activeBookmarkIdContainers.forEach(bookmarkIdContainerName => {
+    bookmarkIdContainers.forEach(bookmarkIdContainerName => {
       allImageIds = [...allImageIds, ...Object.keys(items[bookmarkIdContainerName])];
     });
 
@@ -219,17 +219,9 @@ export function addImagesToDOM(masonryObject, imageObjects, gridDiv, forBookmark
  * image-components and add them to the DOM).
  * @param {string} url
  */
-export function search(url) {
-  fetch(url)
-    .then(data => data.json())
-    .then(res => {
-      checkHTTP400(res);
-
-      const resultArray = res.results;
-      checkResultLength(resultArray);
-
-      addImagesToDOM(primaryGridMasonryObject, resultArray, elements.gridPrimary);
-
-      appObject.pageNo += 1;
-    });
+export async function search(url) {
+  const images = await fetchImages(url);
+  checkResultLength(images);
+  addImagesToDOM(primaryGridMasonryObject, images, elements.gridPrimary);
+  appObject.pageNo += 1;
 }

@@ -1,22 +1,11 @@
-import { elements, appObject, primaryGridMasonryObject } from './base';
+import { elements, appObject, primaryGridMasonryObject, filterCheckboxWrappers } from './base';
 import { removeChildNodes, showNotification } from '../utils';
 import { removeSpinner } from './spinner';
 
 export function clearFilters() {
-  const checkboxesWrappers = [
-    elements.useCaseCheckboxesWrapper,
-    elements.licenseCheckboxesWrapper,
-    elements.sourceCheckboxesWrapper,
-    elements.fileTypeCheckboxesWrapper,
-    elements.imageTypeCheckboxesWrapper,
-    elements.imageSizeCheckboxesWrapper,
-    elements.aspectRatioCheckboxesWrapper,
-    elements.showMatureContentCheckboxWrapper,
-  ];
-
   // unchecking all the filter checkboxes
-  checkboxesWrappers.forEach(checkboxesWrapper => {
-    const checkboxes = checkboxesWrapper.querySelectorAll('input[type=checkbox]');
+  filterCheckboxWrappers.forEach(wrapper => {
+    const checkboxes = wrapper.querySelectorAll('input[type=checkbox]');
 
     for (let i = 0; i < checkboxes.length; i += 1) {
       checkboxes[i].checked = false;
@@ -93,29 +82,6 @@ export function checkResultLength(resultArray) {
   } else {
     // render the "Load More" button if non empty result
     addLoadMoreButton(elements.loadMoreSearchButtonWrapper);
-  }
-}
-
-/**
- * @desc Checks if API sent a HTTP 400 Bad Request. If yes, then notfiy the user, and throw Error.
- * @param {Object} apiResponse
- */
-export function checkHTTP400(apiResponse) {
-  if (Object.prototype.hasOwnProperty.call(apiResponse, 'error')) {
-    removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);
-    removeSpinner(elements.spinnerPlaceholderPrimary);
-
-    if (apiResponse.error === 'InputError') {
-      showNotification('Not a valid search query.', 'negative', 'notification--extension-popup');
-    } else {
-      showNotification(
-        'Some error occured. Please try again after some time.',
-        'negative',
-        'notification--extension-popup',
-      );
-    }
-
-    throw new Error('400 Bad Request');
   }
 }
 

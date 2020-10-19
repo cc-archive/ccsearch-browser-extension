@@ -2,7 +2,7 @@ import download from 'downloadjs';
 
 import { elements, appObject, relatedImagesGridMasonryObject } from './base';
 import { addSpinner } from './spinner';
-import { removeChildNodes } from '../utils';
+import { fetchImage, fetchImages, removeChildNodes } from '../utils';
 import { clearFilters, removeImagesFromGrid, getTagsUrl, licenseInfo } from './helper';
 // eslint-disable-next-line import/no-cycle
 import { addImagesToDOM, search } from './localUtils';
@@ -297,14 +297,9 @@ function fillImageTags(tagsArray) {
  * @desc Fetches "related-images" from the API and calls "addImagesToDOM" for making image
  * components and adding them in the image-detail section.
  */
-function fillRelatedImages(relatedUrl) {
-  fetch(relatedUrl)
-    .then(data => data.json())
-    .then(res => {
-      const resultArray = res.results;
-
-      addImagesToDOM(relatedImagesGridMasonryObject, resultArray, elements.gridRelatedImages);
-    });
+async function fillRelatedImages(relatedUrl) {
+  const images = await fetchImages(relatedUrl);
+  addImagesToDOM(relatedImagesGridMasonryObject, images, elements.gridRelatedImages);
 }
 
 /* *********************** Meta *********************** */
@@ -350,58 +345,55 @@ export function resetImageDetailSection() {
  * fill the image detail section (reuse, information, and share tab).
  * @param {string} imageId
  */
-export function fillImageDetailSection(imageId) {
+export async function fillImageDetailSection(imageId) {
   const url = `https://api.creativecommons.engineering/v1/images/${imageId}`;
 
-  fetch(url)
-    .then(data => data.json())
-    .then(res => {
-      const {
-        id,
-        width,
-        height,
-        source,
-        license,
-        url: imageUrl,
-        tags: tagsArray,
-        related_url: relatedUrl,
-        license_url: licenseUrl,
-        license_version: licenseVersion,
-        foreign_landing_url: foreignLandingUrl,
-      } = res;
-      const licenseArray = license.split('-');
+  const image = await fetchImage(url);
+  const {
+    id,
+    width,
+    height,
+    source,
+    license,
+    url: imageUrl,
+    tags: tagsArray,
+    related_url: relatedUrl,
+    license_url: licenseUrl,
+    license_version: licenseVersion,
+    foreign_landing_url: foreignLandingUrl,
+  } = image;
+  const licenseArray = license.split('-');
 
-      // common head (download button and external link)
-      for (let i = 0; i < elements.downloadImageAttributionButton.length; i += 1) {
-        // adding arguments for event handler to the target itself
-        elements.downloadImageAttributionButton[i].image = res;
-        elements.downloadImageAttributionButton[i].title = `${res.title}.${res.url.split('.').pop()}`;
-        elements.downloadImageAttributionButton[i].addEventListener('click', handleImageAndAttributionDownload);
-      }
-      elements.imageExternalLink.href = foreignLandingUrl;
+  // common head (download button and external link)
+  for (let i = 0; i < elements.downloadImageAttributionButton.length; i += 1) {
+    // adding arguments for event handler to the target itself
+    elements.downloadImageAttributionButton[i].image = image;
+    elements.downloadImageAttributionButton[i].title = `${image.title}.${image.url.split('.').pop()}`;
+    elements.downloadImageAttributionButton[i].addEventListener('click', handleImageAndAttributionDownload);
+  }
+  elements.imageExternalLink.href = foreignLandingUrl;
 
-      // reuse tab
-      embedRichTextAttribution(res);
-      elements.htmlAttributionTextArea.value = getHtmlAttribution(res);
-      elements.plainTextAttributionPara.innerText = res.attribution;
-      fillLicenseLink(license, licenseVersion, licenseUrl);
-      fillLicenseInfo(licenseArray);
+  // reuse tab
+  embedRichTextAttribution(image);
+  elements.htmlAttributionTextArea.value = getHtmlAttribution(image);
+  elements.plainTextAttributionPara.innerText = image.attribution;
+  fillLicenseLink(license, licenseVersion, licenseUrl);
+  fillLicenseInfo(licenseArray);
 
-      // information tab
-      fillImageDimension(height, width);
-      fillImageSource(foreignLandingUrl, source);
-      fillImageLicense(licenseUrl, licenseArray);
+  // information tab
+  fillImageDimension(height, width);
+  fillImageSource(foreignLandingUrl, source);
+  fillImageLicense(licenseUrl, licenseArray);
 
-      // share tab
-      elements.facebookShareButton.href = getFacebookShareLink(id);
-      elements.twitterShareButton.href = getTwitterShareLink(foreignLandingUrl);
-      elements.pinterestShareButton.href = getPinterestShareLink(foreignLandingUrl, imageUrl);
-      elements.tumblrShareButton.href = getTumblrShareLink(foreignLandingUrl, imageUrl);
+  // share tab
+  elements.facebookShareButton.href = getFacebookShareLink(id);
+  elements.twitterShareButton.href = getTwitterShareLink(foreignLandingUrl);
+  elements.pinterestShareButton.href = getPinterestShareLink(foreignLandingUrl, imageUrl);
+  elements.tumblrShareButton.href = getTumblrShareLink(foreignLandingUrl, imageUrl);
 
-      // common
-      fillImageTags(tagsArray);
-      fillRelatedImages(relatedUrl);
-    });
+  // common
+  fillImageTags(tagsArray);
+  fillRelatedImages(relatedUrl);
 }
 
 /**
