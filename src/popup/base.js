@@ -143,31 +143,31 @@ export const appConfig = {
   extensionBookmarkLimit: 300,
 };
 
-class Stack {
-  constructor() {
-    this.stack = [];
-  }
+function getStack() {
+  return {
+    stack: [],
 
-  push(element) {
-    this.stack.push(element);
-  }
+    push(element) {
+      this.stack.push(element);
+    },
 
-  pop() {
-    if (this.stack.length === 0) return 'Underflow';
-    return this.stack.pop();
-  }
+    pop() {
+      if (this.stack.length === 0) return 'Underflow';
+      return this.stack.pop();
+    },
 
-  top() {
-    return this.stack[this.stack.length - 1];
-  }
+    top() {
+      return this.stack[this.stack.length - 1];
+    },
 
-  isEmpty() {
-    return this.stack.length === 0;
-  }
+    isEmpty() {
+      return this.stack.length === 0;
+    },
 
-  clear() {
-    this.stack = [];
-  }
+    clear() {
+      this.stack = [];
+    },
+  };
 }
 
 /**
@@ -224,7 +224,7 @@ function createApplicationObject() {
     tagName: '',
     isEditViewEnabled: false,
     clickedImageTag: false,
-    imageDetailStack: new Stack(),
+    imageDetailStack: getStack(),
 
     resetFilters() {
       this.useCaseFilters = [];
