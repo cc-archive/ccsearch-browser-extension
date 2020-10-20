@@ -1,12 +1,10 @@
-import elements from './base';
-import { init, saveFiltersOptions, addBookmarksToStorage, handleLegacyBookmarksFile } from './helper';
+import { elements } from './base';
+import { init, saveFilters, addBookmarksToStorage, addLegacyBookmarksToStorage } from './helper';
 import { showNotification, allowCheckingOneTypeOfCheckbox, enableTabSwitching } from '../utils';
 
 document.addEventListener('DOMContentLoaded', init);
-
-elements.saveFiltersButton.addEventListener('click', saveFiltersOptions);
-
-allowCheckingOneTypeOfCheckbox(elements.useCaseCheckboxesWrapper, elements.licenseCheckboxesWrapper);
+elements.saveFiltersButton.addEventListener('click', saveFilters);
+elements.tabsHeader.addEventListener('click', enableTabSwitching);
 
 elements.importBookmarksButton.addEventListener('click', () => {
   const file = elements.importBookmarksInput.files[0];
@@ -21,23 +19,20 @@ elements.importBookmarksButton.addEventListener('click', () => {
       const fileContents = evt.target.result;
       try {
         const bookmarksObject = JSON.parse(fileContents);
-        if (typeof bookmarksObject === 'object') {
-          if (Array.isArray(bookmarksObject)) {
-            // the legacy bookmark files had an array of image ids
-            handleLegacyBookmarksFile(bookmarksObject);
-          } else if (!(Object.keys(bookmarksObject).length > 0))
-            showNotification('Error: No bookmarks found in the file', 'negative', 'notification--options');
-          else {
-            addBookmarksToStorage(bookmarksObject);
-          }
-        } else {
-          showNotification('Error: File contents not in the required format', 'negative', 'notification--options');
-        }
+        // if the file contains an array, then it's legacy bookmarkmarks file. They had
+        // an array of image ids
+        if (Array.isArray(bookmarksObject)) {
+          if (bookmarksObject.length > 0) addLegacyBookmarksToStorage(bookmarksObject);
+          else showNotification('No bookmarks found in the file', 'negative', 'notification--options');
+        } else if (!Object.keys(bookmarksObject).length > 0) {
+          showNotification('No bookmarks found in the file', 'negative', 'notification--options');
+        } else addBookmarksToStorage(bookmarksObject);
       } catch (error) {
         showNotification('Error in parsing file', 'negative', 'notification--options');
+        console.log(`Error: ${error}`);
       }
     };
   }
 });
 
-elements.tabsHeader.addEventListener('click', enableTabSwitching);
+allowCheckingOneTypeOfCheckbox(elements.useCaseCheckboxesWrapper, elements.licenseCheckboxesWrapper);

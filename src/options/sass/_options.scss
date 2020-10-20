@@ -22,16 +22,18 @@ body {
   padding: 0rem 21rem 1rem 1rem;
 }
 
-.notification__options {
+.modal {
   &--background {
     background: rgba(0, 0, 0, 0.4);
     display: none;
     height: 100%;
+    width: 100%;
     position: fixed;
     text-align: center;
     top: 0;
-    width: 100%;
-    z-index: 10000;
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
   }
   &--body {
     font-size: 1.6rem;

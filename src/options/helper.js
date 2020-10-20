@@ -1,16 +1,18 @@
-/* eslint-disable no-param-reassign */
-import elements from './base';
+import { elements, filterCheckboxWrappers } from './base';
 import {
   showNotification,
   getLatestSources,
-  fetchImageData,
-  keyNames,
-  activeBookmarkIdContainers,
-  activeBookmarkContainers,
-  loadFilterCheckboxesFromStorage,
+  allBookmarkKeyNames,
+  bookmarkIdContainers,
+  bookmarkContainers,
+  markDefaultFilters,
+  fetchImage,
 } from '../utils';
-import { constants } from '../popup/base';
+import { appConfig } from '../popup/base';
 
+/**
+ * @desc Makes input checkboxes for the latest sources and adds them in the filter section.
+ */
 function addSourcesToDom(sources) {
   const { sourceCheckboxesWrapper } = elements;
   sourceCheckboxesWrapper.innerText = '';
@@ -31,9 +33,14 @@ function addSourcesToDom(sources) {
     sourceCheckboxesWrapper.appendChild(label);
     sourceCheckboxesWrapper.appendChild(breakLine);
   });
-  loadFilterCheckboxesFromStorage(elements.sourceCheckboxesWrapper);
+  markDefaultFilters(elements.sourceCheckboxesWrapper);
 }
 
+/**
+ * @desc Uses the checkboxes that lies inside the passed DOM wrapper element to
+ * update the preferences for that particual filters in the sync store.
+ * @param {HTMLElement} wrapperElement
+ */
 function saveSingleFilter(wrapperElement) {
   const filterStorageKey = wrapperElement.dataset.storageKeyName;
   const filterCheckboxElements = wrapperElement.getElementsByTagName('input');
@@ -41,6 +48,7 @@ function saveSingleFilter(wrapperElement) {
   chrome.storage.sync.get(filterStorageKey, items => {
     for (let i = 0; i < filterCheckboxElements.length; i += 1) {
       const checkbox = filterCheckboxElements[i];
+      // eslint-disable-next-line no-param-reassign
       items[filterStorageKey][checkbox.id] = checkbox.checked;
     }
 
@@ -51,100 +59,98 @@ function saveSingleFilter(wrapperElement) {
 }
 
 export async function init() {
-  loadFilterCheckboxesFromStorage(elements.useCaseCheckboxesWrapper);
-  loadFilterCheckboxesFromStorage(elements.licenseCheckboxesWrapper);
-  loadFilterCheckboxesFromStorage(elements.fileTypeCheckboxesWrapper);
-  loadFilterCheckboxesFromStorage(elements.imageTypeCheckboxesWrapper);
-  loadFilterCheckboxesFromStorage(elements.imageSizeCheckboxesWrapper);
-  loadFilterCheckboxesFromStorage(elements.aspectRatioCheckboxesWrapper);
-  loadFilterCheckboxesFromStorage(elements.showMatureContentCheckboxWrapper);
+  filterCheckboxWrappers.forEach(wrapper => {
+    if (wrapper !== elements.sourceCheckboxesWrapper) markDefaultFilters(wrapper);
+  });
   const sources = await getLatestSources();
   addSourcesToDom(sources);
 }
 
-export function saveFiltersOptions() {
-  saveSingleFilter(elements.useCaseCheckboxesWrapper);
-  saveSingleFilter(elements.licenseCheckboxesWrapper);
-  saveSingleFilter(elements.fileTypeCheckboxesWrapper);
-  saveSingleFilter(elements.imageTypeCheckboxesWrapper);
-  saveSingleFilter(elements.imageSizeCheckboxesWrapper);
-  saveSingleFilter(elements.aspectRatioCheckboxesWrapper);
-  saveSingleFilter(elements.sourceCheckboxesWrapper);
-  saveSingleFilter(elements.showMatureContentCheckboxWrapper);
+export function saveFilters() {
+  filterCheckboxWrappers.forEach(wrapper => {
+    saveSingleFilter(wrapper);
+  });
 }
 
-export function addBookmarksToStorage(newBookmarksObject, showConfirmation = true) {
-  const newKeyNames = keyNames;
-  newKeyNames.push('bookmarks'); // also checking for legacy "bookmarks" key
-  chrome.storage.sync.get(newKeyNames, items => {
-    const bookmarksImageIdsObject = {};
-    activeBookmarkIdContainers.forEach(bookmarksImageIdContainerName => {
-      const bookmarksImageIdContainer = items[bookmarksImageIdContainerName];
-      Object.keys(bookmarksImageIdContainer).forEach(id => {
-        bookmarksImageIdsObject[id] = [bookmarksImageIdContainer[id], bookmarksImageIdContainerName.substring(17)];
-      });
-    });
-    const bookmarksImageIds = Object.keys(bookmarksImageIdsObject);
-    // if user tries to import bookmarks before the bookmarks storage data is updated
-    if (Array.isArray(items.bookmarks)) {
-      showNotification(
-        'Error: First please open the extension popup to trigger the automatic update of bookmarks section. It will only take a few minutes',
-        'negative',
-        'notification--options',
-      );
-      throw new Error('Bookmarks data structures not updated');
-    }
+/**
+ * @desc Parses the sync storage object and returns an array of all the image
+ * ids present in sync store.
+ * @param {Object} items
+ * @returns {string[]}
+ */
+function getAllImageIds(items) {
+  let allImageIds = [];
+  bookmarkIdContainers.forEach(container => {
+    allImageIds = [...Object.keys(items[container]), ...allImageIds];
+  });
 
-    const filteredBookmarksImageIds = [];
-    const newBookmarksImageIds = Object.keys(newBookmarksObject);
-    newBookmarksImageIds.forEach(bookmarkId => {
-      if (bookmarksImageIds.indexOf(bookmarkId) === -1) {
-        filteredBookmarksImageIds.push(bookmarkId);
+  return allImageIds;
+}
+
+/**
+ * @desc Adds bookmark images to sync storage.
+ * @param {Object} newBookmarks - Bookmarks that needs to be added to sync store.
+ * @param {bool} showConfirmation=true - whether to show the notification of completion to user or not.
+ */
+export function addBookmarksToStorage(newBookmarks, showConfirmation = true) {
+  chrome.storage.sync.get(allBookmarkKeyNames, items => {
+    // for storing id's of all the bookmarks already present in sync storage
+    const allImageIds = getAllImageIds(items);
+    // for storing id's of the bookmarks that are not already present in the sync store.
+    const newImageIds = [];
+
+    Object.keys(newBookmarks).forEach(bookmarkId => {
+      if (allImageIds.indexOf(bookmarkId) === -1) {
+        newImageIds.push(bookmarkId);
       }
     });
-    // console.log(filteredBookmarksImageIds);
 
-    if (bookmarksImageIds.length + filteredBookmarksImageIds.length > constants.extensionBookmarkLimit) {
+    if (allImageIds.length + newImageIds.length > appConfig.extensionBookmarkLimit) {
       showNotification(
-        `Error: Cannot import because bookmark limit of ${constants.extensionBookmarkLimit} would be surpassed`,
+        `Error: Cannot import because bookmark limit of ${appConfig.extensionBookmarkLimit} would be surpassed`,
         'negative',
         'notification--options',
         5000,
       );
       throw new Error('Cannot store bookmarks over bookmark limit');
     }
-    let currBookmarkIdx = 0; // points to the bookmark id in filteredBookmarksImageIds
 
+    let currIdx = 0; // points to the first unprocessed bookmark id in newImageIds
     const bookmarkIdContainerNum = {};
 
     // adding bookmarks data to bookmark containers
-    for (let i = 0; i < activeBookmarkContainers.length; i += 1) {
+    for (let i = 0; i < bookmarkContainers.length; i += 1) {
       let allProcessed = false;
-      const bookmarkContainerName = activeBookmarkContainers[i];
+      const bookmarkContainerName = bookmarkContainers[i];
       const currContainerLength = items.bookmarksLength[bookmarkContainerName];
-      for (let j = currContainerLength; j < constants.bookmarkContainerSize; j += 1) {
-        if (currBookmarkIdx === filteredBookmarksImageIds.length) {
+
+      for (let j = currContainerLength; j < appConfig.bookmarkContainerSize; j += 1) {
+        if (currIdx === newImageIds.length) {
           allProcessed = true;
           break;
         }
-        const currBookmarkImageId = filteredBookmarksImageIds[currBookmarkIdx];
-        items[bookmarkContainerName][currBookmarkImageId] = newBookmarksObject[currBookmarkImageId];
+        const currImageId = newImageIds[currIdx];
+        // eslint-disable-next-line no-param-reassign
+        items[bookmarkContainerName][currImageId] = newBookmarks[currImageId];
+        // eslint-disable-next-line no-param-reassign
         items.bookmarksLength[bookmarkContainerName] += 1;
-        bookmarkIdContainerNum[currBookmarkImageId] = bookmarkContainerName.substring(9);
-        currBookmarkIdx += 1;
+        bookmarkIdContainerNum[currImageId] = bookmarkContainerName.substring(9);
+        currIdx += 1;
       }
       if (allProcessed) break;
     }
 
-    currBookmarkIdx = 0;
-    // adding bookmarks Image Ids to bookmark Image Ids containers
-    for (let i = 0; i < activeBookmarkIdContainers.length; i += 1) {
-      const bookmarkIdContainerName = activeBookmarkIdContainers[i];
-      while (currBookmarkIdx < filteredBookmarksImageIds.length) {
-        if (Object.keys(items[bookmarkIdContainerName]).length >= constants.bookmarkImageIdContainerSize) break;
-        const currBookmarkId = filteredBookmarksImageIds[currBookmarkIdx];
+    currIdx = 0;
+
+    // adding new bookmarks-ids to bookmark-id containers
+    for (let i = 0; i < bookmarkIdContainers.length; i += 1) {
+      const bookmarkIdContainerName = bookmarkIdContainers[i];
+      while (currIdx < newImageIds.length) {
+        if (Object.keys(items[bookmarkIdContainerName]).length >= appConfig.bookmarkIdContainerSize) break;
+        const currBookmarkId = newImageIds[currIdx];
+        // eslint-disable-next-line no-param-reassign
         items[bookmarkIdContainerName][currBookmarkId] = bookmarkIdContainerNum[currBookmarkId];
-        currBookmarkIdx += 1;
+        currIdx += 1;
       }
     }
 
@@ -154,80 +160,67 @@ export function addBookmarksToStorage(newBookmarksObject, showConfirmation = tru
   });
 }
 
-async function addLegacyBookmarksToStorage(bookmarksArray) {
-  const newKeyNames = keyNames;
-  newKeyNames.push('bookmarks'); // also checking for legacy "bookmarks" key
-  chrome.storage.sync.get(newKeyNames, async items => {
-    const bookmarksImageIdsObject = {};
-    activeBookmarkIdContainers.forEach(bookmarksImageIdContainerName => {
-      const bookmarksImageIdContainer = items[bookmarksImageIdContainerName];
-      Object.keys(bookmarksImageIdContainer).forEach(id => {
-        bookmarksImageIdsObject[id] = [bookmarksImageIdContainer[id], bookmarksImageIdContainerName.substring(17)];
-      });
-    });
-    const bookmarksImageIds = Object.keys(bookmarksImageIdsObject);
-    // if user tries to import bookmarks before the bookmarks storage data is updated
-    if (Array.isArray(items.bookmarks)) {
-      showNotification(
-        'Error: First please open the extension popup to trigger the automatic update of bookmarks section. It will only take a few minutes',
-        'negative',
-        'notification--options',
-        5500,
-      );
-      throw new Error('Bookmarks data structures not updated');
-    }
+/**
+ * @desc Parses the content stored in the legacy bookmark file(ie: image-ids) and converts it into
+ * the required structure. Adds these bookmarks to sync storage by calling 'addBookmarksToStorage'.
+ * @param {string[]} bookmarksArray - An array of image ids.
+ */
+export async function addLegacyBookmarksToStorage(bookmarksArray) {
+  chrome.storage.sync.get(allBookmarkKeyNames, async items => {
+    // for storing id's of all the bookmarks already present in sync storage
+    const allImageIds = getAllImageIds(items);
 
-    document.querySelector('.notification__options--background').style.display = 'flex';
-    document.querySelector('.notification__options--body button').classList.add('is-loading');
-    document.querySelector('.notification__options--body button').addEventListener('click', () => {
-      document.querySelector('.notification__options--background').style.display = 'none';
+    // Open the modal which tells the user that importing may take some time
+    // because the data is being fetched from the API
+    elements.modalBackground.style.display = 'flex';
+    elements.modalBody.classList.add('is-loading');
+    elements.modalButton.addEventListener('click', () => {
+      elements.modalBackground.style.display = 'none';
     });
 
     let newBookmarksObject = {};
-    let bookmarkBatchCount = 0; // to track the number of bookmarks processed and pushed into newBookmarksObject
+    // tracks the number of bookmarks processed and pushed into newBookmarksObject
+    let bookmarkBatchCount = 0;
+
     for (let i = 0; i < bookmarksArray.length; i += 1) {
-      const bookmarkId = bookmarksArray[i];
-      if (bookmarksImageIds.indexOf(bookmarkId) === -1) {
+      const imageId = bookmarksArray[i];
+      // only import the current bookmarks if it's not already present.
+      if (allImageIds.indexOf(imageId) === -1) {
         // eslint-disable-next-line no-await-in-loop
-        const res = await fetchImageData(bookmarkId);
-        const imageDetailResponse = res[0];
-        const responseCode = res[1];
-        const imageObject = {};
+        const [image, responseCode] = await fetchImage(
+          `https://api.creativecommons.engineering/v1/images/${imageId}`,
+          true,
+        );
+
         if (responseCode === 429) {
-          document.querySelector('.notification__options--body p').innerText =
+          // surpased API rate limit.
+          elements.modalBody.getElementsByTagName('p')[0].innerText =
             'The process has stoped due to surpassing the API limit. Some bookmarks have been imported. Refresh and upload the file after 5 minutes to import the rest.';
           throw new Error('API limit reached');
         } else if (responseCode === 200) {
-          imageObject.thumbnail = imageDetailResponse.thumbnail
-            ? imageDetailResponse.thumbnail
-            : imageDetailResponse.url;
-          imageObject.license = imageDetailResponse.license;
-          newBookmarksObject[bookmarkId] = imageObject;
+          // stores the data in the required format
+          newBookmarksObject[imageId] = {
+            thumbnail: image.thumbnail ? image.thumbnail : image.url,
+            license: image.license,
+          };
           bookmarkBatchCount += 1;
-          // add bookmarks in the batch of 5 to storage
-          if (bookmarkBatchCount === 5) {
+          // add bookmarks in the batch of 10 to storage. This allows completting
+          // the process without surpassing the sync storage write limit.
+          if (bookmarkBatchCount === 10) {
             addBookmarksToStorage(newBookmarksObject, false);
             bookmarkBatchCount = 0;
             newBookmarksObject = {};
           }
+        } else {
+          showNotification('Error occured while connecting with the API', 'negative', 'notification--options');
+          console.log(`Error: ${responseCode}`);
         }
       }
     }
-    addBookmarksToStorage(newBookmarksObject); // add left out bookmarks to storage
-    document.querySelector('.notification__options--body button').disabled = false;
-    document.querySelector('.notification__options--body button').classList.remove('is-loading');
+    addBookmarksToStorage(newBookmarksObject); // add the rest of the bookmarks to storage
+
+    elements.modalButton.disabled = false;
+    elements.modalButton.classList.remove('is-loading');
     showNotification('Bookmarks updated!', 'positive', 'notification--options');
   });
-}
-
-export function handleLegacyBookmarksFile(bookmarksArray) {
-  try {
-    if (!bookmarksArray.length > 0) {
-      showNotification('Error: No bookmarks found in the file', 'negative', 'notification--options');
-    } else {
-      addLegacyBookmarksToStorage(bookmarksArray);
-    }
-  } catch (error) {
-    showNotification('Error in parsing file', 'negative', 'notification--options');
-  }
 }

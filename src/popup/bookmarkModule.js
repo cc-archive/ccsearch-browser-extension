@@ -241,7 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   elements.selectAllBookmarksLink.addEventListener('click', () => {
-    const images = elements.gridBookmarks.getElementsByClassName('image');
+    const images = elements.gridBookmarks.querySelectorAll('.image');
     images.forEach(image => {
       image.classList.add('is-selected');
     });

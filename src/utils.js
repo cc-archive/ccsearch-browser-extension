@@ -60,11 +60,11 @@ export async function fetchSources() {
   return response.json();
 }
 
-export async function fetchImage(requestUrl) {
+export async function fetchImage(requestUrl, forLegacyBookmarks = false) {
   const response = await fetch(requestUrl);
-  checkAPIResponse(response, 'image');
+  if (!forLegacyBookmarks) checkAPIResponse(response, 'image');
   const data = await response.json();
-  return data;
+  return forLegacyBookmarks ? [data, response.status] : data;
 }
 
 export async function fetchImages(requestUrl) {
@@ -98,15 +98,6 @@ export function removeChildNodes(targetNode) {
   while (targetNode.lastChild) {
     targetNode.removeChild(targetNode.lastChild);
   }
-}
-
-export async function fetchImageData(imageId) {
-  const url = `https://api.creativecommons.engineering/v1/images/${imageId}`;
-  const data = await fetch(url);
-  const responseCode = data.status;
-  const res = await data.json();
-
-  return [res, responseCode];
 }
 
 /**
