@@ -56,7 +56,7 @@ elements.searchButton.addEventListener('click', () => {
 
 elements.inputField.addEventListener('keydown', event => {
   // "Click" the Search Button when pressing "Enter".
-  if (event.keyCode === 13) {
+  if (event.key === 'Enter') {
     elements.searchButton.click();
   }
 });
