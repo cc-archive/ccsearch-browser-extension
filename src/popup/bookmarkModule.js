@@ -44,13 +44,13 @@ export default function loadBookmarkImages(numberOfImages) {
       const segBookmarkIds = {};
 
       // segregate the bookmark image ids into respective container numbers
-      for (let i = 0; i < bookmarkImageIds.length; i += 1) {
-        const containerNum = allImageIds[bookmarkImageIds[i]];
+      bookmarkImageIds.forEach(id => {
+        const containerNum = allImageIds[id];
         if (!Object.prototype.hasOwnProperty.call(segBookmarkIds, containerNum)) {
           segBookmarkIds[containerNum] = [];
         }
-        segBookmarkIds[containerNum].push(bookmarkImageIds[i]);
-      }
+        segBookmarkIds[containerNum].push(id);
+      });
 
       // the bookmark containers that are to be fetched from the sync storage
       const requiredBookmarkContainer = Object.keys(segBookmarkIds).map(containerNum => `bookmarks${containerNum}`);
@@ -172,9 +172,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // using querySelectorAll instead of getElementsByClassName because we do not want live nodelist
     const selectedImages = elements.gridBookmarks.querySelectorAll('.is-selected');
     // "de-selecting" all the selected images
-    for (let i = 0; i < selectedImages.length; i += 1) {
-      selectedImages[i].classList.remove('is-selected');
-    }
+    selectedImages.forEach(image => {
+      image.classList.remove('is-selected');
+    });
     appObject.isEditViewEnabled = false;
     toggleEditView(event);
   });

@@ -46,8 +46,7 @@ function saveSingleFilter(wrapperElement) {
   const filterCheckboxElements = wrapperElement.getElementsByTagName('input');
 
   chrome.storage.sync.get(filterStorageKey, items => {
-    for (let i = 0; i < filterCheckboxElements.length; i += 1) {
-      const checkbox = filterCheckboxElements[i];
+    for (const checkbox of filterCheckboxElements) {
       // eslint-disable-next-line no-param-reassign
       items[filterStorageKey][checkbox.id] = checkbox.checked;
     }
@@ -119,9 +118,8 @@ export function addBookmarksToStorage(newBookmarks, showConfirmation = true) {
     const bookmarkIdContainerNum = {};
 
     // adding bookmarks data to bookmark containers
-    for (let i = 0; i < bookmarkContainers.length; i += 1) {
+    for (const bookmarkContainerName of bookmarkContainers) {
       let allProcessed = false;
-      const bookmarkContainerName = bookmarkContainers[i];
       const currContainerLength = items.bookmarksLength[bookmarkContainerName];
 
       for (let j = currContainerLength; j < appConfig.bookmarkContainerSize; j += 1) {
@@ -143,8 +141,7 @@ export function addBookmarksToStorage(newBookmarks, showConfirmation = true) {
     currIdx = 0;
 
     // adding new bookmarks-ids to bookmark-id containers
-    for (let i = 0; i < bookmarkIdContainers.length; i += 1) {
-      const bookmarkIdContainerName = bookmarkIdContainers[i];
+    for (const bookmarkIdContainerName of bookmarkIdContainers) {
       while (currIdx < newImageIds.length) {
         if (Object.keys(items[bookmarkIdContainerName]).length >= appConfig.bookmarkIdContainerSize) break;
         const currBookmarkId = newImageIds[currIdx];
@@ -182,8 +179,7 @@ export async function addLegacyBookmarksToStorage(bookmarksArray) {
     // tracks the number of bookmarks processed and pushed into newBookmarksObject
     let bookmarkBatchCount = 0;
 
-    for (let i = 0; i < bookmarksArray.length; i += 1) {
-      const imageId = bookmarksArray[i];
+    for (const imageId of bookmarksArray) {
       // only import the current bookmarks if it's not already present.
       if (allImageIds.indexOf(imageId) === -1) {
         // eslint-disable-next-line no-await-in-loop

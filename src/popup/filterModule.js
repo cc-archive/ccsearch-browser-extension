@@ -10,14 +10,14 @@ export async function addSourceFilterCheckboxes() {
 
     const sourceNames = Object.keys(appObject.sourcesFromAPI);
 
-    for (let i = 0; i < sourceNames.length; i += 1) {
+    for (const name of sourceNames) {
       const checkboxElement = document.createElement('input');
       checkboxElement.type = 'checkbox';
-      checkboxElement.id = sourceNames[i];
+      checkboxElement.id = name;
 
       const labelElement = document.createElement('label');
       labelElement.setAttribute('for', checkboxElement.id);
-      labelElement.innerText = appObject.sourcesFromAPI[sourceNames[i]];
+      labelElement.innerText = appObject.sourcesFromAPI[name];
 
       const breakElement = document.createElement('br');
 

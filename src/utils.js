@@ -144,13 +144,13 @@ export function enableTabSwitching(e) {
     let targetPanelDiv;
 
     // removing active class from any tab content div
-    Array.prototype.forEach.call(tabsContentDiv.children, element => {
+    for (const element of tabsContentDiv.children) {
       element.classList.remove('is-active');
       if (element.getAttribute('data-content-no') === tabNo) {
         // saving the target content div
         targetPanelDiv = element;
       }
-    });
+    }
 
     // adding active class to target content div
     targetPanelDiv.classList.add('is-active');

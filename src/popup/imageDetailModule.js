@@ -287,9 +287,9 @@ function fillImageTags(tagsArray) {
       tagButtons.push(tagButton);
     });
 
-    for (let i = 0; i < tagButtons.length; i += 1) {
-      elements.imageTagsDiv.appendChild(tagButtons[i]);
-    }
+    tagButtons.forEach(tagButton => {
+      elements.imageTagsDiv.appendChild(tagButton);
+    });
   }
 }
 
@@ -310,8 +310,8 @@ async function fillRelatedImages(relatedUrl) {
  */
 export function resetImageDetailSection() {
   // remove eventlisteners from download buttons to avoid multiple downloads.
-  for (let i = 0; i < elements.downloadImageAttributionButton.length; i += 1) {
-    elements.downloadImageAttributionButton[i].removeEventListener('click', handleImageAndAttributionDownload);
+  for (const button of elements.downloadImageAttributionButton) {
+    button.removeEventListener('click', handleImageAndAttributionDownload);
   }
   // making reuse tab active for later
   const imageDetailNavTabs = elements.imageDetailNav.getElementsByTagName('li');
@@ -365,11 +365,11 @@ export async function fillImageDetailSection(imageId) {
   const licenseArray = license.split('-');
 
   // common head (download button and external link)
-  for (let i = 0; i < elements.downloadImageAttributionButton.length; i += 1) {
+  for (const button of elements.downloadImageAttributionButton) {
     // adding arguments for event handler to the target itself
-    elements.downloadImageAttributionButton[i].image = image;
-    elements.downloadImageAttributionButton[i].title = `${image.title}.${image.url.split('.').pop()}`;
-    elements.downloadImageAttributionButton[i].addEventListener('click', handleImageAndAttributionDownload);
+    button.image = image;
+    button.title = `${image.title}.${image.url.split('.').pop()}`;
+    button.addEventListener('click', handleImageAndAttributionDownload);
   }
   elements.imageExternalLink.href = foreignLandingUrl;
 

@@ -7,8 +7,8 @@ export function clearFilters() {
   filterCheckboxWrappers.forEach(wrapper => {
     const checkboxes = wrapper.querySelectorAll('input[type=checkbox]');
 
-    for (let i = 0; i < checkboxes.length; i += 1) {
-      checkboxes[i].checked = false;
+    for (const checkbox of checkboxes) {
+      checkbox.checked = false;
     }
   });
 
