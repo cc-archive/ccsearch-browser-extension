@@ -14,10 +14,10 @@ export const elements = {
   navInvertColorsIcon: document.getElementById('nav-invert_colors-icon'),
 
   /* ------primary section------ */
-  sectionMain: document.getElementsByClassName('section-main')[0],
+  sectionMain: document.querySelector('.section-main'),
   primarySection: document.querySelector('.section-primary'),
   // search section
-  searchSection: document.getElementsByClassName('section-search')[0],
+  searchSection: document.querySelector('.section-search'),
   inputField: document.getElementById('section-search-input'),
   searchButton: document.getElementById('search-button'),
   filterButton: document.getElementById('filter-button'),
@@ -31,14 +31,14 @@ export const elements = {
   filterSection: document.querySelector('.section-filter'),
   closeFiltersLink: document.getElementById('close-filters-link'),
   // different filters
-  useCaseCheckboxesWrapper: document.getElementsByClassName('section-filter__usecase')[0],
-  licenseCheckboxesWrapper: document.getElementsByClassName('section-filter__license')[0],
-  sourceCheckboxesWrapper: document.getElementsByClassName('section-filter__source')[0],
-  fileTypeCheckboxesWrapper: document.getElementsByClassName('section-filter__file-type')[0],
-  imageTypeCheckboxesWrapper: document.getElementsByClassName('section-filter__image-type')[0],
-  imageSizeCheckboxesWrapper: document.getElementsByClassName('section-filter__image-size')[0],
-  aspectRatioCheckboxesWrapper: document.getElementsByClassName('section-filter__aspect-ratio')[0],
-  showMatureContentCheckboxWrapper: document.getElementsByClassName('section-filter__show-mature-content')[0],
+  useCaseCheckboxesWrapper: document.querySelector('.section-filter__usecase'),
+  licenseCheckboxesWrapper: document.querySelector('.section-filter__license'),
+  sourceCheckboxesWrapper: document.querySelector('.section-filter__source'),
+  fileTypeCheckboxesWrapper: document.querySelector('.section-filter__file-type'),
+  imageTypeCheckboxesWrapper: document.querySelector('.section-filter__image-type'),
+  imageSizeCheckboxesWrapper: document.querySelector('.section-filter__image-size'),
+  aspectRatioCheckboxesWrapper: document.querySelector('.section-filter__aspect-ratio'),
+  showMatureContentCheckboxWrapper: document.querySelector('.section-filter__show-mature-content'),
   // footer buttons
   clearFiltersButton: document.getElementById('clear-filters-button'),
   applyFiltersButton: document.getElementById('apply-filters-button'),
@@ -46,17 +46,17 @@ export const elements = {
   /* ------bookmarks section------ */
   bookmarksSection: document.querySelector('.section-bookmarks'),
   // head links
-  bookmarksSectionHead: document.getElementsByClassName('section-bookmarks__head')[0],
+  bookmarksSectionHead: document.querySelector('.section-bookmarks__head'),
   editBookmarksLink: document.getElementById('edit-bookmarks'),
   selectAllBookmarksLink: document.getElementById('select-all-bookmarks'),
   closeEditViewLink: document.getElementById('close-edit-view'),
   // image gallery
-  bookmarksSectionContent: document.getElementsByClassName('section-content--bookmarks')[0],
+  bookmarksSectionContent: document.querySelector('.section-content--bookmarks'),
   gridBookmarks: document.querySelector('.grid-bookmarks'),
   loadMoreBookmarkButton: document.querySelector('.load-more-bookmark-button'),
   loadMoreBookmarkButtonkWrapper: document.querySelector('.load-more-bookmark-button-wrapper'),
   // footer
-  bookmarksSectionFooter: document.getElementsByClassName('section-bookmarks__footer')[0],
+  bookmarksSectionFooter: document.querySelector('.section-bookmarks__footer'),
   deleteBookmarksButton: document.getElementById('delete-bookmarks'),
   exportBookmarksLink: document.getElementById('export-bookmarks'),
 
@@ -67,24 +67,24 @@ export const elements = {
   // clearSearchButton: document.getElementsByClassName('clear-search-button'),
 
   /* ------image-detail section------ */
-  imageDetailSection: document.getElementsByClassName('section-image-detail')[0],
-  imageDetailNav: document.getElementsByClassName('image-detail__nav')[0],
+  imageDetailSection: document.querySelector('.section-image-detail'),
+  imageDetailNav: document.querySelector('.image-detail__nav'),
   closeImageDetailLink: document.getElementById('close-image-detail'),
-  reuseTab: document.getElementsByClassName('reuse-tab')[0],
+  reuseTab: document.querySelector('.reuse-tab'),
   imageDetailTabsPanels: document.querySelectorAll('.section-image-detail > .tabs-content > .tabs-panel'),
-  reusePanel: document.getElementsByClassName('reuse-panel')[0],
+  reusePanel: document.querySelector('.reuse-panel'),
   // common head buttons
   downloadImageAttributionButton: document.getElementsByClassName('download-image-attribution'),
   imageExternalLink: document.getElementById('image-external-link'),
   // reuse tab
-  attributionTab: document.getElementsByClassName('attribution-tab')[0],
+  attributionTab: document.querySelector('.attribution-tab'),
   richTextAttributionPara: document.getElementById('rich-text-attribution'),
   htmlAttributionTextArea: document.getElementById('html-attribution'),
   plainTextAttributionPara: document.getElementById('plain-text-attribution'),
   licenseLink: document.getElementById('license-link'),
-  licenseDescriptionDiv: document.getElementsByClassName('license-description')[0],
+  licenseDescriptionDiv: document.querySelector('.license-description'),
   licenseLinkCaption: document.getElementById('license-link--caption'),
-  imageTagsDiv: document.getElementsByClassName('image-tags')[0],
+  imageTagsDiv: document.querySelector('.image-tags'),
   // information tab
   imageDimensionPara: document.getElementById('image-dimension'),
   imageSourcePara: document.getElementById('image-source'),
@@ -98,7 +98,7 @@ export const elements = {
   gridRelatedImages: document.querySelector('.grid-related-images'),
 
   /* ------Misc------ */
-  buttonBackToTop: document.getElementsByClassName('button-backToTop')[0],
+  buttonBackToTop: document.querySelector('.button-backToTop'),
 };
 
 export const filterCheckboxWrappers = [

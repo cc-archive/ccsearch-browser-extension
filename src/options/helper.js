@@ -38,7 +38,7 @@ function addSourcesToDom(sources) {
 
 /**
  * @desc Uses the checkboxes that lies inside the passed DOM wrapper element to
- * update the preferences for that particual filters in the sync store.
+ * update the preferences for that particular filter in the sync store.
  * @param {HTMLElement} wrapperElement
  */
 function saveSingleFilter(wrapperElement) {

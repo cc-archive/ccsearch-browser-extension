@@ -24,8 +24,11 @@ function appendToGrid(msnryObject, imageComponents, gridDiv, forBookmarksSection
   });
 
   removeSpinner(elements.spinnerPlaceholderPrimary);
-  if (forBookmarksSection) addLoadMoreButton(elements.loadMoreBookmarkButtonkWrapper);
-  else if (msnryObject.cols) addLoadMoreButton(elements.loadMoreSearchButtonWrapper);
+  if (forBookmarksSection) {
+    addLoadMoreButton(elements.loadMoreBookmarkButtonkWrapper);
+  } else if (msnryObject.cols) {
+    addLoadMoreButton(elements.loadMoreSearchButtonWrapper);
+  }
 }
 
 /**

@@ -2,12 +2,12 @@
  * @desc Shows a notification to the user.
  * @param {string} message - The message to show.
  * @param {string} context - positive or negative.
- * @param {HTMLElement} notificationWrapperClass
+ * @param {string} notificationWrapperClass
  * @param {number} timeout=1500 - The time(in milisecond) for the notification should be seen
  */
 export function showNotification(message, context, notificationWrapperClass, timeout = 1500) {
   const notificationWrapperDiv = document.getElementsByClassName(notificationWrapperClass)[0];
-  const notificationContainer = notificationWrapperDiv.getElementsByClassName('notification-container')[0];
+  const notificationContainer = notificationWrapperDiv.querySelector('.notification-container');
   const notificationPara = notificationContainer.getElementsByTagName('p')[0];
 
   notificationContainer.classList.remove('has-background-success-light');
