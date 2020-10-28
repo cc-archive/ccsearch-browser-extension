@@ -14,23 +14,13 @@ export function checkInputError(inputText) {
  * @return {string}
  */
 export function getRequestUrl() {
-  const {
-    inputText,
-    useCaseFilters,
-    licenseFilters,
-    sourceFilters,
-    fileTypeFilters,
-    imageTypeFilters,
-    imageSizeFilters,
-    aspectRatioFilters,
-    enableMatureContent,
-    pageNo,
-  } = appObject;
+  const { inputText, filters, enableMatureContent, pageNo } = appObject;
+  const { useCase, license, source, fileType, imageType, imageSize, aspectRatio } = filters;
 
-  if (useCaseFilters.length > 0) {
-    return `https://api.creativecommons.engineering/v1/images?q=${inputText}&page=${pageNo}&page_size=20&license_type=${useCaseFilters}&source=${sourceFilters}&extension=${fileTypeFilters}&categories=${imageTypeFilters}&size=${imageSizeFilters}&aspect_ratio=${aspectRatioFilters}&mature=${enableMatureContent}`;
+  if (useCase.length > 0) {
+    return `https://api.creativecommons.engineering/v1/images?q=${inputText}&page=${pageNo}&page_size=20&license_type=${useCase}&source=${source}&extension=${fileType}&categories=${imageType}&size=${imageSize}&aspect_ratio=${aspectRatio}&mature=${enableMatureContent}`;
   }
-  return `https://api.creativecommons.engineering/v1/images?q=${inputText}&page=${pageNo}&page_size=20&license=${licenseFilters}&source=${sourceFilters}&extension=${fileTypeFilters}&categories=${imageTypeFilters}&size=${imageSizeFilters}&aspect_ratio=${aspectRatioFilters}&mature=${enableMatureContent}`;
+  return `https://api.creativecommons.engineering/v1/images?q=${inputText}&page=${pageNo}&page_size=20&license=${license}&source=${source}&extension=${fileType}&categories=${imageType}&size=${imageSize}&aspect_ratio=${aspectRatio}&mature=${enableMatureContent}`;
 }
 
 /**

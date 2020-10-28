@@ -202,13 +202,15 @@ function createApplicationObject() {
     searchContext: 'default',
 
     // data structures to hold active filters
-    useCaseFilters: [],
-    licenseFilters: [],
-    sourceFilters: [],
-    fileTypeFilters: [],
-    imageTypeFilters: [],
-    imageSizeFilters: [],
-    aspectRatioFilters: [],
+    filters: {
+      useCase: [],
+      license: [],
+      source: [],
+      fileType: [],
+      imageType: [],
+      imageSize: [],
+      aspectRatio: [],
+    },
     enableMatureContent: false,
 
     // holds latest sources fetched from API as <source_name, display_name>
@@ -227,24 +229,16 @@ function createApplicationObject() {
     imageDetailStack: getStack(),
 
     resetFilters() {
-      this.useCaseFilters = [];
-      this.licenseFilters = [];
-      this.sourceFilters = [];
-      this.fileTypeFilters = [];
-      this.imageTypeFilters = [];
-      this.imageSizeFilters = [];
-      this.aspectRatioFilters = [];
+      for (const filter of Object.keys(this.filters)) {
+        this.filters[filter] = [];
+      }
       this.enableMatureContent = false;
     },
 
     updateFilters() {
-      this.useCaseFilters = getCheckedCheckboxes(elements.useCaseCheckboxesWrapper);
-      this.userSelectedLicensesList = getCheckedCheckboxes(elements.licenseCheckboxesWrapper);
-      this.userSelectedSourcesList = getCheckedCheckboxes(elements.sourceCheckboxesWrapper);
-      this.fileTypeFilters = getCheckedCheckboxes(elements.fileTypeCheckboxesWrapper);
-      this.imageTypeFilters = getCheckedCheckboxes(elements.imageTypeCheckboxesWrapper);
-      this.imageSizeFilters = getCheckedCheckboxes(elements.imageSizeCheckboxesWrapper);
-      this.aspectRatioFilters = getCheckedCheckboxes(elements.aspectRatioCheckboxesWrapper);
+      for (const filter of Object.keys(this.filters)) {
+        this.filters[filter] = getCheckedCheckboxes(elements[`${filter}CheckboxesWrapper`]);
+      }
       this.enableMatureContent = getCheckedCheckboxes(elements.showMatureContentCheckboxWrapper).length > 0;
     },
   };
