@@ -66,7 +66,9 @@
     "webpack-dev-server": "^3.7.2"
   },
   "dependencies": {
+    "clipboard": "^2.0.6",
     "downloadjs": "^1.4.7",
+    "imagesloaded": "^4.1.4",
     "masonry-layout": "^4.2.2"
   }
 }

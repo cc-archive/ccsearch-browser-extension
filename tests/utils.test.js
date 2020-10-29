@@ -1,4 +1,4 @@
-import { showNotification, removeNode } from '../src/utils';
+import { showNotification } from '../src/utils';
 
 test('testing showNotification', () => {
   document.body.innerHTML = `<div class="notification-wrapper notification--extension-popup display-none">
@@ -24,13 +24,4 @@ test('testing showNotification', () => {
 
   showNotification('test', 'negative', 'notification--extension-popup');
   expect(notificationContainer.classList).toContain('has-background-danger-light');
-});
-
-test('testing removeNode', () => {
-  document.body.innerHTML = '<div><p class="initial-info primary__initial-info">Some content</p></div>';
-
-  const className = 'primary__initial-info';
-  removeNode(className);
-  const targetNode = document.querySelector(`.${className}`);
-  expect(targetNode).toBeNull();
 });

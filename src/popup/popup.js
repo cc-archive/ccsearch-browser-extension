@@ -1,180 +1,40 @@
-import { elements, initGlobalObject } from './base';
-// eslint-disable-next-line import/no-cycle
 import {
-  checkInputError,
-  removeOldSearchResults,
-  getRequestUrl,
-  search,
-  addSearchThumbnailsToDOM,
-  getCollectionsUrl,
-  getTagsUrl,
-} from './searchModule';
-import { removeLoadMoreButton, clearFilters } from './helper';
-import loadUserDefaults from './filterModule';
-import { fillImageDetailSection, resetImageDetailSection } from './infoPopupModule';
+  elements,
+  appObject,
+  primaryGridMasonryObject,
+  bookmarksGridMasonryObject,
+  filterCheckboxWrappers,
+} from './base';
+import { checkInputError, getRequestUrl, getCollectionsUrl } from './searchModule';
+import { removeLoadMoreButton, clearFilters, removeImagesFromGrid, getTagsUrl } from './helper';
+import { fillImageDetailSection, resetImageDetailSection } from './imageDetailModule';
 import { addSpinner, removeSpinner } from './spinner';
 import {
   showNotification,
-  getLatestSources,
   allowCheckingOneTypeOfCheckbox,
   enableTabSwitching,
-  loadFilterCheckboxesFromStorage,
+  markDefaultFilters,
   checkInternetConnection,
-  // activeBookmarkContainers,
+  fetchImages,
 } from '../utils';
-import { loadBookmarkImages } from './bookmarkModule';
-import { confirmBookmarkSchemaInSync, confirmFilterSchemaInSync } from './popup.utils';
-import { removeActiveClassFromNavLinks, bookmarksGridMasonryObject } from './bookmarkModule.utils';
-import primaryGridMasonryObject from './searchModule.utils';
+import loadBookmarkImages from './bookmarkModule';
+import checkSyncStorageSchema from './popup.utils';
+import { removeActiveClassFromNavLinks } from './bookmarkModule.utils';
+import { addImagesToDOM, search } from './localUtils';
+import { addSourceFilterCheckboxes, toggleFilterSection } from './filterModule';
 
-initGlobalObject();
-
-// eslint-disable-next-line no-undef
-const clipboard = new ClipboardJS('.btn-copy');
-
-clipboard.on('success', e => {
-  e.clearSelection();
-  showNotification('Copied', 'positive', 'notification--extension-popup');
-});
-
-elements.imageDetailNav.getElementsByTagName('ul')[0].addEventListener('click', enableTabSwitching);
-elements.attributionTab.firstElementChild.getElementsByTagName('ul')[0].addEventListener('click', enableTabSwitching);
-
-elements.closeImageDetailLink.addEventListener('click', () => {
-  resetImageDetailSection();
-  if (window.appObject.clickedImageTag) {
-    window.appObject.imageDetailStack.clear();
-    window.appObject.clickedImageTag = false;
-  } else window.appObject.imageDetailStack.pop();
-
-  if (window.appObject.imageDetailStack.isEmpty()) {
-    elements.header.classList.remove('display-none');
-    // elements.bookmarksSection.classList.add('display-none');
-    elements.sectionMain.classList.remove('display-none');
-    elements.imageDetailSection.classList.add('display-none');
-  } else {
-    elements.buttonBackToTop.click();
-    fillImageDetailSection(window.appObject.imageDetailStack.top());
-  }
-
-  // lays out images in masonry grid again
-  bookmarksGridMasonryObject.layout();
-  primaryGridMasonryObject.layout();
-});
-
-// Activate the click event on pressing enter.
-elements.inputField.addEventListener('keydown', event => {
-  if (event.keyCode === 13) {
-    elements.searchButton.click();
-  }
-});
-
-async function addSourceFilterCheckboxes() {
-  if (elements.sourceCheckboxesWrapper.children.length === 1) {
-    window.appObject.sourcesFromAPI = await getLatestSources();
-
-    const sourceNames = Object.keys(window.appObject.sourcesFromAPI);
-
-    for (let i = 0; i < sourceNames.length; i += 1) {
-      const checkboxElement = document.createElement('input');
-      checkboxElement.type = 'checkbox';
-      checkboxElement.id = sourceNames[i];
-
-      const labelElement = document.createElement('label');
-      labelElement.setAttribute('for', checkboxElement.id);
-      labelElement.innerText = window.appObject.sourcesFromAPI[sourceNames[i]];
-
-      const breakElement = document.createElement('br');
-
-      elements.sourceCheckboxesWrapper.appendChild(checkboxElement);
-      elements.sourceCheckboxesWrapper.appendChild(labelElement);
-      elements.sourceCheckboxesWrapper.appendChild(breakElement);
-    }
-    loadFilterCheckboxesFromStorage(elements.sourceCheckboxesWrapper);
-    showNotification('Fetched latest sources succcessfully.', 'positive', 'notification--extension-popup');
-  }
-}
-
-elements.filterButton.onclick = () => {
-  window.appObject.activeSection = 'filter';
-  elements.primarySection.classList.add('display-none');
-  elements.filterSection.classList.remove('display-none');
-};
-
-setTimeout(addSourceFilterCheckboxes, 2000);
-
-elements.closeFiltersLink.onclick = () => {
-  window.appObject.activeSection = 'search';
-  elements.primarySection.classList.remove('display-none');
-  elements.filterSection.classList.add('display-none');
-};
-
-allowCheckingOneTypeOfCheckbox(elements.licenseCheckboxesWrapper, elements.useCaseCheckboxesWrapper);
-
-elements.clearFiltersButton.addEventListener('click', () => {
-  // the filter is not activated anymore
-  // elements.filterButton.classList.remove('activate-filter');
-
-  clearFilters();
-  // close the filters section and make a search
-  primaryGridMasonryObject.layout();
-  elements.closeFiltersLink.click();
-  elements.searchButton.click();
-});
-
-function getCheckedCheckboxes(checkboxesWrapper) {
-  const checkboxes = checkboxesWrapper.querySelectorAll('input[type=checkbox]');
-
-  const checkedCheckboxes = [];
-  checkboxes.forEach(checkbox => {
-    if (checkbox.checked) checkedCheckboxes.push(checkbox.id);
-  });
-
-  return checkedCheckboxes;
-}
-
-function applyFilters() {
-  window.appObject.userSelectedUseCaseList = getCheckedCheckboxes(elements.useCaseCheckboxesWrapper);
-  window.appObject.userSelectedLicensesList = getCheckedCheckboxes(elements.licenseCheckboxesWrapper);
-  window.appObject.userSelectedSourcesList = getCheckedCheckboxes(elements.sourceCheckboxesWrapper);
-  window.appObject.userSelectedFileTypeList = getCheckedCheckboxes(elements.fileTypeCheckboxesWrapper);
-  window.appObject.userSelectedImageTypeList = getCheckedCheckboxes(elements.imageTypeCheckboxesWrapper);
-  window.appObject.userSelectedImageSizeList = getCheckedCheckboxes(elements.imageSizeCheckboxesWrapper);
-  window.appObject.userSelectedAspectRatioList = getCheckedCheckboxes(elements.aspectRatioCheckboxesWrapper);
-  window.appObject.enableMatureContent = getCheckedCheckboxes(elements.showMatureContentCheckboxWrapper).length > 0;
-
-  // "activate" filter icon if some filters are applied
-  // if (
-  //   window.appObject.userSelectedSourcesList.length > 0 ||
-  //   window.appObject.userSelectedLicensesList.length > 0 ||
-  //   window.appObject.userSelectedUseCaseList.length > 0 ||
-  //   window.appObject.userSelectedFileTypeList.length > 0 ||
-  //   window.appObject.userSelectedImageTypeList.length > 0 ||
-  //   window.appObject.userSelectedImageSizeList.length > 0 ||
-  //   window.appObject.userSelectedAspectRatioList.length > 0
-  // ) {
-  //   elements.filterButton.classList.add('activate-filter');
-  // } else {
-  //   elements.filterButton.classList.remove('activate-filter');
-  // }
-}
-
-elements.applyFiltersButton.addEventListener('click', () => {
-  applyFilters();
-  primaryGridMasonryObject.layout();
-  elements.closeFiltersLink.click();
-  elements.searchButton.click();
-});
+/* *********************** Search Section *********************** */
 
 elements.searchButton.addEventListener('click', () => {
-  window.appObject.inputText = elements.inputField.value.trim().replace('/[ ]+/g', ' ');
-  window.appObject.pageNo = 1;
-  window.appObject.activeSearchContext = 'normal';
+  appObject.inputText = elements.inputField.value.trim().replace('/[ ]+/g', ' ');
+  appObject.pageNo = 1;
+  appObject.searchContext = 'default';
 
-  checkInputError(window.appObject.inputText);
-  // checkIfSourceFilterIsRendered();
+  checkInputError(appObject.inputText);
   checkInternetConnection();
 
+  // If the latest sources are still not fetched from the API and loaded in the
+  // filters section, notify the user and terminate search.
   if (elements.sourceCheckboxesWrapper.children.length === 1) {
     showNotification(
       'Extension is fetching latest sources. Please wait a sec.',
@@ -185,85 +45,113 @@ elements.searchButton.addEventListener('click', () => {
     throw new Error('Sources not yet fetched');
   }
 
-  removeOldSearchResults();
+  removeImagesFromGrid(elements.gridPrimary);
   removeSpinner(elements.spinnerPlaceholderPrimary);
-  applyFilters();
-
-  // enable spinner
+  appObject.updateFilters();
   addSpinner(elements.spinnerPlaceholderPrimary, 'original');
-  // elements.spinner.classList.add('spinner');
 
-  const url = getRequestUrl(
-    window.appObject.inputText,
-    window.appObject.userSelectedUseCaseList,
-    window.appObject.userSelectedLicensesList,
-    window.appObject.userSelectedSourcesList,
-    window.appObject.userSelectedFileTypeList,
-    window.appObject.userSelectedImageTypeList,
-    window.appObject.userSelectedImageSizeList,
-    window.appObject.userSelectedAspectRatioList,
-    window.appObject.pageNo,
-    window.appObject.enableMatureContent,
-  );
-
-  // console.log(url);
-
+  const url = getRequestUrl();
   search(url);
-  // pageNo += 1;
-  // elements.clearSearchButton[0].classList.remove('display-none');
 });
 
-function restoreAppObjectVariables() {
-  chrome.storage.sync.get(['enableMatureContent'], res => {
-    window.appObject.enableMatureContent = res.enableMatureContent === true;
-  });
-}
-
-restoreAppObjectVariables();
-loadUserDefaults();
-
-async function nextRequest() {
-  let result = [];
-  let url;
-  if (window.appObject.activeSearchContext === 'collection') {
-    url = getCollectionsUrl(window.appObject.collectionName, window.appObject.pageNo);
-  } else if (window.appObject.activeSearchContext === 'normal') {
-    url = getRequestUrl(
-      window.appObject.inputText,
-      window.appObject.userSelectedUseCaseList,
-      window.appObject.userSelectedLicensesList,
-      window.appObject.userSelectedSourcesList,
-      window.appObject.userSelectedFileTypeList,
-      window.appObject.userSelectedImageTypeList,
-      window.appObject.userSelectedImageSizeList,
-      window.appObject.userSelectedAspectRatioList,
-      window.appObject.pageNo,
-      window.appObject.enableMatureContent,
-    );
-  } else if (window.appObject.activeSearchContext === 'tag') {
-    url = getTagsUrl(window.appObject.tagName, window.appObject.pageNo);
+elements.inputField.addEventListener('keydown', event => {
+  // "Click" the Search Button when pressing "Enter".
+  if (event.key === 'Enter') {
+    elements.searchButton.click();
   }
+});
 
+/**
+ * @desc Fetches next bunch of images from the API and calls "addImagesToDOM" to make
+ * image-components and render them on the search grid.
+ */
+async function nextRequest() {
+  // deciding the API request url based on the current search-context
+  let url;
+  const { searchContext } = appObject;
+  if (searchContext === 'collection') {
+    url = getCollectionsUrl();
+  } else if (searchContext === 'default') {
+    url = getRequestUrl();
+  } else if (searchContext === 'image-tag') {
+    url = getTagsUrl();
+  }
   console.log(url);
-  const response = await fetch(url);
-  const json = await response.json();
-  result = json.results;
-  // console.log(result);
-  addSearchThumbnailsToDOM(primaryGridMasonryObject, result, elements.gridPrimary);
-  window.appObject.pageNo += 1;
+
+  const images = await fetchImages(url);
+  addImagesToDOM(primaryGridMasonryObject, images, elements.gridPrimary);
+  appObject.pageNo += 1;
 }
 
 elements.loadMoreSearchButton.addEventListener('click', () => {
   removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);
   addSpinner(elements.spinnerPlaceholderPrimary, 'for-bottom');
-  nextRequest(window.appObject.pageNo);
+  nextRequest();
 });
 
+/* *********************** Filters Section *********************** */
+
+elements.filterButton.addEventListener('click', toggleFilterSection);
+elements.closeFiltersLink.addEventListener('click', toggleFilterSection);
+
+allowCheckingOneTypeOfCheckbox(elements.licenseCheckboxesWrapper, elements.useCaseCheckboxesWrapper);
+setTimeout(addSourceFilterCheckboxes, 2000);
+
+filterCheckboxWrappers.forEach(wrapper => {
+  if (wrapper !== elements.sourceCheckboxesWrapper) markDefaultFilters(wrapper);
+});
+
+elements.clearFiltersButton.addEventListener('click', () => {
+  clearFilters();
+
+  // close the filters section and make a search
+  primaryGridMasonryObject.layout();
+  elements.closeFiltersLink.click();
+  elements.searchButton.click();
+});
+
+elements.applyFiltersButton.addEventListener('click', () => {
+  appObject.updateFilters();
+  primaryGridMasonryObject.layout();
+  elements.closeFiltersLink.click();
+  elements.searchButton.click();
+});
+
+/* *********************** Bookmarks Section *********************** */
 elements.loadMoreBookmarkButton.addEventListener('click', () => {
   removeLoadMoreButton(elements.loadMoreBookmarkButtonkWrapper);
   addSpinner(elements.spinnerPlaceholderPrimary, 'for-bottom');
-  loadBookmarkImages(10, window.appObject.bookmarksEditViewEnabled);
+  loadBookmarkImages(10, appObject.isEditViewEnabled);
 });
+
+/* *********************** Image Detail Section *********************** */
+
+elements.closeImageDetailLink.addEventListener('click', () => {
+  resetImageDetailSection();
+  if (appObject.clickedImageTag) {
+    appObject.imageDetailStack.clear();
+    appObject.clickedImageTag = false;
+  } else appObject.imageDetailStack.pop();
+
+  if (appObject.imageDetailStack.isEmpty()) {
+    elements.header.classList.remove('display-none');
+    elements.sectionMain.classList.remove('display-none');
+    elements.imageDetailSection.classList.add('display-none');
+  } else {
+    elements.buttonBackToTop.click();
+    fillImageDetailSection(appObject.imageDetailStack.top());
+  }
+
+  // lays out images in masonry grid again
+  bookmarksGridMasonryObject.layout();
+  primaryGridMasonryObject.layout();
+});
+
+// add tab switching functionality to image-detail nav and attribution tab.
+elements.imageDetailNav.getElementsByTagName('ul')[0].addEventListener('click', enableTabSwitching);
+elements.attributionTab.firstElementChild.getElementsByTagName('ul')[0].addEventListener('click', enableTabSwitching);
+
+/* *********************** Misc *********************** */
 
 elements.navSettingsLink.addEventListener('click', () => {
   // visually marking settings link as active
@@ -274,17 +162,20 @@ elements.navSettingsLink.addEventListener('click', () => {
 });
 
 elements.navInvertColorsIcon.addEventListener('click', () => {
+  // toggling dark-mode
   document.body.classList.toggle('dark');
   document.documentElement.classList.toggle('dark');
 
+  // saving the user preferrence in sync storage.
   chrome.storage.sync.get('darkmode', items => {
     const value = !items.darkmode;
     chrome.storage.sync.set({
-      darkmode: value, // using ES6 to use variable as key of object
+      darkmode: value,
     });
   });
 });
 
+// Set the user preferrence of dark mode.
 chrome.storage.sync.get('darkmode', items => {
   if (items.darkmode) {
     document.body.classList.add('dark');
@@ -292,6 +183,7 @@ chrome.storage.sync.get('darkmode', items => {
   }
 });
 
+// back to top button
 window.addEventListener('scroll', () => {
   if (window.scrollY > 400) {
     elements.buttonBackToTop.classList.add('show');
@@ -299,8 +191,6 @@ window.addEventListener('scroll', () => {
     elements.buttonBackToTop.classList.remove('show');
   }
 });
-
 elements.buttonBackToTop.addEventListener('click', () => window.scrollTo(0, 0));
 
-confirmBookmarkSchemaInSync();
-confirmFilterSchemaInSync();
+checkSyncStorageSchema();
