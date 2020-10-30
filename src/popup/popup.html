@@ -6,9 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
     <link rel="stylesheet" href="https://unpkg.com/@creativecommons/vocabulary@2020.8.7/css/vocabulary.css" />
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="popup.css" />
     <title>Creative Commons</title>
   </head>
+    <style>
+        .tooltip-inner{
+            
+            text-align: left !important;
+            letter-spacing: 1px !important;
+        }
+    
+    </style>
 
   <body>
     <div class="button-backToTop"><i class="icon chevron-up"></i></div>
@@ -82,38 +91,45 @@
         <div class="section-filter__license margin-top-big" data-storage-key-name="licenseFilter">
           <h5 class="b-header margin-bottom-normal">Licenses</h5>
           <input type="checkbox" id="CC0" />
-          <label for="CC0"> <i class="icon cc-zero has-background-white margin-right-smaller"></i> CC0</label><br />
+            <label for="CC0"><i class="icon cc-logo has-background-white margin-right-smaller"></i>  <i class="icon cc-zero has-background-white margin-right-smaller"></i> CC0 <button style="margin-left: 150px ; border: none; background-color: white;"  data-toggle="tooltip" data-placement="right" data-html="true"  title="<b> CC0</b><p><i class='icon cc-zero'></i> This work has been marked as dedicated to the public domain.</p><p>Read more about the tool <span><a href='#'>here</a></span></p>"><i class="icon question-circle" ></i></button>
+                
+</label><br />
           <input type="checkbox" id="PDM" />
-          <label for="PDM"><i class="icon cc-pd has-background-white margin-right-smaller"></i>Public Domain Mark</label
+          <label for="PDM"><i class="icon cc-logo has-background-white margin-right-smaller"></i><i class="icon cc-pd has-background-white margin-right-smaller"></i>Public Domain Mark  <button style="margin-left: 43px ; border: none; background-color: white;"  data-toggle="tooltip" data-placement="right" data-html="true"  title="<b> PDM</b><p><i class='icon cc-pd'></i> This work is marked as being in the public domain.</p><p>Read more about the tool <span><a href='#'>here</a></span></p> "><i class="icon question-circle" ></i></button></label
           ><br />
           <input type="checkbox" id="BY" />
-          <label for="BY"><i class="icon cc-by has-background-white margin-right-smaller"></i>BY</label><br />
+          <label for="BY"><i class="icon cc-logo has-background-white margin-right-smaller"></i> <i class="icon cc-by has-background-white margin-right-smaller"></i>BY  <button style="margin-left: 165px ; border: none; background-color: white;"  data-toggle="tooltip" data-placement="right" data-html="true"  title="<b> License CC BY</b><p><i class='icon cc-by'></i> Credit the creator.</p><p>Read more about the tool <span><a href='#'>here</a></span></p>"><i class="icon question-circle" ></i></button></label><br />
           <input type="checkbox" id="BY-SA" />
           <label for="BY-SA"
-            ><i class="icon cc-by has-background-white margin-right-smaller"></i
-            ><i class="icon cc-sa has-background-white margin-right-smaller"></i>BY-SA</label
+            ><i class="icon cc-logo has-background-white margin-right-smaller"></i> <i class="icon cc-by has-background-white margin-right-smaller"></i
+            ><i class="icon cc-sa has-background-white margin-right-smaller"></i>BY-SA 
+            <button style="margin-left: 120px ; border: none; background-color: white;"  data-toggle="tooltip" data-placement="right" data-html="true"  title="<b> License CC BY-SA</b><p><i class='icon cc-by'></i> Credit the creator.<br/><i class='icon cc-sa'></i> Share adaptations under the same terms.</p><p>Read more about the tool <span><a href='#'>here</a></span></p>"><i class="icon question-circle" ></i></button></label
           ><br />
           <input type="checkbox" id="BY-NC" />
           <label for="BY-NC"
-            ><i class="icon cc-by has-background-white margin-right-smaller"></i
-            ><i class="icon cc-nc has-background-white margin-right-smaller"></i>BY-NC</label
+            ><i class="icon cc-logo has-background-white margin-right-smaller"></i> <i class="icon cc-by has-background-white margin-right-smaller"></i
+            ><i class="icon cc-nc has-background-white margin-right-smaller"></i>BY-NC 
+            <button style="margin-left: 117px ; border: none; background-color: white;"  data-toggle="tooltip" data-placement="right" data-html="true"  title="<b> License CC BY-NC</b><p><i class='icon cc-by'></i> Credit the creator.<br/><i class='icon cc-nc'></i> Noncommercial uses only.</p><p>Read more about the tool <span><a href='#'>here</a></span></p>"><i class="icon question-circle" ></i></button></label
           ><br />
           <input type="checkbox" id="BY-ND" />
           <label for="BY-ND"
-            ><i class="icon cc-by has-background-white margin-right-smaller"></i
-            ><i class="icon cc-nd has-background-white margin-right-smaller"></i>BY-ND</label
+            ><i class="icon cc-logo has-background-white margin-right-smaller"></i> <i class="icon cc-by has-background-white margin-right-smaller"></i
+            ><i class="icon cc-nd has-background-white margin-right-smaller"></i>BY-ND 
+            <button style="margin-left: 116px ; border: none; background-color: white;"  data-toggle="tooltip" data-placement="right" data-html="true"  title="<b> License CC BY-ND</b><p><i class='icon cc-by'></i> Credit the creator.<br/><i class='icon cc-nd'></i> No derivatives or adaptations permitted.</p><p>Read more about the tool <span><a href='#'>here</a></span></p>"><i class="icon question-circle" ></i></button></label
           ><br />
           <input type="checkbox" id="BY-NC-SA" />
           <label for="BY-NC-SA"
-            ><i class="icon cc-by has-background-white margin-right-smaller"></i
+            ><i class="icon cc-logo has-background-white margin-right-smaller"></i> <i class="icon cc-by has-background-white margin-right-smaller"></i
             ><i class="icon cc-nc has-background-white margin-right-smaller"></i
-            ><i class="icon cc-sa has-background-white margin-right-smaller"></i>BY-NC-SA</label
+            ><i class="icon cc-sa has-background-white margin-right-smaller"></i>BY-NC-SA 
+            <button style="margin-left: 73px ; border: none; background-color: white;"  data-toggle="tooltip" data-placement="right" data-html="true"  title="<b> License CC BY-NC-SA</b><p><i class='icon cc-by'></i> Credit the creator.<br/><i class='icon cc-nc'></i> Noncommercial uses only.<br/><i class='icon cc-sa'></i> Share adaptations under the same terms.</p><p>Read more about the tool <span><a href='#'>here</a></span></p>"><i class="icon question-circle" ></i></button></label
           ><br />
           <input type="checkbox" id="BY-NC-ND" />
           <label for="BY-NC-ND"
-            ><i class="icon cc-by has-background-white margin-right-smaller"></i
+            ><i class="icon cc-logo has-background-white margin-right-smaller"></i> <i class="icon cc-by has-background-white margin-right-smaller"></i
             ><i class="icon cc-nc has-background-white margin-right-smaller"></i
-            ><i class="icon cc-nd has-background-white margin-right-smaller"></i>BY-NC-ND</label
+            ><i class="icon cc-nd has-background-white margin-right-smaller"></i>BY-NC-ND 
+           <button style="margin-left: 69px ; border: none; background-color: white;"  data-toggle="tooltip" data-placement="right" data-html="true"  title="<b> License CC BY-NC-ND</b><p><i class='icon cc-by'></i> Credit the creator.<br/><i class='icon cc-nc'></i> Noncommercial uses only.<br/><i class='icon cc-nd'></i> No derivatives or adaptations permitted.</p><p>Read more about the tool <span><a href='#'>here</a></span></p>"><i class="icon question-circle" ></i></button></label
           ><br />
         </div>
         <div class="section-filter__source margin-top-big" data-storage-key-name="sourceFilter">
@@ -343,7 +359,14 @@
         </span>
       </div>
     </div>
-
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script src="popup.js"></script>
+      <script>
+      $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+      </script>
   </body>
 </html>
