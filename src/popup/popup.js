@@ -21,7 +21,7 @@ import loadBookmarkImages from './bookmarkModule';
 import checkSyncStorageSchema from './popup.utils';
 import { removeActiveClassFromNavLinks } from './bookmarkModule.utils';
 import { addImagesToDOM, search } from './localUtils';
-import { addSourceFilterCheckboxes, toggleFilterSection, tooltiGen} from './filterModule';
+import { addSourceFilterCheckboxes, toggleFilterSection } from './filterModule';
 
 /* *********************** Search Section *********************** */
 
@@ -109,6 +109,16 @@ elements.clearFiltersButton.addEventListener('click', () => {
   elements.closeFiltersLink.click();
   elements.searchButton.click();
 });
+
+  // added a function to fetch licencse explanation
+function tooltiGen(self) {
+  let pathId = self.getAttribute('data-id');
+  let heading=tooltipInfo[pathId].tooltipHeading;
+  let content=tooltipInfo[pathId].tooltipContent;
+  let html = '';
+  html += `<b>${heading}</b><p>${content}</p><br/><p class="caption is-pulled-right margin-small">Read more about the tool <a href='#'>here</a></p>`;
+  document.getElementById(`${pathId}-gen`).innerHTML = html;
+}
 
 elements.applyFiltersButton.addEventListener('click', () => {
   appObject.updateFilters();
