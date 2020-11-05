@@ -6,7 +6,7 @@ import {
   filterCheckboxWrappers,
 } from './base';
 import { checkInputError, getRequestUrl, getCollectionsUrl } from './searchModule';
-import { removeLoadMoreButton, clearFilters, removeImagesFromGrid, getTagsUrl } from './helper';
+import { removeLoadMoreButton, clearFilters, removeImagesFromGrid, getTagsUrl, tooltipInfo } from './helper';
 import { fillImageDetailSection, resetImageDetailSection } from './imageDetailModule';
 import { addSpinner, removeSpinner } from './spinner';
 import {
@@ -21,7 +21,7 @@ import loadBookmarkImages from './bookmarkModule';
 import checkSyncStorageSchema from './popup.utils';
 import { removeActiveClassFromNavLinks } from './bookmarkModule.utils';
 import { addImagesToDOM, search } from './localUtils';
-import { addSourceFilterCheckboxes, toggleFilterSection } from './filterModule';
+import { addSourceFilterCheckboxes, toggleFilterSection, tooltiGen} from './filterModule';
 
 /* *********************** Search Section *********************** */
 
