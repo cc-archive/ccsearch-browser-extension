@@ -1,6 +1,6 @@
 import { appObject, elements } from './base';
 import { getLatestSources, markDefaultFilters, showNotification } from '../utils';
-
+import { tooltipInfo } from './helper';
 /**
  * @desc Makes input checkboxes for the latest sources and adds them in the filter section.
  */
@@ -37,12 +37,11 @@ export function toggleFilterSection(event) {
   elements.filterSection.classList.toggle('display-none');
 }
 
- export function tooltiGen(self){
-     
-    var pathId = self.getAttribute("data-id");
-     var heading=tooltipInfo[pathId]['tooltipHeading'];
-     var content=tooltipInfo[pathId]['tooltipContent'];
-    var html="";
+export function tooltiGen(self){
+  var pathId = self.getAttribute("data-id");
+  var heading = tooltipInfo[pathId]['tooltipHeading'];
+  var content = tooltipInfo[pathId]['tooltipContent'];
+  var html="";
     html+=`<b>${heading}</b><p>${content}</p><br/><p class="caption is-pulled-right margin-small">Read more about the tool <a href='#'>here</a></p>`
     
      document.getElementById(`${pathId}-gen`).innerHTML = html;
