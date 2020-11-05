@@ -115,7 +115,7 @@ const tooltiGen = function() {
   const pathId = this.id;
   const heading = tooltipInfo[pathId].tooltipHeading;
   const content = tooltipInfo[pathId].tooltipContent;
-  let html = "";
+  let html = ``;
   html += `<b>${heading}</b><p>${content}</p><br/><p class="caption is-pulled-right margin-small">Read more about the tool <a href='#'>here</a></p>`;
   document.getElementById(`${pathId}-gen`).innerHTML = html;
 };
