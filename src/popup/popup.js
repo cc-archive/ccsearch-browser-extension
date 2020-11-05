@@ -110,11 +110,11 @@ elements.clearFiltersButton.addEventListener('click', () => {
   elements.searchButton.click();
 });
 
-  // added a function to fetch licencse explanation
+// added a function to fetch licencse explanation
 function tooltiGen(self) {
-  let pathId = self.getAttribute('data-id');
-  let heading=tooltipInfo[pathId].tooltipHeading;
-  let content=tooltipInfo[pathId].tooltipContent;
+  const pathId = self.getAttribute('data-id');
+  const heading = tooltipInfo[pathId].tooltipHeading;
+  const content = tooltipInfo[pathId].tooltipContent;
   let html = '';
   html += `<b>${heading}</b><p>${content}</p><br/><p class="caption is-pulled-right margin-small">Read more about the tool <a href='#'>here</a></p>`;
   document.getElementById(`${pathId}-gen`).innerHTML = html;

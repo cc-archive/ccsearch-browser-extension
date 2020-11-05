@@ -131,19 +131,19 @@ export const tooltipInfo = {
     tooltipContent: `<p><i class='icon cc-by'></i> Credit the creator.<br/><i class='icon cc-nd'></i> No derivatives or adaptations permitted.</p>`,
   },
   byncsa: {
-      tooltipHeading: `License CC BY-NC-SA`,
-      tooltipContent: `<p><i class='icon cc-by'></i> Credit the creator.<br/><i class='icon cc-nc'></i> Noncommercial uses only.<br/><i class='icon cc-sa'></i> Share adaptations under the same terms.</p>`,
+    tooltipHeading: `License CC BY-NC-SA`,
+    tooltipContent: `<p><i class='icon cc-by'></i> Credit the creator.<br/><i class='icon cc-nc'></i> Noncommercial uses only.<br/><i class='icon cc-sa'></i> Share adaptations under the same terms.</p>`,
   },
   byncnd: {
-      tooltipHeading: `License CC BY-NC-ND`,
-      tooltipContent: `<p><i class='icon cc-by'></i> Credit the creator.<br/><i class='icon cc-nc'></i> Noncommercial uses only.<br/><i class='icon cc-nd'></i> No derivatives or adaptations permitted.</p>`,
+    tooltipHeading: `License CC BY-NC-ND`,
+    tooltipContent: `<p><i class='icon cc-by'></i> Credit the creator.<br/><i class='icon cc-nc'></i> Noncommercial uses only.<br/><i class='icon cc-nd'></i> No derivatives or adaptations permitted.</p>`,
   },
   pdm: {
-    tooltipHeading:`PDM`,
+    tooltipHeading: `PDM`,
     tooltipContent: `<p><i class='icon cc-pd'></i> This work is marked as being in the public domain.</p>`,
   },
   cc0: {
-    tooltipHeading:`CC0`,
+    tooltipHeading: `CC0`,
     tooltipContent: `<p><i class='icon cc-zero'></i> This work has been marked as dedicated to the public domain.</p>`,
   },
 };

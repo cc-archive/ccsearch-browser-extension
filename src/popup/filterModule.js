@@ -1,6 +1,5 @@
 import { appObject, elements } from './base';
 import { getLatestSources, markDefaultFilters, showNotification } from '../utils';
-import { tooltipInfo } from './helper';
 /**
  * @desc Makes input checkboxes for the latest sources and adds them in the filter section.
  */
