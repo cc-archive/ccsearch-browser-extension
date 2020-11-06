@@ -128,6 +128,14 @@ elements.byncbtn.onclick = tooltiGen;
 elements.byndbtn.onclick = tooltiGen;
 elements.byncsabtn.onclick = tooltiGen;
 elements.byncndbtn.onclick = tooltiGen;
+elements.cc0btn.onmouseover = tooltiGen;
+elements.pdmbtn.onmouseover = tooltiGen;
+elements.bybtn.onmouseover = tooltiGen;
+elements.bysabtn.onmouseover = tooltiGen;
+elements.byncbtn.onmouseover = tooltiGen;
+elements.byndbtn.onmouseover = tooltiGen;
+elements.byncsabtn.onmouseover = tooltiGen;
+elements.byncndbtn.onmouseover = tooltiGen;
 
 elements.applyFiltersButton.addEventListener('click', () => {
   appObject.updateFilters();
