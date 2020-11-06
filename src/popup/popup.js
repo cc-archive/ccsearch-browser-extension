@@ -6,7 +6,7 @@ import {
   filterCheckboxWrappers,
 } from './base';
 import { checkInputError, getRequestUrl, getCollectionsUrl } from './searchModule';
-import { removeLoadMoreButton, clearFilters, removeImagesFromGrid, getTagsUrl } from './helper';
+import { removeLoadMoreButton, clearFilters, removeImagesFromGrid, getTagsUrl , checkResultLength } from './helper';
 import { fillImageDetailSection, resetImageDetailSection } from './imageDetailModule';
 import { addSpinner, removeSpinner } from './spinner';
 import {
@@ -79,6 +79,7 @@ async function nextRequest() {
   console.log(url);
 
   const images = await fetchImages(url);
+  checkResultLength(images);
   addImagesToDOM(primaryGridMasonryObject, images, elements.gridPrimary);
   appObject.pageNo += 1;
 }
