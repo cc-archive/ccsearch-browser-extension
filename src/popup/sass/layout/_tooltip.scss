@@ -7,12 +7,14 @@
   visibility: hidden;
   position: absolute;
   width: 180px;
-  background-color: #555;
-  color: #fff;
+  background-color: #fff;
+  border: 2px solid #d8d8d8;
+  z-index: 400;
+  width: 20rem;
+  box-shadow: 10px 10px 10px -10px rgba(0,0,0,.25);
+  color: #333;
   text-align: left;
   padding: 5px;
-  border-radius: 6px;
-  z-index: 1;
   opacity: 0;
   transition: opacity 0.3s;
 }
@@ -28,9 +30,9 @@
   top: 10%;
   right: 100%;
   margin-top: -5px;
-  border-width: 5px;
+  border-width: 13px;
   border-style: solid;
-  border-color: transparent #555 transparent transparent;
+  border-color: transparent #d8d8d8 transparent transparent;
 }
 
 .tooltip:hover .tooltiptext {
@@ -49,4 +51,7 @@
 
 .margin-small {
   margin: 0.1rem !important;
+}
+.padding-small {
+    padding: .5rem!important;
 }

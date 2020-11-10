@@ -115,35 +115,39 @@ export const licenseInfo = {
 
 export const tooltipInfo = {
   by: {
-    tooltipHeading: `License CC BY`,
-    tooltipContent: `<p><i class='icon cc-by'></i> Credit the creator.</p>`,
+      tooltipHeading:`License CC BY`,
+      tooltipContent: `<p><i class='icon ${licenseInfo.by.licenseIcon}'></i> ${licenseInfo.by.licenseDescription}</p>`,
   },
   bync: {
-    tooltipHeading: `License CC BY-NC`,
-    tooltipContent: `<p><i class='icon cc-by'></i> Credit the creator.<br/><i class='icon cc-nc'></i> Noncommercial uses only.</p>`,
+   tooltipHeading:`License CC BY-NC`,
+      tooltipContent: `<p><i class='icon ${licenseInfo.by.licenseIcon}'></i> ${licenseInfo.by.licenseDescription}<br/><i class='icon ${licenseInfo.nc.licenseIcon}'></i> ${licenseInfo.nc.licenseDescription}</p>`,
   },
   bysa: {
-    tooltipHeading: `License CC BY-SA`,
-    tooltipContent: `<p><i class='icon cc-by'></i> Credit the creator.<br/><i class='icon cc-sa'></i> Share adaptations under the same terms.</p>`,
+    tooltipHeading:`License CC BY-SA`,
+      tooltipContent: `<p><i class='icon ${licenseInfo.by.licenseIcon}'></i> ${licenseInfo.by.licenseDescription}<br/><i class='icon ${licenseInfo.sa.licenseIcon}'></i> ${licenseInfo.sa.licenseDescription}</p>`,
   },
   bynd: {
-    tooltipHeading: `License CC BY-ND`,
-    tooltipContent: `<p><i class='icon cc-by'></i> Credit the creator.<br/><i class='icon cc-nd'></i> No derivatives or adaptations permitted.</p>`,
+   tooltipHeading:`License CC BY-ND`,
+      tooltipContent: `<p><i class='icon ${licenseInfo.by.licenseIcon}'></i> ${licenseInfo.by.licenseDescription}<br/><i class='icon ${licenseInfo.nd.licenseIcon}'></i> ${licenseInfo.nd.licenseDescription}</p>`,
   },
-  byncsa: {
-    tooltipHeading: `License CC BY-NC-SA`,
-    tooltipContent: `<p><i class='icon cc-by'></i> Credit the creator.<br/><i class='icon cc-nc'></i> Noncommercial uses only.<br/><i class='icon cc-sa'></i> Share adaptations under the same terms.</p>`,
-  },
-  byncnd: {
-    tooltipHeading: `License CC BY-NC-ND`,
-    tooltipContent: `<p><i class='icon cc-by'></i> Credit the creator.<br/><i class='icon cc-nc'></i> Noncommercial uses only.<br/><i class='icon cc-nd'></i> No derivatives or adaptations permitted.</p>`,
-  },
+  byncsa:{
+   tooltipHeading:`License CC BY-NC-SA`,
+      tooltipContent: `<p><i class='icon ${licenseInfo.by.licenseIcon}'></i> ${licenseInfo.by.licenseDescription}<br/><i class='icon ${licenseInfo.nc.licenseIcon}'></i> ${licenseInfo.nc.licenseDescription}<br/><i class='icon ${licenseInfo.sa.licenseIcon}'></i> ${licenseInfo.by.licenseDescription}</p>`,
+        
+    },
+  byncnd:{
+        tooltipHeading:`License CC BY-NC-ND`,
+      tooltipContent: `<p><i class='icon ${licenseInfo.by.licenseIcon}'></i> ${licenseInfo.by.licenseDescription}<br/><i class='icon ${licenseInfo.nc.licenseIcon}'></i> ${licenseInfo.by.licenseDescription}<br/><i class='icon ${licenseInfo.nd.licenseIcon}'></i> ${licenseInfo.by.licenseDescription}</p>`,
+        
+    },
   pdm: {
-    tooltipHeading: `PDM`,
-    tooltipContent: `<p><i class='icon cc-pd'></i> This work is marked as being in the public domain.</p>`,
+    tooltipHeading:`PDM`,
+    tooltipContent: `<p><i class='icon ${licenseInfo.pdm.licenseIcon}'></i> ${licenseInfo.pdm.licenseDescription}</p>`,
   },
   cc0: {
-    tooltipHeading: `CC0`,
-    tooltipContent: `<p><i class='icon cc-zero'></i> This work has been marked as dedicated to the public domain.</p>`,
+      tooltipHeading:`CC0`,
+    tooltipContent: `<p><i class='icon ${licenseInfo.cc0.licenseIcon}'></i> ${licenseInfo.cc0.licenseDescription}</p>`,
   },
 };
+
+
