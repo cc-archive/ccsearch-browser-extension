@@ -12,7 +12,6 @@ import {
   removeImagesFromGrid,
   getTagsUrl,
   tooltipInfo,
-  licenseInfo,
 } from './helper';
 import { fillImageDetailSection, resetImageDetailSection } from './imageDetailModule';
 import { addSpinner, removeSpinner } from './spinner';
