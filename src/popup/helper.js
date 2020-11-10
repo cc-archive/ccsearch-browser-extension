@@ -136,7 +136,7 @@ export const tooltipInfo = {
   },
   byncnd: {
     tooltipHeading: `License CC BY-NC-ND`,
-    tooltipContent: `<p><i class='icon ${licenseInfo.by.licenseIcon}'></i> ${licenseInfo.by.licenseDescription}<br/><i class='icon ${licenseInfo.nc.licenseIcon}'></i> ${licenseInfo.by.licenseDescription}<br/><i class='icon ${licenseInfo.nd.licenseIcon}'></i> ${licenseInfo.by.licenseDescription}</p>`,
+    tooltipContent: `<p><i class='icon ${licenseInfo.by.licenseIcon}'></i> ${licenseInfo.by.licenseDescription}<br/><i class='icon ${licenseInfo.nc.licenseIcon}'></i> ${licenseInfo.nc.licenseDescription}<br/><i class='icon ${licenseInfo.nd.licenseIcon}'></i> ${licenseInfo.nd.licenseDescription}</p>`,
   },
   pdm: {
     tooltipHeading: `PDM`,
