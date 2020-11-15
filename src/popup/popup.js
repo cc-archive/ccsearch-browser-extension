@@ -79,6 +79,7 @@ async function nextRequest() {
   console.log(url);
 
   const images = await fetchImages(url);
+  checkResultLength(images, 'forNextRequest');
   addImagesToDOM(primaryGridMasonryObject, images, elements.gridPrimary);
   appObject.pageNo += 1;
 }

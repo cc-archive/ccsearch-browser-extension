@@ -67,14 +67,15 @@ export function removeLoadMoreButton(loadMoreButtonWrapper) {
  * notify the user, and throw Error.
  * @param {Object[]} resultArray
  */
-export function checkResultLength(resultArray) {
+export function checkResultLength(resultArray, context) {
   if (resultArray.length === 0) {
-    showNotification(
-      'No Images Found. Please enter a different query.',
-      'negative',
-      'notification--extension-popup',
-      4000,
-    );
+    let message;
+    if (context === 'forSearch') {
+      message = 'No Images Found. Please enter a different query.';
+    } else if (context === 'forNextRequest') {
+      message = 'No more images found.';
+    }
+    showNotification(message, 'negative', 'notification--extension-popup', 4000);
     removeSpinner(elements.spinnerPlaceholderPrimary);
     removeLoadMoreButton(elements.loadMoreSearchButtonWrapper);
     primaryGridMasonryObject.layout();

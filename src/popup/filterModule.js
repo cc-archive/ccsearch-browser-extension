@@ -25,7 +25,7 @@ export async function addSourceFilterCheckboxes() {
       elements.sourceCheckboxesWrapper.appendChild(breakElement);
     }
     markDefaultFilters(elements.sourceCheckboxesWrapper);
-    showNotification('Fetched latest sources succcessfully.', 'positive', 'notification--extension-popup');
+    showNotification('Fetched latest sources successfully.', 'positive', 'notification--extension-popup');
   }
 }
 
