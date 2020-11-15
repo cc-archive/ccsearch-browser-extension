@@ -222,7 +222,7 @@ export function addImagesToDOM(masonryObject, imageObjects, gridDiv, forBookmark
  */
 export async function search(url) {
   const images = await fetchImages(url);
-  checkResultLength(images);
+  checkResultLength(images, 'forSearch');
   addImagesToDOM(primaryGridMasonryObject, images, elements.gridPrimary);
   appObject.pageNo += 1;
 }
