@@ -6,7 +6,7 @@ import {
   filterCheckboxWrappers,
 } from './base';
 import { checkInputError, getRequestUrl, getCollectionsUrl } from './searchModule';
-import { removeLoadMoreButton, clearFilters, removeImagesFromGrid, getTagsUrl, tooltipInfo } from './helper';
+import { removeLoadMoreButton, clearFilters, removeImagesFromGrid, getTagsUrl, checkResultLength, tooltipInfo } from './helper';
 import { fillImageDetailSection, resetImageDetailSection } from './imageDetailModule';
 import { addSpinner, removeSpinner } from './spinner';
 import {
