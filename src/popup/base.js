@@ -39,6 +39,15 @@ export const elements = {
   imageSizeCheckboxesWrapper: document.querySelector('.section-filter__image-size'),
   aspectRatioCheckboxesWrapper: document.querySelector('.section-filter__aspect-ratio'),
   showMatureContentCheckboxWrapper: document.querySelector('.section-filter__show-mature-content'),
+  // tooltip buttons
+  cc0btn: document.getElementById('cc0'),
+  pdmbtn: document.getElementById('pdm'),
+  bybtn: document.getElementById('by'),
+  bysabtn: document.getElementById('bysa'),
+  byncbtn: document.getElementById('bync'),
+  byndbtn: document.getElementById('bynd'),
+  byncsabtn: document.getElementById('byncsa'),
+  byncndbtn: document.getElementById('byncnd'),
   // footer buttons
   clearFiltersButton: document.getElementById('clear-filters-button'),
   applyFiltersButton: document.getElementById('apply-filters-button'),

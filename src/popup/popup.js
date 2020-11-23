@@ -6,7 +6,14 @@ import {
   filterCheckboxWrappers,
 } from './base';
 import { checkInputError, getRequestUrl, getCollectionsUrl } from './searchModule';
-import { removeLoadMoreButton, clearFilters, removeImagesFromGrid, getTagsUrl, checkResultLength } from './helper';
+import {
+  removeLoadMoreButton,
+  clearFilters,
+  removeImagesFromGrid,
+  getTagsUrl,
+  checkResultLength,
+  tooltipInfo,
+} from './helper';
 import { fillImageDetailSection, resetImageDetailSection } from './imageDetailModule';
 import { addSpinner, removeSpinner } from './spinner';
 import {
@@ -110,6 +117,33 @@ elements.clearFiltersButton.addEventListener('click', () => {
   elements.closeFiltersLink.click();
   elements.searchButton.click();
 });
+
+// a function to fetch licencse explanation
+const tooltiGen = function() {
+  const pathId = this.id;
+  const heading = tooltipInfo[pathId].tooltipHeading;
+  const content = tooltipInfo[pathId].tooltipContent;
+  let html = ``;
+  html += `<b>${heading}</b><p>${content}</p><br/><p class="caption is-pulled-right margin-small">Read more about the tool <a href='#'>here</a></p>`;
+  document.getElementById(`${pathId}-gen`).innerHTML = html;
+};
+// added event listeners in all tooltip btn
+elements.cc0btn.onclick = tooltiGen;
+elements.pdmbtn.onclick = tooltiGen;
+elements.bybtn.onclick = tooltiGen;
+elements.bysabtn.onclick = tooltiGen;
+elements.byncbtn.onclick = tooltiGen;
+elements.byndbtn.onclick = tooltiGen;
+elements.byncsabtn.onclick = tooltiGen;
+elements.byncndbtn.onclick = tooltiGen;
+elements.cc0btn.onmouseover = tooltiGen;
+elements.pdmbtn.onmouseover = tooltiGen;
+elements.bybtn.onmouseover = tooltiGen;
+elements.bysabtn.onmouseover = tooltiGen;
+elements.byncbtn.onmouseover = tooltiGen;
+elements.byndbtn.onmouseover = tooltiGen;
+elements.byncsabtn.onmouseover = tooltiGen;
+elements.byncndbtn.onmouseover = tooltiGen;
 
 elements.applyFiltersButton.addEventListener('click', () => {
   appObject.updateFilters();
