@@ -119,7 +119,7 @@ elements.clearFiltersButton.addEventListener('click', () => {
 });
 
 // a function to fetch licencse explanation
-const tooltiGen = function() {
+const tooltiGen = () => {
   const pathId = this.id;
   const heading = tooltipInfo[pathId].tooltipHeading;
   const content = tooltipInfo[pathId].tooltipContent;
