@@ -68,7 +68,7 @@ export function toggleEditView() {
 
   const images = elements.gridBookmarks.getElementsByClassName('image');
 
-  images.forEach(image => {
+  for (const image of images) {
     /**
      * if edit view is enabled, then on clicking an image, we want to "select" it.
      * else, we want the image-detail section for that image to open.
@@ -80,7 +80,7 @@ export function toggleEditView() {
       image.removeEventListener('click', selectImage);
       image.addEventListener('click', initImageDetailSection);
     }
-  });
+  }
 }
 
 /**
