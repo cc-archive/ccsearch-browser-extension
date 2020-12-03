@@ -19,13 +19,9 @@
   transition: opacity 0.3s;
 }
 
-.question-color {
-  color: #d8d8d8 !important;
-}
-
 .tooltip-right {
   top: -5px;
-  left: 125%;
+  right: 125%;
 }
 
 .tooltip-right::after {
@@ -39,9 +35,10 @@
   border-color: transparent #d8d8d8 transparent transparent;
 }
 
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-  opacity: 1;
+.display-fix {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .caption,

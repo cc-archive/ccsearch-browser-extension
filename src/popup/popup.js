@@ -119,7 +119,7 @@ elements.clearFiltersButton.addEventListener('click', () => {
 });
 
 // a function to fetch licencse explanation
-const tooltiGen = function() {
+function tooltiGen() {
   console.log(this);
   const pathId = this.licenseName;
   const heading = tooltipInfo[pathId].tooltipHeading;
@@ -127,9 +127,13 @@ const tooltiGen = function() {
   let html = ``;
   html += `<b>${heading}</b><p>${content}</p><br/><p class="caption is-pulled-right margin-small">Read more about the tool <a href='#'>here</a></p>`;
   document.getElementById(`${pathId}-gen`).innerHTML = html;
-};
+}
 // added event listeners in all tooltip btn
-elements.tooltipButtons.forEach(button => (button.onclick = tooltiGen));
+elements.tooltipButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    tooltiGen;
+  });
+});
 
 elements.applyFiltersButton.addEventListener('click', () => {
   appObject.updateFilters();
