@@ -119,8 +119,9 @@ elements.clearFiltersButton.addEventListener('click', () => {
 });
 
 // a function to fetch licencse explanation
-const tooltiGen = () => {
-  const pathId = this.id;
+const tooltiGen = function() {
+  console.log(this);
+  const pathId = this.licenseName;
   const heading = tooltipInfo[pathId].tooltipHeading;
   const content = tooltipInfo[pathId].tooltipContent;
   let html = ``;
@@ -128,22 +129,7 @@ const tooltiGen = () => {
   document.getElementById(`${pathId}-gen`).innerHTML = html;
 };
 // added event listeners in all tooltip btn
-elements.cc0btn.onclick = tooltiGen;
-elements.pdmbtn.onclick = tooltiGen;
-elements.bybtn.onclick = tooltiGen;
-elements.bysabtn.onclick = tooltiGen;
-elements.byncbtn.onclick = tooltiGen;
-elements.byndbtn.onclick = tooltiGen;
-elements.byncsabtn.onclick = tooltiGen;
-elements.byncndbtn.onclick = tooltiGen;
-elements.cc0btn.onmouseover = tooltiGen;
-elements.pdmbtn.onmouseover = tooltiGen;
-elements.bybtn.onmouseover = tooltiGen;
-elements.bysabtn.onmouseover = tooltiGen;
-elements.byncbtn.onmouseover = tooltiGen;
-elements.byndbtn.onmouseover = tooltiGen;
-elements.byncsabtn.onmouseover = tooltiGen;
-elements.byncndbtn.onmouseover = tooltiGen;
+elements.tooltipButtons.forEach(button => (button.onclick = tooltiGen));
 
 elements.applyFiltersButton.addEventListener('click', () => {
   appObject.updateFilters();

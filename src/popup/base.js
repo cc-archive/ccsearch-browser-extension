@@ -40,14 +40,7 @@ export const elements = {
   aspectRatioCheckboxesWrapper: document.querySelector('.section-filter__aspect-ratio'),
   showMatureContentCheckboxWrapper: document.querySelector('.section-filter__show-mature-content'),
   // tooltip buttons
-  cc0btn: document.getElementById('cc0'),
-  pdmbtn: document.getElementById('pdm'),
-  bybtn: document.getElementById('by'),
-  bysabtn: document.getElementById('bysa'),
-  byncbtn: document.getElementById('bync'),
-  byndbtn: document.getElementById('bynd'),
-  byncsabtn: document.getElementById('byncsa'),
-  byncndbtn: document.getElementById('byncnd'),
+  tooltipButtons: document.querySelectorAll('.tooltip'),
   // footer buttons
   clearFiltersButton: document.getElementById('clear-filters-button'),
   applyFiltersButton: document.getElementById('apply-filters-button'),
