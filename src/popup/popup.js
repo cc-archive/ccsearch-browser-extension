@@ -12,7 +12,7 @@ import {
   removeImagesFromGrid,
   getTagsUrl,
   checkResultLength,
-  tooltipInfo,
+  licenseInfo,
 } from './helper';
 import { fillImageDetailSection, resetImageDetailSection } from './imageDetailModule';
 import { addSpinner, removeSpinner } from './spinner';
@@ -131,7 +131,7 @@ function tooltiGen() {
   const content = `<p><i class='icon ${licenseInfo.licenseName.licenseIcon}'></i> ${licenseInfo.licenseName.licenseDescription}</p>`;
   let html = ``;
   html += `<b>${heading}</b>${content}<br/><p class="caption is-pulled-right margin-small">Read more about the tool <a href='#'>here</a></p>`;
-  document.getElementById(`${pathId}-gen`).innerHTML = html;
+  document.getElementById(`${licenseName}-gen`).innerHTML = html;
 }
 // added event listeners in all tooltip btn
 elements.tooltipButtons.forEach(button => {
