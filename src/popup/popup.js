@@ -6,14 +6,7 @@ import {
   filterCheckboxWrappers,
 } from './base';
 import { checkInputError, getRequestUrl, getCollectionsUrl } from './searchModule';
-import {
-  removeLoadMoreButton,
-  clearFilters,
-  removeImagesFromGrid,
-  getTagsUrl,
-  checkResultLength,
-  licenseInfo,
-} from './helper';
+import { removeLoadMoreButton, clearFilters, removeImagesFromGrid, getTagsUrl, checkResultLength } from './helper';
 import { fillImageDetailSection, resetImageDetailSection } from './imageDetailModule';
 import { addSpinner, removeSpinner } from './spinner';
 import {
@@ -28,7 +21,7 @@ import loadBookmarkImages from './bookmarkModule';
 import checkSyncStorageSchema from './popup.utils';
 import { removeActiveClassFromNavLinks } from './bookmarkModule.utils';
 import { addImagesToDOM, search } from './localUtils';
-import { addSourceFilterCheckboxes, toggleFilterSection } from './filterModule';
+import { addSourceFilterCheckboxes, toggleFilterSection, generateLicenseToolTips } from './filterModule';
 
 /* *********************** Search Section *********************** */
 
@@ -118,34 +111,14 @@ elements.clearFiltersButton.addEventListener('click', () => {
   elements.searchButton.click();
 });
 
-// a function to fetch licencse explanation
-function tooltiGen() {
-  console.log(this);
-  const licenseName = this.licenseName;
-  const heading = document.createElement('h5');
-  heading.classList.add('b-header');
-  heading.innerText =
-    licenseName === 'cc0' || licenseName === 'pdm'
-      ? licenseName.toUpperCase()
-      : `License CC ${licenseName.toUpperCase()}`;
-  const content = `<p><i class='icon ${licenseInfo.licenseName.licenseIcon}'></i> ${licenseInfo.licenseName.licenseDescription}</p>`;
-  let html = ``;
-  html += `<b>${heading}</b>${content}<br/><p class="caption is-pulled-right margin-small">Read more about the tool <a href='#'>here</a></p>`;
-  document.getElementById(`${licenseName}-gen`).innerHTML = html;
-}
-// added event listeners in all tooltip btn
-elements.tooltipButtons.forEach(button => {
-  button.addEventListener('click', () => {
-    tooltiGen;
-  });
-});
-
 elements.applyFiltersButton.addEventListener('click', () => {
   appObject.updateFilters();
   primaryGridMasonryObject.layout();
   elements.closeFiltersLink.click();
   elements.searchButton.click();
 });
+
+generateLicenseToolTips();
 
 /* *********************** Bookmarks Section *********************** */
 elements.loadMoreBookmarkButton.addEventListener('click', () => {

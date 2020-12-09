@@ -29,6 +29,7 @@ export const elements = {
 
   /* ------filters section------ */
   filterSection: document.querySelector('.section-filter'),
+  tooltipWrappers: document.querySelectorAll('.tooltip-wrapper'),
   closeFiltersLink: document.getElementById('close-filters-link'),
   // different filters
   useCaseCheckboxesWrapper: document.querySelector('.section-filter__usecase'),
@@ -39,8 +40,6 @@ export const elements = {
   imageSizeCheckboxesWrapper: document.querySelector('.section-filter__image-size'),
   aspectRatioCheckboxesWrapper: document.querySelector('.section-filter__aspect-ratio'),
   showMatureContentCheckboxWrapper: document.querySelector('.section-filter__show-mature-content'),
-  // tooltip buttons
-  tooltipButtons: document.querySelectorAll('.tooltip'),
   // footer buttons
   clearFiltersButton: document.getElementById('clear-filters-button'),
   applyFiltersButton: document.getElementById('apply-filters-button'),
