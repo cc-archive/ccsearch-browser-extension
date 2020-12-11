@@ -38,8 +38,40 @@
     margin-right: 5px;
   }
 
+  .license-checkbox-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+
+    .tooltip-wrapper {
+      margin-left: auto;
+
+      .tooltip {
+        position: absolute;
+        top: 0;
+        right: 1.4rem;
+        opacity: 0;
+        visibility: hidden;
+        background-color: $color-white;
+        border: 2px solid $color-light-gray;
+        z-index: 400;
+        width: 20rem;
+        box-shadow: 0.7rem 0.7rem 0.7rem -0.7rem rgba(0, 0, 0, 0.25);
+        color: $color-dark-slate-gray;
+        text-align: left;
+        transition: opacity 0.3s;
+
+        &-active {
+          visibility: visible;
+          opacity: 1;
+        }
+      }
+    }
+  }
+
   label .icon {
-    color: #000;
+    color: $color-black;
   }
 }
 

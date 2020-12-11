@@ -29,6 +29,7 @@ export const elements = {
 
   /* ------filters section------ */
   filterSection: document.querySelector('.section-filter'),
+  tooltipWrappers: document.querySelectorAll('.tooltip-wrapper'),
   closeFiltersLink: document.getElementById('close-filters-link'),
   // different filters
   useCaseCheckboxesWrapper: document.querySelector('.section-filter__usecase'),

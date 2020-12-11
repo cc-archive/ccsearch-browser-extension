@@ -21,7 +21,7 @@ import loadBookmarkImages from './bookmarkModule';
 import checkSyncStorageSchema from './popup.utils';
 import { removeActiveClassFromNavLinks } from './bookmarkModule.utils';
 import { addImagesToDOM, search } from './localUtils';
-import { addSourceFilterCheckboxes, toggleFilterSection } from './filterModule';
+import { addSourceFilterCheckboxes, toggleFilterSection, generateLicenseToolTips } from './filterModule';
 
 /* *********************** Search Section *********************** */
 
@@ -117,6 +117,8 @@ elements.applyFiltersButton.addEventListener('click', () => {
   elements.closeFiltersLink.click();
   elements.searchButton.click();
 });
+
+generateLicenseToolTips();
 
 /* *********************** Bookmarks Section *********************** */
 elements.loadMoreBookmarkButton.addEventListener('click', () => {
