@@ -82,6 +82,43 @@ export function getHtmlAttribution(image) {
 }
 
 /**
+ * @desc Helper function to formatHTML
+ * @param {number} level - left space count.
+ */
+function formatHTMLMain(node, newLevel) {
+  let level = newLevel;
+  const indentBefore = new Array(level + 1).join('  ');
+  level += 1;
+  const indentAfter = new Array(level - 1).join('  ');
+  let textNode;
+
+  for (let i = 0; i < node.children.length; i += 1) {
+    textNode = document.createTextNode(`\n${indentBefore}`);
+    node.insertBefore(textNode, node.children[i]);
+
+    formatHTMLMain(node.children[i], level);
+
+    if (node.lastElementChild === node.children[i]) {
+      textNode = document.createTextNode(`\n${indentAfter}`);
+      node.appendChild(textNode);
+    }
+  }
+
+  return node;
+}
+
+/**
+ * @desc Helps in Formatting HTML Attributions
+ * @param {string} str - The image object.
+ */
+function formatHTML(str) {
+  const div = document.createElement('div');
+  div.innerHTML = str.trim();
+
+  return formatHTMLMain(div, 0).innerHTML;
+}
+
+/**
  * @desc Creates and returns the attribution that needs to be put in the attribution text file. The
  * file has plain text attribution, links(for image, creator, and license), and HTML attribution.
  * @param {Object} image - The image object.
@@ -93,6 +130,7 @@ export function getAttributionForTextFile(image) {
   }
   let creatorUrl = 'Not Available';
   const HtmlAttribution = getHtmlAttribution(image);
+  const FormattedHtmlAttribution = formatHTML(HtmlAttribution, 0);
   if (image.creator_url) {
     creatorUrl = image.creator_url;
   }
@@ -104,13 +142,13 @@ Image Link: ${image.foreign_landing_url}\n
 Creator Link: ${creatorUrl}\n
 License Link: ${image.license_url}\n\n
 **********************HTML Attribution**********************
-${HtmlAttribution}`;
+${FormattedHtmlAttribution}`;
   }
   return `${image.title} is licensed under CC ${image.license.toUpperCase()} ${image.license_version}\n\n
 Image Link: ${image.foreign_landing_url}\n
 Creator Link: ${creatorUrl}\n\n
 **********************HTML Attribution**********************
-${HtmlAttribution}`;
+${FormattedHtmlAttribution}`;
 }
 
 /**
