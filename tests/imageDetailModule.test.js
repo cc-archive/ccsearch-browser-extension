@@ -61,7 +61,19 @@ License Link: https://creativecommons.org/licenses/by-nc-nd/2.0/
 
 
 **********************HTML Attribution**********************
-<p style="font-size: 0.9rem;font-style: italic;"><a href="https://www.flickr.com/photos/46586088@N05/4696290733">"Megi - Lutka Moja"</a><span> by <a href="https://www.flickr.com/photos/46586088@N05">cipovic</a></span> is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/2.0/" style="margin-right: 5px;">CC BY-NC-ND 2.0</a><a href="https://creativecommons.org/licenses/by-nc-nd/2.0/" target="_blank" rel="noopener noreferrer" style="display: inline-block;white-space: none;margin-top: 2px;margin-left: 3px;height: 22px !important;"><img style="height: inherit;margin-right: 3px;display: inline-block;" src="https://search.creativecommons.org/static/img/cc_icon.svg" /><img style="height: inherit;margin-right: 3px;display: inline-block;" src="https://search.creativecommons.org/static/img/cc-by_icon.svg" /><img style="height: inherit;margin-right: 3px;display: inline-block;" src="https://search.creativecommons.org/static/img/cc-nc_icon.svg" /><img style="height: inherit;margin-right: 3px;display: inline-block;" src="https://search.creativecommons.org/static/img/cc-nd_icon.svg" /></a></p>`;
 
+<p style="font-size: 0.9rem;font-style: italic;">
+    <a href="https://www.flickr.com/photos/46586088@N05/4696290733">"Megi - Lutka Moja"</a>
+    <span> by 
+        <a href="https://www.flickr.com/photos/46586088@N05">cipovic</a>
+    </span> is licensed under 
+    <a href="https://creativecommons.org/licenses/by-nc-nd/2.0/" style="margin-right: 5px;">CC BY-NC-ND 2.0</a>
+    <a href="https://creativecommons.org/licenses/by-nc-nd/2.0/" target="_blank" rel="noopener noreferrer" style="display: inline-block;white-space: none;margin-top: 2px;margin-left: 3px;height: 22px !important;">
+        <img style="height: inherit;margin-right: 3px;display: inline-block;" src="https://search.creativecommons.org/static/img/cc_icon.svg" />
+        <img style="height: inherit;margin-right: 3px;display: inline-block;" src="https://search.creativecommons.org/static/img/cc-by_icon.svg" />
+        <img style="height: inherit;margin-right: 3px;display: inline-block;" src="https://search.creativecommons.org/static/img/cc-nc_icon.svg" />
+        <img style="height: inherit;margin-right: 3px;display: inline-block;" src="https://search.creativecommons.org/static/img/cc-nd_icon.svg" />
+    </a>
+</p>`;
   expect(testPlainAttribution).toBe(correctAttribution);
 });

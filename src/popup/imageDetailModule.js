@@ -82,6 +82,61 @@ export function getHtmlAttribution(image) {
 }
 
 /**
+ * @desc Helps in Formatting HTML Attributions
+ * @param {string} code - HTML Attributions.
+ */
+function formatHTMLAttribution(code, stripWhiteSpaces, stripEmptyLines) {
+  const whitespace = ' '.repeat(4); // Default indenting 4 whitespaces
+  let currentIndent = 0;
+  let char = null;
+  let nextChar = null;
+  let flag = false;
+
+  let result = '';
+  for (let pos = 0; pos <= code.length; pos += 1) {
+    char = code.substr(pos, 1);
+    nextChar = code.substr(pos + 1, 1);
+
+    if (char === '<' && nextChar !== '/') {
+      flag = true;
+    }
+
+    // If opening tag, add newline character and indention
+    if (char === '<' && nextChar !== '/') {
+      result += `\n${whitespace.repeat(currentIndent)}`;
+      currentIndent += 1;
+    }
+    // if Closing tag, add newline and indention
+    else if (char === '<' && nextChar === '/') {
+      // If there're more closing tags than opening
+      currentIndent -= 1;
+      if (currentIndent < 0) currentIndent = 0;
+      if (flag) {
+        flag = false;
+      } else {
+        result += `\n${whitespace.repeat(currentIndent)}`;
+      }
+    } else if (char === '/' && nextChar === '>') {
+      // If there're more closing tags than opening
+      currentIndent -= 1;
+      if (currentIndent < 0) currentIndent = 0;
+      flag = false;
+    }
+
+    // remove multiple whitespaces
+    else if (stripWhiteSpaces === true && char === ' ' && nextChar === ' ') char = '';
+    // remove empty lines
+    else if (stripEmptyLines === true && char === '\n') {
+      if (code.substr(pos, code.substr(pos).indexOf('<')).trim() === '') char = '';
+    }
+
+    result += char;
+  }
+
+  return result;
+}
+
+/**
  * @desc Creates and returns the attribution that needs to be put in the attribution text file. The
  * file has plain text attribution, links(for image, creator, and license), and HTML attribution.
  * @param {Object} image - The image object.
@@ -93,6 +148,7 @@ export function getAttributionForTextFile(image) {
   }
   let creatorUrl = 'Not Available';
   const HtmlAttribution = getHtmlAttribution(image);
+  const FormattedHtmlAttribution = formatHTMLAttribution(HtmlAttribution, true, true);
   if (image.creator_url) {
     creatorUrl = image.creator_url;
   }
@@ -104,13 +160,13 @@ Image Link: ${image.foreign_landing_url}\n
 Creator Link: ${creatorUrl}\n
 License Link: ${image.license_url}\n\n
 **********************HTML Attribution**********************
-${HtmlAttribution}`;
+${FormattedHtmlAttribution}`;
   }
   return `${image.title} is licensed under CC ${image.license.toUpperCase()} ${image.license_version}\n\n
 Image Link: ${image.foreign_landing_url}\n
 Creator Link: ${creatorUrl}\n\n
 **********************HTML Attribution**********************
-${HtmlAttribution}`;
+${FormattedHtmlAttribution}`;
 }
 
 /**
