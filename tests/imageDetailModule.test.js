@@ -74,7 +74,6 @@ License Link: https://creativecommons.org/licenses/by-nc-nd/2.0/
         <img style="height: inherit;margin-right: 3px;display: inline-block;" src="https://search.creativecommons.org/static/img/cc-nc_icon.svg" />
         <img style="height: inherit;margin-right: 3px;display: inline-block;" src="https://search.creativecommons.org/static/img/cc-nd_icon.svg" />
     </a>
-</p>
-`;
+</p>`;
   expect(testPlainAttribution).toBe(correctAttribution);
 });
