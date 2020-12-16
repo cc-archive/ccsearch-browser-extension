@@ -82,40 +82,58 @@ export function getHtmlAttribution(image) {
 }
 
 /**
- * @desc Helper function to formatHTML
- * @param {number} level - left space count.
+ * @desc Helps in Formatting HTML Attributions
+ * @param {string} code - HTML Attributions.
  */
-function formatHTMLMain(node, newLevel) {
-  let level = newLevel;
-  const indentBefore = new Array(level + 1).join('  ');
-  level += 1;
-  const indentAfter = new Array(level - 1).join('  ');
-  let textNode;
+function formatCode(code, stripWhiteSpaces, stripEmptyLines) {
+  const whitespace = ' '.repeat(4); // Default indenting 4 whitespaces
+  let currentIndent = 0;
+  let char = null;
+  let nextChar = null;
+  let flag = false;
 
-  for (let i = 0; i < node.children.length; i += 1) {
-    textNode = document.createTextNode(`\n${indentBefore}`);
-    node.insertBefore(textNode, node.children[i]);
+  let result = '';
+  for (let pos = 0; pos <= code.length; pos += 1) {
+    char = code.substr(pos, 1);
+    nextChar = code.substr(pos + 1, 1);
 
-    formatHTMLMain(node.children[i], level);
-
-    if (node.lastElementChild === node.children[i]) {
-      textNode = document.createTextNode(`\n${indentAfter}`);
-      node.appendChild(textNode);
+    if (char === '<' && nextChar !== '/') {
+      flag = true;
     }
+
+    // If opening tag, add newline character and indention
+    if (char === '<' && nextChar !== '/') {
+      result += `\n${whitespace.repeat(currentIndent)}`;
+      currentIndent += 1;
+    }
+    // if Closing tag, add newline and indention
+    else if (char === '<' && nextChar === '/') {
+      // If there're more closing tags than opening
+      currentIndent -= 1;
+      if (currentIndent < 0) currentIndent = 0;
+      if (flag) {
+        flag = false;
+      } else {
+        result += `\n${whitespace.repeat(currentIndent)}`;
+      }
+    } else if (char === '/' && nextChar === '>') {
+      // If there're more closing tags than opening
+      currentIndent -= 1;
+      if (currentIndent < 0) currentIndent = 0;
+      flag = false;
+    }
+
+    // remove multiple whitespaces
+    else if (stripWhiteSpaces === true && char === ' ' && nextChar === ' ') char = '';
+    // remove empty lines
+    else if (stripEmptyLines === true && char === '\n') {
+      if (code.substr(pos, code.substr(pos).indexOf('<')).trim() === '') char = '';
+    }
+
+    result += char;
   }
 
-  return node;
-}
-
-/**
- * @desc Helps in Formatting HTML Attributions
- * @param {string} str - The image object.
- */
-function formatHTML(str) {
-  const div = document.createElement('div');
-  div.innerHTML = str.trim();
-
-  return formatHTMLMain(div, 0).innerHTML;
+  return result;
 }
 
 /**
@@ -130,7 +148,7 @@ export function getAttributionForTextFile(image) {
   }
   let creatorUrl = 'Not Available';
   const HtmlAttribution = getHtmlAttribution(image);
-  const FormattedHtmlAttribution = formatHTML(HtmlAttribution, 0);
+  const FormattedHtmlAttribution = formatCode(HtmlAttribution, true, true);
   if (image.creator_url) {
     creatorUrl = image.creator_url;
   }
