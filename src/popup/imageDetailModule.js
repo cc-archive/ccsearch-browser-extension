@@ -85,7 +85,7 @@ export function getHtmlAttribution(image) {
  * @desc Helps in Formatting HTML Attributions
  * @param {string} code - HTML Attributions.
  */
-function formatCode(code, stripWhiteSpaces, stripEmptyLines) {
+function formatHTMLAttribution(code, stripWhiteSpaces, stripEmptyLines) {
   const whitespace = ' '.repeat(4); // Default indenting 4 whitespaces
   let currentIndent = 0;
   let char = null;
@@ -148,7 +148,7 @@ export function getAttributionForTextFile(image) {
   }
   let creatorUrl = 'Not Available';
   const HtmlAttribution = getHtmlAttribution(image);
-  const FormattedHtmlAttribution = formatCode(HtmlAttribution, true, true);
+  const FormattedHtmlAttribution = formatHTMLAttribution(HtmlAttribution, true, true);
   if (image.creator_url) {
     creatorUrl = image.creator_url;
   }
