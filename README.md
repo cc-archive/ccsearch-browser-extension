@@ -1,3 +1,5 @@
+## ⚠️ Notice: This project is on hold, and not under active development. We are not accepting new issues or pull requests. You can learn more at: [Upcoming Changes to the CC Open Source Community — Creative Commons Open Source](https://opensource.creativecommons.org/blog/entries/2020-12-07-upcoming-changes-to-community/).
+
   <p align="center">
   <img src="https://mirrors.creativecommons.org/presskit/icons/cc.xlarge.png" height="150">
   <h2 align="center">CC Search Browser Extension</h2>
