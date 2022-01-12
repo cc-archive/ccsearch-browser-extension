@@ -1,11 +1,14 @@
-> 🙅 **status: discontinued:** Project is in maintenance mode.
->
-> **The projects related to this are being continued by WordPress: [Welcome to Openverse – Openverse — WordPress.org](https://make.wordpress.org/openverse/2021/05/11/hello-world/).**
->
-> For additional context see:
-> - 2020-12-07: [Upcoming Changes to the CC Open Source Community — Creative Commons Open Source](https://opensource.creativecommons.org/blog/entries/2020-12-07-upcoming-changes-to-community/)
-> - 2021-05-03: [CC Search to Join WordPress - Creative Commons](https://creativecommons.org/2021/05/03/cc-search-to-join-wordpress/)
-> - **2021-05-10: [Welcome to Openverse – Openverse — WordPress.org](https://make.wordpress.org/openverse/2021/05/11/hello-world/)**
+--------
+# Project Transferred
+**This project was transfered to WordPress:**
+- **[WordPress/openverse-browser-extension](https://github.com/wordpress/openverse-browser-extension): A cross-browser extension that lets you search, filter, and use openly-licensed images.**
+
+For additional context see:
+- 2020-12-07: [Upcoming Changes to the CC Open Source Community — Creative Commons Open Source](https://opensource.creativecommons.org/blog/entries/2020-12-07-upcoming-changes-to-community/)
+- 2021-05-03: [CC Search to Join WordPress - Creative Commons](https://creativecommons.org/2021/05/03/cc-search-to-join-wordpress/)
+- 2021-05-10: [Welcome to Openverse – Openverse — WordPress.org](https://make.wordpress.org/openverse/2021/05/11/hello-world/)
+- 2021-12-13: [Dear Users of CC Search, Welcome to Openverse - Creative Commons](https://creativecommons.org/2021/12/13/dear-users-of-cc-search-welcome-to-openverse/)
+--------
 
   <p align="center">
   <img src="https://mirrors.creativecommons.org/presskit/icons/cc.xlarge.png" height="150">
